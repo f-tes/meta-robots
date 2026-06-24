@@ -1,0 +1,41 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Data and weights (download separately)
+data/
+pretrained_weights/
+
+# Environment
+.env
+.env.local
+lockfiles/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Conda/Python
+.Python
+*.egg-info/
+dist/
+build/
+
+# Outputs
+debug/
+outputs/
+
+# Claude Code
+.claude/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Backup dirs
+runs_backup*/
+runs_erroneous/

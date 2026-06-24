@@ -1,0 +1,130 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid pixel lies in a navmesh-disconnected component, causing Reach_stair_centroid to remain False on every gcts step and the stair to never be traversed. No waypoint-adjustment mechanism applied after Phase 1 entry can resolve a geometric disconnection; the fix must prevent engagement with the unreachable centroid before Phase 1 commits.",
+      "cross_scene_pattern": "Identical across both scenes: stair centroid coordinates fall outside the connected navmesh component reachable from the robot; Reach_stair_centroid: False fires on every gcts step; no floor switch occurs; DTG never drops below ~1.0m; the frontier associated with the stair is disabled without traversal. Differences: q3zU7Yy5E5s targets an UPSTAIR centroid (Phase 1 entry via look_for_downstair at steps 70\u201381), and all 6 T6 interception attempts produced byte-identical behavioral fingerprints \u2014 the centroid disconnection is far from any navigable boundary. qyAac8rV8Zk targets a DOWNSTAIR centroid (Phase 2), and the T6 baseline's 0.4m pullback moved the Phase 2 waypoint to a robot-adjacent navigable pixel, achieving SUCCESS (DTG=0.094m, step 415) \u2014 the centroid is only marginally disconnected.",
+      "transfer_notes": "The T6 baseline solving qyAac8rV8Zk reveals that a 0.4m pullback toward the robot is sufficient when the centroid is marginally disconnected (downstair geometry). This does NOT transfer to q3zU7Yy5E5s: the same 0.4m/0.5m pullback, BFS snaps, ring-sampling, CC-validated carrot, and \u00b150px navmesh box checks all return byte-identical behavioral fingerprints \u2014 the upstair centroid is sufficiently far from any navigable pixel that no waypoint perturbation within stair bounding-box range lands on the connected component. The transfer insight is directional: fix qyAac8rV8Zk by restoring the 0.4m pullback (already proven); fix q3zU7Yy5E5s by blocking centroid registration upstream, before Phase 1 is ever entered.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "DP9_phase2_connected_component_validation",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+        "floor_py_init_subclass_injection_with_50px_box_navmesh_check",
+        "early_gcts_disable_gcts_streak_10",
+        "gcts_streak_based_downstair_redirect_any_threshold",
+        "DP9_phase2_pullback_alone_for_q3zU7Yy5E5s",
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard"
+      ],
+      "highest_leverage_untested": "Compound fix: (1) For q3zU7Yy5E5s \u2014 inject a strict single-pixel navigability check at the exact centroid coordinates at stair registration time (on_episode_start or post_episode_init), disabling the upstair centroid entry if navigable_map[centroid_row, centroid_col] == 0, preventing Phase 1 from ever being entered for a geometrically unreachable upstair; fall through to frontier-only exploration. (2) For qyAac8rV8Zk \u2014 restore DP9 to 0.4m pullback as sole carrot mechanism (revert candidate_1's 0.6m forward projection), which the T6 baseline proved sufficient. Both can be delivered in a single candidate: centroid_navigability_gate_at_registration + DP9_0.4m_pullback.",
+      "sr_gain_if_fixed": 0.667,
+      "priority": 1
+    },
+    {
+      "id": "post_stair_frontier_exhaustion_and_false_positive_stop",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "XB4GS9ShBRE has two layered failure modes: (1) the 0.6m forward-projection carrot shortens Phase 2 traversal depth, causing stair exit at a frontier-poor second-floor boundary position and immediate 'no unexplored frontiers' at floor_step=1; (2) when traversal is deep enough (candidate_0, three paused_step resets), a false-positive STOP fires at step 499 during initialize mode with floor_step=1 and DTG=0.131m, preventing final goal approach.",
+      "cross_scene_pattern": "Single scene; two sub-mechanisms interact sequentially. Sub-mechanism 1 (traversal depth) is upstream: carrot distance determines how far into the stair the robot penetrates during Phase 2, which determines the richness of the frontier supply on the second floor post-traversal. Sub-mechanism 2 (false-positive STOP) is downstream: it only becomes the binding failure when sub-mechanism 1 is mitigated (candidate_0 exposed it; candidate_1 masked it by reinstating sub-mechanism 1). The STOP fires in initialize mode at floor_step=1 \u2014 a reinit step \u2014 not during normal exploration, indicating the should_stop gate does not distinguish between a settled exploration step and a floor reinit step.",
+      "transfer_notes": "Candidate_0's three paused_step resets (11\u219219\u21920\u21921\u21920\u2192SUCCESS@1) confirm that the Phase 2 traversal under the 0.4m pullback exits at a frontier-rich second-floor position, enabling 280+ explore steps. This establishes that restoring 0.4m pullback (no forward projection) is a prerequisite for exposing sub-mechanism 2. The false-positive STOP at step 499 (initialize mode, floor_step=1, DTG=0.131m) is structurally distinct from the navmesh-disconnection failures in q3zU7Yy5E5s/qyAac8rV8Zk \u2014 it is a stop-gate miscalibration during floor reinit, not a stair reachability problem. No cross-scene transfer applies.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "post_floor_switch_frontier_seeding_radius",
+        "DP9_phase2_connected_component_validation",
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard"
+      ],
+      "highest_leverage_untested": "suppress_STOP_when_mode_is_initialize_and_floor_step_lt_20: gate the should_stop / STOP action on floor_step >= 20, preventing false-positive SUCCESS during the initialize reinit window (candidate_0 step 499, floor_step=1). Combine with restoring DP9 to 0.4m pullback (no forward projection) to ensure Phase 2 exits at a frontier-rich second-floor position, re-enabling the 280+ explore steps that candidate_0 achieved before hitting the false-positive. Both changes are required jointly: the stop guard is irrelevant unless deep traversal is first restored.",
+      "sr_gain_if_fixed": 0.333,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Moves the Phase 2 waypoint back into the disconnected navmesh region for qyAac8rV8Zk \u2014 candidate_1 confirmed: Reach_stair_centroid False throughout, min_dis_to_downstair oscillating 160\u2013166, identical to all pre-T6 failures. Has no beneficial effect on q3zU7Yy5E5s whose centroid is disconnected regardless of projection direction."
+    },
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "post_stair_frontier_exhaustion_and_false_positive_stop",
+      "reason": "Shortens Phase 2 traversal depth in XB4GS9ShBRE \u2014 candidate_1 confirmed regression from DTG=0.131m (candidate_0, deep traversal) to DTG=0.683m (candidate_1, stair exit at frontier-poor boundary position, no-frontier fires at floor_step=1)."
+    },
+    {
+      "lever": "floor_py_init_subclass_injection_with_50px_box_navmesh_check",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "The \u00b150px box around the q3zU7Yy5E5s upstair centroid expands into the connected navmesh boundary, returning centroid_navigable=True and leaving Phase 1 entirely unchanged. Confirmed: [T6_FLOOR_NAVCHECK] tag never appeared in logs; behavioral fingerprint byte-identical to candidate_0 across all 5 prior candidates tested with box-based approaches."
+    },
+    {
+      "lever": "gcts_streak_based_downstair_redirect_any_threshold",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "All gcts_streak thresholds tested (N=8, 10, 30) for q3zU7Yy5E5s produce byte-identical behavioral fingerprints. The interception fires after Phase 1 is already committed to an unreachable centroid, and the redirect target is also outside the connected component; the fix must occur before Phase 1 entry, not during gcts stall."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Global forbidden move. The failure mode for both scenes is not a premature SUCCESS \u2014 it is complete failure to traverse the stair (Reach_stair_centroid always False, no floor switch). The guard addresses a distinct failure class (early-exit SUCCESS during stair traversal) that is not triggered here."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "post_stair_frontier_exhaustion_and_false_positive_stop",
+      "reason": "Global forbidden move. XB4GS9ShBRE's false-positive is a STOP action during initialize mode (step 499, floor_step=1) triggered via the should_stop path, not a premature stair_climb SUCCESS in the Phase 2 paused_step gate. These are different code paths."
+    },
+    {
+      "lever": "post_floor_switch_frontier_seeding_radius",
+      "cluster": "post_stair_frontier_exhaustion_and_false_positive_stop",
+      "reason": "Frontier exhaustion in XB4GS9ShBRE candidate_1 fires at floor_step=1 immediately after Phase 2 exit because the traversal is too shallow \u2014 the robot exits at a second-floor boundary with no local frontiers. Increasing seeding radius cannot compensate for placement at a geometrically frontier-poor exit point; the fix is deeper traversal (restore 0.4m carrot), not wider seeding."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Global forbidden move. DP12 gates one floor-switch reinit path; the binding failure is navmesh disconnection preventing stair traversal entirely \u2014 no DP12 value affects whether Reach_stair_centroid fires True or False."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "post_stair_frontier_exhaustion_and_false_positive_stop",
+      "reason": "Global forbidden move. Phase 2 traversal depth and the false-positive STOP during initialize mode are not gated by DP12's floor-switch interval."
+    },
+    {
+      "lever": "DP7",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP5",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP6",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP2",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP3",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    }
+  ],
+  "last_updated": "2026-06-02T06:58:01Z"
+}

@@ -1,0 +1,21 @@
+{
+  "harness": "/home/jovyan/meta_harness/runs/candidate_0/harness.py",
+  "split": "smoke10_remaining",
+  "metrics": {
+    "success": 0.5,
+    "spl": 0.270874,
+    "distance_to_goal": 4.379176,
+    "num_episodes": 8
+  },
+  "sources": {
+    "DYehNKdT76V": "smoke10_remaining",
+    "wcojb4TFT35": "smoke10_remaining",
+    "q3zU7Yy5E5s": "smoke10_remaining",
+    "p53SfW6mjZe": "smoke5",
+    "mL8ThkuaVTM": "smoke5",
+    "TEEsavR23oF": "smoke5",
+    "qyAac8rV8Zk": "smoke2_missing",
+    "bxsVRursffK": "smoke2_missing"
+  },
+  "timestamp": "2026-05-11T08:55:14"
+}

@@ -1,0 +1,131 @@
+{
+  "clusters": [
+    {
+      "id": "frontier",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "mL8ThkuaVTM",
+        "p53SfW6mjZe",
+        "TEEsavR23oF",
+        "XB4GS9ShBRE",
+        "DYehNKdT76V",
+        "4ok3usBNeis",
+        "Dd4bFSTQ8gi",
+        "zt1RVoi7PcG",
+        "wcojb4TFT35"
+      ],
+      "root_cause_summary": "Heuristic group: frontier",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "DP7"
+      ],
+      "highest_leverage_untested": "per_category_couch_threshold_lowered_to_0.10_proximity_gate_widened_to_4.5m",
+      "sr_gain_if_fixed": 1.0,
+      "priority": 1
+    },
+    {
+      "id": "stair",
+      "scenes": [
+        "mv2HUxq3B53",
+        "bxsVRursffK"
+      ],
+      "root_cause_summary": "Heuristic group: stair",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "DP1",
+        "DP7",
+        "navmesh_disconnection_watchdog"
+      ],
+      "highest_leverage_untested": "TV_suppress_threshold_0.50_with_distance_gate_gte_2.0m",
+      "sr_gain_if_fixed": 0.2,
+      "priority": 2
+    },
+    {
+      "id": "unknown",
+      "scenes": [
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "Heuristic group: unknown",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "candidate_4_TV_suppress_gate_for_this_scene",
+        "DP1",
+        "DP12",
+        "DP7",
+        "DP9",
+        "navmesh_disconnection_watchdog",
+        "DP8",
+        "false_positive_TV_detection_hypothesis"
+      ],
+      "highest_leverage_untested": "toilet_false_positive_suppression_by_category",
+      "sr_gain_if_fixed": 0.1,
+      "priority": 3
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "frontier",
+      "reason": "Ruled out in all 10 scenes in cluster"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "stair",
+      "reason": "Ruled out in all 2 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "stair",
+      "reason": "Ruled out in all 2 scenes in cluster"
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "stair",
+      "reason": "Ruled out in all 2 scenes in cluster"
+    },
+    {
+      "lever": "candidate_4_TV_suppress_gate_for_this_scene",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP9",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP8",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "false_positive_TV_detection_hypothesis",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    }
+  ],
+  "last_updated": "2026-06-23T19:42:10Z"
+}

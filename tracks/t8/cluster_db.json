@@ -1,0 +1,161 @@
+{
+  "clusters": [
+    {
+      "id": "frontier",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "mL8ThkuaVTM",
+        "qyAac8rV8Zk",
+        "mv2HUxq3B53",
+        "TEEsavR23oF",
+        "XB4GS9ShBRE",
+        "bxsVRursffK",
+        "4ok3usBNeis",
+        "Dd4bFSTQ8gi",
+        "zt1RVoi7PcG",
+        "wcojb4TFT35"
+      ],
+      "root_cause_summary": "Heuristic group: frontier",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "DP7"
+      ],
+      "highest_leverage_untested": "should_stop_detection_score_direct_logging_couch_at_1.1m_dtg",
+      "sr_gain_if_fixed": 1.1,
+      "priority": 1
+    },
+    {
+      "id": "navmesh",
+      "scenes": [
+        "p53SfW6mjZe"
+      ],
+      "root_cause_summary": "Heuristic group: navmesh",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "false_positive_stop_gate",
+        "DP7",
+        "per_category_stop_gate",
+        "stair_physical_traversal_failure",
+        "floor_exploration_budget_cap",
+        "floor_reinit_missing_after_stair_success",
+        "floor_exploration_budget_window",
+        "navmesh_disconnection_blocking_stair_zone",
+        "geodesic_inf_watchdog",
+        "DP1",
+        "DP12_as_sole_gate"
+      ],
+      "highest_leverage_untested": "post_stair_occupancy_grid_rebuild: force full occupancy grid reset from agent's post-stair position rather than reusing pre-climb grid \u2014 the pre-climb grid may incorrectly mark upper-floor cells as obstacles, artificially capping frontier count at 13",
+      "sr_gain_if_fixed": 0.1,
+      "priority": 2
+    },
+    {
+      "id": "stair",
+      "scenes": [
+        "DYehNKdT76V"
+      ],
+      "root_cause_summary": "Heuristic group: stair",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "navmesh_disconnection_as_root_cause",
+        "DP12",
+        "DP7",
+        "proximity_gate_as_binding_suppressor_in_candidate_3",
+        "DP1"
+      ],
+      "highest_leverage_untested": "Category-calibrated confidence threshold without collateral floor.py changes: BLIP-2 Mss for couch in this scene is ~0.180 even at 0.2m; a category-aware threshold (0.15 for couch, 0.50 for TV) restores STOP without DYehNKdT76V side-effects \u2014 candidate_4 proves this works, but subsequent candidates (7) introduced unrelated regressions",
+      "sr_gain_if_fixed": 0.1,
+      "priority": 3
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "frontier",
+      "reason": "Ruled out in all 11 scenes in cluster"
+    },
+    {
+      "lever": "false_positive_stop_gate",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "per_category_stop_gate",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "stair_physical_traversal_failure",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "floor_exploration_budget_cap",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "floor_reinit_missing_after_stair_success",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "floor_exploration_budget_window",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "navmesh_disconnection_blocking_stair_zone",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "geodesic_inf_watchdog",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP12_as_sole_gate",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "navmesh_disconnection_as_root_cause",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "proximity_gate_as_binding_suppressor_in_candidate_3",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    }
+  ],
+  "last_updated": "2026-06-24T04:13:42Z"
+}

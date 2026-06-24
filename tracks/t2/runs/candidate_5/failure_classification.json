@@ -1,0 +1,31 @@
+{
+  "candidate": "candidate_5",
+  "log_file": "/home/teeshan/meta_harness_pipeline/runs/candidate_5/smoke10_pipeline.log",
+  "n_episodes": 1,
+  "n_success": 1,
+  "n_failed": 0,
+  "sr": 1.0,
+  "failure_class_counts": {},
+  "primary_failure_class": null,
+  "episodes": [
+    {
+      "scene": "unknown",
+      "episode_id": 0,
+      "goal": "unknown",
+      "success": true,
+      "failure_tag": null,
+      "total_steps": 56,
+      "floor_reinits": 1,
+      "stair_mode_runs": 0,
+      "stair_mode_steps": 0,
+      "look_up_back_max": 0,
+      "dp7_calls": 2,
+      "dp7_empty": 1,
+      "dp7_parse_warns": 1,
+      "llm_triggers": 2,
+      "failure_class": null,
+      "failure_class_secondary": null
+    }
+  ],
+  "generated_at": "2026-05-18T08:08:33Z"
+}

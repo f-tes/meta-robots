@@ -1,0 +1,265 @@
+{
+  "scenes": {
+    "q3zU7Yy5E5s": {
+      "scene": "q3zU7Yy5E5s",
+      "goal": "couch",
+      "root_cause_summary": "Both detected stair centroids in scene q3zU7Yy5E5s are inside collision geometry: centroid [-1.30898204, 3.5508982] (selected in candidates 11\u201314, 16, 18, 19, 20, 22, 23) produces 27 consecutive Reach_stair_centroid=False then pointnav abort; centroid [-2.10394737, 3.27368421] (selected in candidate_15 via DP10='replace') produces 35 consecutive Reach_stair_centroid=False then abort. floor_step NEVER resets to 0 in any of the 14 candidates, confirming zero physical floor crossings. Candidate_23's perpendicular advance patch (targeting mL8ThkuaVTM premature frontier exhaustion) had zero effect \u2014 steps=418, reinits=2, stair_runs=2, dp7_empty=4/4 remain bit-for-bit identical across all 14 candidates \u2014 confirming the failure is exclusively stair centroid unreachability and is fully orthogonal to both mL8ThkuaVTM and qyAac8rV8Zk root causes. Fix requires a Track 2 nav_mesh validity check in ascent_policy.py; all 12 harness DPs are exhausted.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "floor_step=161 at step 390 (Mode=look_down, Stair_flag=2); floor_step never resets to 0 across all 14 candidates \u2014 no physical floor traverse in any run",
+        "27 consecutive 'Reach_stair_centroid: False' from step 391 in candidates 11\u201314, 16, 18, 19, 20, 22, 23 before 'Pointnav policy stopped. Disabling stair frontier [-1.30898204  3.5508982]'",
+        "candidate_15: 35 consecutive 'Reach_stair_centroid: False' before 'Pointnav policy stopped. Disabling stair frontier [-2.10394737  3.27368421]'; second distinct unreachable centroid confirmed",
+        "candidate_23: steps=418, reinits=2, stair_runs=2, dp7_empty=4/4, DTG=2.6627819541608915 \u2014 14th consecutive bit-for-bit identical failure; perpendicular advance patch guard never fires because episode terminates via 'Pointnav policy stopped / Disabling stair frontier [-1.30898204  3.5508982]' before any advance condition is reachable; orthogonality of q3zU7Yy5E5s root cause with mL8ThkuaVTM root cause confirmed for a third patch variant across three structurally distinct patches (c20: reinit-count extension, c22: FWD-advance + reinit reset, c23: perpendicular-advance + reinit reset)"
+      ],
+      "candidate_outcomes": {
+        "candidate_4": "DP12=35 + DP3=65: no change to stair trajectory; steps=418, reinits=2, stair_runs=2 identical",
+        "candidate_5": "Same changes as candidate_4 re-applied; identical outcome \u2014 steps=418, floor_step never 0",
+        "candidate_6": "DP2=always-True, DP5 CoT prompt: no change to stair trajectory; steps=418, reinits=2, stair_runs=2, dp7_empty=8/8 identical",
+        "candidate_7": "DP5+DP6 CoT prompts: no change; identical steps=418, floor_step never 0, stair_runs=2, dp7_empty=8/8",
+        "candidate_10": "DP9=1.2m carrot: identical steps=418, floor_step never 0 \u2014 conclusively rules out carrot distance when pointnav stops before reaching the centroid",
+        "candidate_11": "DP12=100: identical steps=418, reinits=2 \u2014 floor switches are not DP12-gated; no-frontiers path bypasses DP12 entirely",
+        "candidate_12": "DP4=0.65 SSIM + topk+5: identical steps=418, reinits=2, stair_runs=2, dp7_empty=4/4 \u2014 frontier diversity irrelevant when root cause is unreachable stair centroid",
+        "candidate_13": "Lateral stair waypoint perturbation via DP9: identical steps=418, reinits=2 \u2014 infeasible via harness DP9 alone; Track 2 required",
+        "candidate_14": "DP1 extended smooth distance bonus: identical steps=418, reinits=2, stair_runs=2; dp7_empty changed 4/4\u21922/2 but stair trajectory entirely unaffected \u2014 last untested harness DP exhausted",
+        "candidate_15": "DP10='replace': DIFFERENT trajectory \u2014 steps=293, reinits=1, stair_runs=1, dp7_empty=3/3; selected upstairs centroid [-2.10394737, 3.27368421] instead of downstairs [-1.30898204, 3.5508982]; 35 consecutive Reach_stair_centroid=False then disable; DTG=2.21 vs 2.66 \u2014 DP10 changes stair selection order but cannot make blocked centroids navigable; second distinct unreachable centroid confirmed",
+        "candidate_16": "DP10='default' (reverting c15 'replace'): steps=418, reinits=2, stair_runs=2, dp7_empty=4/4, DTG=2.6628 \u2014 identical to c11\u2013c14 trajectory; Track 2 fixes listed in description were not implemented",
+        "candidate_18": "Minimal import-fix candidate, no DP targeting this scene: steps=418, reinits=2, stair_runs=2, dp7_empty=4/4, DTG=2.6628 \u2014 10th consecutive bit-for-bit identical failure; centroid [-1.30898204, 3.5508982] selected again, 27 Reach_stair_centroid=False sequence reproduced exactly",
+        "candidate_19": "DP4=0.65 SSIM without topk change: steps=418, reinits=2, stair_runs=2, dp7_empty=4/4, DTG=2.6627819541608915 \u2014 11th consecutive identical failure; both the SSIM threshold and topk components of frontier deduplication confirmed irrelevant to stair centroid reachability",
+        "candidate_20": "Track 2 monkey-patch in ASCENTHarness.__init__ targeting premature floor exhaustion: steps=418, reinits=2, stair_runs=2, dp7_empty=4/4, DTG=2.6627819541608915 \u2014 12th consecutive bit-for-bit identical failure; patch never fires because termination path is 'Pointnav policy stopped / Disabling stair frontier', not the 'all floors explored' guard targeted by the patch",
+        "candidate_22": "Track 2 '[Track2c21]' patch targeting mL8ThkuaVTM premature_frontier_exhaustion: steps=418, reinits=2, stair_runs=2, dp7_empty=4/4, DTG=2.6627819541608915 \u2014 13th consecutive bit-for-bit identical failure; patch guard condition never fires because this scene terminates via 'Pointnav policy stopped / Disabling stair frontier [-1.30898204  3.5508982]' not via the reinit_flag path; orthogonality of the two root causes confirmed for a second patch variant",
+        "candidate_23": "Perpendicular advance patch (TURN_LEFT\u00d73 + MOVE_FORWARD\u00d73) targeting mL8ThkuaVTM premature_frontier_exhaustion: steps=418, reinits=2, stair_runs=2, dp7_empty=4/4, DTG=2.6627819541608915 \u2014 14th consecutive bit-for-bit identical failure; patch guard never fires because q3zU7Yy5E5s terminates via 'Pointnav policy stopped / Disabling stair frontier [-1.30898204  3.5508982]' at step ~417, well before any advance condition fires; confirms orthogonality for a third structurally distinct patch variant"
+      },
+      "ruled_out_levers": [
+        "DP1",
+        "DP2",
+        "DP3",
+        "DP4",
+        "DP5",
+        "DP6",
+        "DP7",
+        "DP8",
+        "DP9",
+        "DP10",
+        "DP11",
+        "DP12"
+      ],
+      "ruled_out_reasoning": {
+        "DP1": "candidate_14 smooth distance bonus for all distances: identical steps=418, stair_runs=2, floor_step never 0 \u2014 frontier value scoring cannot affect stair centroid reachability in the nav_mesh",
+        "DP2": "always-True trigger in candidate_6 had no effect on physical stair geometry failure",
+        "DP3": "candidates 4/5 used DP3=65 with no change to stair approach behavior",
+        "DP4": "candidate_12 SSIM=0.65 + topk+5: identical steps=418, stair_runs=2; candidate_19 SSIM=0.65 without topk: identical steps=418 \u2014 both the threshold and topk subcomponents independently confirmed irrelevant; frontier dedup has no bearing on unreachable stair centroid",
+        "DP5": "CoT intra-floor prompt change in candidate_6 had no effect on physical stair traversal",
+        "DP6": "CoT inter-floor prompt change in candidate_7 had no effect",
+        "DP7": "dp7_empty=2\u20138 across all candidates \u2014 LLM output never parsed; LLM recommendation is irrelevant when stair centroid is the bottleneck",
+        "DP8": "same reasoning as DP7",
+        "DP9": "candidate_10 with 1.2m carrot: identical trajectory; candidate_13 lateral perturbation also identical \u2014 DP9 cannot change the final navigation target sent to pointnav",
+        "DP10": "candidate_15 'replace' fusion selects different upstairs centroid [-2.10394737, 3.27368421] with 35 consecutive Reach_stair_centroid=False; candidate_16 reverts to 'default' restoring exact c11\u2013c14 trajectory; DP10 affects which stair centroid is prioritized but cannot make a blocked centroid navigable \u2014 both tested centroids are unreachable, exhausting the DP10 search space for this scene",
+        "DP11": "value map update weighting cannot affect stair centroid reachability",
+        "DP12": "candidate_11 raised DP12 to 100 with identical result; floor switches go via Stair_flag=2 path, not the DP12-gated reinit path"
+      },
+      "highest_leverage_untested_levers": [
+        "Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3\u20130.5m); directly addresses both blocked centroids confirmed across 14 candidates",
+        "Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample",
+        "Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists"
+      ],
+      "open_questions": [
+        "Are both centroids [-1.30898204, 3.5508982] and [-2.10394737, 3.27368421] inside collision geometry in the HM3D nav_mesh for q3zU7Yy5E5s? Projecting both onto the occupancy map would confirm whether ALL detected stair centroids in this scene are blocked.",
+        "Are there any reachable stair centroids in q3zU7Yy5E5s? If all ASCENT-detected stair centroids are inside collision geometry, the scene is permanently infeasible without a Track 2 stair detection improvement.",
+        "Would a nav_mesh snapping fix (projecting the blocked centroid to nearest navigable cell within 0.3\u20130.5m) produce a reachable target, or are all nav_mesh neighbors of [-1.30898204, 3.5508982] also inside collision geometry?"
+      ]
+    },
+    "qyAac8rV8Zk": {
+      "scene": "qyAac8rV8Zk",
+      "goal": "couch",
+      "root_cause_summary": "Two distinct stair centroid failure sub-modes are confirmed across 14 candidates. In candidates 11\u201314, 16, 18, 19, 20, 22, and 23, centroid [-1.26861111, -8.18583333] exhibits a deflection pattern (min_dis increases 170\u2192177, agent moves away) consistent with a navigation obstacle or disconnected nav_mesh region blocking the approach path. In candidate_15 with DP10='replace', a different centroid [-1.20948276, -8.26961207] exhibits an approach pattern (min_dis decreases 173\u2192167\u2192166\u2192161 over 17 steps) but Reach_stair_centroid remains False throughout, consistent with a centroid geometrically approachable in 2D grid distance but on physically inaccessible collision mesh. Candidate_23's perpendicular advance patch (targeting mL8ThkuaVTM) had zero effect \u2014 steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9575 remain bit-for-bit identical \u2014 confirming the root cause is exclusively stair centroid reachability and that this scene's failure class is fully orthogonal to both mL8ThkuaVTM and q3zU7Yy5E5s.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "Candidates 11\u201314, 16, 18, 19, 20, 22, 23: min_dis_to_downstair increases 170\u2192177 over successive approach steps \u2014 agent is deflected away from centroid [-1.26861111, -8.18583333], consistent with a disconnected nav_mesh region or navigation obstacle on approach path",
+        "candidate_15: different centroid [-1.20948276, -8.26961207]; min_dis DECREASES 173\u2192167\u2192166\u2192161 over 17 consecutive steps \u2014 agent successfully approaches centroid geometrically but Reach_stair_centroid remains False throughout; centroid is approachable but physically unreachable (on collision mesh boundary or 3D obstacle surface)",
+        "floor_step never resets to 0 in any of the 14 candidates \u2014 no physical floor crossing in any run",
+        "candidate_23: steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9575647931390754 \u2014 14th consecutive identical failure; centroid [-1.26861111, -8.18583333] selected again; min_dis 170\u2192177 deflection pattern reproduced exactly at identical step positions; perpendicular advance patch guard never fires because episode terminates at step 243 via 'Pointnav policy stopped / Disabling stair frontier [-1.26861111  -8.18583333]' well before any advance condition is reachable; orthogonality of qyAac8rV8Zk root cause with mL8ThkuaVTM fix confirmed for a third structurally distinct patch variant"
+      ],
+      "candidate_outcomes": {
+        "candidate_4": "DP12=35, DP3=65: identical failure, steps=243, stair centroid never approached",
+        "candidate_5": "Same changes; identical outcome \u2014 steps=243, min_dis 170\u2192177, same disable sequence",
+        "candidate_6": "DP2=always-True, DP5 CoT: no change, steps=243, min_dis 170\u2192177 pattern identical, dp7_empty=2/2",
+        "candidate_7": "DP5+DP6 CoT: no change, steps=243, identical min_dis 170\u2192177 sequence, dp7_empty=2/2",
+        "candidate_10": "DP9=1.2m: identical failure, steps=243, min_dis 170\u2192177 (deflection), dp7_empty=1/1 \u2014 conclusively rules out carrot distance when agent is deflected from centroid approach path",
+        "candidate_11": "DP12=100: identical failure, steps=243, min_dis 170\u2192177 \u2014 DP12 path never engaged; termination via stair frontier disable",
+        "candidate_12": "DP4=0.65 SSIM + topk+5: identical steps=243, same min_dis 170\u2192177 deflection pattern \u2014 frontier diversity irrelevant to stair centroid reachability",
+        "candidate_13": "No new DP targeting this scene; identical 243-step trajectory confirmed",
+        "candidate_14": "DP1 smooth distance bonus: identical steps=243, same min_dis 170\u2192177, dp7_empty=1/1 \u2014 last untested harness DP; null effect completes exhaustive ruling-out",
+        "candidate_15": "DP10='replace': DIFFERENT centroid [-1.20948276, -8.26961207], steps=323, dp7_empty=3/3; min_dis DECREASES 173\u2192167\u2192166\u2192161 (agent approaches!) but Reach_stair_centroid remains False across all 17 approach steps \u2014 second sub-mode of stair failure confirmed: geometrically approachable but collision-mesh-blocked centroid",
+        "candidate_16": "DP10='default' (reverting c15 'replace'): steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9575 \u2014 bit-for-bit identical to c11\u2013c14; centroid [-1.26861111, -8.18583333] re-selected; min_dis 170\u2192177 deflection pattern restored",
+        "candidate_18": "Minimal import-fix candidate, no DP targeting this scene: steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9556 \u2014 10th consecutive failure; centroid [-1.26861111, -8.18583333] selected; min_dis 170\u2192177 deflection sequence reproduced exactly",
+        "candidate_19": "DP4=0.65 SSIM without topk change: steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9575647931390754 \u2014 11th consecutive identical failure; full DP4 search space exhausted",
+        "candidate_20": "Track 2 monkey-patch in ASCENTHarness.__init__ targeting premature floor exhaustion: steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9575647931390754 \u2014 12th consecutive bit-for-bit identical failure; patch guard never fires; confirms root cause is centroid reachability, not floor exhaustion",
+        "candidate_22": "Track 2 '[Track2c21]' patch targeting mL8ThkuaVTM premature_frontier_exhaustion: steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9575647931390754 \u2014 13th consecutive bit-for-bit identical failure; min_dis 170\u2192177 deflection pattern reproduced at identical step positions; patch guard never fires because episode terminates at step 243 via stair frontier disable, well before any reinit_flag condition is reachable",
+        "candidate_23": "Perpendicular advance patch (TURN_LEFT\u00d73 + MOVE_FORWARD\u00d73) targeting mL8ThkuaVTM premature_frontier_exhaustion: steps=243, reinits=1, stair_runs=1, dp7_empty=1/1, DTG=3.9575647931390754 \u2014 14th consecutive bit-for-bit identical failure; min_dis 170\u2192170\u2192170, frontier disabled, second attempt 170\u2192170\u2192170\u2192170\u2192177\u2192177\u2192177\u2192177\u2192177\u2192177\u2192177\u2192177\u2192177\u2192177\u2192177, 'Pointnav policy stopped. Disabling stair frontier [-1.26861111 -8.18583333]' reproduced; patch guard never fires for qyAac8rV8Zk; orthogonality confirmed for a third patch variant"
+      },
+      "ruled_out_levers": [
+        "DP1",
+        "DP2",
+        "DP3",
+        "DP4",
+        "DP5",
+        "DP6",
+        "DP7",
+        "DP8",
+        "DP9",
+        "DP10",
+        "DP11",
+        "DP12"
+      ],
+      "ruled_out_reasoning": {
+        "DP1": "candidate_14 smooth distance bonus: identical steps=243, min_dis 170\u2192177, stair frontier disabled at same step \u2014 frontier value scoring cannot affect stair centroid reachability",
+        "DP2": "always-True trigger in candidate_6 had no effect on stair traversal failure",
+        "DP3": "DP3=65 in candidates 4/5 had no effect on stair approach behavior",
+        "DP4": "candidate_12 SSIM=0.65 + topk+5: identical 243-step sequence, same min_dis 170\u2192177 deflection; candidate_19 SSIM=0.65 without topk: identical steps=243, same deflection pattern \u2014 both the threshold and topk subcomponents independently confirmed irrelevant; stair centroid reachability is independent of frontier visual diversity",
+        "DP5": "CoT prompt irrelevant to physical stair approach failure",
+        "DP6": "same as DP5",
+        "DP7": "dp7_empty=1\u20133 across all candidates \u2014 LLM effectively unused; irrelevant since stair approach fails before any LLM selection matters",
+        "DP8": "same as DP7",
+        "DP9": "candidate_10 with 1.2m carrot: identical 243-step trajectory with same deflection pattern \u2014 carrot distance cannot change approach dynamics when centroid lies in disconnected nav region",
+        "DP10": "candidate_15 'replace' fusion selects different centroid [-1.20948276, -8.26961207] with approach pattern (min_dis 173\u2192161) but still Reach_stair_centroid=False across all 17 approach steps; candidate_16 reverts to 'default' restoring exact c11\u2013c14 failure \u2014 DP10 changes which centroid is targeted but cannot make an unreachable centroid physically crossable; both tested centroid variants fail confirming all available stair centroids are blocked",
+        "DP11": "value map update weighting cannot affect stair centroid reachability",
+        "DP12": "candidate_11 DP12=100: identical steps=243; no DP12-gated reinit occurs in this episode"
+      },
+      "highest_leverage_untested_levers": [
+        "Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173\u2192161) but Reach_stair_centroid stays False \u2014 centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c11\u2013c14, c16, c18, c19, c20, c22, c23) and the approach-but-blocked sub-mode (c15)",
+        "Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern confirmed in c11\u2013c14, c16, c18, c19, c20, c22, c23), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15",
+        "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1\u20132m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c11\u2013c14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"
+      ],
+      "open_questions": [
+        "Is centroid [-1.26861111, -8.18583333] in a nav_mesh-disconnected region (explaining the deflection/increasing min_dis in c11\u2013c14, c16, c18, c19, c20, c22, c23), while centroid [-1.20948276, -8.26961207] is on a connected-but-blocked surface (explaining approach success but Reach_stair_centroid=False in c15)? The two distinct min_dis patterns support this hypothesis.",
+        "Why does the approach in candidate_15 stall at min_dis=161 rather than reaching 0? Is the centroid on an obstacle boundary \u2014 e.g., the edge of a stair tread that is navigable in 2D grid coordinates but blocked by stair riser geometry in 3D simulation?",
+        "Is there a third stair centroid in this scene that would be both approachable AND traversable? Two tested centroids with different failure sub-modes suggest detection coverage rather than a single-point fix may be needed.",
+        "Would nav_mesh snapping (projecting the blocked centroids to nearest navigable cells within 0.3\u20130.5m) find a traversable approach to the staircase in this scene, or are the surrounding nav_mesh cells also in a disconnected region?"
+      ]
+    },
+    "mL8ThkuaVTM": {
+      "scene": "mL8ThkuaVTM",
+      "goal": "toilet",
+      "root_cause_summary": "The agent physically climbs stairs at step 120 ('climb stair success!!!!' confirmed in all 14 candidates) but BFS seeding initializes from the narrow stair-landing footprint, producing a deterministic 13-step frontier exhaustion (floor_step=13 at step 133) in every candidate. Candidate_20 (FWD advance, 2 extra reinit cycles, steps=250, DTG=4.713) and candidate_23 (perpendicular LEFT advance, steps=224, DTG=4.661) both converge to the identical dead-end frontier [3.88535534, -0.08535534] via different advance directions, exhausting the direction-of-advance hypothesis space and confirming that ALL lateral directions from the stair landing lead to the same unreachable room. Three tested exploration strategies \u2014 no advance (c16\u2013c19, c22: DTG\u22484.168\u20134.180), FWD advance (c20: DTG=4.713), and perpendicular-LEFT advance (c23: DTG=4.661) \u2014 all fail. The 13-step exhaustion is a structural fixed point of the stair-landing BFS seed; the toilet-containing room is not accessible from any direction through a landing-anchored frontier set. Full BFS re-seeding from ALL navigable cells on floor 2 (not anchored to the landing footprint) is confirmed as the minimum necessary and only remaining structural fix.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "'climb stair success!!!!' at step 120 with floor_step=0 confirmed in all 14 candidates \u2014 physical stair traverse confirmed; 'mapping_floor_confusion' heuristic class is incorrect for this scene",
+        "floor_step=13 at step 133, floor_step=0 at step 135, 'Environment 0: In all floors, no unexplored stairs or frontiers found, stopping' at step 148 \u2014 byte-identical in candidates 11\u201319 and c16, c18, c19; identical stair climb sequence reproduced in c22 and c23",
+        "candidate_20: steps=250, reinits=5, stair_runs=0, dp7_empty=0/2, DTG=4.713 \u2014 2 extra reinit cycles fired; FWD advance converges to dead-end [3.88535534, -0.08535534], DP1 logs show approach from 5.1m\u21922.1m; toilet not found",
+        "candidate_22: steps=171, reinits=4, stair_runs=0, dp7_empty=0/0, DTG=4.168 \u2014 '[Track2c21]' patch fired at step=158 (floor_step=23); 13-step exhaustion reproduced identically in extended phase (steps 158\u2192171, floor_step=0\u219213); no LLM calls made; agent stayed near landing, DTG\u2248baseline 4.180",
+        "candidate_23: steps=224, reinits=3, stair_runs=0, dp7_empty=0/2, DTG=4.661 \u2014 perpendicular (TURN_LEFT\u00d73 + MOVE_FORWARD\u00d73) advance fired; 2 LLM calls made (both parsed successfully, 0 empty); DP1 logs show best_frontier=[3.88535534, -0.08535534] continuously across 19+ consecutive selections at decreasing distances 5.3m\u21922.5m \u2014 IDENTICAL dead-end room as c20's FWD advance; toilet not found; 'Environment 0: In all floors, no unexplored stairs or frontiers found, stopping' at step 224",
+        "Both c20 (FWD advance, DTG=4.713) and c23 (90\u00b0-LEFT advance, DTG=4.661) select identical best_frontier [3.88535534, -0.08535534] and navigate to it at similar distance profiles \u2014 confirms the stair-landing BFS-seeded frontier set has exactly one accessible corridor regardless of advance direction; the toilet-containing room is structurally unreachable from the landing footprint via any directional advance"
+      ],
+      "candidate_outcomes": {
+        "candidate_4": "DP12=35, DP3=65: stair climb succeeded at step 120, episode stopped at step 148 \u2014 DP12 not the gate",
+        "candidate_5": "Identical to candidate_4: same 148-step trajectory, same stop reason",
+        "candidate_6": "DP2=always-True, DP5 CoT: passive upstairs detection at step 91, stair climb success at step 120, frontier exhaustion at step 148 \u2014 dp7_empty=1/1; outcome unchanged",
+        "candidate_7": "DP5+DP6 CoT: identical to candidate_6; passive detection at step 91, climb at step 120, stop at step 148 \u2014 dp7_empty=1/1",
+        "candidate_10": "DP9=1.2m: identical trajectory; stair already climbs successfully under default carrot \u2014 DP9 not the bottleneck; stop at step 148, dp7_empty=0/0",
+        "candidate_11": "DP12=100: identical 148-step trajectory \u2014 most informative early result; proves 'all floors explored' termination bypasses DP12",
+        "candidate_12": "DP4=0.65 + topk+5: identical steps=148, dp7_empty=0/0 \u2014 floor 2 frontier pool fundamentally empty, not merely under-diverse",
+        "candidate_13": "No new DP targeting this scene; identical 148-step trajectory confirmed for sixth consecutive time",
+        "candidate_14": "DP1 smooth distance bonus: identical steps=148, dp7_empty=0/0 \u2014 frontier value scoring cannot generate new frontiers on structurally empty floor",
+        "candidate_15": "DP10='replace': identical steps=148, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 complete value map overwrite vs weighted average has zero effect; floor-2 frontier pool emptiness is invariant to all three tested fusion modes",
+        "candidate_16": "DP10='default' (reverting c15 'replace'): steps=148, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 9th consecutive bit-for-bit identical run; description claimed Track 2 fixes were implemented but zero trajectory change proves they were not applied",
+        "candidate_18": "Minimal import-fix candidate: steps=148, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 10th consecutive identical failure; stair climb at step 120 confirmed; 13-step frontier exhaustion on floor 2 reproduced exactly",
+        "candidate_19": "DP4=0.65 SSIM without topk change: steps=148, reinits=3, stair_runs=0, dp7_empty=0/0, DTG=4.180377110506275 \u2014 11th consecutive identical failure",
+        "candidate_20": "Track 2 monkey-patch in ASCENTHarness.__init__ allowing 2 extra reinit cycles when reinit_flag=True AND floor_step<30 AND frontiers=0: steps=250, reinits=5, stair_runs=0, dp7_empty=0/2, DTG=4.713062390352467 \u2014 DIFFERENT trajectory; FWD advance exposed dead-end room [3.88535534, -0.08535534]; DTG worsened 4.18\u21924.71; confirms premature-stop hypothesis AND reveals that FWD exploration from landing leads to a dead-end",
+        "candidate_22": "Track 2 '[Track2c21]' patch targeting premature_frontier_exhaustion: steps=171, reinits=4, stair_runs=0, dp7_empty=0/0, DTG=4.167949916728373 \u2014 '[Track2c21]' patch fired at step=158 (floor_step=23), resetting reinit_flag; one extra 13-step frontier exhaustion cycle added (steps 158\u2192171); no LLM calls; DTG=4.168\u2248baseline 4.180 \u2014 agent stayed in landing area, did not reach [3.88535534, -0.08535534]; confirms 1 extra reinit cycle is insufficient to escape the landing footprint",
+        "candidate_23": "Perpendicular advance patch (TURN_LEFT\u00d73 + MOVE_FORWARD\u00d73): steps=224, reinits=3, stair_runs=0, dp7_empty=0/2, DTG=4.661402125111116 \u2014 DIFFERENT from c16-c19 (148 steps), c22 (171 steps), c20 (250 steps); perpendicular advance fired after first premature stop, resetting reinit_flag; 2 LLM calls made (both parsed, 0 empty); DP1 logs show best_frontier=[3.88535534, -0.08535534] continuously from approximately step 165 through step 224 at decreasing distances 5.3m\u21922.5m \u2014 SAME dead-end as c20's FWD advance; DTG=4.661 between c22's 4.168 and c20's 4.713; confirms the dead-end [3.88535534, -0.08535534] is the only room accessible from ANY advance direction from the landing footprint, exhausting the direction-of-advance hypothesis space"
+      },
+      "ruled_out_levers": [
+        "DP1",
+        "DP2",
+        "DP3",
+        "DP4",
+        "DP5",
+        "DP6",
+        "DP7",
+        "DP8",
+        "DP9",
+        "DP10",
+        "DP11",
+        "DP12"
+      ],
+      "ruled_out_reasoning": {
+        "DP1": "candidate_14 smooth distance bonus: identical steps=148, dp7_empty=0/0 \u2014 frontier pool empty before DP1 scoring influences any selection; in c20 and c23 DP1 activates at close ranges but the toilet is not in the room explored, confirming DP1 is downstream of the frontier seeding gap",
+        "DP2": "always-True trigger in candidate_6 did not change stair-climb or frontier-exhaustion sequence",
+        "DP3": "DP3=65 in candidates 4/5 did not affect outcome",
+        "DP4": "candidate_12 SSIM=0.65 + topk+5: identical steps=148, dp7_empty=0/0; candidate_19 SSIM=0.65 without topk: identical steps=148, dp7_empty=0/0 \u2014 both the threshold and topk subcomponents independently confirmed irrelevant; no LLM call is made before termination in c11\u2013c19, so frontier dedup operates on a structurally empty pool",
+        "DP5": "CoT prompt changes in candidates 6/7 had no effect; in c20 and c23, successful LLM calls (dp7_empty=0/2) still fail to direct agent to toilet, confirming prompt quality is not the bottleneck",
+        "DP6": "same as DP5",
+        "DP7": "dp7_empty=0/0 in candidates 11\u201319 \u2014 no LLM calls made before termination; in c20 and c23, dp7_empty=0/2 (both LLM responses parsed successfully) but toilet still not found in either; parse quality is not the bottleneck",
+        "DP8": "same as DP7",
+        "DP9": "candidate_10 changed carrot to 1.2m with no effect; stair already climbs successfully under default carrot",
+        "DP10": "candidate_15 'replace' fusion: identical steps=148, reinits=3, dp7_empty=0/0; candidate_16 reverts to 'default': identical steps=148 \u2014 floor-2 frontier pool emptiness is invariant to all three tested fusion modes",
+        "DP11": "value map update weighting cannot generate new frontiers on structurally empty floor",
+        "DP12": "candidate_11 DP12=100: identical 148-step stop; 'all floors explored' termination does not check DP12"
+      },
+      "highest_leverage_untested_levers": [
+        "Frontier re-seeding from ALL navigable cells after stair climb (Track 2 / ascent_policy.py): candidate_23 decisively closes the direction-of-advance hypothesis \u2014 both FWD (c20) and perpendicular-LEFT (c23) advance from the landing converge to the same dead-end [3.88535534, -0.08535534]; the fix must change WHAT nav_mesh cells are used to seed the frontier BFS, not which direction the agent advances or how many reinit cycles are allowed; full BFS from all navigable cells on floor 2 is the minimum necessary change",
+        "Combined 'all floors explored' guard threshold + full BFS re-seeding (Track 2 / ascent_policy.py): the reinit-count extension mechanism (proven functional in c20 and c22) is necessary scaffolding but insufficient alone; the fix must combine (a) a minimum floor_step threshold before declaring a floor exhausted AND (b) BFS re-seeding from all nav_mesh cells at floor initialization rather than the landing footprint",
+        "Second staircase detection during extended exploration (Track 2 / ascent_policy.py): candidate_22 (stair_runs=0, dp7_empty=0/0) and candidate_23 (stair_runs=0, dp7_empty=0/2 but no stair re-detection) both confirm that passive stair detection does not fire from the explored landing area and dead-end corridor; if the toilet is on floor 3, second-stair detection must be triggered from a broader frontier set exposed by the full BFS re-seed"
+      ],
+      "open_questions": [
+        "Candidate_23 answers the direction-of-advance question: both FWD (c20) and 90\u00b0-LEFT (c23) lead to [3.88535534, -0.08535534]. Is this dead-end the ONLY room accessible from the stair landing, implying the toilet-containing room is separated by a corridor or doorway that is out of sight from the landing? Full BFS from all nav_mesh cells would determine the connectivity of the entire floor.",
+        "Is the toilet on floor 2 (the landed floor, unreachable from the landing corridor) or on a floor 3 requiring a second stair climb? Candidate_23's stair_runs=0 even in the extended phase (with 2 LLM calls) suggests no second staircase was detected from the explored landing area or dead-end room; if the toilet is on floor 3, second-staircase access from the broader BFS-seeded frontier set becomes the primary hypothesis.",
+        "Why does c23 (perpendicular advance) have reinits=3 \u2014 identical to the no-patch baseline \u2014 while c22 shows reinits=4 and c20 shows reinits=5? If the perpendicular advance fires before the 'all floors explored' stop guard rather than resetting reinit_flag after the stop, it may consume fewer floor-reinit events while still extending exploration.",
+        "What is the spatial footprint of the floor-2 BFS seed from the stair landing vs the total navigable area on floor 2 in mL8ThkuaVTM? C20 and c23 both reach [3.88535534, -0.08535534] at distances 2.1\u20132.5m from the dead-end frontier, suggesting the explored area covers roughly a 5\u20136m radius from the landing; the toilet's DTG\u22484.18\u20134.71 from this region implies it may be in an entirely disconnected corridor segment that would only be exposed by full BFS re-seeding."
+      ]
+    },
+    "bxsVRursffK": {
+      "scene": "bxsVRursffK",
+      "goal": "bed",
+      "root_cause_summary": "Success in this 3-floor scene (bed on floor 3) requires two sequential stair climbs and is sensitive to both DP9 and DP10. With DP9=1.2m and DP10='default' (candidates 10, 12, 13, 14), the first stair climb completes at step 159 and the second upward staircase is detected at floor_step=13 (step 172), enabling the second climb and bed discovery at step ~200. Candidate_15 reveals DP10='replace' causes regression to FAIL: the overwrite fusion triggers the first stair climb 14 steps earlier (step 145), placing the agent at a different floor-2 landing position that does not detect the second staircase within the 13-step exploration window; the same 'no frontiers, all floors explored' premature-exhaustion termination pattern as mL8ThkuaVTM fires at step 187. The mechanism is identical across both failures: narrow floor-2 frontier visibility window that is sensitive to landing position.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "candidates 10/12/13/14 (SUCCESS): first climb at step 159 (floor_step=0), 'Environment 0: Navigating upstairs to unexplored floor' at step 172 (floor_step=13), second climb at step 180 (floor_step=21), 'climb stair success!!!!' at step 187 (floor_step=0), bed found at step 200 (floor_step=13) \u2014 bit-for-bit identical successful trajectory across 4 candidates with DP9=1.2m and DP10='default'",
+        "candidate_15 (FAIL): DP10='replace' with DP9=1.2m retained; first climb at step 145 (14 steps earlier than c10\u201314); floor_step=0 at step 161; floor_step=0 at step 174 (no second stair detected, no-frontier condition fires); floor_step=1 at step 175 (reinit); STOP at step 187 (floor_step=13) \u2014 premature-exhaustion termination identical to mL8ThkuaVTM",
+        "candidate_11 (FAIL): DP9=0.8m, DP12=100; first climb at step 154; same 180-step no-frontier termination \u2014 confirms DP9=1.2m is necessary for placing agent within second-stair detection range",
+        "dp7_empty=5/5 in candidate_15 vs 2/2 in candidate_10 \u2014 DP10='replace' generates 3 extra LLM triggers before stair climb, reflecting altered frontier value distribution from overwrite vs weighted-average accumulation",
+        "min_dis_to_upstair=330 at step 172\u2013173 in successful candidates, decreasing to 324 by step 179 \u2014 second staircase detected and approach initiated; this detection event NEVER occurs in candidate_15 after the earlier-timed first climb at step 145"
+      ],
+      "candidate_outcomes": {
+        "candidate_4": "DP12=35, DP3=65: climb success at step 154, stop at step 180 after 13 steps on floor 2",
+        "candidate_5": "Identical to candidate_4: same trajectory and stop",
+        "candidate_6": "DP2=always-True, DP5 CoT: same 180-step failure with climb at step 137",
+        "candidate_7": "DP5+DP6 CoT: same 180-step failure with climb at step 137",
+        "candidate_10": "DP9=1.2m, DP10='default': SUCCESS (steps=217); first climb step 159, second stair detected at floor_step=13, second climb step 180, bed found step 200 \u2014 DP9=1.2m is the confirmed lever; DP10='default' is the necessary companion",
+        "candidate_11": "DP9=0.8m (baseline), DP12=100: FAIL (steps=180) \u2014 same no-frontier termination as baseline; DP12 irrelevant since 'no frontiers' path bypasses it; confirms DP9=1.2m is necessary",
+        "candidate_12": "DP9=1.2m, DP4=0.65, DP10='default': SUCCESS (steps=217) \u2014 identical to candidate_10; DP4 change does not affect stair climb timing or floor-2 landing position",
+        "candidate_13": "DP9=1.2m, DP10='default': SUCCESS (steps=217) \u2014 identical; DP9=1.2m with default value map fusion reliably produces correct landing position across three independent candidates",
+        "candidate_14": "DP9=1.2m, DP1 smooth bonus, DP10='default': SUCCESS (steps=217) \u2014 DP1 change does not affect stair climb timing; default fusion preserves correct landing position",
+        "candidate_15": "DP9=1.2m, DP10='replace': FAIL (steps=187) \u2014 REGRESSION; 'replace' fusion causes first climb 14 steps earlier (step 145 vs 159), floor-2 landing position misses second staircase within 13-step window; floor_step=0 at step 174 (no-frontier reinit), STOP at step 187 (floor_step=13); dp7_empty=5/5 vs 2/2 in c10; DP10='replace' is confirmed harmful for this scene"
+      },
+      "ruled_out_levers": [
+        "DP12",
+        "DP3",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP10"
+      ],
+      "ruled_out_reasoning": {
+        "DP12": "candidate_11 DP12=100: identical 180-step failure; 'no frontiers' termination bypasses DP12 entirely",
+        "DP3": "DP3=65 in candidates 4/5 had no effect on climb timing or floor 2 outcome",
+        "DP5": "CoT prompt changes in candidates 6/7 had no effect on stair traversal or post-climb exploration",
+        "DP6": "same as DP5",
+        "DP2": "always-True LLM trigger in candidate_6 did not change the stair-based failure mode",
+        "DP10": "candidate_15 'replace' variant REGRESSES this scene from SUCCESS to FAIL; earlier first climb (step 145 vs 159) places agent at floor-2 landing position outside second-staircase detection range within 13-step window; DP10='replace' is confirmed harmful and must not be combined with DP9=1.2m; DP10='default' is load-bearing for this scene's success"
+      },
+      "highest_leverage_untested_levers": [
+        "DP9=1.2m with DP10='default' is the confirmed winning configuration for this scene \u2014 must be preserved in all future candidates; DP10='replace' is confirmed harmful and must not be re-applied",
+        "Track 2 fix to floor-2 frontier seeding after stair climb (ascent_policy.py): the 13-step detection window is narrow and sensitive to landing position; re-running full BFS frontier expansion from all navigable cells after successful stair climb (rather than narrow landing-footprint seeding) would make second-staircase detection robust to the landing position variance induced by DP changes \u2014 this fix would simultaneously address mL8ThkuaVTM's identical exhaustion mechanism",
+        "Minimum floor exploration guard (Track 2 / ascent_policy.py): the same 13-step exhaustion pattern fires in mL8ThkuaVTM (always) and bxsVRursffK under DP10='replace'; a min_floor_steps guard preventing 'all floors explored' termination until floor_step exceeds threshold would protect both scenes against premature-exhaustion regressions caused by future DP changes that shift landing position"
+      ],
+      "open_questions": [
+        "Why does DP10='replace' cause the first stair climb 14 steps earlier (step 145 vs 159) \u2014 does the overwrite fusion create higher Mss confidence for stair-area frontier cells sooner, triggering passive upstairs detection at floor_step=145 instead of 159? Comparing the value map state at floor_step=145 under 'replace' vs 'default' would confirm this.",
+        "Is the second staircase in bxsVRursffK only visible from within a specific ~1m radius on floor 2 that is reached by the landing position at step 159 (c10 carrot) but not step 161 (c15 carrot, 14-step-earlier climb)? The 2-step difference in landing step and the floor_step=13 detection boundary suggest the detection range is extremely narrow.",
+        "Can the Track 2 frontier re-seeding fix for mL8ThkuaVTM simultaneously fix the landing-position sensitivity for bxsVRursffK, or is the bxsVRursffK failure specifically about the second staircase falling outside the agent's field of view at the c15 landing position regardless of frontier pool size?",
+        "dp7_empty=5/5 in candidate_15 vs 2/2 in candidate_10: are the 3 extra LLM triggers in candidate_15 responsible for a different floor-1 exploration path that alters the position from which passive stair detection fires, or does the different climb timing arise purely from DP10='replace' changing frontier ranking to prioritize the stair-adjacent cell earlier?"
+      ]
+    }
+  },
+  "last_updated": "2026-05-20T05:47:46Z"
+}

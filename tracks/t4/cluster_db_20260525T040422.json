@@ -1,0 +1,120 @@
+{
+  "clusters": [
+    {
+      "id": "stair_centroid_navmesh_disconnect",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid targeted by look_for_downstair lies in a geometrically inaccessible navmesh component; Reach_stair_centroid is never True across all approach attempts, so no floor change ever occurs and the target-floor goal is never explored.",
+      "cross_scene_pattern": "Identical: Reach_stair_centroid always False on every attempt, floor_step never resets to 0, behavioral fingerprints byte-for-byte identical between candidate_0 and candidate_2 (hysteresis patch is a complete no-op). Different: q3zU7Yy5E5s exhibits area-wide multi-centroid disconnection (4 distinct centroids tested across tracks, all unreachable in the same stair region), while qyAac8rV8Zk has a single centroid that gets retried twice after disable/re-enable with identical failure each time.",
+      "transfer_notes": "Testing the hysteresis patch on both scenes produced zero observable behavioral change, confirming that all floor-switching and hysteresis logic is entirely downstream of the navmesh disconnection \u2014 it never fires because the stair is never traversed. q3zU7Yy5E5s's multi-centroid area-wide failure directly informs qyAac8rV8Zk: selecting alternative centroids in the same stair region will fail for the same topological reason, so the fix must gate on geodesic feasibility before any centroid commitment rather than after repeated failures.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP9_carrot_distance",
+        "LLM_DP7",
+        "DP1",
+        "all_harness_DPs"
+      ],
+      "highest_leverage_untested": "navmesh_connectivity_precheck_before_stair_centroid_commitment: query Habitat pathfinder geodesic distance to stair centroid before entering look_for_downstair; if geodesic is inf or exceeds a feasibility threshold, snap centroid to nearest navigable node via pathfinder.snap_point() or skip the stair entirely and trigger a fallback floor-entry search using alternative navmesh-reachable waypoints near the stair geometry",
+      "sr_gain_if_fixed": 0.5,
+      "priority": 1
+    },
+    {
+      "id": "patch_regression_passive_stair",
+      "scenes": [
+        "mL8ThkuaVTM"
+      ],
+      "root_cause_summary": "The scene is inherently solvable \u2014 candidate_0 succeeded via passive climb_stair detection at steps 91-102 \u2014 but candidate_2's hysteresis patch intercepted the explore-phase stair detection and diverted the agent into a get_close_to_stair\u2192look_for_downstair oscillation, doubling floor reinitializations and exhausting all steps before the toilet was reached.",
+      "cross_scene_pattern": "Single scene. Toilet confirmed 2D-connected to agent (failure tag 'feasible'), so this is a pure code regression, not a scene-inherent failure. The passive climb_stair mode fires during explore phase and was intercepted by the hysteresis patch's stair-detection hook, rerouting into the active stair approach cycle that oscillates.",
+      "transfer_notes": "The candidate_0\u2192candidate_2 regression precisely isolates the hysteresis patch as the breaking change with no confounders. Key forward insight for all future candidates: any patch touching floor-switching or stair-approach mode transitions must be guarded against intercepting passive climb_stair events that fire during the explore phase. A conditional gate (apply hysteresis only when already in get_close_to_stair or look_for_downstair, not during explore) would have preserved candidate_0 behavior here while still being applicable to floor-confusion scenes.",
+      "cluster_ruled_out_levers": [
+        "DP12_increase_to_80",
+        "floor_confusion_hypothesis",
+        "LLM_DP7",
+        "DP1"
+      ],
+      "highest_leverage_untested": "revert_hysteresis_patch_and_conditionally_gate_stair_mode_transitions: remove the unconditional hysteresis patch and replace with a guarded version that only activates when the agent is already in an active stair mode (get_close_to_stair or look_for_downstair), leaving passive climb_stair detection during explore phase completely unmodified",
+      "sr_gain_if_fixed": 0.25,
+      "priority": 2
+    },
+    {
+      "id": "post_stair_floor2_navmesh_frontier_starvation",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Stair traversal succeeds (floor_step resets to 0 at step 199) but floor 2 presents only 2 low-scoring frontiers reachable from the stair landing; the bed room occupies a navmesh-disconnected subgraph of floor 2, so neither frontier expansion nor three T4_NOQUIT rescues can bridge the topological gap to the target.",
+      "cross_scene_pattern": "Single scene. Shares navmesh disconnection as ultimate blocker with cluster stair_centroid_navmesh_disconnect but differs critically in failure point: disconnection is on the target floor after a successful stair climb rather than preventing the stair climb itself. The hysteresis patch had zero observable effect (identical fingerprints), confirming the failure is upstream of all floor-switching logic.",
+      "transfer_notes": "Three T4_NOQUIT rescues confirmed that standard frontier regeneration cannot overcome navmesh topology gaps \u2014 the post-stair analogue of the pre-stair centroid-disconnection finding in stair_centroid_navmesh_disconnect. This cross-cluster insight unifies the two navmesh failure modes: the Habitat navmesh API's geodesic feasibility check (pathfinder.geodesic_distance) is the correct diagnostic tool for both pre-stair centroid accessibility and post-stair target subgraph reachability, suggesting a shared infrastructure fix.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP9",
+        "LLM_DP7",
+        "DP1"
+      ],
+      "highest_leverage_untested": "navmesh_subgraph_connectivity_check_on_arrival_floor_plus_frontier_seeding: after stair climb, enumerate all navigable connected components on the new floor using pathfinder; seed frontier waypoints at the perimeter of each reachable subgraph from the stair landing rather than relying solely on the frontier map; if the semantic target region lies in a disconnected subgraph, trigger a fallback to a different stair entry point or alternative floor-2 entry geometry",
+      "sr_gain_if_fixed": 0.25,
+      "priority": 3
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "LLM_DP7",
+      "cluster": "ALL",
+      "reason": "Globally ruled out for all scenes; LLM parse tuning has no effect on navmesh topology, stair traversal mechanics, or code regressions"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "ALL",
+      "reason": "Globally ruled out for all scenes; frontier scoring weights cannot overcome navmesh disconnection or patch regressions"
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "stair_centroid_navmesh_disconnect",
+      "reason": "Tested on both q3zU7Yy5E5s and qyAac8rV8Zk; identical behavioral fingerprints before and after patch confirm zero effect \u2014 failure is entirely upstream of floor-switching logic since the stair is never traversed"
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "post_stair_floor2_navmesh_frontier_starvation",
+      "reason": "Tested on XB4GS9ShBRE; identical behavioral fingerprints confirm zero effect \u2014 failure is on floor 2 frontier topology, not floor-switching hysteresis"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "stair_centroid_navmesh_disconnect",
+      "reason": "Floor switch interval governs reinitialization frequency, not navmesh topology; irrelevant when the stair centroid is geometrically unreachable regardless of timing"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "post_stair_floor2_navmesh_frontier_starvation",
+      "reason": "Floor switch interval tuning cannot generate new frontiers or bridge navmesh disconnection in a topologically isolated subgraph of floor 2"
+    },
+    {
+      "lever": "DP12_increase_to_80",
+      "cluster": "patch_regression_passive_stair",
+      "reason": "mL8ThkuaVTM failure is caused by patch regression intercepting a working code path; DP12 interval does not address the mode-transition interception"
+    },
+    {
+      "lever": "DP9_carrot_distance",
+      "cluster": "stair_centroid_navmesh_disconnect",
+      "reason": "Carrot waypoint distance is irrelevant when Pointnav cannot compute a path to the stair centroid at all; the issue is geodesic infeasibility, not approach distance calibration"
+    },
+    {
+      "lever": "DP9",
+      "cluster": "post_stair_floor2_navmesh_frontier_starvation",
+      "reason": "Stair carrot distance is irrelevant after successful stair traversal; XB4GS9ShBRE's failure occurs on floor 2 exploration, not during stair approach"
+    },
+    {
+      "lever": "floor_confusion_hypothesis",
+      "cluster": "patch_regression_passive_stair",
+      "reason": "mL8ThkuaVTM failure tag is 'feasible' (toilet is 2D-connected to agent); this is not a floor confusion episode but a code regression \u2014 applying floor-confusion fixes here risks further regressions"
+    },
+    {
+      "lever": "all_harness_DPs",
+      "cluster": "stair_centroid_navmesh_disconnect",
+      "reason": "No combination of the 12 decision-point parameters can alter navmesh topology or make a geometrically disconnected component reachable; this is a structural infeasibility confirmed across 4 distinct centroids in q3zU7Yy5E5s"
+    }
+  ],
+  "last_updated": "2026-05-25T04:04:22Z"
+}

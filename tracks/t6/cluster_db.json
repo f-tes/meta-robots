@@ -1,0 +1,115 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid coordinates fall in a navmesh-disconnected component, making pointnav unable to reach the centroid on every attempt across the entire episode. No harness-layer DP tuning can route the agent through a geometrically unreachable waypoint, so floor transition never occurs and the goal-floor object is never visible.",
+      "cross_scene_pattern": "Identical: (1) persistent Reach_stair_centroid: False on all logged attempts with zero successes, (2) stair frontier ultimately disabled by pointnav policy exhaustion, (3) goal object on the unreachable floor never observed, (4) T4 baseline confirmation showing the fix layer is present but structurally irrelevant. Different: direction of floor transition (q3zU7Yy5E5s goes upstairs; qyAac8rV8Zk goes downstairs); post-disable behavior (q3zU7Yy5E5s attempts a single Navigating upstairs re-approach then terminates; qyAac8rV8Zk re-enters get_close_to_stair in a looping trap consuming the final 76 steps); qyAac8rV8Zk exhibits a quantitative navmesh-boundary-bouncing signature \u2014 min_dis_to_downstair oscillates between two distinct pixel plateaus (160 and 166) rather than converging \u2014 which is absent from q3zU7Yy5E5s logs.",
+      "transfer_notes": "Both scenes confirmed the navmesh-disconnection diagnosis in their T4 baseline runs, establishing that the root cause is structural and immune to existing DP tuning. The oscillating pixel-distance pattern in qyAac8rV8Zk provides a concrete early-abort trigger heuristic (non-converging min_dis over N steps) that would have also prevented the wasted re-approach in q3zU7Yy5E5s. The single successful LLM parse in q3zU7Yy5E5s (dp7_empty=0/1, llm_parse_rate=1.00) confirms LLM guidance was available but irrelevant once the physical bottleneck is hit \u2014 this transfers directly to qyAac8rV8Zk as confirmation that all LLM-side and scoring-side levers are futile for this failure mode. DP9 appears in qyAac8rV8Zk's highest_leverage_untested list (as DP9_stair_carrot_distance) but is ruled out for q3zU7Yy5E5s; cluster synthesis overrides this \u2014 adjusting carrot distance cannot help an agent approach a centroid that is outside the navmesh entirely.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12"
+      ],
+      "highest_leverage_untested": "alternative_stair_entry_point_sampling: when the nominal stair centroid is detected as navmesh-unreachable \u2014 either via a pre-flight navmesh connectivity precheck or after N consecutive Reach_stair_centroid: False events \u2014 sample candidate approach waypoints from the stair bounding polygon perimeter rather than committing to the centroid. This directly attacks the disconnection root cause for both scenes: it would prevent the disable-and-loop trap consuming 76 steps in qyAac8rV8Zk and the single-re-attempt failure in q3zU7Yy5E5s, and is the minimal structural change needed since all DP-layer levers are confirmed ineffective.",
+      "sr_gain_if_fixed": 0.67,
+      "priority": 1
+    },
+    {
+      "id": "post_floor_switch_goal_inaccessibility",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Stair traversal succeeds and a valid floor switch occurs (floor_step resets to 0), but the goal object resides in a navmesh-disconnected region of the destination floor. The newly accessible floor's frontier supply exhausts in only ~16 steps and all five subsequent floor_reinit cycles traverse only the connected portion of the floor, never reaching a viewpoint from which the goal is visible.",
+      "cross_scene_pattern": "Single-scene cluster; no cross-scene variance. Distinguishing characteristics: confirmed stair SUCCESS (T5_STAIR_CLIMB_EVAL SUCCESS at paused_step=20, floor_step reset to 0 at step 198); extremely thin post-switch frontier supply (only 2 frontiers at 0.2m and 2.2m); 5 floor_reinit cycles all failing to generate new frontiers; T5_NOQUIT rescues at steps 228 and 241 clearing disabled frontiers but unable to seed new ones due to physical disconnection of the goal region.",
+      "transfer_notes": "No intra-cluster transfer (single scene). However, the navmesh_disconnected_stair_centroid cluster demonstrates that navmesh connectivity failures manifest at two distinct pipeline stages \u2014 pre-floor-switch (stair centroid unreachable) and post-floor-switch (goal region unreachable on destination floor). This suggests that any navmesh precheck infrastructure built for alternative_stair_entry_point_sampling should be designed to cover both stair approach waypoints and destination-floor goal-region reachability. If that cluster's fix is implemented first, the same connectivity oracle can be reused here to detect and skip floors where the goal's projected position lies in a disconnected component, avoiding wasted reinit cycles.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "DP9"
+      ],
+      "highest_leverage_untested": "navmesh_connectivity_precheck_for_floor_skip: before committing to a destination floor after a successful stair climb, verify that the floor contains at least one navmesh-reachable frontier within a minimum coverage radius of the goal's projected floor position. If none exists, immediately skip to the next candidate floor rather than spending 5 floor_reinit cycles exhausting the disconnected region. This directly addresses the 16-step frontier exhaustion and the 5-reinit waste, and shares infrastructure with the stair-centroid precheck needed for the higher-priority cluster.",
+      "sr_gain_if_fixed": 0.33,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both q3zU7Yy5E5s and qyAac8rV8Zk; LLM response parsing is irrelevant when the physical stair centroid is navmesh-unreachable \u2014 the pointnav failure occurs before LLM-guided frontier selection has any effect on the trajectory."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; LLM prompt engineering cannot alter navmesh topology or create a connected path to a geometrically isolated stair centroid."
+    },
+    {
+      "lever": "DP6",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; prompt structure changes are irrelevant to whether the stair centroid lies inside a connected navmesh component."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; adjusting the LLM trigger threshold does not affect whether pointnav can navigate to the stair centroid."
+    },
+    {
+      "lever": "DP3",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; the multi-floor LLM path is irrelevant when the agent cannot physically reach the stair to initiate any floor transition."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; floor switch interval gating is irrelevant when the agent is stuck approaching an unreachable stair centroid and cannot complete the precondition for a switch."
+    },
+    {
+      "lever": "DP7",
+      "cluster": "post_floor_switch_goal_inaccessibility",
+      "reason": "Ruled out for XB4GS9ShBRE; LLM response parsing has no effect on frontier availability in a navmesh-disconnected destination floor region \u2014 the bottleneck is physical, not informational."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "post_floor_switch_goal_inaccessibility",
+      "reason": "Ruled out for XB4GS9ShBRE; LLM prompt content cannot generate frontiers in physically disconnected navmesh regions on the destination floor."
+    },
+    {
+      "lever": "DP6",
+      "cluster": "post_floor_switch_goal_inaccessibility",
+      "reason": "Ruled out for XB4GS9ShBRE; same as DP5 \u2014 prompt structure is irrelevant to navmesh coverage on the destination floor."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "post_floor_switch_goal_inaccessibility",
+      "reason": "Ruled out for XB4GS9ShBRE; LLM trigger frequency cannot expand navmesh coverage or create new frontiers in a disconnected region of the destination floor."
+    },
+    {
+      "lever": "DP3",
+      "cluster": "post_floor_switch_goal_inaccessibility",
+      "reason": "Ruled out for XB4GS9ShBRE; multi-floor LLM logic is irrelevant \u2014 the floor switch has already succeeded and the failure is post-switch goal-region disconnection, not floor selection."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "post_floor_switch_goal_inaccessibility",
+      "reason": "Ruled out for XB4GS9ShBRE; floor switch interval gating is irrelevant because the switch already occurred successfully \u2014 the problem is the post-switch frontier exhaustion in a disconnected region, not the timing of the switch decision."
+    },
+    {
+      "lever": "DP9",
+      "cluster": "post_floor_switch_goal_inaccessibility",
+      "reason": "Ruled out for XB4GS9ShBRE; stair carrot waypoint distance is irrelevant because the stair was already successfully traversed (floor_step reset to 0 confirmed) \u2014 the failure is entirely post-floor-switch and unrelated to stair approach mechanics."
+    }
+  ],
+  "last_updated": "2026-06-01T12:04:53Z",
+  "seeded_from": "T5 (meta_harness_t5) on 2026-06-01"
+}

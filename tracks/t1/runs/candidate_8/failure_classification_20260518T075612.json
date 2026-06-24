@@ -1,0 +1,31 @@
+{
+  "candidate": "candidate_8",
+  "log_file": "/home/teeshan/meta-ascent/meta_harness/runs/candidate_8/smoke10_remaining.log",
+  "n_episodes": 1,
+  "n_success": 1,
+  "n_failed": 0,
+  "sr": 1.0,
+  "failure_class_counts": {},
+  "primary_failure_class": null,
+  "episodes": [
+    {
+      "scene": "DYehNKdT76V",
+      "episode_id": 0,
+      "goal": "chair",
+      "success": true,
+      "failure_tag": null,
+      "total_steps": 99,
+      "floor_reinits": 1,
+      "stair_mode_runs": 1,
+      "stair_mode_steps": 1,
+      "look_up_back_max": 1,
+      "dp7_calls": 2,
+      "dp7_empty": 2,
+      "dp7_parse_warns": 2,
+      "llm_triggers": 7,
+      "failure_class": null,
+      "failure_class_secondary": null
+    }
+  ],
+  "generated_at": "2026-05-18T07:56:12Z"
+}

@@ -1,0 +1,33 @@
+{
+  "candidate": "candidate_4",
+  "log_file": "/home/teeshan/meta_harness_pipeline/runs/candidate_4/smoke10_pipeline.log",
+  "n_episodes": 1,
+  "n_success": 0,
+  "n_failed": 1,
+  "sr": 0.0,
+  "failure_class_counts": {
+    "mapping_floor_confusion": 1
+  },
+  "primary_failure_class": "mapping_floor_confusion",
+  "episodes": [
+    {
+      "scene": "bxsVRursffK",
+      "episode_id": 0,
+      "goal": "bed",
+      "success": false,
+      "failure_tag": "never_saw_target_traveled_stairs_likely_infeasible",
+      "total_steps": 499,
+      "floor_reinits": 12,
+      "stair_mode_runs": 5,
+      "stair_mode_steps": 23,
+      "look_up_back_max": 1,
+      "dp7_calls": 28,
+      "dp7_empty": 27,
+      "dp7_parse_warns": 27,
+      "llm_triggers": 28,
+      "failure_class": "mapping_floor_confusion",
+      "failure_class_secondary": "reasoning_error"
+    }
+  ],
+  "generated_at": "2026-05-18T08:05:27Z"
+}

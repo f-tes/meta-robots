@@ -1,0 +1,117 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "Both stair centroids lie in navmesh-disconnected islands: PointNav cannot reach the centroid coordinate, producing sustained Reach_stair_centroid: False sequences and no floor transition. The mechanism is identical; severity differs\u2014qyAac8rV8Zk's downstair island is small enough that a 0.4m carrot pullback brings the Phase 2 waypoint into the robot's connected component (solved by T6 candidate_0), while q3zU7Yy5E5s's upstair island is larger and radially further from the robot, requiring a pre-Phase-1 navigability gate at centroid registration time.",
+      "cross_scene_pattern": "IDENTICAL: navmesh disconnection mechanism; consecutive Reach_stair_centroid: False logs throughout the stair phase; min_dis_to_stair oscillating at a fixed value (160\u2013166 for qyAac8rV8Zk; gcts window 70\u201381 for q3zU7Yy5E5s); episode terminates far from goal without completing a floor transition. DIFFERENT: traversal direction (downstair for qyAac8rV8Zk, upstair for q3zU7Yy5E5s); disconnection severity (qyAac8rV8Zk solved by 0.4m carrot pullback in T6 baseline; q3zU7Yy5E5s produced byte-identical behavioral fingerprints across all 6 T6 candidates including the \u00b150px box navmesh check that nominally targeted it); required fix injection point (Phase 2 waypoint selection for qyAac8rV8Zk vs upstream upstair-selection gating before Phase 1 entry for q3zU7Yy5E5s).",
+      "transfer_notes": "DP9 0.4m carrot pullback (T6 candidate_0) solved qyAac8rV8Zk by moving the Phase 2 downstair waypoint out of the disconnected island into a robot-adjacent navigable pixel. The same pullback was already effective on the robot's CC for q3zU7Yy5E5s (T5 c9/c10/c11 all confirmed carrot already in robot's connected component via CC validation), confirming the upstair disconnected island is larger\u2014no amount of waypoint adjustment mid-phase can bridge it. This asymmetry constrains the q3zU7Yy5E5s fix: it must prevent Phase 1 from being entered when the upstair centroid pixel is non-navigable, rather than adjusting carrot distance after entry. For qyAac8rV8Zk, candidate_1's 0.6m forward projection is a confirmed regression: removing it (restoring 0.4m pullback as the sole carrot mechanism) is a high-confidence fix backed by T6 candidate_0 evidence.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "DP9_phase2_connected_component_validation",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+        "early_gcts_disable_gcts_streak_10",
+        "gcts_streak_based_downstair_redirect_any_threshold",
+        "floor_py_init_subclass_injection_with_50px_box_navmesh_check"
+      ],
+      "highest_leverage_untested": "Two-part fix applied together: (1) restore_DP9_0.4m_pullback_as_sole_carrot_mechanism for qyAac8rV8Zk (high-confidence regression revert; T6 c0 proved sufficiency); (2) force_disable_upstair_centroid_in_on_episode_start_if_centroid_pixel_not_in_navigable_map for q3zU7Yy5E5s\u2014strict single-pixel navigability check at the exact centroid coordinate at episode start (not a \u00b150px box), injected at the navigate_stair_if_unexplored_floor upstair/downstair selection point before Phase 1 is ever entered, causing the upstair frontier to be unconditionally disabled and the agent to proceed with cross-floor exploration via an alternative path.",
+      "sr_gain_if_fixed": 0.667,
+      "priority": 1
+    },
+    {
+      "id": "false_positive_stop_post_floor_switch",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "After successful stair traversal and floor switch, the agent reaches within DTG < 0.15m of the goal during second-floor initialize mode (floor_step=1) but fires a spurious STOP before any exploration has confirmed the goal object, because the should_stop gate does not suppress stops during the post-switch initialization window.",
+      "cross_scene_pattern": "Single scene. False STOP at step 499, DTG=0.131m, mode=initialize, floor_step=1. T6 candidate_0 demonstrates the traversal mechanism is sound (3 paused_step resets, 280+ exploration steps after stair exit, DTG=0.131m achieved); the only unresolved binding failure is this false STOP. Candidate_1's regression (frontier-poor stair exit from 0.6m forward projection; DTG=0.683m) is a separate mechanism that masks the original failure in current logs but is independently reversible by restoring the 0.4m carrot.",
+      "transfer_notes": "The passive stair detection hysteresis approach (T6 c7/c8: blocking _detect_passive_stair_entry for 350\u2013400 steps after floor switch) is structurally analogous and confirmed effective for XB4GS9ShBRE's spurious second-switch at step 482. The same temporal-gate pattern transfers directly: suppress STOP when mode=initialize AND floor_step < threshold (e.g., 20), preventing the stop from firing before the second-floor exploration run has had a chance to locate the goal. The DTG-gated stop guard attempts in T4/T5 (Fix 8c variants, c42/c33) all failed because info['distance_to_goal'] is absent per-step; the mode+floor_step gate avoids that data-availability constraint entirely.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "post_floor_switch_frontier_seeding_radius",
+        "DP9_phase2_connected_component_validation",
+        "premature_stair_climb_success_guard",
+        "dtg_based_stop_suppression_via_info_distance_to_goal"
+      ],
+      "highest_leverage_untested": "suppress_STOP_when_mode_is_initialize_and_floor_step_lt_20: gate the should_stop path so it cannot return True while mode=initialize AND floor_step < 20, giving the second floor at least 20 exploration steps before any stop is permitted. Combined with restoring the 0.4m carrot (to eliminate the candidate_1 regression and re-enable the frontier-rich stair exit that produced DTG=0.131m in candidate_0).",
+      "sr_gain_if_fixed": 0.333,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database per mandatory constraint."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database per mandatory constraint."
+    },
+    {
+      "lever": "DP6",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database per mandatory constraint."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database per mandatory constraint."
+    },
+    {
+      "lever": "DP3",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database per mandatory constraint."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database per mandatory constraint."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database per mandatory constraint."
+    },
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "ALL",
+      "reason": "Globally ruled out: caused confirmed SR regression in qyAac8rV8Zk (reinstated navmesh-disconnected failure, DTG 0.094m\u21922.075m) and XB4GS9ShBRE (frontier-poor stair exit, DTG 0.131m\u21920.683m)."
+    },
+    {
+      "lever": "gcts_streak_based_downstair_redirect_any_threshold",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "All gcts-streak-based interventions for q3zU7Yy5E5s (c2: streak=8, c3: streak=10, c5: floor.py __init_subclass__ at step 0) produced byte-identical behavioral fingerprints to candidate_0; the injection points are all downstream of the already-committed Phase 1 entry and cannot intercept the stall."
+    },
+    {
+      "lever": "floor_py_init_subclass_injection_with_50px_box_navmesh_check",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "The \u00b150px box expands from the disconnected centroid outward into the adjacent connected navmesh boundary, causing the check to return True and allowing Phase 1 to proceed identically to no-fix. Confirmed behavioral no-op for q3zU7Yy5E5s: byte-identical fingerprint to c0/c2/c3/c4; [T6_FLOOR_NAVCHECK] tag never appeared in logs."
+    },
+    {
+      "lever": "DP9_phase2_connected_component_validation",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "For q3zU7Yy5E5s, the carrot waypoint is already on the robot's connected component after the 0.4m pullback (T5 c10/c11 confirmed via CC indexing fix); the disconnected island cannot be reached regardless of intra-component waypoint placement. Behavioral fingerprint identical to T5 c9 for both candidates."
+    },
+    {
+      "lever": "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "For q3zU7Yy5E5s, navigable pixels within the stair bounding box reside on the isolated disconnected island; BFS snap within the box returns a point that is still unreachable from the robot. All T5 BFS/ring/perimeter-sampling snaps (c2\u2013c24) produced no SR gain for this scene."
+    },
+    {
+      "lever": "dtg_based_stop_suppression_via_info_distance_to_goal",
+      "cluster": "false_positive_stop_post_floor_switch",
+      "reason": "info['distance_to_goal'] is absent per-step in Habitat (confirmed across T4 Fix 8c variants c43\u2013c55 and T5 c12\u2013c22); all DTG-gated stop guards relying on this field silently failed to fire. Any stop suppression must use mode+floor_step state, not per-step DTG."
+    },
+    {
+      "lever": "post_floor_switch_frontier_seeding_radius",
+      "cluster": "false_positive_stop_post_floor_switch",
+      "reason": "The XB4GS9ShBRE binding failure is a false-positive STOP at floor_step=1 before any exploration runs; frontier supply is irrelevant because the stop fires before frontier evaluation begins. Seeding radius changes cannot suppress a stop gate that precedes exploration."
+    }
+  ],
+  "last_updated": "2026-06-02T02:32:20Z"
+}

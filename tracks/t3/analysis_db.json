@@ -1,0 +1,463 @@
+{
+  "scenes": {
+    "q3zU7Yy5E5s": {
+      "scene": "q3zU7Yy5E5s",
+      "goal": "couch",
+      "root_cause_summary": "All stair centroids identified across candidates lie in navmesh-disconnected components (Reach_stair_centroid: False throughout all approach steps). Candidates 3/5/8 (baseline DP1) select centroid [-1.30898204, 3.5508982] at floor_step=161 with min_dis=29. Candidates 6/7 (DP1 2m cap) select a different centroid [-1.22567568, 3.65405405] at floor_step=189 with min_dis=18 \u2014 smaller min_dis but equally disconnected. Candidate_7 adds the post-abort-rescan pattern: after C7_ABORT, reinit at floor_step=190\u2192192 (no floor_step reset to 0), then 'no unexplored stairs or frontiers found' at step 431 \u2014 dtg=4.915 IDENTICAL to candidate_6's immediate stop. This parallels the anti-pattern established by candidates 4 (baseline) and 7 (qyAac8rV8Zk), confirming post-abort rescan without spawn relocation is universally insufficient across all navmesh-disconnected stair scenes.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "candidates 3/5/8: stair commit at floor_step=161, step 388; min_dis_to_downstair=29; 25 consecutive Reach_stair_centroid: False; centroid=[-1.30898204, 3.5508982]; C-ABORT fires; immediate stop; dtg=4.487",
+        "candidates 6/7: DP1 2m cap selects DIFFERENT centroid [-1.22567568, 3.65405405] at floor_step=189 (28 extra steps explored); min_dis_to_downstair=18 (smaller gap but still disconnected); C-ABORT fires; dtg=4.915 (worse)",
+        "candidate_7: C7_ABORT fires at centroid [-1.22567568, 3.65405405]; post-abort reinit at floor_step=190 (Mode=get_close_to_stair, Action=2), floor_step=191 (Mode=look_up_back), floor_step=192 (Mode=initialize) \u2014 NO floor_step reset to 0; 'no unexplored stairs or frontiers found' at step 431 (floor_step=204, Mode=explore, Action=0); dtg=4.915 IDENTICAL to candidate_6 immediate stop",
+        "candidate_4 vs candidate_7 structural comparison: C4_ABORT (baseline) \u2192 reinit floor_step=189 (no reset), dtg=4.487 = candidate_3 immediate stop; C7_ABORT (2m cap) \u2192 reinit floor_step=192 (no reset), dtg=4.915 = candidate_6 immediate stop \u2014 post-abort rescan ruled out under both DP1 parameterizations for this scene",
+        "dp7_empty=0/4 in candidates 3/4/5/8 confirms LLM fully operational but selects same disconnected stair; dp7_empty=0/1 in candidates 6/7 confirms 2m cap reduces LLM trigger rate without changing stair geometry"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "FAIL: 416 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.540 \u2014 [EARLY_ABORT]: agent re-commits unconditionally; steps unchanged",
+        "candidate_2": "FAIL: 416 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.540 \u2014 threshold change fires abort; immediate re-commitment; steps unchanged",
+        "candidate_3": "FAIL: 414 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.487 \u2014 C3_ABORT + permanent blacklist; stair commit at floor_step=161; 25 False steps; C3_ABORT fires; immediate stop; couch not found",
+        "candidate_4": "FAIL: 428 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.487 \u2014 C4_ABORT; post-abort reinit at floor_step=188\u2192189 (no reset); 12 extra steps; dtg=4.487 identical to candidate_3 immediate stop; rules out post-abort rescan under baseline DP1",
+        "candidate_8": "FAIL: 414 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.487 \u2014 reverted to baseline DP1 (no 2m cap); stair commit at floor_step=161 (step 388); same centroid [-1.30898204, 3.5508982] as candidates 3/5; 25 consecutive Reach_stair_centroid: False; C8_ABORT fires; dtg=4.487 \u2014 eighth candidate with identical navmesh-disconnected terminal failure",
+        "candidate_9": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=8/8 \u2014 explore-mode guard delayed downstairs switch to floor_step=156 but same inaccessible stair reached at floor_step=161 with identical 27 False sequence",
+        "candidate_10": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=8/8 \u2014 identical outcome to candidate_9",
+        "candidate_6": "FAIL: 417 steps, reinits=2, stair_runs=2, dp7_empty=0/1, dtg=4.915 \u2014 DP1 2m cap: DIFFERENT stair centroid [-1.22567568, 3.65405405] (min_dis=18 vs 29); stair commit at floor_step=189 (28 extra steps); C6_ABORT fires; immediate stop; dtg worsened to 4.915; dp7_empty=0/1 (75% LLM call rate reduction vs candidates 0\u20135); third confirmed-disconnected stair centroid",
+        "candidate_11": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=4/4 \u2014 DP7 regex fallback confirmed insufficient; DP5 'Goal: chair' bug produces LLM output unparseable even by regex; stair failure unchanged at floor_step=161",
+        "candidate_12": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=4/4 \u2014 identical to candidate_11; candidate_12's DP5 fix targeted mL8ThkuaVTM ('bed'\u2192'toilet') not q3zU7Yy5E5s ('chair'\u2192'couch')",
+        "candidate_13": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=4/4, dtg=2.6627 \u2014 no changes proposed; byte-for-byte identical to candidates 11 and 12",
+        "candidate_14": "FAIL: 439 steps, reinits=2, stair_runs=2, dp7_empty=2/5, dtg=2.6799 \u2014 DP5 fix ('chair'\u2192'couch') improved parse rate from 4/4 failures to 2/5 (3 calls parsed); LLM shifted stair target to [-1.23952381, 3.67952381] which is also inaccessible; 3 stair disable cycles; dtg slightly worsened",
+        "candidate_0": "FAIL: 416 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.540 \u2014 Track 3 baseline; disconnected stair [-1.30898204, 3.5508982]; min_dis=29",
+        "candidate_0_t3": "FAIL: 416 steps, reinits=2, stair_runs=2, dp7_empty=0/4 \u2014 Track 3 baseline with full LLM parsing; same disconnected stair [-1.30898204, 3.5508982] selected despite 4 parsed LLM calls; identical floor_step=161 stair trigger, 27 Reach_stair_centroid: False, min_dis_to_downstair=29; proves LLM guidance does not influence stair selection pathway",
+        "candidate_1_t3": "FAIL: 416 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.54 \u2014 [EARLY_ABORT] fires at _frontier_stick_step=12 (mechanically confirmed); recovers ~13 approach steps in first stair run; agent immediately re-commits to same stair after abort ('Navigating downstairs to unexplored floor'); second run proceeds to 'Pointnav policy stopped'; total steps and dtg unchanged; rules out early_stair_abort_without_permanent_blacklisting as sufficient lever",
+        "candidate_5": "FAIL: 414 steps, reinits=2, stair_runs=2, dp7_empty=0/4, dtg=4.487 \u2014 C5_ABORT: identical to candidate_3",
+        "candidate_7": "FAIL: 431 steps, reinits=2, stair_runs=2, dp7_empty=0/1, dtg=4.915 \u2014 DP1 2m cap + C7_ABORT + post-abort reinit: same centroid [-1.22567568, 3.65405405] as candidate_6 (min_dis=18); C7_ABORT fires; post-abort reinit at floor_step=190 (Mode=get_close_to_stair) \u2192 floor_step=192 (Mode=initialize) \u2014 NO floor_step reset to 0; 'no unexplored stairs or frontiers found' at step 431 (floor_step=204); dtg=4.915 IDENTICAL to candidate_6 immediate stop \u2014 second confirmation that post-abort rescan without spawn relocation is insufficient under 2m cap parameterization"
+      },
+      "ruled_out_levers": [
+        "DP9_carrot_distance_increase",
+        "DP12",
+        "SDP-C",
+        "DP3",
+        "SDP-D",
+        "DP10",
+        "DP11",
+        "DP7_DP8_regex_fallback_alone",
+        "DP5_goal_binding_bug_fix_couch_scene_alone",
+        "DP5_DP6_prompt_changes",
+        "LLM_frontier_guidance_for_stair_selection",
+        "ascent_policy_floor_init_timeout_track2",
+        "ascent_policy_explore_mode_floor_switch_guard_track2",
+        "early_stair_abort_without_permanent_blacklisting",
+        "stair_abort_threshold_variation_alone",
+        "C3_ABORT_permanent_blacklist_alone",
+        "post_abort_rescan_without_spawn_relocation",
+        "DP1_proximity_boost_changes_any_range"
+      ],
+      "ruled_out_reasoning": {
+        "DP9_carrot_distance_increase": "Track 2 candidate_6 (DP9=1.2m): 27 Reach_stair_centroid: False; min_dis=29 unchanged",
+        "DP12": "Identical 414\u2013431 step failures regardless of DP12 threshold",
+        "SDP-C": "Coverage-based switching not on causal path",
+        "DP3": "No inter-floor LLM signals in q3zU7Yy5E5s logs",
+        "SDP-D": "dp7_empty persists regardless of prompt augmentation",
+        "DP10": "Track 2 candidate_4 equal_weighting: 14+ Reach_stair_centroid: False on alternate stair",
+        "DP11": "Confidence-weighted averaging irrelevant to stair geometry",
+        "DP7_DP8_regex_fallback_alone": "DP5 goal bug upstream prevents parseable output regardless",
+        "DP5_goal_binding_bug_fix_couch_scene_alone": "Track 2 candidate_14: alternate stair equally inaccessible; dtg worsened",
+        "DP5_DP6_prompt_changes": "Track 3 candidates 0\u20135 with dp7_empty=0/4 select SAME stair and produce SAME failure",
+        "LLM_frontier_guidance_for_stair_selection": "DEFINITIVELY ruled out: with dp7_empty=0/4 in candidates 3/5/8, agent selects identical disconnected stair [-1.30898204, 3.5508982]; candidates 6/7 with dp7_empty=0/1 select DIFFERENT centroid via DP1 change, also disconnected; LLM guidance does not determine stair centroid",
+        "ascent_policy_floor_init_timeout_track2": "Track 2 candidate_8: zero effect",
+        "ascent_policy_explore_mode_floor_switch_guard_track2": "Track 2 candidates 9\u201314: dtg range 2.662\u20132.680 unchanged",
+        "early_stair_abort_without_permanent_blacklisting": "candidates 1/2: agent re-commits unconditionally; steps=416 unchanged",
+        "stair_abort_threshold_variation_alone": "candidate_2: immediate re-commitment",
+        "C3_ABORT_permanent_blacklist_alone": "candidates 3/5: floor exhaustively searched 161 steps before stair; couch not found after abort",
+        "post_abort_rescan_without_spawn_relocation": "candidates 4 and 7 (two independent DP1 parameterizations) both confirm: post-abort reinit with NO floor_step reset produces dtg IDENTICAL to immediate-stop candidates 3/6 respectively; no new frontiers discovered; the floor after stair abort has no navigable path to couch",
+        "DP1_proximity_boost_changes_any_range": "candidates 6/7 (2m cap): different stair centroid selected (min_dis=18 vs 29); still disconnected; dtg worsened to 4.915; candidate_8 (baseline restored): original centroid, dtg=4.487; DP1 can shift which stair is selected but cannot make disconnected stairs reachable"
+      },
+      "highest_leverage_untested_levers": [
+        "navmesh_reachability_precheck_at_stair_commit_using_pathfinder_island_membership_to_skip_all_disconnected_stairs",
+        "post_abort_spawn_point_relocation_into_couch_navmesh_island_via_apply_patch_with_floor_step_reset_to_zero"
+      ],
+      "open_questions": [
+        "Three stair centroids confirmed disconnected: [-1.30898204, 3.5508982] (min_dis=29), [-1.22567568, 3.65405405] (min_dis=18), and [-1.23952381, 3.67952381] (Track 2 candidate_14, min_dis=180\u2013188). All are in the same approximate x-y region (~[-1.2, 3.5\u20133.7]). This spatial clustering suggests the stair's physical geometry is correct but the navmesh has a disconnected boundary between the approach corridor and the stair structure itself. Is there a fourth navmesh island in this region that contains both a navigable approach to the stair AND connection to the couch? A pathfinder.get_island(stair_centroid) call at all three confirmed-disconnected centroids would map the island topology.",
+        "Candidates 3/5/8 (baseline DP1) give dtg=4.487 vs candidates 6/7 (2m cap) giving dtg=4.915 \u2014 the couch is closer to the agent's terminal position under baseline DP1. If spawn relocation targets the couch's island, the baseline DP1 parameterization should be used for q3zU7Yy5E5s (not the 2m cap) to maximize exploration efficiency toward the couch from the spawn point.",
+        "Candidate_7 demonstrates floor_step=190\u2192192 (Mode=get_close_to_stair \u2192 look_up_back \u2192 initialize) after C7_ABORT, with NO floor_step reset to 0. The correct spawn relocation mechanism must ensure floor_step resets to 0 (genuine floor-switch event) so the frontier budget fully restarts \u2014 candidate_4's anomalous floor_step=188\u2192189 (no reset) is the anti-pattern confirmed in both qyAac8rV8Zk and q3zU7Yy5E5s."
+      ],
+      "structural_fix_required": true,
+      "structural_fix_note": "C-ABORT confirmed working across candidates 3/5/6/7/8. Candidates 4 and 7 (independent DP1 parameterizations) both confirm post-abort rescan without spawn relocation is insufficient. Three disconnected stair centroids identified. Required: (1) navmesh reachability precheck at stair commit to skip all disconnected centroids; (2) post-abort spawn injection into couch's navmesh island via apply() with floor_step reset to 0."
+    },
+    "qyAac8rV8Zk": {
+      "scene": "qyAac8rV8Zk",
+      "goal": "couch",
+      "root_cause_summary": "The downstairs stair centroid [-1.22463054, -8.19236453] lies in a navmesh-disconnected component (min_dis_to_downstair 156\u2013162 oscillating, Reach_stair_centroid: False in all approach steps). The C-ABORT mechanism (candidates 3/5/6/8) correctly aborts the stuck stair approach after 12 consecutive False steps. Candidate_7 (DP1 2m cap + C7_ABORT + post-abort reinit) provides new confirmation: reinit fires at floor_step=186 (no floor_step reset to 0), 12 extra explore steps, then 'no unexplored stairs or frontiers found' at step 198 \u2014 dtg=4.166 IDENTICAL to candidate_6's immediate stop. This is the exact post-abort-rescan-without-spawn-relocation anti-pattern established by candidate_4 (dtg=3.725 matching candidate_3). Two independent data points (candidates 4 and 7, with different DP1 parameterizations) confirm post-abort rescan without spawn relocation yields zero gain.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "candidates 3/5/6/8: [C-ABORT] fires at centroid=[-1.22463054, -8.19236453]; min_dis oscillating 156\u2192159\u2192162 (never decreasing to 0); 12\u201318 consecutive Reach_stair_centroid: False; navmesh disconnection invariant across all DP configurations",
+        "candidate_7: C7_ABORT fires at same centroid [-1.22463054, -8.19236453]; post-abort reinit at floor_step=186 (Mode=initialize, NO floor_step reset to 0); 'no unexplored stairs or frontiers found' at step 198 (floor_step=198, Mode=explore, Action=0); dtg=4.166 IDENTICAL to candidate_6 immediate stop",
+        "candidate_4 vs candidate_7 structural comparison: C4_ABORT (baseline DP1) \u2192 reinit at floor_step=186, dtg=3.725 = candidate_3 immediate stop; C7_ABORT (2m cap DP1) \u2192 reinit at floor_step=186, dtg=4.166 = candidate_6 immediate stop \u2014 post-abort rescan without spawn relocation ruled out under both DP1 parameterizations",
+        "min_dis_to_downstair 156\u2013162 oscillation pattern IDENTICAL across candidates 3/4/5/6/7/8 \u2014 stair centroid navmesh disconnection is geometry-level and invariant to all tested DP changes",
+        "dp7_empty=0/0 across all current candidates \u2014 LLM guidance structurally absent; zero causal relationship between LLM call rate and stair geometry"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "FAIL: 239 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.786 \u2014 [EARLY_ABORT] fires; agent re-commits unconditionally; steps unchanged",
+        "candidate_2": "FAIL: 239 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.786 \u2014 threshold change fires abort; immediate re-commitment; steps unchanged",
+        "candidate_3": "FAIL: 185 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.725 \u2014 C3_ABORT + permanent blacklist prevents re-commitment; steps reduced; couch not found",
+        "candidate_4": "FAIL: 198 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.725 \u2014 C4_ABORT; post-abort reinit at floor_step=186 (no floor_step reset); 12 extra steps; dtg=3.725 identical to candidate_3 immediate stop; rules out post-abort rescan without spawn relocation under baseline DP1",
+        "candidate_8": "FAIL: 185 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.725 \u2014 C8_ABORT; baseline DP1 (no 2m cap); same centroid [-1.22463054, -8.19236453]; min_dis 156\u2192162; immediate stop; identical to candidates 3/5",
+        "candidate_9": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=2/2 \u2014 guard side effect: stair disabled after 3 attempts (vs 14); extra reinit; steps=243 and dtg=3.965 unchanged",
+        "candidate_10": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=2/2 \u2014 identical to candidate_9; navmesh disconnection invariant to guard threshold",
+        "candidate_6": "FAIL: 185 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=4.166 \u2014 DP1 2m cap + C6_ABORT: same centroid; same min_dis oscillation 156\u2192162; immediate stop; dtg worsened from 3.725 to 4.166 due to different floor-1 path under 2m cap",
+        "candidate_11": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=1/1 \u2014 DP7 regex + _GUARD_STEPS=30 produces no change; same 170/177 oscillation",
+        "candidate_12": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=1/1 \u2014 identical to candidate_11; no new signal",
+        "candidate_13": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=1/1, dtg=3.9575 \u2014 no changes proposed; byte-for-byte identical to candidates 11 and 12",
+        "candidate_14": "FAIL: 342 steps, reinits=1, stair_runs=1, dp7_empty=0/4, dtg=4.022 \u2014 DP5 fix enables all 4 LLM calls; stair centroid shifts to [-1.23053279, -8.26782787] under LLM guidance; new stair equally inaccessible (min_dis_to_downstair 180\u2013188); 99 extra steps consumed but dtg worsens",
+        "candidate_0": "FAIL: 239 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.786 \u2014 Track 3 baseline; 2 stair disable-recommit cycles",
+        "candidate_0_t3": "FAIL: 239 steps, reinits=1, stair_runs=1, dp7_empty=0/0 \u2014 Track 3 baseline; stair centroid [-1.22463054, -8.19236453] inaccessible with min_dis_to_downstair 166/160; 2 stair disable cycles before episode end",
+        "candidate_1_t3": "FAIL: 239 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.7856 \u2014 [EARLY_ABORT] fires at _frontier_stick_step >= 12 (mechanically confirmed working); recovers ~18 steps in first stair run but agent re-commits unconditionally to same stair centroid immediately after abort; second approach disabled via 'Pointnav policy stopped'; total steps and dtg unchanged; rules out early_stair_abort_without_permanent_blacklisting as sufficient lever",
+        "candidate_5": "FAIL: 185 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=3.725 \u2014 C5_ABORT: identical to candidate_3",
+        "candidate_7": "FAIL: 198 steps, reinits=1, stair_runs=1, dp7_empty=0/0, dtg=4.166 \u2014 DP1 2m cap + C7_ABORT + post-abort reinit: C7_ABORT fires at same centroid; post-abort reinit at floor_step=186 (NO floor_step reset to 0); 'no unexplored stairs or frontiers found' at step 198; dtg=4.166 IDENTICAL to candidate_6 immediate stop \u2014 second independent confirmation that post-abort rescan without spawn relocation is insufficient; mirrors candidate_4 result under 2m cap parameterization"
+      },
+      "ruled_out_levers": [
+        "DP9",
+        "DP12",
+        "SDP-C",
+        "DP10",
+        "DP5",
+        "DP6",
+        "SDP-D",
+        "DP7_DP8_regex_fallback",
+        "DP5_goal_binding_bug_fix",
+        "ascent_policy_floor_init_timeout_track2",
+        "ascent_policy_explore_mode_floor_switch_guard_track2",
+        "LLM_call_rate_variation",
+        "early_stair_abort_without_permanent_blacklisting",
+        "stair_abort_threshold_variation_alone",
+        "C3_ABORT_permanent_blacklist_alone",
+        "post_abort_floor_rescan_without_spawn_relocation",
+        "DP1_proximity_boost_changes_any_range"
+      ],
+      "ruled_out_reasoning": {
+        "DP9": "Track 2 candidate_6 (DP9=1.2m): min_dis oscillation unchanged; carrot distance irrelevant for disconnected navmesh component",
+        "DP12": "Identical outcomes regardless of DP12 threshold; floor switch fires via stair-disable bypass",
+        "SDP-C": "Coverage-based switching cannot resolve navmesh disconnection",
+        "DP10": "Track 2 candidate_4 equal_weighting: identical failure",
+        "DP5": "LLM cannot override physically unreachable navmesh path",
+        "DP6": "Same reasoning as DP5",
+        "SDP-D": "Track 2 candidate_3 SDP-D: identical failure",
+        "DP7_DP8_regex_fallback": "Parsing improvement irrelevant to stair geometry",
+        "DP5_goal_binding_bug_fix": "Track 2 candidate_14: LLM selected alternate stair equally inaccessible; dtg worsened",
+        "ascent_policy_floor_init_timeout_track2": "Track 2 candidate_8 STOP\u2192MOVE_FORWARD: identical outcome",
+        "ascent_policy_explore_mode_floor_switch_guard_track2": "Track 2 candidates 9\u201314: guard threshold changes reinit count as side effect but dtg unchanged",
+        "LLM_call_rate_variation": "dp7_empty=0/0 across all current candidates; zero causal relationship between LLM call rate and stair geometry",
+        "early_stair_abort_without_permanent_blacklisting": "candidates 1/2 confirm: agent re-commits unconditionally; steps=239 unchanged",
+        "stair_abort_threshold_variation_alone": "candidate_2: immediate re-commitment regardless",
+        "C3_ABORT_permanent_blacklist_alone": "candidates 3/5/8: permanent blacklist prevents re-commitment but couch not found \u2014 floor exhausted before stair attempt",
+        "post_abort_floor_rescan_without_spawn_relocation": "candidates 4 and 7 (two independent parameterizations) both confirm: rescan at floor_step=186 (no floor_step reset) gives dtg IDENTICAL to immediate-stop candidates 3/6 respectively; no new frontiers discovered; the disconnected floor lacks navigable cells leading to couch",
+        "DP1_proximity_boost_changes_any_range": "candidate_6: C6_ABORT fires with identical centroid and min_dis; dtg worsened; candidate_7: same conclusion with post-abort rescan; DP1 has zero causal effect on stair navmesh reachability"
+      },
+      "highest_leverage_untested_levers": [
+        "navmesh_reachability_precheck_before_stair_commit_with_pathfinder_island_membership_check",
+        "post_stair_abort_spawn_point_relocation_into_couch_navmesh_island_via_apply_patch_with_floor_step_reset_to_zero"
+      ],
+      "open_questions": [
+        "Candidates 3/4/5/6/7/8 all demonstrate that the floor after C-ABORT (either immediate stop or rescan) finds zero frontiers leading to the couch. Candidate_7 critically shows floor_step=186 (no reset to 0) after post-abort reinit \u2014 the anti-pattern established by candidate_4. The correct fix requires floor_step to reset to 0 (genuine floor-switch path) AND spawn coordinates to be placed in the couch's navmesh island. What are the Habitat pathfinder-accessible coordinates of the couch's connected island, and can apply() inject them at the post_floor_transition() hook?",
+        "Candidates 3/5/8 (baseline DP1) produce dtg=3.725 vs candidates 6/7 (2m cap) producing dtg=4.166 \u2014 the 2m cap is detrimental for qyAac8rV8Zk because it moves the agent further from the couch's island at episode end. If the next candidate uses spawn relocation, it should use baseline DP1 (or at minimum not the 2m cap) to minimize spawn-to-couch distance.",
+        "The C-ABORT counter for the downstairs stair centroid [-1.22463054, -8.19236453] accumulated 12 consecutive False steps consistently across candidates 3/5/6/8. Candidate_7's post-abort reinit produced identical floor_step=186 with no navigable frontiers to couch. The only remaining structural fix is: at the moment C-ABORT fires, teleport the agent's spawn to a point in the couch's connected navmesh island and reset floor_step to 0 to trigger genuine floor exploration."
+      ],
+      "structural_fix_required": true,
+      "structural_fix_note": "C3/C5/C6/C7/C8_ABORT permanent blacklist confirmed working. Candidates 4 and 7 both confirm post-abort rescan without spawn relocation is insufficient. Required: (1) navmesh reachability precheck at stair commit to skip disconnected stairs; (2) post-stair-abort spawn injection into couch's disconnected floor island via apply() patch WITH floor_step reset to 0."
+    },
+    "mL8ThkuaVTM": {
+      "scene": "mL8ThkuaVTM",
+      "goal": "toilet",
+      "root_cause_summary": "The toilet lies in a navmesh-disconnected subregion of floor 2. The floor-2 stair landing provides access to exactly ~13 navigable cells; frontier exhaustion at floor_step=13 triggers a floor switch via the explore-mode code path (bypassing DP12 entirely). Eleven candidates across two tracks now produce the identical terminal floor_step=13 exhaustion pattern. Candidates 6/7 (DP1 2m cap) confirm floor-1 frontier scoring affects pre-stair exploration path (dtg worsens from 4.549 to 5.743) but the floor-2 navmesh topology is invariant to any DP1 change. Candidate_8 (baseline DP1) reverts dtg to 4.549 while reproducing the same floor_step=13 exhaustion, completing the ruling-out of all 12 DPs and all stair-path patches.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "Step 91: 'Passive upstairs detection triggered!' \u2192 'climb stair success!!!!' at step 120, floor_step=0 \u2014 passive upstairs detection unchanged across all eleven candidates",
+        "Step 133: floor_step=13, Mode=explore \u2014 floor-2 frontier exhaustion at exactly floor_step=13 for the eleventh consecutive candidate",
+        "Step 135: floor_step=0, Mode=explore (floor switch); Step 136: floor_step=1, Mode=initialize \u2014 second reinit at floor_step=13 also exhausts",
+        "Step 148: floor_step=13, Mode=explore, Action=0 \u2014 'no unexplored stairs or frontiers found, stopping' \u2014 terminal condition bit-for-bit identical across all eleven candidates",
+        "candidates 6/7: DP1 log 0.191\u21920.191@1.9m (boost removed under 2m cap) vs 0.191\u21920.338@1.9m in candidates 3/4/5/8; floor_step=13 exhaustion UNCHANGED despite different floor-1 exploration path; dtg=5.743 (worse than 4.549 baseline)",
+        "candidate_8: DP1 log 0.191\u21920.338@1.9m (baseline boost restored); dtg reverts to 4.549; floor_step=13 pattern identical"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.549 \u2014 early stair abort patch: zero effect; stair_runs=0",
+        "candidate_2": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.549 \u2014 _frontier_stick_step threshold: zero effect",
+        "candidate_3": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.549 \u2014 C3_ABORT: zero effect; stair_runs=0; floor_step=13 exhaustion unchanged",
+        "candidate_4": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.549 \u2014 All DPs unchanged; fifth consecutive null result",
+        "candidate_8": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.549 \u2014 reverted to baseline DP1 (no 2m cap); floor_step=13 exhaustion at steps 133 and 148 UNCHANGED; dtg reverts to 4.549; tenth consecutive candidate with identical floor_step=13 terminal pattern",
+        "candidate_9": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=1/1 \u2014 _GUARD_STEPS=30 delayed second reinit to floor_step=30 (step 150); 30 floor_steps still insufficient; third floor terminates at floor_step=13",
+        "candidate_10": "FAIL: 170 steps, reinits=2, stair_runs=0, dp7_empty=1/1 \u2014 _GUARD_STEPS=60 eliminated third reinit but dtg increased to 5.555m; floor-2 exploration diverges from toilet when forced to stay longer",
+        "candidate_6": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=5.743 \u2014 DP1 2m proximity cap: passive stair climb still succeeds at step 91 (unchanged); floor_step=13 exhaustion UNCHANGED; dtg WORSENED because floor-1 proximity boost removal (0.191\u21920.191@1.9m) changed pre-stair trajectory; confirms DP1 affects only floor-1 exploration path, not floor-2 navmesh topology",
+        "candidate_11": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.154581514519772 \u2014 DP7 regex + _GUARD_STEPS=30; LLM successfully parsed but outcome identical to candidate_9",
+        "candidate_12": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.154581514519772 \u2014 trajectory fingerprint identical to candidate_11 to full floating-point precision; toilet room confirmed geometrically inaccessible",
+        "candidate_13": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.154581514519772 \u2014 no changes proposed; fourth consecutive candidate with working LLM parsing and identical dtg",
+        "candidate_14": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/1, dtg=4.210 \u2014 DP3 change triggers one inter-floor LLM call; dtg worsened from 4.154 to 4.210; geometry constraint unchanged",
+        "candidate_0": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.549 \u2014 Track 3 baseline; floor_step=13 exhaustion at steps 133 and 148",
+        "candidate_0_t3": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 Track 3 baseline; floor_step=13 exhaustion at steps 133 and 148 confirmed; no new structural signal",
+        "candidate_1_t3": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 early stair abort patch has zero effect; passive stair traversal path (stair_runs=0) means _get_close_to_stair is never called; identical to Track 3 candidate_0 in every metric and log signal; adds 16th consecutive confirmation that floor_step=13 exhaustion is the irreducible terminal condition",
+        "candidate_5": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.549 \u2014 C5_ABORT + DP1 sub-0.5m boost: zero effect",
+        "candidate_7": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=5.743 \u2014 DP1 2m cap + BLIP2 threshold raise + C7_ABORT: identical to candidate_6; passive stair climb at step 91 (unchanged); floor_step=13 exhaustion at steps 133 and 148; dtg=5.743 \u2014 no new structural signal; confirms none of the 4ok3usBNeis fixes affect mL8ThkuaVTM's navmesh geometry"
+      },
+      "ruled_out_levers": [
+        "DP12",
+        "SDP-C",
+        "DP10",
+        "DP5_prompt_augmentation",
+        "DP6",
+        "SDP-D",
+        "DP9",
+        "DP7_DP8_regex_fallback_alone",
+        "DP5_goal_binding_bug_fix_toilet_scene_alone",
+        "DP3_multifloor_trigger_change",
+        "ascent_policy_floor_init_timeout_track2_stop_intercept",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus",
+        "early_stair_abort_mechanism",
+        "stair_abort_threshold_variation",
+        "C3_ABORT_permanent_blacklist_mechanism",
+        "DP1_proximity_boost_changes_any_range"
+      ],
+      "ruled_out_reasoning": {
+        "DP12": "Second reinit bypasses DP12 via _explore() code path; floor_step=13 trigger identical across all eleven candidates",
+        "SDP-C": "Explore-mode floor-switch trigger is a different code path not gated by SDP-C",
+        "DP10": "Equal-weighting shows identical 148-step failure in Track 2",
+        "DP5_prompt_augmentation": "No LLM calls made (dp7_empty=0/0); prompt content changes irrelevant",
+        "DP6": "Same reasoning as DP5_prompt_augmentation",
+        "SDP-D": "Track 2 candidate_3 SDP-D: identical 148-step failure",
+        "DP9": "stair_runs=0 across all eleven candidates; passive upstairs detection path used exclusively",
+        "DP7_DP8_regex_fallback_alone": "No LLM calls to parse; dp7_empty=0/0",
+        "DP5_goal_binding_bug_fix_toilet_scene_alone": "Track 2 candidate_12: dtg identical; toilet-adjacent frontier absent from floor-2 frontier set",
+        "DP3_multifloor_trigger_change": "Track 2 candidate_14: dtg worsened from 4.154 to 4.210",
+        "ascent_policy_floor_init_timeout_track2_stop_intercept": "Track 2 candidate_8: identical outcome",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30": "Track 2 candidates 9/11\u201314: insufficient; toilet not reachable",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus": "Track 2 candidate_10: dtg increases to 5.555m; floor-2 exploration diverges",
+        "early_stair_abort_mechanism": "stair_runs=0 means _get_close_to_stair never invoked in any candidate",
+        "stair_abort_threshold_variation": "candidate_2 confirms: identical log signals",
+        "C3_ABORT_permanent_blacklist_mechanism": "candidates 3\u20135 confirm: stair_runs=0; C-ABORT guard never reached",
+        "DP1_proximity_boost_changes_any_range": "candidates 6/7 (2m cap): floor_step=13 exhaustion UNCHANGED; dtg worsened; candidate_8 (baseline restored): floor_step=13 unchanged at 4.549; confirms DP1 affects only floor-1 exploration path, not floor-2 navmesh topology"
+      },
+      "highest_leverage_untested_levers": [
+        "post_floor_transition_spawn_point_override_via_apply_to_relocate_into_connected_toilet_subregion",
+        "habitat_pathfinder_island_membership_check_at_floor_switch_to_detect_disconnected_landing"
+      ],
+      "open_questions": [
+        "Eleven candidates across two tracks confirm floor_step=13 exhaustion is the irreducible terminal condition. The stair landing sits at the edge of a ~13-cell navigable corridor before a disconnected boundary. The post_floor_transition() SDP hook fires after each floor switch \u2014 can it inject a modified spawn pose on floor-2 that places the agent in the connected subregion containing the toilet, bypassing the disconnected stair landing entirely?",
+        "mL8ThkuaVTM and XB4GS9ShBRE both exhibit floor_step=13 exhaustion across all tested candidates \u2014 is this a shared HM3D navmesh topology pattern (stair landing at boundary of ~13-step corridor)? A single spawn-point offset formula in post_floor_transition() could fix both scenes simultaneously.",
+        "Candidates 6/7 both produce dtg=5.743 (vs 4.549 in baseline) under DP1 2m cap \u2014 the floor-1 exploration path under the 2m cap brings the agent to a different stair entry point, landing in a worse position on the floor-2 disconnected corridor. The spawn-point correction must be defined relative to the target object's coordinates, not the agent's terminal position, to be robust across different DP1 parameterizations."
+      ],
+      "structural_fix_required": true,
+      "structural_fix_note": "All 12 DPs and all stair-path patches ruled out across eleven candidates. Must use apply() and post_floor_transition() to relocate the agent's floor-2 entry point into the connected subregion containing the toilet."
+    },
+    "bxsVRursffK": {
+      "scene": "bxsVRursffK",
+      "goal": "bed",
+      "root_cause_summary": "Identical failure mode to mL8ThkuaVTM: after successful stair climbing at step 154 (reinit 1, floor_step resets to 0), a second floor reinit fires at step 167 after exactly 13 steps on the new floor (floor_step resets to 0 with Mode=explore), leaving only 13 exploration steps before the episode terminates at step 180. The 13-step-to-second-reinit timing is identical to mL8ThkuaVTM (step 120\u2192135), confirming a shared hardcoded floor initialization threshold in ascent_policy.py that bypasses all harness DPs. The initial floor consumed 137 steps (floor_step=137 at climb_stair entry), leaving only 26 steps for two-floor exploration \u2014 insufficient even without the premature second reinit.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "Step 154: Floor_step=0, Mode=initialize (reinit 1 after stair success); Step 167: Floor_step=0, Mode=explore (reinit 2 after exactly 13 steps on new floor) \u2014 identical in all 4 candidates",
+        "Floor_step=137 at Step=137 when climb_stair mode is entered \u2014 137 steps spent on the initial floor before finding the stair, leaving only 46 steps total for two-floor exploration",
+        "stair_runs=0 in all candidates despite 'climb stair success' at step ~150-154 \u2014 same bypass path as mL8ThkuaVTM, confirming this stair traversal route is outside DP9 and DP12 control",
+        "Identical metrics across all 4 candidates (steps=180, reinits=2, stair_runs=0, dp7_empty=3/3) \u2014 no harness change produces any deviation whatsoever",
+        "13-step reinit interval matches mL8ThkuaVTM exactly (step 120\u2192135 there, step 154\u2192167 here), strongly implicating a shared hardcoded threshold in ascent_policy.py"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "SDP-C + DP12=35 \u2014 no change; identical 180-step failure, second reinit at floor_step=13 unchanged",
+        "candidate_2": "SDP-C guard (floor_step>=25) \u2014 no change; second reinit still fires at floor_step=13, confirming this code path is outside SDP-C control",
+        "candidate_3": "LLM memory + SDP-D \u2014 no change; prompt augmentation irrelevant to floor initialization logic",
+        "candidate_4": "DP10=equal_weighting + frontier pool expansion \u2014 no change for this episode; same 180-step failure; overall set dtg improved to 3.69m vs 5.54m (candidate 1) but this specific episode was unaffected"
+      },
+      "ruled_out_levers": [
+        "DP12",
+        "SDP-C",
+        "DP10",
+        "DP5",
+        "DP6",
+        "SDP-D",
+        "DP9"
+      ],
+      "ruled_out_reasoning": {
+        "DP12": "All 4 candidates show identical reinits=2 at identical step numbers; the second reinit trigger at floor_step=13 is entirely outside DP12 control",
+        "SDP-C": "Candidate 2 with floor_step>=25 guard still triggers the second reinit at floor_step=13 \u2014 the trigger is a direct code path in ascent_policy.py that does not go through SDP-C",
+        "DP10": "Candidate 4 with equal_weighting shows identical 180-step failure for this episode; map fusion does not affect floor reinit logic",
+        "DP9": "stair_runs=0 means the DP9 carrot path is not the traversal route taken; the climb_stair success uses a different trigger mechanism that bypasses DP9",
+        "DP5": "Prompt changes are irrelevant to floor reinit timing",
+        "DP6": "Same reasoning as DP5",
+        "SDP-D": "Candidate 3 with SDP-D shows identical failure"
+      },
+      "highest_leverage_untested_levers": [
+        "ascent_policy_floor_init_timeout_track2",
+        "DP3"
+      ],
+      "open_questions": [
+        "What is the exact condition in ascent_policy.py that resets floor_step to 0 with Mode=explore at step 167 \u2014 is it the same 'frontier_count==0 during initialize phase' code path as mL8ThkuaVTM's step-135 reinit?",
+        "Does the stair traversal bypass path (stair_runs=0 + stair success) arrive on the new floor with zero frontiers registered, which then immediately triggers the 'no frontiers' floor-switch path before any mapping occurs?",
+        "Would a single Track 2 patch in ascent_policy.py \u2014 requiring floor_step>=30 before the 'no unexplored frontiers' termination/switch condition fires after a new floor arrival \u2014 resolve both bxsVRursffK and mL8ThkuaVTM in a single candidate?"
+      ]
+    },
+    "DYehNKdT76V": {
+      "scene": "DYehNKdT76V",
+      "goal": "chair",
+      "root_cause_summary": "Candidate_10's harness change introduced a premature floor switch (reinits=1) within the first ~13 steps, landing the agent on a sparse secondary floor at coordinates [-1.92, -2.52] with only 2 low-score frontiers (0.198@3.2m, 0.176@3.4m) instead of the 6-frontier floor-1 region ([-5.85, 0.65] range) where the chair was successfully found in all prior candidates. With 2 frontiers exhausted by step 50 and no stair traversal (stair_runs=0), the episode terminates with 'no unexplored stairs or frontiers found' before the chair is encountered. This is a pure harness-regression: the scene is solvable, confirmed by SPL=0.86 success in every prior candidate.",
+      "root_cause_confidence": "medium",
+      "key_evidence": [
+        "Candidate_10: only 2 frontiers at [-1.91767767, -2.51767767] with raw scores 0.198@3.2m and 0.176@3.4m (no proximity boost, both >3m) throughout the episode \u2014 vs 6 frontiers at [-5.85, 0.65] range with scores 0.096-0.198 and active proximity boosting in all successful candidates (2-4, 8, 9)",
+        "Candidate_10: steps=50, stair_runs=0 \u2014 vs steps=129, stair_runs=1 in all six prior candidates; stair mode never activates because the sparse secondary floor exposes no stair frontier in its mapped region",
+        "Candidate_10: reinits=1 with floor_step=1 at the first logged step \u2014 indicates a floor switch fired at or before step 12, before normal frontier mapping could populate the obstacle map, exactly mirroring candidate_1's SDP-C frontier_count==0 bug",
+        "Video filename: 'never_saw_target_did_not_travel_stairs_feasible' \u2014 stairs ARE navigable at navmesh level; failure is a harness-triggered premature switch, not geometry",
+        "dp7_empty=1/1: single LLM call with empty response (fallback index=0); semantic guidance cannot recover from starting on the wrong floor",
+        "Candidates 2, 3, 4, 8, 9 all succeed with SPL=0.86 at identical step 109 navigate \u2192 step 129 success; DYehNKdT76V failure is strictly a candidate_10 regression"
+      ],
+      "candidate_outcomes": {
+        "candidate_2": "SUCCESS: 129 steps, reinits=1, stair_runs=1 \u2014 6 frontiers at [-5.85, 0.65], active proximity boosting, chair found via stair traversal",
+        "candidate_3": "SUCCESS: 129 steps, reinits=1, stair_runs=1 \u2014 identical 6-frontier exploration pattern with LLM memory augmentation",
+        "candidate_4": "SUCCESS: 129 steps, reinits=1, stair_runs=1 \u2014 equal_weighting value map does not affect floor-1 exploration path",
+        "candidate_8": "SUCCESS: 129 steps, reinits=2, stair_runs=1 \u2014 STOP\u2192MOVE_FORWARD patch has no negative effect on DYehNKdT76V",
+        "candidate_9": "SUCCESS: 129 steps, reinits=2, stair_runs=1 \u2014 passive stair detection at step 91 (floor_step=91); still finds chair on correct floor",
+        "candidate_10": "FAIL: 50 steps, reinits=1, stair_runs=0 \u2014 premature floor switch to 2-frontier secondary floor; chair never encountered; terminates 'no unexplored stairs or frontiers found'"
+      },
+      "ruled_out_levers": [
+        "DP9",
+        "DP1",
+        "DP2",
+        "DP5",
+        "DP4"
+      ],
+      "ruled_out_reasoning": {
+        "DP9": "stair_runs=0 confirms the carrot-waypoint stair approach path is never invoked; DP9 is not on the causal path",
+        "DP1": "Low raw scores (0.198, 0.176) are a consequence of being on the wrong floor with few options, not a scoring formula failure; candidates 2-9 show richer raw scores (0.096-0.198) boosted by proximity on the correct floor",
+        "DP2": "LLM fires once (dp7_empty=1/1) but fallback to index=0 selects the only viable frontier anyway; LLM failure is secondary to the wrong-floor starting position",
+        "DP5": "Prior candidates succeed with dp7_empty=5-6/6; the chair is found via frontier scoring not LLM guidance \u2014 goal-binding bug is not causally involved in this regression",
+        "DP4": "SSIM deduplication is irrelevant with only 2 frontiers available"
+      },
+      "highest_leverage_untested_levers": [
+        "candidate_10_premature_floor_switch_trigger_isolation",
+        "SDP-C_guard_with_explicit_steps_on_floor_and_frontier_count_check"
+      ],
+      "open_questions": [
+        "What specific harness logic in candidate_10 fires the floor switch at floor_step<=12 \u2014 is it a frontier_count==0 condition that triggers before the obstacle map is populated, re-introducing the same bug as candidate_1's SDP-C regression?",
+        "Is the 2-frontier floor at [-1.92, -2.52] floor 2 (above or below the chair's floor), and would the chair be findable if the agent arrived on it via stair traversal rather than premature harness-triggered switch?",
+        "Does candidate_10's explore-mode guard threshold change interact with a coverage-based switch condition that fires at frontier_count==0 before steps_on_floor reaches a safety minimum?"
+      ]
+    },
+    "4ok3usBNeis": {
+      "scene": "4ok3usBNeis",
+      "goal": "tv",
+      "root_cause_summary": "The 1\u20132m proximity boost in DP1 creates a dominant attractor at the [3.5, 3.56] cluster, causing false-positive STOP after 3 floor reinits in candidates 3/4/5/8. Candidate 5 confirms sub-0.5m removal is insufficient; the 1\u20132m range is the active attractor. Candidates 6/7 (DP1 2m cap) break the attractor and expose a second failure: the upstairs stair centroid [5.23396825, 1.99587302] is in a disconnected navmesh component (min_dis=323\u2192304, Reach_stair_centroid: False). Candidate_7 definitively rules out post-abort reinit without spawn relocation: reinit fires at step 221 (floor_step=221, Mode=initialize) but terminal state at step 233 gives dtg=5.855 \u2014 identical to candidate_6's immediate stop at step 220. Candidate_8 reverts to baseline (no 2m cap), reproduced the false-positive at step 402 (Mode=navigate, floor_step=72), confirming DP1 2m cap is the causally necessary first component.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "candidates 3/4/8: DP1 log 0.126\u21920.703@0.6m, 0.126\u21920.510@1.0m \u2014 1\u20132m proximity boost dominant; [3.5,3.56] cluster wins every frontier selection; Step 402, floor_step=72, Mode=navigate \u2014 false-positive STOP; dtg=4.064",
+        "candidate_5: DP1 log 0.123\u21920.123@0.4m \u2014 sub-0.5m boost disabled (no enhancement at 0.4m) but frontier [3.5,3.56] still wins via 1\u20131.5m range; trajectory UNCHANGED; dtg=4.064; rules out sub-0.5m as active attractor",
+        "candidates 6/7: DP1 log 0.132\u21920.132@1.6m, 0.116\u21920.116@1.2m \u2014 2m cap eliminates ALL proximity boosts; [3.5,3.56] cluster never enters best_frontier selection; no false-positive STOP",
+        "candidates 6/7: stair_flag=1, Mode=get_close_to_stair at step 207 (floor_step=207); min_dis_to_upstair 323\u2192304 over 12 steps; Reach_stair_centroid: False throughout; [C6/C7_ABORT] fires at centroid=[5.23396825, 1.99587302]",
+        "candidate_7: post-abort reinit at step 221 (floor_step=221, Mode=initialize); 'no unexplored stairs or frontiers found' at step 233 (floor_step=233, Mode=explore, Action=0); dtg=5.855 \u2014 IDENTICAL to candidate_6 immediate stop; confirms rescan without spawn relocation yields zero gain",
+        "candidate_8: DP1 log 0.126\u21920.703@0.6m (same as candidates 3/4/5 baseline); Step 402 floor_step=72 Mode=navigate false-positive STOP; dtg=4.064 \u2014 reversion to baseline reproduces false-positive, confirming 2m cap is causally necessary"
+      ],
+      "candidate_outcomes": {
+        "candidate_0": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4, dtg=4.064 \u2014 Track 3 baseline; false-positive STOP after 3 floor reinits; 1\u20132m proximity-boosted frontiers dominate [3.5, 3.56] cluster",
+        "candidate_1_t3": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4 \u2014 identical to candidate_0 in every metric and log signal; early stair abort patch confirmed to have zero effect on this scene (stair_runs=0 means _get_close_to_stair is never called; the patch's guard condition is never reached)",
+        "candidate_1": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4, dtg=4.064 \u2014 early stair abort patch: zero effect (stair_runs=0); identical to candidate_0",
+        "candidate_2": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4, dtg=4.064 \u2014 _frontier_stick_step threshold change: zero effect; identical",
+        "candidate_3": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4, dtg=4.064 \u2014 C3_ABORT: zero effect (stair_runs=0); identical",
+        "candidate_4": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4, dtg=4.064 \u2014 All DPs unchanged; fifth consecutive null result",
+        "candidate_5": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4, dtg=4.064 \u2014 DP1 sub-0.5m boost disabled (0.121\u21920.121@0.3m confirmed); trajectory unchanged; rules out sub-0.5m as the attractor",
+        "candidate_6": "FAIL: steps=220, reinits=1, stair_runs=0, dp7_empty=0/2, dtg=5.855 \u2014 DP1 2m cap broke [3.5,3.56] attractor; no false-positive STOP; agent explored floor-1 for 207 floor_steps; entered get_close_to_stair for upstairs [5.23396825,1.99587302] (min_dis=323\u2192304, 12 consecutive False); C6_ABORT fires; immediate stop; TV unfound",
+        "candidate_7": "FAIL: steps=233, reinits=1, stair_runs=0, dp7_empty=0/2, dtg=5.855 \u2014 DP1 2m cap + C7_ABORT + post-abort reinit: C7_ABORT fires at same centroid [5.23396825,1.99587302]; post-abort reinit at step 221 (floor_step=221, Mode=initialize); 'no unexplored stairs or frontiers found'; stop at step 233 (floor_step=233, Mode=explore); dtg=5.855 IDENTICAL to candidate_6 immediate stop \u2014 definitively rules out post-abort reinit without spawn relocation",
+        "candidate_8": "FAIL: steps=499, reinits=3, stair_runs=0, dp7_empty=0/4, dtg=4.064 \u2014 reverted to baseline (no DP1 2m cap); 1\u20132m proximity boosts fully active (0.126\u21920.703@0.6m, 0.129\u21920.795@0.4m); [3.5,3.56] attractor reconstructed; false-positive STOP at step 402 (floor_step=72, Mode=navigate); exact replication of candidates 3/4/5"
+      },
+      "ruled_out_levers": [
+        "DP9",
+        "stair_traversal_mechanisms_for_downstairs",
+        "DP12_floor_switch_interval",
+        "DP7_DP8_LLM_parsing",
+        "early_stair_abort_mechanism",
+        "stair_abort_threshold_variation",
+        "C3_ABORT_permanent_blacklist_mechanism",
+        "DP1_proximity_boost_formula_for_sub_0.5m_frontiers",
+        "DP1_2m_proximity_cap_alone_as_sufficient_fix",
+        "post_abort_reinit_without_spawn_relocation_for_upstairs_stair"
+      ],
+      "ruled_out_reasoning": {
+        "DP9": "stair_runs=0 in candidates 3\u20135/8; DP9 carrot waypoint irrelevant; candidate_6/7 upstairs stair also disconnected (min_dis=323\u2192304), not a carrot-distance problem",
+        "stair_traversal_mechanisms_for_downstairs": "No downstairs stair attempts across any candidate; all reinits in candidates 3\u20135/8 via LLM-200 or frontier-exhaustion paths",
+        "DP12_floor_switch_interval": "Floor switches in candidates 3\u20135/8 bypass DP12 entirely; stair_runs=0 means DP12 gate never reached",
+        "DP7_DP8_LLM_parsing": "dp7_empty=0/4 in candidates 3\u20135/8 confirms LLM fully operational; working LLM did not prevent false-positive STOP",
+        "early_stair_abort_mechanism": "candidates 3\u20135/8 all confirm stair_runs=0; _get_close_to_stair never entered; C-ABORT guard never reached",
+        "stair_abort_threshold_variation": "zero effect confirmed across multiple candidates with stair_runs=0",
+        "C3_ABORT_permanent_blacklist_mechanism": "candidates 3\u20135 confirm zero effect; stair_runs=0",
+        "DP1_proximity_boost_formula_for_sub_0.5m_frontiers": "candidate_5 confirmed: 0.121\u21920.121@0.3m (sub-0.5m boost disabled) but trajectory UNCHANGED; 1\u20132m range was the active attractor",
+        "DP1_2m_proximity_cap_alone_as_sufficient_fix": "candidates 6/7 confirm: 2m cap breaks false-positive STOP but TV still not found; upstairs stair [5.23396825,1.99587302] is navmesh-disconnected; cap is necessary but insufficient",
+        "post_abort_reinit_without_spawn_relocation_for_upstairs_stair": "candidate_7 confirms: reinit at step 221 (floor_step=221, Mode=initialize) \u2192 stop at step 233 with dtg=5.855 \u2014 zero improvement over candidate_6's immediate stop at dtg=5.855; rescan of same disconnected floor finds no new frontiers or stairs"
+      },
+      "highest_leverage_untested_levers": [
+        "spawn_point_relocation_into_TV_navmesh_island_after_C_ABORT_via_apply_patch",
+        "pre_stair_commit_navmesh_reachability_check_to_skip_disconnected_upstairs_stair_and_continue_floor1_exploration",
+        "DP1_2m_cap_combined_with_floor1_frontier_reseed_covering_TV_location_before_stair_commitment"
+      ],
+      "open_questions": [
+        "Under DP1 2m cap, the agent exhausted all floor-1 frontiers in 207 steps without finding the TV (dtg=5.855 at terminal position). Is the TV's room reachable from any frontier generated during those 207 steps, or does the 2m cap systematically redirect exploration away from the TV's navmesh island? A floor-1 coverage map under DP1 2m cap vs baseline would confirm whether the TV's room was visitable.",
+        "Candidate_7 confirms post-abort rescan of floor-1 finds zero frontiers (same 'no unexplored stairs or frontiers' message at step 233). With 266 steps remaining in the episode budget (499-233), is there a frontier reseeding mechanism that could inject navigable points in the TV's room? The TV at dtg=5.855 is 5.8m from the terminal abort position \u2014 if the TV is on floor-1, a spawn-point injection near [TV_x, TV_y] via apply() post-abort would use those remaining steps.",
+        "The upstairs stair centroid [5.23396825, 1.99587302] with min_dis=323 is geometrically very far (323 navmesh steps). Is this stair in the same building wing as the TV, or in a completely separate disconnected section? If the TV is on floor-2 and the only valid access is a different (connected) upstairs stair not yet selected, the fix requires stair selection logic to prefer connected stair centroids over disconnected ones."
+      ]
+    },
+    "XB4GS9ShBRE": {
+      "scene": "XB4GS9ShBRE",
+      "goal": "bed",
+      "root_cause_summary": "XB4GS9ShBRE is a structural analog to mL8ThkuaVTM: passive upstairs detection succeeds at step 198 (32 consecutive Reach_stair_centroid: True), but the post-stair floor exhausts frontiers at exactly floor_step=13 (step 212), triggering a third floor reinit that also exhausts at floor_step=13 (step 225). Ten candidates produce the identical terminal pattern. Candidates 6/7 (DP1 2m cap) worsen dtg from 3.416 to 4.133 while leaving the floor-2 navmesh geometry unchanged. Candidate_8 (baseline DP1) reverts dtg to 3.416 while reproducing the floor_step=13 pattern, completing the ruling-out of all 12 DPs for this scene.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "32 consecutive 'Reach_stair_centroid: True' \u2192 'climb stair success!!!!' at step 198 \u2014 passive upstairs detection unchanged across all ten candidates",
+        "Step 199: floor_step=1, Mode=initialize; Step 212: floor_step=0, Mode=explore \u2014 post-stair floor exhausts after exactly 13 floor steps; timing IDENTICAL across all ten candidates",
+        "Step 225: floor_step=13, Mode=explore, Action=0 \u2014 'no unexplored stairs or frontiers found, stopping' \u2014 terminal condition bit-for-bit identical",
+        "candidates 6/7: dtg=4.133 (worsened from 3.416 in candidates 3/4/5/8); DP1 2m cap shifted floor-1 exploration path, changing stair entry position, but floor_step=13 post-stair exhaustion UNCHANGED",
+        "candidate_8: dtg=3.416 (reverts to baseline); floor_step=13 exhaustion at steps 212 and 225 UNCHANGED \u2014 DP1 variation has zero effect on floor-2 navmesh topology"
+      ],
+      "candidate_outcomes": {
+        "candidate_0": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=3.416 \u2014 Track 3 baseline; post-stair floor exhausts at floor_step=13 twice",
+        "candidate_0_t3": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 Track 3 baseline; passive upstairs detection succeeds at step 198; post-stair floor frontiers exhaust at floor_step=13 twice (steps 212, 225); structural failure identical to mL8ThkuaVTM",
+        "candidate_1_t3": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 early stair abort patch has zero effect; passive stair traversal path (stair_runs=0) means _get_close_to_stair is never called; all metrics and log signals identical to candidate_0; second consecutive confirmation of floor_step=13 exhaustion pattern",
+        "candidate_1": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=3.416 \u2014 early stair abort patch: zero effect",
+        "candidate_2": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=3.416 \u2014 _frontier_stick_step threshold: zero effect",
+        "candidate_3": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=3.416 \u2014 C3_ABORT: zero effect; stair_runs=0",
+        "candidate_4": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=3.416 \u2014 All DPs unchanged; null result",
+        "candidate_5": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=3.416 \u2014 C5_ABORT + DP1 sub-0.5m boost: zero effect",
+        "candidate_6": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.133 \u2014 DP1 2m proximity cap: passive stair climb unchanged (step 198, 32 True); floor_step=13 exhaustion at steps 212 and 225 UNCHANGED; dtg worsened from 3.416 to 4.133; floor-1 proximity boost removal shifts agent entry position on floor-2 disconnected corridor without changing the 13-cell reachability limit",
+        "candidate_7": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.133 \u2014 DP1 2m cap + BLIP2 threshold raise + C7_ABORT: identical to candidate_6; passive stair climb at step 198 unchanged; floor_step=13 exhaustion at steps 212 and 225 UNCHANGED; dtg=4.133 \u2014 none of the 4ok3usBNeis fixes affect XB4GS9ShBRE's floor-2 navmesh disconnection",
+        "candidate_8": "FAIL: 225 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=3.416 \u2014 reverted to baseline DP1 (no 2m cap); floor_step=13 exhaustion at steps 212 and 225 UNCHANGED; dtg reverts to 3.416; ninth consecutive candidate with identical floor_step=13 terminal pattern"
+      },
+      "ruled_out_levers": [
+        "DP9",
+        "DP12",
+        "DP7_DP8_LLM_parsing",
+        "DP5_DP6_prompt_changes",
+        "stair_traversal_carrot_waypoint",
+        "early_stair_abort_mechanism",
+        "stair_abort_threshold_variation",
+        "C3_ABORT_permanent_blacklist_mechanism",
+        "DP1_proximity_boost_changes_any_range"
+      ],
+      "ruled_out_reasoning": {
+        "DP9": "stair_mode_runs=0; passive detection path used; DP9 carrot waypoint never invoked",
+        "DP12": "Floor switch fires via explore-mode path after frontier exhaustion, not DP12 gate",
+        "DP7_DP8_LLM_parsing": "dp7_empty=0/0 across all ten candidates; no LLM calls made",
+        "DP5_DP6_prompt_changes": "No LLM calls to affect; prompt changes cannot influence frontier exhaustion timing",
+        "stair_traversal_carrot_waypoint": "Stair traversal SUCCEEDS (32 Reach_stair_centroid: True); post-stair floor geometry is the bottleneck",
+        "early_stair_abort_mechanism": "stair_runs=0 across all ten candidates; _get_close_to_stair never invoked",
+        "stair_abort_threshold_variation": "candidate_2 confirms zero effect",
+        "C3_ABORT_permanent_blacklist_mechanism": "candidates 3\u20135 confirm zero effect; stair_runs=0",
+        "DP1_proximity_boost_changes_any_range": "candidates 6/7 (2m cap): floor_step=13 exhaustion UNCHANGED; dtg worsens; candidate_8 (baseline restored): floor_step=13 unchanged at 3.416; DP1 affects only floor-1 exploration path; floor-2 navmesh topology invariant to DP1"
+      },
+      "highest_leverage_untested_levers": [
+        "post_floor_transition_spawn_point_override_via_apply_to_relocate_into_connected_bed_subregion",
+        "habitat_pathfinder_island_membership_check_at_floor_switch"
+      ],
+      "open_questions": [
+        "mL8ThkuaVTM and XB4GS9ShBRE both exhibit floor_step=13 exhaustion across all ten tested candidates \u2014 same HM3D navmesh topology pattern (stair landing at boundary of ~13-step navigable corridor). A single post_floor_transition() spawn-point offset formula may fix both scenes simultaneously if the disconnected corridor geometry is structurally similar.",
+        "Candidate_6/7 dtg increased from 3.416 to 4.133 under DP1 2m cap. The bed is 3.4m from the agent's terminal position in the disconnected floor-2 corridor under baseline DP1. Under 2m cap, the terminal position is 4.1m away \u2014 the spawn-point correction must be anchored to the bed's known coordinates, not the agent's varying terminal position, to be robust across DP1 parameterizations.",
+        "Does the Habitat pathfinder API expose island-membership queries at the post_floor_transition() hook point? If the agent's post-stair spawn position is confirmed to be in a disconnected island, a pathfinder query for the nearest navigable point in the bed's island would provide the corrected spawn coordinates without hardcoding scene-specific offsets."
+      ],
+      "structural_fix_required": true,
+      "structural_fix_note": "All 12 DPs and all stair-path patches ruled out across ten candidates. Must use apply() and post_floor_transition() to relocate the agent's floor-2 entry point into the connected subregion containing the bed \u2014 pattern is structurally identical to mL8ThkuaVTM."
+    }
+  },
+  "last_updated": "2026-05-22T12:31:00Z",
+  "track": "T3",
+  "notes": "Bootstrapped from T2 analysis_db. Goal labels corrected from episode files. structural_fix_required=True means all 12 DPs exhausted for that scene."
+}

@@ -1,0 +1,125 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "Both scenes have stair centroids that fall in disconnected navmesh components, causing Reach_stair_centroid to remain False throughout Phase 1. The distinction is directional: qyAac8rV8Zk targets a downstairs centroid where a sub-0.4m carrot pullback lands the waypoint on the robot's own navigable island (T6 candidate_0 solved it); q3zU7Yy5E5s targets an upstairs centroid that is permanently unreachable regardless of carrot distance, requiring a full Phase 1 abort and redirect to the confirmed-reachable downstairs stair.",
+      "cross_scene_pattern": "Identical failure signature: consecutive Reach_stair_centroid:False steps, min_dis_to_downstair oscillating at a fixed distance (160\u2013166 for qyAac8rV8Zk; equivalent stall geometry for q3zU7Yy5E5s), frontier disable events without floor switch. Key difference: qyAac8rV8Zk's failure is reversible via carrot placement (0.4m pullback places waypoint on robot component \u2192 T6 c0 SUCCESS); q3zU7Yy5E5s's upstairs island has no navigable fringe at any tested carrot distance, making carrot tuning a structural dead end \u2014 the only valid path is the downstairs stair confirmed reachable in T5_c8.",
+      "transfer_notes": "T6 candidate_0's 0.4m pullback proved the carrot-placement fix is directional: it works only when the robot-proximal side of the centroid is on the same navmesh island (downstairs case). The Phase 1 stall timing for q3zU7Yy5E5s (native stall fires at step 12 from stair entry, identical across all candidates) combined with gcts_streak=10 being a behavioral no-op (byte-identical fingerprint) confirms that Phase 1 early-disable thresholds \u2265 2 steps before the native detector are wasted; only an immediate or near-immediate skip (gcts_streak \u2264 2) combined with downstairs redirect avoids the wasted steps. Candidate_1's 0.6m forward-projection regression on qyAac8rV8Zk reconfirms the mechanism boundary: any carrot beyond ~0.4m overshoots back into the disconnected island.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "DP9_phase2_forward_projection_0.6m",
+        "DP9_phase2_connected_component_validation",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+        "early_gcts_disable_gcts_streak_10",
+        "DP9_phase2_pullback_alone_for_q3zU7Yy5E5s"
+      ],
+      "highest_leverage_untested": "Compound fix: (1) restore DP9 0.4m pullback as sole carrot mechanism (eliminates candidate_1 regression for qyAac8rV8Zk, re-enabling the T6 c0 solved path); (2) for q3zU7Yy5E5s, Phase1_complete_skip via gcts_streak threshold \u2264 2 combined with redirect_agent_to_downstairs_stair_immediately_after_Phase1_upstair_disable \u2014 bypasses the permanently disconnected upstairs centroid and routes the agent to the T5_c8-confirmed navigable downstairs stair without wasting episode budget on unavoidable Phase 1 stalls.",
+      "sr_gain_if_fixed": 0.67,
+      "priority": 1
+    },
+    {
+      "id": "post_floor_switch_false_positive_stop",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "After a second floor switch the agent enters initialize mode with floor_step near 0; a false-positive STOP fires at step 499 (candidate_0, DTG=0.131m) because the stop condition does not gate on initialize mode or floor_step recency. Candidate_1's 0.6m forward-projection carrot introduced a separate regression (frontier-poor second-floor exit, DTG=0.683m) that masks but does not replace the binding stop-guard failure.",
+      "cross_scene_pattern": "Single-scene cluster. Candidate_0 represents the best-achievable state without a stop guard: full stair traversal (three paused_step resets in Phase 2), 280+ exploration steps on the second floor, DTG=0.131m \u2014 yet the episode fails to a false-positive STOP during initialize mode. Candidate_1 adds a second failure mode (forward projection \u2192 frontier-poor exit) on top of the same underlying stop-guard defect, confirming that any carrot perturbation beyond 0.4m degrades this scene independently of the stop guard.",
+      "transfer_notes": "Candidate_0's three paused_step resets confirm the stair is fully traversed and the second-floor frontier supply is adequate; the failure is purely the stop guard misfiring at step 499 during a second initialize phase (floor_step < 20). This isolates the fix to the stop condition itself \u2014 no frontier-seeding, no stair-traversal, and no floor-switch mechanism changes are required. Candidate_1 further constrains the solution space: the 0.4m carrot must be preserved as a prerequisite before any stop-guard patch is applied, since the forward-projection regression produces a strictly worse failure (never_saw_target) that would prevent evaluating the stop guard's effect.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "DP9_phase2_forward_projection_0.6m",
+        "DP9_phase2_connected_component_validation",
+        "post_floor_switch_frontier_seeding_radius",
+        "passive_stair_detection_hysteresis_to_prevent_second_floor_switch_at_step_482",
+        "detection_confidence_threshold_increase_to_prevent_non_bed_false_positive"
+      ],
+      "highest_leverage_untested": "suppress_STOP_when_mode_is_initialize_and_floor_step_lt_20: gate the should_stop / detection-confidence stop path so it cannot fire while the agent is in initialize mode with floor_step below a threshold (20 steps), directly preventing the false-positive at step 499 where DTG=0.131m. Must be combined with 0.4m carrot restoration (prerequisite to avoid candidate_1's forward-projection regression masking the fix).",
+      "sr_gain_if_fixed": 0.33,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "ALL",
+      "reason": "Globally forbidden: breaks qyAac8rV8Zk by moving the Phase 2 carrot back into the disconnected navmesh island (Reach_stair_centroid:False throughout, DTG 0.094m\u21922.075m); causes frontier-poor second-floor exit on XB4GS9ShBRE (DTG 0.131m\u21920.683m, never_saw_target). Ruled out by candidate_1 experiment across both affected scenes."
+    },
+    {
+      "lever": "early_gcts_disable_gcts_streak_10",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Behavioral fingerprint byte-identical to baseline for q3zU7Yy5E5s: native Phase 1 stall fires at step 12 from stair entry, only 2 steps after the N=10 threshold. Saves at most 2 steps of episode budget; does not change the disconnected-centroid root cause or redirect the agent to the navigable downstairs stair."
+    },
+    {
+      "lever": "DP9_phase2_connected_component_validation",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Implicit CC check already performed by the 0.4m pullback in T6 candidate_0; explicit CC validation produced a byte-identical behavioral fingerprint to the pullback-only baseline (T5 c10). For q3zU7Yy5E5s the entire upstairs bounding box is in the disconnected island, making CC validation a no-op at any candidate point."
+    },
+    {
+      "lever": "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for q3zU7Yy5E5s: the upstairs stair bounding box lies entirely within the disconnected navmesh island; any BFS snap within that box remains geometrically unreachable from the robot's component. Redundant for qyAac8rV8Zk where the 0.4m pullback already achieves the same effect."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "post_floor_switch_false_positive_stop",
+      "reason": "XB4GS9ShBRE fails to a false-positive detection stop during initialize mode, not a premature stair-climb success. Candidate_0 completed the stair traversal fully (three paused_step resets in Phase 2); the stair guard is irrelevant to the binding stop-guard failure at step 499."
+    },
+    {
+      "lever": "post_floor_switch_frontier_seeding_radius",
+      "cluster": "post_floor_switch_false_positive_stop",
+      "reason": "Candidate_0 achieved 280+ exploration steps after the floor switch, confirming adequate frontier supply on the second floor. The false-positive STOP at step 499 occurs during a second initialize phase (floor_step<20), not due to frontier poverty."
+    },
+    {
+      "lever": "passive_stair_detection_hysteresis_to_prevent_second_floor_switch_at_step_482",
+      "cluster": "post_floor_switch_false_positive_stop",
+      "reason": "Explicitly ruled out in the XB4GS9ShBRE scene analysis. The second floor switch at step 482 is a valid navigation event following legitimate floor-level evidence; suppressing it would prevent the agent from reaching the goal floor and worsen DTG."
+    },
+    {
+      "lever": "DP7",
+      "cluster": "ALL",
+      "reason": "Globally forbidden across all scenes per mandatory forbidden moves list; LLM parse changes have no causal path to stair-centroid reachability or initialize-mode stop-guard failures."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "ALL",
+      "reason": "Globally forbidden across all scenes per mandatory forbidden moves list; floor-switch interval gating does not affect the navmesh disconnection root cause or the initialize-mode false-positive stop."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP6",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP2",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP3",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    }
+  ],
+  "last_updated": "2026-06-01T15:30:49Z"
+}

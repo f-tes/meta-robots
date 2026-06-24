@@ -1,0 +1,11 @@
+{
+  "harness": "/home/teeshan/meta_harness_t7/runs/candidate_16/harness",
+  "split": "val_30_t7",
+  "metrics": {
+    "success": 0.4667,
+    "num_episodes": 30,
+    "spl": 0.2305,
+    "distance_to_goal": 5.322536891574661
+  },
+  "timestamp": "2026-06-04T05:22:32"
+}

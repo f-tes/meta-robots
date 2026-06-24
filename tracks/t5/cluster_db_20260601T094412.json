@@ -1,0 +1,103 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid lies in a geometrically disconnected navmesh component; Phase 1 PointNav centroid-approach never converges (35+ consecutive Reach_stair_centroid: False), the stair frontier is permanently disabled, and no floor switch occurs in any tested candidate across both scenes.",
+      "cross_scene_pattern": "Identical mechanism: disconnected navmesh makes the centroid coordinate unnavigable, producing a persistent Reach_stair_centroid: False loop that terminates in frontier disable and episode budget exhaustion without floor traversal. Differences: q3zU7Yy5E5s targets an upstair centroid (multiple distinct coordinate variants in the same stair region are all unreachable, ruling out single-point jitter); qyAac8rV8Zk targets a downstair centroid exhibiting characteristic min_dis_to_downstair oscillation between 160 and 166 pixels, confirming a navmesh boundary is being hit rather than convergence occurring. q3zU7Yy5E5s received more candidate variants (including DP9 pullback and BFS snap) and still never traversed; qyAac8rV8Zk was tested on only 2 candidates both producing bit-identical logs.",
+      "transfer_notes": "candidate_9's DP9 pullback on q3zU7Yy5E5s demonstrated that changing Phase 2 waypoint distance shifts the post-failure robot position enough to improve lower-floor exploration (DTG 2.84m \u2192 1.045m) even without stair traversal. This is instructive for qyAac8rV8Zk: Phase 2 adjustments can improve residual exploration quality but cannot overcome Phase 1 navmesh disconnection. The BFS snap tested in candidate_4 of q3zU7Yy5E5s (which snaps frontier points to navigable positions) also failed identically, confirming that snapping the frontier representation does not change whether the physical centroid is reachable by PointNav. The correct intervention must operate at Phase 1 entry: replace the disconnected centroid with a reachable proxy before launching PointNav.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "DP9_phase2_pullback_alone",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box"
+      ],
+      "highest_leverage_untested": "alternative_stair_entry_point_sampling_from_connected_navmesh_boundary: before launching Phase 1 PointNav, verify the centroid's connected-component membership; if disconnected, sample candidate entry points within the stair bounding box using connected-component-aware BFS until a navigable proxy is found, then substitute that proxy as the Phase 1 target \u2014 directly attacking the root cause rather than adjusting Phase 2 behavior after Phase 1 has already failed",
+      "sr_gain_if_fixed": 0.667,
+      "priority": 1
+    },
+    {
+      "id": "post_stair_exit_frontier_exhaustion_and_false_stop",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Stair traversal succeeds but the default Phase 2 carrot trajectory exits the robot at a geometrically degenerate upper-floor position (2 frontiers, exhausted in 16 steps); candidate_9's accidental DP9 pullback produced a richer exit position and DTG=0.131m, but the episode was then killed by a false positive STOP not gated on goal-bbox confirmation.",
+      "cross_scene_pattern": "Single-scene cluster with two sequential sub-failures: (a) stair exit position sensitivity \u2014 the Phase 2 carrot trajectory determines upper-floor frontier supply, and the default path yields a dead-end with 2 frontiers; (b) false positive STOP \u2014 after DP9 pullback resolved (a) and DTG reached 0.131m, STOP fired without validating the target bounding box, converting a near-success into a failure at step 499. Sub-failure (a) is now resolved by candidate_9's DP9 pullback finding; the remaining open problem is entirely sub-failure (b).",
+      "transfer_notes": "candidate_9's accidental DP9 pullback (scoped to q3zU7Yy5E5s, not XB4GS9ShBRE) showed that a 0.5m carrot pullback during Phase 2 stair ascent causes paused_step to reset 3 times, placing the robot on a different upper-floor path and tripling available frontiers. This is a transferable insight for any scene where stair traversal succeeds but post-stair exploration is sparse. The false positive STOP finding here (STOP called at DTG=0.131m without bbox confirmation) is specific to this scene but the fix \u2014 a DTG-gated or bbox-gated STOP guard \u2014 is broadly applicable to any scene where goal detection fires prematurely.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "post_floor_switch_frontier_seeding_radius"
+      ],
+      "highest_leverage_untested": "goal_bbox_overlap_verification_before_stop: gate the STOP action on confirmed spatial overlap between the detected goal region and a target bounding box (or require DTG < a strict threshold, e.g. 0.05m), preventing the false positive STOP that terminated candidate_9 at step 499 when DTG=0.131m and the bed was essentially found for the first time across all 5 candidates",
+      "sr_gain_if_fixed": 0.333,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database; appears in every scene's ruled_out_levers list"
+    },
+    {
+      "lever": "DP5",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database; appears in every scene's ruled_out_levers list"
+    },
+    {
+      "lever": "DP6",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database; appears in every scene's ruled_out_levers list"
+    },
+    {
+      "lever": "DP2",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database; appears in every scene's ruled_out_levers list"
+    },
+    {
+      "lever": "DP3",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database; appears in every scene's ruled_out_levers list"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database; appears in every scene's ruled_out_levers list"
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "ALL",
+      "reason": "Globally ruled out across all scenes in the database; confirmed off-target for qyAac8rV8Zk (downstair centroid reachability failure, not premature success) and produces bit-identical logs when applied"
+    },
+    {
+      "lever": "DP9_phase2_pullback_alone",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Confirmed insufficient as a standalone fix in q3zU7Yy5E5s: stair_runs increased 1\u21922 and DTG improved but traveled_stairs remained False; mechanistically cannot bridge Phase 1 navmesh disconnection since DP9 only affects Phase 2 carrot waypoint distance after centroid approach has already completed"
+    },
+    {
+      "lever": "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Tested in q3zU7Yy5E5s candidate_4 (BFS snap): episode reached step 499 with stair_runs=2 but stair never traversed; snapping the frontier grid representation does not make a disconnected centroid reachable by Phase 1 PointNav \u2014 the physical navmesh boundary is the blocker"
+    },
+    {
+      "lever": "post_floor_switch_frontier_seeding_radius",
+      "cluster": "post_stair_exit_frontier_exhaustion_and_false_stop",
+      "reason": "Explicitly ruled out for XB4GS9ShBRE; the sparse post-stair frontier problem was resolved by DP9 carrot pullback in candidate_9, not by seeding radius adjustment, demonstrating that the issue is exit trajectory geometry rather than seeding coverage"
+    }
+  ],
+  "last_updated": "2026-06-01T09:44:12Z"
+}

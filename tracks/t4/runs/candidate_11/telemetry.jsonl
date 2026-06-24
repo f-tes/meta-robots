@@ -1,0 +1,223 @@
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1871, 0.1128], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1871, 0.1128], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1871, 0.1128], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1871, 0.1128], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1871, 0.1128], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1865, 0.1124], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2064, 0.1102], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.209, 0.1165], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2364, 0.1208], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2643, 0.1151, 0.1137], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.316, 0.1167, 0.1162], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.3482, 0.1156, 0.1138], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2759, 0.1167, 0.1156], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.3115, 0.1157, 0.1152], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3531, 0.1702, 0.1152, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4086, 0.1808, 0.1199, 0.1163], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4638, 0.1927, 0.116, 0.115], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4662, 0.1927, 0.116, 0.115], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4662, 0.1927, 0.1159, 0.115], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.5326, 0.2053, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.591, 0.2183, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4958, 0.2183, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.5363, 0.2183, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.6294, 0.2054, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2054, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2054, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2054, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2054, 0.115, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1807, 0.1141, 0.1107], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1948, 0.114, 0.1118], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.114, 0.1103], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1641, 0.1093], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.1748, 0.1091], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1869, 0.109, 0.1081], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2017, 0.109, 0.1083], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1158, 0.1135, 0.1108, 0.1099], "stall_override": false}
+{"t": "llm", "ep": 0, "type": "intrafloor", "prompt": "You are a navigation assistant. The robot is looking for a bed.\nThe following areas are visible:\nArea 0: {'area_id': 1, 'room': 'living_room', 'objects': 'appliance, armchair, cabinet, ceiling, ceiling fan, floor, furniture, hardwood, hardwood floor, home, home appliance, kitchen, living room, open, room, wood floor'} (room probability: 4.00)\nArea 1: {'area_id': 2, 'room': 'hall', 'objects': 'appliance, balustrade, doorway, floor, hardwood, hardwood floor, home, home appliance, kitchen, lead, le", "response": "{\"Index\": 1, \"Reason\": \"The room probability for Area 1 is is 4.7, which is is higher than the other two areas.\"}", "parsed_ok": true}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1604, 0.1138, 0.1135, 0.111], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1744, 0.1139, 0.1135, 0.1115], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1918, 0.1142, 0.1135, 0.1121], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2134, 0.1148, 0.1135, 0.1127], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2406, 0.1701, 0.1156, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2734, 0.186, 0.116, 0.1159, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2943, 0.2066, 0.1155, 0.1154, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3366, 0.2333, 0.1634, 0.116, 0.1155], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3625, 0.2675, 0.168, 0.1155, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4082, 0.3112, 0.1719, 0.1155, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4512, 0.3673, 0.1748, 0.1157, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4832, 0.4389, 0.1765, 0.1157, 0.1148], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4832, 0.4389, 0.1765, 0.114], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4646, 0.4499, 0.1852, 0.172], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.5168, 0.4061, 0.1937, 0.1887], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4061, 0.3485, 0.23, 0.1937, 0.1887], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3896, 0.3885, 0.2572, 0.2054, 0.1907], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3885, 0.2569, 0.2054, 0.1907], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3885, 0.2571, 0.2054, 0.1907], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3859, 0.2571, 0.2054, 0.1907], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3862, 0.2571, 0.2054, 0.1907], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3862, 0.2571, 0.2054, 0.1907], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4379, 0.2377, 0.1853, 0.1841], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.4859, 0.2193, 0.1768, 0.1696], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.5203, 0.2025, 0.1692, 0.1139], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2025, 0.1692, 0.1139], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2025, 0.1692, 0.1139], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2025, 0.1692, 0.1139], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2037, 0.1692, 0.1139], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2039, 0.1692, 0.1139], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2039, 0.1692, 0.1125], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2207, 0.1768, 0.1684], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2391, 0.1841, 0.1835], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2387, 0.1841, 0.1835], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.27, 0.1988, 0.1814], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2711, 0.1988, 0.1814], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.3136, 0.2051, 0.1706], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.3673, 0.2093, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.4286, 0.2111, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.5144, 0.2103, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.6078, 0.2069, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.5277, 0.2013, 0.1135], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2107, 0.1845], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2229, 0.1921], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2101, 0.2054], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.22, 0.2184], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.233, 0.2281], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2539, 0.2334], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2785, 0.2355], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.3042, 0.2339], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2339, 0.226], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2477, 0.2449], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2714, 0.2529], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.2959, 0.2569], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.3192, 0.2564], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4316, 0.3691, 0.1138, 0.1124, 0.1108], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.7378, 0.4328, 0.3776, 0.1172, 0.1163, 0.1153], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.7872, 0.4697, 0.458, 0.1167, 0.1159, 0.1155], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.7442, 0.5278, 0.5237, 0.1719, 0.1155, 0.1129], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.6481, 0.6008, 0.5702, 0.1949, 0.1493, 0.1233], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.6481, 0.5781, 0.5702, 0.1949, 0.1446, 0.1247], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.5853, 0.5837, 0.5266, 0.2085, 0.1242, 0.1194], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.5853, 0.5704, 0.5266, 0.2085, 0.1242, 0.1194], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 7, "scores": [0.5512, 0.4768, 0.4427, 0.3439, 0.2147, 0.1763, 0.1194], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4427, 0.3466, 0.2147, 0.1763, 0.1194], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4427, 0.3466, 0.2147, 0.1763, 0.1194], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4427, 0.3466, 0.2147, 0.1757, 0.1179], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4427, 0.3466, 0.2117, 0.1762, 0.1235], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4427, 0.3466, 0.2113, 0.1762, 0.1227], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3466, 0.2596, 0.2113, 0.1762, 0.1227], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3047, 0.2857, 0.229, 0.1814, 0.1227], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3047, 0.2857, 0.2287, 0.1814, 0.1194], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3047, 0.2857, 0.2298, 0.1822, 0.1262], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3047, 0.2857, 0.2298, 0.1816, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3046, 0.2857, 0.2298, 0.1816, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3027, 0.2857, 0.2298, 0.1816, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3543, 0.2495, 0.2222, 0.1834, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4241, 0.2203, 0.2129, 0.184, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.5124, 0.2028, 0.1971, 0.1833, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.6271, 0.1926, 0.1814, 0.1787, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.7675, 0.1827, 0.1783, 0.1642, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.832, 0.1744, 0.1735, 0.1243, 0.1113], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.7666, 0.1744, 0.1735, 0.1243, 0.1113], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.7703, 0.1744, 0.1735, 0.1243, 0.1113], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1737, 0.1735, 0.1243, 0.1113], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2054, 0.1926, 0.1849, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2029, 0.1868, 0.1382, 0.1368, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2129, 0.1875, 0.1397, 0.1384, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2129, 0.1875, 0.1397, 0.1384, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2331, 0.195, 0.1397, 0.1384, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2563, 0.2019, 0.1943, 0.1384, 0.1243], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2584, 0.2019, 0.1943, 0.145, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.2962, 0.216, 0.1946, 0.1384, 0.1368], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3425, 0.233, 0.1938, 0.1384, 0.1222], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3406, 0.2312, 0.1938, 0.1384, 0.107], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3987, 0.2582, 0.1397, 0.1384, 0.1061], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4716, 0.2919, 0.1397, 0.1384, 0.1054], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.5465, 0.3283, 0.1397, 0.1384, 0.1231], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.5961, 0.3771, 0.1397, 0.1384, 0.1186, 0.1183], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.6528, 0.4251, 0.1397, 0.1384, 0.1309, 0.1222], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.5304, 0.4251, 0.1397, 0.1384, 0.1309, 0.1214], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.5552, 0.4251, 0.1397, 0.1384, 0.1309, 0.1214], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4251, 0.1397, 0.1384, 0.1309, 0.1214], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4251, 0.1397, 0.1384, 0.1309, 0.1214], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4251, 0.1397, 0.1384, 0.1309, 0.1212], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4351, 0.1397, 0.1384, 0.1309, 0.1212], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4351, 0.1397, 0.1384, 0.1323, 0.1224], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4119, 0.1397, 0.1384, 0.1384, 0.1233], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4021, 0.1397, 0.1384, 0.1372, 0.1233], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4801, 0.1755, 0.1397, 0.1384, 0.1372], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4802, 0.1758, 0.1397, 0.1384, 0.1351], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.5225, 0.1916, 0.1893, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.5019, 0.1916, 0.1893, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4835, 0.2036, 0.1959, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 6, "scores": [0.3809, 0.3183, 0.2175, 0.2017, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3175, 0.2175, 0.2017, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.3759, 0.2229, 0.196, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.4258, 0.2266, 0.1894, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.5131, 0.2282, 0.1823, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.6246, 0.2274, 0.1752, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.7621, 0.2244, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.762, 0.2244, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8058, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8058, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8058, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8064, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8067, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8067, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8065, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.807, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8074, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 5, "scores": [0.8072, 0.2262, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2215, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2215, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2215, 0.1397, 0.1384, 0.1241], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1833, 0.1397, 0.1384, 0.1378], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1833, 0.1397, 0.1384, 0.1378], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1833, 0.1397, 0.1384, 0.1378], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1833, 0.1397, 0.1384, 0.1378], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1841, 0.1397, 0.1384, 0.1378], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.1885, 0.1397, 0.1387, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2086, 0.2025, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.234, 0.2171, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2647, 0.2535, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2656, 0.2554, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.293, 0.2764, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.2916, 0.2764, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.297, 0.2575, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3236, 0.2575, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3805, 0.2624, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3573, 0.2624, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3563, 0.2624, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3982, 0.2651, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3688, 0.2651, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 4, "scores": [0.3623, 0.2542, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2542, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2542, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2542, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2542, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "llm", "ep": 0, "type": "intrafloor", "prompt": "You are a navigation assistant. The robot is looking for a tv.\nThe following areas are visible:\nArea 0: {'area_id': 1, 'room': 'hall', 'objects': 'balustrade, carpet, corridor, doorway, floor, lead, lead to, hallway, room, stair, stairwell'} (room probability: 2.40)\nArea 1: {'area_id': 2, 'room': 'hall', 'objects': 'bedroom, carpet, closet, door, doorway, floor, lead, lead to, hallway, pillow, room'} (room probability: 2.40)\nArea 2: {'area_id': 3, 'room': 'hall', 'objects': 'bookshelf, carpet, c", "response": "{\"Index\": 1, \"Reason\": \"The room probability for area 1 is 0.4 is higher than the other areas, indicating a higher likelihood of containing a tv.\"}", "parsed_ok": true}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1719, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1772, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1818, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1818, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1774, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1722, 0.1397, 0.1384], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1397, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.1969, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.2115, 0.1384, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.313, 0.1972, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.3123, 0.1947, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.3736, 0.2079, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 3, "scores": [0.4277, 0.227, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.4253, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.4711, 0.1193], "stall_override": false}
+{"t": "frontier", "ep": 0, "n": 2, "scores": [0.7151, 0.4273], "stall_override": false}

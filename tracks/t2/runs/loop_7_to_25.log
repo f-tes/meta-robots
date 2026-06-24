@@ -1,0 +1,2461 @@
+Building prompt from 7 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (212293 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py
+Next step: python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py --split search_pipeline
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [skip] candidate_7 — no log file found
+No results to report.
+
+=== run_analyzer: candidate_7 ===
+  No failure_classification.json found — run classify_failures.py first.
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_7/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_7/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_7/stats habitat_baselines.eval.video_option=[] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_7/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 21s  (exit code 1)
+ObjectNav-v1
+=> loading RedNet checkpoint 'pretrained_weights/rednet_semmap_mp3d_40.pth'
+=> loaded checkpoint 'pretrained_weights/rednet_semmap_mp3d_40.pth' (epoch 53)
+Model's state_dict:
+Error executing job with overrides: ['habitat_baselines.eval.split=smoke10_pipeline', 'habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_7/smoke10_pipeline_videos', 'habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_7/tb', 'habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_7/stats', 'habitat_baselines.eval.video_option=[]', 'habitat.simulator.habitat_sim_v0.gpu_device_id=0']
+Traceback (most recent call last):
+  File "/home/teeshan/ascent_pipeline/ascent/run.py", line 89, in main
+    execute_exp(cfg, "eval" if cfg.habitat_baselines.evaluate else "train")
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/run.py", line 62, in execute_exp
+    trainer.eval()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/common/base_trainer.py", line 129, in eval
+    self._eval_checkpoint(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_trainer.py", line 101, in _eval_checkpoint
+    self._agent = self._create_agent(None)
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/ppo_trainer.py", line 123, in _create_agent
+    return baseline_registry.get_agent_access_mgr(
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 83, in __init__
+    self._init_policy_and_updater(lr_schedule_fn, resume_state)
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 86, in _init_policy_and_updater
+    self._actor_critic = self._create_policy()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 194, in _create_policy
+    actor_critic = policy.from_config(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 91, in from_config
+    return cls(**kwargs)
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 158, in __init__
+    self._map_controller = Map_Controller(device=self.device, num_envs = kwargs['num_envs'], text_prompt=kwargs["text_prompt"],
+  File "/home/teeshan/ascent_pipeline/ascent/map_controller.py", line 84, in __init__
+    fusion_type=get_harness().get_value_map_fusion_type(),  # DP10
+  File "/home/teeshan/ascent_pipeline/ascent/harness_bridge.py", line 28, in get_harness
+    _harness.apply()
+  File "/home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py", line 129, in apply
+    original_act = ap.ASCENTPolicies.act
+AttributeError: module 'ascent.ascent_policy' has no attribute 'ASCENTPolicies'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+
+--- Step 3: Parse metrics ---
+WARNING: could not parse any metrics from log. Check eval.log manually.
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_7/scores.json
+{
+  "parse_error": true
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 5: Analyze failures ---
+Building prompt from 8 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (238708 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py
+Next step: python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py --split search_pipeline
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [candidate_8] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_8/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260519T030532.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 03:05 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_8 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 0.5
+- **Example episodes:**
+  - candidate_8 / q3zU7Yy5E5s (sofa)
+  - candidate_8 / qyAac8rV8Zk (tv_monitor)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 2.0
+- **Example episodes:**
+  - candidate_8 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_8 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (70,630 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  q3zU7Yy5E5s: The stair at [-1.30898204, 3.5508982] is physically unreachable at DP9=0.8m carrot distance — 26+ consecutive Reach_stai
+  Ruled out: ['DP12', 'SDP-C', 'DP3', 'SDP-D', 'ascent_policy_floor_init_timeout_track2']
+  Next levers: ['DP9', 'DP5_goal_binding_bug_fix', 'DP7']
+
+  qyAac8rV8Zk: The single downstairs stair candidate at [-1.26861111, -8.18583333] is geometrically inaccessible at the Habitat navmesh
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'ascent_policy_floor_init_timeout_track2']
+  Next levers: ['stair_candidate_search_breadth_in_ascent_policy', 'navmesh_reachability_precheck_before_stair_commit']
+
+  mL8ThkuaVTM: The agent successfully traverses stairs at step 120 via a bypass path (stair_runs=0, DP9 not involved), arriving on floo
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'DP9', 'ascent_policy_floor_init_timeout_track2_stop_intercept']
+  Next levers: ['ascent_policy_explore_mode_floor_switch_guard_track2', 'ascent_policy_frontier_init_after_bypass_stair_track2']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_8/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_8/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_8/stats habitat_baselines.eval.video_option=[] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_8/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1716s  (exit code 0)
+ode: navigate | Stair_flag: 0 | Action: 3
+Distance to goal: 1.8119004300487118
+Env: 0 | Step: 211 | Floor_step: 24 | Mode: navigate | Stair_flag: 0 | Action: 1
+Distance to goal: 1.583482741136546
+Env: 0 | Step: 212 | Floor_step: 25 | Mode: navigate | Stair_flag: 0 | Action: 1
+Distance to goal: 1.3375346811535365
+Env: 0 | Step: 213 | Floor_step: 26 | Mode: navigate | Stair_flag: 0 | Action: 1
+Distance to goal: 1.1132992498677095
+Env: 0 | Step: 214 | Floor_step: 27 | Mode: navigate | Stair_flag: 0 | Action: 1
+Distance to goal: 0.9090861240623593
+Env: 0 | Step: 215 | Floor_step: 28 | Mode: navigate | Stair_flag: 0 | Action: 1
+Distance to goal: 0.7000484869531047
+Env: 0 | Step: 216 | Floor_step: 29 | Mode: navigate | Stair_flag: 0 | Action: 1
+Distance to goal: 0.49326668365346793
+Env: 0 | Step: 217 | Floor_step: 30 | Mode: navigate | Stair_flag: 0 | Action: 0
+Renderer: NVIDIA H100 NVL/PCIe/SSE2 by NVIDIA Corporation
+OpenGL version: 4.6.0 NVIDIA 535.288.01
+Using optional features:
+    GL_ARB_vertex_array_object
+    GL_ARB_separate_shader_objects
+    GL_ARB_robustness
+    GL_ARB_texture_storage
+    GL_ARB_texture_view
+    GL_ARB_framebuffer_no_attachments
+    GL_ARB_invalidate_subdata
+    GL_ARB_texture_storage_multisample
+    GL_ARB_multi_bind
+    GL_ARB_direct_state_access
+    GL_ARB_get_texture_sub_image
+    GL_ARB_texture_filter_anisotropic
+    GL_KHR_debug
+    GL_KHR_parallel_shader_compile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [28:11<00:00, 217.74s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.92%
+Till Now Average Dtg: 3.6709282137453556
+
+100%|██████████| 8/8 [28:11<00:00, 211.45s/it]
+2026-05-19 03:05:29,911 Average episode reward: 7.7644
+2026-05-19 03:05:29,911 Average episode distance_to_goal: 3.6709
+2026-05-19 03:05:29,911 Average episode success: 0.6250
+2026-05-19 03:05:29,911 Average episode spl: 0.3292
+2026-05-19 03:05:29,911 Average episode soft_spl: 0.3787
+2026-05-19 03:05:29,911 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 03:05:29,911 Average episode traveled_stairs: 0.2500
+2026-05-19 03:05:29,911 Average episode yaw: -26.2500
+2026-05-19 03:05:29,911 Average episode target_detected: 0.6250
+2026-05-19 03:05:29,911 Average episode stop_called: 0.6250
+2026-05-19 03:05:29,911 Average episode num_steps: 198.3750
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_8/scores.json
+{
+  "spl": 0.3292,
+  "distance_to_goal": 3.6709282137453556,
+  "success": 0.625,
+  "num_steps": 198.375,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 5: Analyze failures ---
+Building prompt from 9 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (271381 chars)
+Calling Claude (headless)...
+Traceback (most recent call last):
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 301, in <module>
+    main()
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 271, in main
+    result = subprocess.run(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1996, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['claude', '--print', '--output-format', 'text']' timed out after 900 seconds
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=19  patience=19
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+
+############################################################
+  Iteration 1/19  best_SR=0.500
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_7
+
+============================================================
+  Validate candidate_7
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py
+============================================================
+
+============================================================
+  Eval candidate_7 on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_7/harness.py --split smoke10_pipeline
+============================================================
+[loop] Could not parse SR from scores.json
+
+[loop] Logged: {'candidate': 'candidate_7', 'split': 'smoke10_pipeline', 'sr': None, 'best_sr': 0.5, 'status': 'parse_error', 'elapsed_s': 870, 'timestamp': '2026-05-19T02:26:34'}
+
+############################################################
+  Iteration 2/19  best_SR=0.500
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_8
+
+============================================================
+  Validate candidate_8
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py
+============================================================
+
+============================================================
+  Eval candidate_8 on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_8/harness.py --split smoke10_pipeline
+============================================================
+
+[loop] *** NEW BEST: candidate_8 SR=0.625 (was 0.500) ***
+
+[loop] Logged: {'candidate': 'candidate_8', 'split': 'smoke10_pipeline', 'sr': 0.625, 'best_sr': 0.625, 'status': 'improved', 'elapsed_s': 2587, 'timestamp': '2026-05-19T03:09:41'}
+
+############################################################
+  Iteration 3/19  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta_harness_pipeline/runs/search_log.jsonl
+############################################################
+Building prompt from 9 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (183884 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py
+Next step: python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py --split search_pipeline
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [candidate_9] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_9/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260519T041938.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 04:19 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_9 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_9 / q3zU7Yy5E5s (couch)
+  - candidate_9 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 163
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_9 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_9 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (85,885 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  q3zU7Yy5E5s: The stair at [-1.30898204, 3.5508982] is physically unreachable at DP9=0.8m carrot distance — 26+ consecutive Reach_stai
+  Ruled out: ['DP12', 'SDP-C', 'DP3', 'SDP-D', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['DP9', 'DP5_goal_binding_bug_fix', 'DP7']
+
+  qyAac8rV8Zk: The single downstairs stair candidate at [-1.26861111, -8.18583333] is geometrically inaccessible at the Habitat navmesh
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['stair_candidate_search_breadth_in_ascent_policy', 'navmesh_reachability_precheck_before_stair_commit']
+
+  mL8ThkuaVTM: The agent successfully traverses stairs at step 120 via a bypass path (floor_step=0, stair_runs=0), arriving on floor 2.
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5_prompt_augmentation', 'DP6', 'SDP-D', 'DP9', 'ascent_policy_floor_init_timeout_track2_stop_intercept']
+  Next levers: ['ascent_policy_explore_mode_floor_switch_guard_higher_threshold_track2', 'ascent_policy_frontier_init_after_bypass_stair_track2', 'DP5_goal_binding_bug_fix']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_9/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_9/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_9/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_9/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1786s  (exit code 0)
+rkarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [29:16<00:00, 227.94s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.92%
+Till Now Average Dtg: 3.648357067257166
+2026-05-19 04:19:33,956 Video created: /home/teeshan/meta_harness_pipeline/runs/candidate_9/smoke10_pipeline_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 04:19:33,956][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:28,  2.45it/s][A
+
+  8%|▊         | 17/217 [00:00<00:04, 42.69it/s][A
+
+ 16%|█▌        | 34/217 [00:00<00:02, 76.01it/s][A
+
+ 24%|██▎       | 51/217 [00:00<00:01, 100.56it/s][A
+
+ 31%|███▏      | 68/217 [00:00<00:01, 119.10it/s][A
+
+ 39%|███▉      | 85/217 [00:00<00:00, 133.19it/s][A
+
+ 47%|████▋     | 103/217 [00:01<00:00, 144.21it/s][A
+
+ 55%|█████▌    | 120/217 [00:01<00:00, 150.18it/s][A
+
+ 64%|██████▎   | 138/217 [00:01<00:00, 156.24it/s][A
+
+ 71%|███████▏  | 155/217 [00:01<00:00, 159.55it/s][A
+
+ 79%|███████▉  | 172/217 [00:01<00:00, 161.34it/s][A
+
+ 87%|████████▋ | 189/217 [00:01<00:00, 161.52it/s][A
+
+ 95%|█████████▍| 206/217 [00:01<00:00, 160.72it/s][A
+100%|██████████| 217/217 [00:01<00:00, 125.70it/s]
+
+100%|██████████| 8/8 [29:21<00:00, 220.24s/it]
+2026-05-19 04:19:35,972 Average episode reward: 7.7851
+2026-05-19 04:19:35,972 Average episode distance_to_goal: 3.6484
+2026-05-19 04:19:35,972 Average episode success: 0.6250
+2026-05-19 04:19:35,972 Average episode spl: 0.3292
+2026-05-19 04:19:35,972 Average episode soft_spl: 0.3797
+2026-05-19 04:19:35,972 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 04:19:35,972 Average episode traveled_stairs: 0.2500
+2026-05-19 04:19:35,972 Average episode yaw: -26.2500
+2026-05-19 04:19:35,972 Average episode target_detected: 0.6250
+2026-05-19 04:19:35,972 Average episode stop_called: 0.6250
+2026-05-19 04:19:35,972 Average episode num_steps: 200.2500
+2026-05-19 04:19:35,972 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_9/scores.json
+{
+  "spl": 0.3292,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.648357067257166,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_pipeline_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 10 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (190406 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py
+Next step: python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py --split search_pipeline
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [candidate_10] SR=0.50  4 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_10/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260519T045751.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 04:57 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_10 | 0.50 | 8 | 4 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 50.0% |
+| 2 | `search_oscillation` | 1 | 25.0% |
+| 3 | `mapping_floor_confusion` | 1 | 25.0% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_10 / q3zU7Yy5E5s (couch)
+  - candidate_10 / qyAac8rV8Zk (couch)
+
+### `search_oscillation` (1 episodes)
+
+- **Typical step count:** 50
+- **Typical floor re-inits:** 1.0
+- **Example episodes:**
+  - candidate_10 / DYehNKdT76V (chair)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 170
+- **Typical floor re-inits:** 2.0
+- **Example episodes:**
+  - candidate_10 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 4 failed episodes, 50%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_10 ===
+  Failing scenes: ['DYehNKdT76V', 'q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (126,510 chars)
+  Calling Claude for failure analysis...
+  Received 4 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  DYehNKdT76V: Candidate_10's harness change introduced a premature floor switch (reinits=1) within the first ~13 steps, landing the ag
+  Ruled out: ['DP9', 'DP1', 'DP2', 'DP5', 'DP4']
+  Next levers: ['candidate_10_premature_floor_switch_trigger_isolation', 'SDP-C_guard_with_explicit_steps_on_floor_and_frontier_count_check']
+
+  q3zU7Yy5E5s: The stair candidate at [-1.30898204, 3.5508982] is physically unreachable at the Habitat navmesh level: min_dis_to_downs
+  Ruled out: ['DP12', 'SDP-C', 'DP3', 'SDP-D', 'DP10', 'DP11', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['DP9_carrot_distance_increase', 'DP5_goal_binding_bug_fix']
+
+  qyAac8rV8Zk: The sole downstairs stair candidate at [-1.26861111, -8.18583333] lies in a disconnected navmesh component: min_dis_to_d
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['navmesh_reachability_precheck_before_stair_commit', 'stair_candidate_search_breadth_in_ascent_policy']
+
+  mL8ThkuaVTM: Stair traversal succeeds at step 120 (floor_step=0) in all candidates via passive upstairs detection at step 91. In cand
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5_prompt_augmentation', 'DP6', 'SDP-D', 'DP9', 'ascent_policy_floor_init_timeout_track2_stop_intercept', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50']
+  Next levers: ['DP5_goal_binding_bug_fix', 'ascent_policy_frontier_init_after_bypass_stair_track2', 'navmesh_reachability_precheck_for_floor2_toilet_subregion']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_10/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_10/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_10/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_10/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1731s  (exit code 0)
+er_compile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [28:21<00:00, 233.83s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 50.00% (4 out of 8)
+Till Now Average Spl: 22.03%
+Till Now Average Dtg: 4.868352553807199
+2026-05-19 04:57:46,275 Video created: /home/teeshan/meta_harness_pipeline/runs/candidate_10/smoke10_pipeline_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 04:57:46,276][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:35,  2.25it/s][A
+
+  8%|▊         | 18/217 [00:00<00:04, 42.64it/s][A
+
+ 17%|█▋        | 36/217 [00:00<00:02, 77.10it/s][A
+
+ 25%|██▍       | 54/217 [00:00<00:01, 103.07it/s][A
+
+ 33%|███▎      | 72/217 [00:00<00:01, 122.19it/s][A
+
+ 41%|████▏     | 90/217 [00:00<00:00, 136.72it/s][A
+
+ 50%|█████     | 109/217 [00:01<00:00, 150.10it/s][A
+
+ 59%|█████▊    | 127/217 [00:01<00:00, 157.84it/s][A
+
+ 67%|██████▋   | 145/217 [00:01<00:00, 160.69it/s][A
+
+ 75%|███████▌  | 163/217 [00:01<00:00, 164.80it/s][A
+
+ 83%|████████▎ | 181/217 [00:01<00:00, 169.19it/s][A
+
+ 92%|█████████▏| 200/217 [00:01<00:00, 173.92it/s][A
+100%|██████████| 217/217 [00:01<00:00, 129.32it/s]
+
+100%|██████████| 8/8 [28:26<00:00, 213.28s/it]
+2026-05-19 04:57:48,245 Average episode reward: 6.2615
+2026-05-19 04:57:48,245 Average episode distance_to_goal: 4.8684
+2026-05-19 04:57:48,245 Average episode success: 0.5000
+2026-05-19 04:57:48,245 Average episode spl: 0.2203
+2026-05-19 04:57:48,245 Average episode soft_spl: 0.2951
+2026-05-19 04:57:48,245 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 04:57:48,245 Average episode traveled_stairs: 0.2500
+2026-05-19 04:57:48,245 Average episode yaw: -0.0000
+2026-05-19 04:57:48,245 Average episode target_detected: 0.5000
+2026-05-19 04:57:48,245 Average episode stop_called: 0.5000
+2026-05-19 04:57:48,245 Average episode num_steps: 191.3750
+2026-05-19 04:57:48,245 Average episode start_yaw: -0.6113
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_10/scores.json
+{
+  "spl": 0.22030000000000002,
+  "success": 0.5,
+  "num_steps": 51.0,
+  "distance_to_goal": 4.868352553807199,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 2 successful-episode video(s) from smoke10_pipeline_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 11 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (199956 chars)
+Calling Claude (headless)...
+ERROR: Claude output does not contain PipelineHarness class.
+Raw output:
+ I need access to the pipeline harness files to get the correct PipelineHarness class structure and SDP signatures. The files are outside `/home/teeshan/meta-ascent` and I'm getting permission blocks. Could you either:
+
+1. Grant access to `/home/teeshan/meta_harness_pipeline/` so I can read the existing harnesses, OR
+2. Paste the content of any recent pipeline harness (e.g., candidate_9 or candidate_10's `harness.py`) so I can use it as the base structure
+
+The specific structures I need are the 4 SDP method signatures (`apply`, `build_exploration_memory`, `should_force_floor_switch_by_coverage`, `augment_intrafloor_prompt`) — I have the 12 DPs from the Track 1 harness.
+
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=17  patience=17
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+[loop] Found existing result: candidate_8 SR=0.625
+
+############################################################
+  Iteration 1/17  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_9
+
+============================================================
+  Validate candidate_9
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py
+============================================================
+
+============================================================
+  Eval candidate_9 on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py --split smoke10_pipeline
+============================================================
+
+[loop] No improvement: candidate_9 SR=0.625 (best=0.625)
+
+[loop] Logged: {'candidate': 'candidate_9', 'split': 'smoke10_pipeline', 'sr': 0.625, 'best_sr': 0.625, 'status': 'no_improvement', 'elapsed_s': 3227, 'timestamp': '2026-05-19T04:24:06'}
+
+############################################################
+  Iteration 2/17  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_10
+
+============================================================
+  Validate candidate_10
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py
+============================================================
+
+============================================================
+  Eval candidate_10 on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_10/harness.py --split smoke10_pipeline
+============================================================
+
+[loop] No improvement: candidate_10 SR=0.500 (best=0.625)
+
+[loop] Logged: {'candidate': 'candidate_10', 'split': 'smoke10_pipeline', 'sr': 0.5, 'best_sr': 0.625, 'status': 'no_improvement', 'elapsed_s': 2569, 'timestamp': '2026-05-19T05:06:55'}
+
+############################################################
+  Iteration 3/17  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta_harness_pipeline/runs/search_log.jsonl
+############################################################
+Building prompt from 11 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (199956 chars)
+Calling Claude (headless)...
+ERROR: Claude output does not contain PipelineHarness class.
+Raw output:
+ I need read access to `/home/teeshan/meta_harness_pipeline/` to write the harness correctly, but all my read attempts there are being blocked pending your permission grant. Could you approve access to that directory? The Glob tool could find the files, but Read and Grep need explicit permission.
+
+Specifically I need to read:
+- `/home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py` (to get the exact SDP-A apply() patch from the proven candidate)
+- `/home/teeshan/meta_harness_pipeline/runs/candidate_0/harness.py` (to get the baseline PipelineHarness class structure with all 4 SDPs)
+
+Without those I can reconstruct the 12 DPs from Track 1 but I don't know the exact signatures of the other SDPs in PipelineHarness.
+
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+[loop] Found existing result: candidate_8 SR=0.625
+[loop] Found existing result: candidate_9 SR=0.625
+[loop] Found existing result: candidate_10 SR=0.500
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta_harness_pipeline/runs/search_log.jsonl
+############################################################
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+[loop] Found existing result: candidate_8 SR=0.625
+[loop] Found existing result: candidate_9 SR=0.625
+[loop] Found existing result: candidate_10 SR=0.500
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+Building prompt from 11 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (199956 chars)
+Calling Claude (headless)...
+Traceback (most recent call last):
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 302, in <module>
+    main()
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 272, in main
+    result = subprocess.run(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1996, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['claude', '--print', '--output-format', 'text', '--dangerously-skip-permissions']' timed out after 1800 seconds
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta_harness_pipeline/runs/search_log.jsonl
+############################################################
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+[loop] Found existing result: candidate_8 SR=0.625
+[loop] Found existing result: candidate_9 SR=0.625
+[loop] Found existing result: candidate_10 SR=0.500
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+Building prompt from 12 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (180033 chars)
+Calling Claude (headless)...
+ERROR: Claude output does not contain PipelineHarness class.
+Raw output:
+ ```
+python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py \
+    --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_12/harness.py \
+    --split search_pipeline
+```
+
+**candidate_12 summary:**
+
+Three changes from the candidate_0 baseline (same as candidate_11 except DP9 1.2m→1.5m):
+
+| Change | Target | Evidence |
+|--------|--------|----------|
+| **SDP-A GUARD=30 + STOP→FORWARD** | bxsVRursffK mapping_floor_confusion | Confirmed fix in candidate_8 (SR 0.5→0.625); GUARD=60 regressed DYehNKdT76V (c10) |
+| **DP7+DP8 regex fallback** | mL8ThkuaVTM dp7_parse_failure | dp7_empty=1/1 in every prior candidate; Qwen preamble breaks json.loads(); dtg increases without LLM guidance on floor 2 |
+| **DP9=1.5m** | q3zU7Yy5E5s navigation_stair_traverse | Analysis db explicitly asks "1.2m or 1.5m?"; 1.2m tested in c8-11 with identical 26-27 consecutive False; 1.5m is genuinely untested |
+
+**Key safety property:** DP9=1.5m has zero regression risk for bxsVRursffK and mL8ThkuaVTM since both use passive stair detection (stair_runs=0) and never invoke the DP9 carrot path.
+
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta_harness_pipeline/runs/search_log.jsonl
+############################################################
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+[loop] Found existing result: candidate_8 SR=0.625
+[loop] Found existing result: candidate_9 SR=0.625
+[loop] Found existing result: candidate_10 SR=0.500
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+[loop] Found existing result: candidate_8 SR=0.625
+[loop] Found existing result: candidate_9 SR=0.625
+[loop] Found existing result: candidate_10 SR=0.500
+
+[loop] Backfilling 3 unevaluated candidate(s): ['candidate_6', 'candidate_11', 'candidate_12']
+
+============================================================
+  Validate candidate_6 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_6/harness.py
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_6/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+
+============================================================
+  Eval candidate_6 (backfill) on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_6/harness.py --split smoke10_pipeline
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_6/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+Building prompt from 13 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (133064 chars)
+Calling Claude (headless)...
+ERROR: Claude output does not contain PipelineHarness class.
+Raw output:
+ The file landed in the right place — `candidate_13` is now visible in `/home/teeshan/meta_harness_pipeline/runs/`. The path is confirmed correct.
+
+  [candidate_6] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_6/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260520T043053.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 04:30 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_6 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_6 / q3zU7Yy5E5s (couch)
+  - candidate_6 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_6 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_6 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (88,321 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  q3zU7Yy5E5s: The stair candidate at [-1.30898204, 3.5508982] is physically unreachable at the Habitat navmesh level regardless of car
+  Ruled out: ['DP9_carrot_distance_increase', 'DP12', 'SDP-C', 'DP3', 'SDP-D', 'DP10', 'DP11', 'DP7_DP8_regex_fallback_alone', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['DP5_goal_binding_bug_fix']
+
+  qyAac8rV8Zk: The sole downstairs stair candidate at [-1.26861111, -8.18583333] lies in a disconnected navmesh component: min_dis_to_d
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['navmesh_reachability_precheck_before_stair_commit', 'stair_candidate_search_breadth_in_ascent_policy']
+
+  mL8ThkuaVTM: Stair traversal succeeds robustly at step 120 via passive upstairs detection in all candidates (stair_runs=0, floor_step
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5_prompt_augmentation', 'DP6', 'SDP-D', 'DP9', 'DP7_DP8_regex_fallback_alone', 'ascent_policy_floor_init_timeout_track2_stop_intercept', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50']
+  Next levers: ['DP5_goal_binding_bug_fix', 'navmesh_reachability_precheck_for_floor2_toilet_subregion']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_6/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_6/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_6/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_6/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_6/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_6/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1833s  (exit code 0)
+qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [29:55<00:00, 233.82s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.6652470754343085
+2026-05-20 04:30:46,934 Video created: /home/teeshan/meta_harness_pipeline/runs/candidate_6/smoke10_pipeline_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-20 04:30:46,935][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:24,  2.56it/s][A
+
+  9%|▉         | 20/217 [00:00<00:03, 51.57it/s][A
+
+ 17%|█▋        | 36/217 [00:00<00:02, 80.82it/s][A
+
+ 25%|██▍       | 54/217 [00:00<00:01, 106.90it/s][A
+
+ 34%|███▍      | 74/217 [00:00<00:01, 111.49it/s][A
+
+ 41%|████      | 88/217 [00:01<00:01, 92.12it/s] [A
+
+ 46%|████▌     | 100/217 [00:01<00:01, 93.30it/s][A
+
+ 51%|█████     | 111/217 [00:01<00:01, 94.43it/s][A
+
+ 56%|█████▌    | 122/217 [00:01<00:01, 86.97it/s][A
+
+ 64%|██████▎   | 138/217 [00:01<00:00, 103.77it/s][A
+
+ 72%|███████▏  | 156/217 [00:01<00:00, 122.47it/s][A
+
+ 79%|███████▉  | 172/217 [00:01<00:00, 131.31it/s][A
+
+ 86%|████████▌ | 187/217 [00:01<00:00, 109.65it/s][A
+
+ 92%|█████████▏| 200/217 [00:02<00:00, 100.92it/s][A
+
+ 97%|█████████▋| 211/217 [00:02<00:00, 100.84it/s][A
+100%|██████████| 217/217 [00:02<00:00, 94.37it/s] 
+
+100%|██████████| 8/8 [30:02<00:00, 225.31s/it]
+2026-05-20 04:30:49,942 Average episode reward: 7.7710
+2026-05-20 04:30:49,942 Average episode distance_to_goal: 3.6652
+2026-05-20 04:30:49,942 Average episode success: 0.6250
+2026-05-20 04:30:49,943 Average episode spl: 0.3268
+2026-05-20 04:30:49,943 Average episode soft_spl: 0.3766
+2026-05-20 04:30:49,943 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 04:30:49,943 Average episode traveled_stairs: 0.2500
+2026-05-20 04:30:49,943 Average episode yaw: -26.2500
+2026-05-20 04:30:49,943 Average episode target_detected: 0.6250
+2026-05-20 04:30:49,943 Average episode stop_called: 0.6250
+2026-05-20 04:30:49,943 Average episode num_steps: 197.5000
+2026-05-20 04:30:49,943 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_6/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.6652470754343085,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_pipeline_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] Logged: {'candidate': 'candidate_6', 'split': 'smoke10_pipeline', 'sr': 0.625, 'best_sr': 0.625, 'status': 'backfill', 'timestamp': '2026-05-20T04:35:47'}
+
+============================================================
+  Validate candidate_11 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_11/harness.py
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_11/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+
+============================================================
+  Eval candidate_11 (backfill) on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_11/harness.py --split smoke10_pipeline
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_11/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [candidate_11] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_11/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260520T050702.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 05:07 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_11 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_11 / q3zU7Yy5E5s (couch)
+  - candidate_11 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 163
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_11 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_11 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (92,012 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  q3zU7Yy5E5s: The stair candidate at [-1.30898204, 3.5508982] is physically unreachable at the Habitat navmesh level regardless of car
+  Ruled out: ['DP9_carrot_distance_increase', 'DP12', 'SDP-C', 'DP3', 'SDP-D', 'DP10', 'DP11', 'DP7_DP8_regex_fallback_alone', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['DP5_goal_binding_bug_fix']
+
+  qyAac8rV8Zk: The sole downstairs stair candidate at [-1.26861111, -8.18583333] lies in a disconnected navmesh component: min_dis_to_d
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'DP7_DP8_regex_fallback', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['navmesh_reachability_precheck_before_stair_commit', 'stair_candidate_search_breadth_in_ascent_policy']
+
+  mL8ThkuaVTM: Stair traversal succeeds robustly at step 120 via passive upstairs detection in all candidates (stair_runs=0, floor_step
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5_prompt_augmentation', 'DP6', 'SDP-D', 'DP9', 'DP7_DP8_regex_fallback_alone', 'ascent_policy_floor_init_timeout_track2_stop_intercept', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus']
+  Next levers: ['DP5_goal_binding_bug_fix', 'navmesh_reachability_precheck_for_floor2_toilet_subregion']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_11/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_11/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_11/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_11/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_11/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_11/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1873s  (exit code 0)
+compile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [30:33<00:00, 237.17s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.642675928946119
+2026-05-20 05:06:57,296 Video created: /home/teeshan/meta_harness_pipeline/runs/candidate_11/smoke10_pipeline_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-20 05:06:57,297][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:23,  2.60it/s][A
+
+ 11%|█         | 23/217 [00:00<00:03, 61.26it/s][A
+
+ 23%|██▎       | 49/217 [00:00<00:01, 115.88it/s][A
+
+ 31%|███▏      | 68/217 [00:00<00:01, 134.42it/s][A
+
+ 40%|████      | 87/217 [00:00<00:00, 149.00it/s][A
+
+ 49%|████▉     | 106/217 [00:00<00:00, 152.28it/s][A
+
+ 57%|█████▋    | 124/217 [00:01<00:00, 134.52it/s][A
+
+ 65%|██████▍   | 140/217 [00:01<00:00, 121.11it/s][A
+
+ 71%|███████   | 154/217 [00:01<00:00, 115.21it/s][A
+
+ 77%|███████▋  | 167/217 [00:01<00:00, 109.09it/s][A
+
+ 85%|████████▍ | 184/217 [00:01<00:00, 122.48it/s][A
+
+ 94%|█████████▍| 204/217 [00:01<00:00, 141.12it/s][A
+100%|██████████| 217/217 [00:01<00:00, 120.72it/s]
+
+100%|██████████| 8/8 [30:40<00:00, 230.06s/it]
+2026-05-20 05:06:59,960 Average episode reward: 7.7917
+2026-05-20 05:06:59,960 Average episode distance_to_goal: 3.6427
+2026-05-20 05:06:59,960 Average episode success: 0.6250
+2026-05-20 05:06:59,960 Average episode spl: 0.3268
+2026-05-20 05:06:59,960 Average episode soft_spl: 0.3776
+2026-05-20 05:06:59,960 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 05:06:59,960 Average episode traveled_stairs: 0.2500
+2026-05-20 05:06:59,960 Average episode yaw: -26.2500
+2026-05-20 05:06:59,960 Average episode target_detected: 0.6250
+2026-05-20 05:06:59,960 Average episode stop_called: 0.6250
+2026-05-20 05:06:59,960 Average episode num_steps: 199.3750
+2026-05-20 05:06:59,960 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_11/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.642675928946119,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_pipeline_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] Logged: {'candidate': 'candidate_11', 'split': 'smoke10_pipeline', 'sr': 0.625, 'best_sr': 0.625, 'status': 'backfill', 'timestamp': '2026-05-20T05:13:39'}
+
+============================================================
+  Validate candidate_12 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_12/harness.py
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_12/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+
+============================================================
+  Eval candidate_12 (backfill) on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_12/harness.py --split smoke10_pipeline
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_12/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [candidate_12] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_12/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260520T054318.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 05:43 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_12 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_12 / q3zU7Yy5E5s (couch)
+  - candidate_12 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 163
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_12 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_12 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (95,311 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  q3zU7Yy5E5s: The stair candidate at [-1.30898204, 3.5508982] is physically unreachable at the Habitat navmesh level regardless of car
+  Ruled out: ['DP9_carrot_distance_increase', 'DP12', 'SDP-C', 'DP3', 'SDP-D', 'DP10', 'DP11', 'DP7_DP8_regex_fallback_alone', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['DP5_goal_binding_bug_fix_couch_scene']
+
+  qyAac8rV8Zk: The sole downstairs stair candidate at [-1.26861111, -8.18583333] lies in a disconnected navmesh component: min_dis_to_d
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'DP7_DP8_regex_fallback', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['navmesh_reachability_precheck_before_stair_commit', 'stair_candidate_search_breadth_in_ascent_policy']
+
+  mL8ThkuaVTM: Stair traversal succeeds robustly at step 120 via passive upstairs detection in all candidates (stair_runs=0, floor_step
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5_prompt_augmentation', 'DP6', 'SDP-D', 'DP9', 'DP7_DP8_regex_fallback_alone', 'ascent_policy_floor_init_timeout_track2_stop_intercept', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus']
+  Next levers: ['navmesh_reachability_precheck_for_floor2_toilet_subregion', 'DP5_goal_binding_bug_fix_toilet_scene_conditional']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_12/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_12/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_12/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_12/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_12/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_12/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1778s  (exit code 0)
+er_compile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [28:58<00:00, 213.16s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.45115
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.04155
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.70%
+Till Now Average Dtg: 3.640452512714546
+2026-05-20 05:43:13,786 Video created: /home/teeshan/meta_harness_pipeline/runs/candidate_12/smoke10_pipeline_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=212.00-did_not_fail.mp4
+
+
+  0%|          | 0/211 [00:00<?, ?it/s][A[2026-05-20 05:43:13,787][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/211 [00:00<01:43,  2.04it/s][A
+
+  8%|▊         | 16/211 [00:00<00:05, 35.08it/s][A
+
+ 16%|█▌        | 33/211 [00:00<00:02, 67.57it/s][A
+
+ 24%|██▎       | 50/211 [00:00<00:01, 93.65it/s][A
+
+ 32%|███▏      | 67/211 [00:00<00:01, 112.73it/s][A
+
+ 41%|████      | 86/211 [00:01<00:00, 132.78it/s][A
+
+ 50%|█████     | 106/211 [00:01<00:00, 149.31it/s][A
+
+ 59%|█████▉    | 124/211 [00:01<00:00, 157.16it/s][A
+
+ 67%|██████▋   | 142/211 [00:01<00:00, 160.16it/s][A
+
+ 76%|███████▋  | 161/211 [00:01<00:00, 166.35it/s][A
+
+ 85%|████████▍ | 179/211 [00:01<00:00, 169.63it/s][A
+
+ 93%|█████████▎| 197/211 [00:01<00:00, 170.61it/s][A
+100%|██████████| 211/211 [00:01<00:00, 123.40it/s]
+
+100%|██████████| 8/8 [29:03<00:00, 217.95s/it]
+2026-05-20 05:43:15,796 Average episode reward: 7.7946
+2026-05-20 05:43:15,796 Average episode distance_to_goal: 3.6405
+2026-05-20 05:43:15,796 Average episode success: 0.6250
+2026-05-20 05:43:15,796 Average episode spl: 0.3270
+2026-05-20 05:43:15,796 Average episode soft_spl: 0.3779
+2026-05-20 05:43:15,796 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 05:43:15,796 Average episode traveled_stairs: 0.2500
+2026-05-20 05:43:15,797 Average episode yaw: -26.2500
+2026-05-20 05:43:15,797 Average episode target_detected: 0.6250
+2026-05-20 05:43:15,797 Average episode stop_called: 0.6250
+2026-05-20 05:43:15,797 Average episode num_steps: 198.6250
+2026-05-20 05:43:15,797 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_12/scores.json
+{
+  "spl": 0.327,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.640452512714546,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_pipeline_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] Logged: {'candidate': 'candidate_12', 'split': 'smoke10_pipeline', 'sr': 0.625, 'best_sr': 0.625, 'status': 'backfill', 'timestamp': '2026-05-20T05:47:09'}
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+Building prompt from 14 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (139622 chars)
+Calling Claude (headless)...
+Traceback (most recent call last):
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 308, in <module>
+    main()
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 278, in main
+    result = subprocess.run(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1996, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['claude', '--print', '--output-format', 'text', '--dangerously-skip-permissions']' timed out after 1800 seconds
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta_harness_pipeline/runs/search_log.jsonl
+############################################################
+
+############################################################
+  ASCENT Pipeline Harness Track 2 Search Loop
+  split=smoke10_pipeline  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.375
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.500
+[loop] Found existing result: candidate_5 SR=0.500
+[loop] Found existing result: candidate_6 SR=0.625
+[loop] Found existing result: candidate_8 SR=0.625
+[loop] Found existing result: candidate_9 SR=0.625
+[loop] Found existing result: candidate_10 SR=0.500
+[loop] Found existing result: candidate_11 SR=0.625
+[loop] Found existing result: candidate_12 SR=0.625
+
+[loop] Backfilling 2 unevaluated candidate(s): ['candidate_13', 'candidate_14']
+
+============================================================
+  Validate candidate_13 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_13/harness.py
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_13/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+
+============================================================
+  Eval candidate_13 (backfill) on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_13/harness.py --split smoke10_pipeline
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_13/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [candidate_13] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_13/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260520T131621.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 13:16 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_13 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_13 / q3zU7Yy5E5s (couch)
+  - candidate_13 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 163
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_13 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_13 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (95,019 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  q3zU7Yy5E5s: The stair at [-1.30898204, 3.5508982] is in a disconnected navmesh component and physically unreachable at any carrot di
+  Ruled out: ['DP9_carrot_distance_increase', 'DP12', 'SDP-C', 'DP3', 'SDP-D', 'DP10', 'DP11', 'DP7_DP8_regex_fallback_alone', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['DP5_goal_binding_bug_fix_couch_scene']
+
+  qyAac8rV8Zk: The sole downstairs stair candidate at [-1.26861111, -8.18583333] lies in a disconnected navmesh component: min_dis_to_d
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'DP7_DP8_regex_fallback', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['navmesh_reachability_precheck_before_stair_commit', 'stair_candidate_search_breadth_in_ascent_policy']
+
+  mL8ThkuaVTM: Stair traversal succeeds robustly at step 120 via passive upstairs detection in all candidates (stair_runs=0, floor_step
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5_prompt_augmentation', 'DP6', 'SDP-D', 'DP9', 'DP7_DP8_regex_fallback_alone', 'DP5_goal_binding_bug_fix_toilet_scene_alone', 'ascent_policy_floor_init_timeout_track2_stop_intercept', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus']
+  Next levers: ['navmesh_reachability_precheck_for_floor2_toilet_subregion']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_13/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_13/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_13/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_13/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_13/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_13/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1575s  (exit code 0)
+orkarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [25:30<00:00, 198.57s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.642675928946119
+2026-05-20 13:16:16,466 Video created: /home/teeshan/meta_harness_pipeline/runs/candidate_13/smoke10_pipeline_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-20 13:16:16,467][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:26,  2.51it/s][A
+
+  7%|▋         | 15/217 [00:00<00:05, 38.61it/s][A
+
+ 14%|█▍        | 31/217 [00:00<00:02, 71.24it/s][A
+
+ 21%|██        | 46/217 [00:00<00:01, 93.17it/s][A
+
+ 28%|██▊       | 61/217 [00:00<00:01, 109.36it/s][A
+
+ 35%|███▌      | 77/217 [00:00<00:01, 123.56it/s][A
+
+ 44%|████▍     | 96/217 [00:01<00:00, 140.32it/s][A
+
+ 53%|█████▎    | 114/217 [00:01<00:00, 150.78it/s][A
+
+ 61%|██████    | 132/217 [00:01<00:00, 156.65it/s][A
+
+ 69%|██████▊   | 149/217 [00:01<00:00, 160.05it/s][A
+
+ 76%|███████▋  | 166/217 [00:01<00:00, 162.96it/s][A
+
+ 85%|████████▍ | 184/217 [00:01<00:00, 165.74it/s][A
+
+ 93%|█████████▎| 202/217 [00:01<00:00, 169.29it/s][A
+100%|██████████| 217/217 [00:01<00:00, 126.94it/s]
+
+100%|██████████| 8/8 [25:36<00:00, 192.05s/it]
+2026-05-20 13:16:18,486 Average episode reward: 7.7917
+2026-05-20 13:16:18,486 Average episode distance_to_goal: 3.6427
+2026-05-20 13:16:18,486 Average episode success: 0.6250
+2026-05-20 13:16:18,486 Average episode spl: 0.3268
+2026-05-20 13:16:18,486 Average episode soft_spl: 0.3776
+2026-05-20 13:16:18,486 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 13:16:18,486 Average episode traveled_stairs: 0.2500
+2026-05-20 13:16:18,486 Average episode yaw: -26.2500
+2026-05-20 13:16:18,486 Average episode target_detected: 0.6250
+2026-05-20 13:16:18,486 Average episode stop_called: 0.6250
+2026-05-20 13:16:18,486 Average episode num_steps: 199.3750
+2026-05-20 13:16:18,486 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_13/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.642675928946119,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_pipeline_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] Logged: {'candidate': 'candidate_13', 'split': 'smoke10_pipeline', 'sr': 0.625, 'best_sr': 0.625, 'status': 'backfill', 'timestamp': '2026-05-20T13:19:19'}
+
+============================================================
+  Validate candidate_14 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/validate_harness.py /home/teeshan/meta_harness_pipeline/runs/candidate_14/harness.py
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_14/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+
+============================================================
+  Eval candidate_14 (backfill) on smoke10_pipeline
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/run_eval.py --candidate /home/teeshan/meta_harness_pipeline/runs/candidate_14/harness.py --split smoke10_pipeline
+============================================================
+Validating: /home/teeshan/meta_harness_pipeline/runs/candidate_14/harness.py
+  OK   [apply]
+  OK   [is_stuck]
+  OK   [get_navigation_state]
+  OK   [should_call_stop]
+  OK   [postprocess_frontiers]
+  OK   [should_navigate_to_candidate_detection]
+  OK   [get_similar_objects]
+  OK   [compute_revisit_penalty]
+  OK   [get_floor_exploration_budget]
+  OK   [build_exploration_memory]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [log_step]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 26 methods validated successfully.
+  [candidate_14] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta_harness_pipeline/runs/candidate_14/failure_classification.json
+
+Report written to /home/teeshan/meta_harness_pipeline/failure_report_20260520T134802.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 13:48 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_14 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 390
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_14 / q3zU7Yy5E5s (couch)
+  - candidate_14 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 163
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_14 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_14 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (94,544 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_pipeline/analysis_db.json
+
+  q3zU7Yy5E5s: Both tested stair candidates lie in disconnected navmesh components: the original stair at [-1.30898204, 3.5508982] (can
+  Ruled out: ['DP9_carrot_distance_increase', 'DP12', 'SDP-C', 'DP3', 'SDP-D', 'DP10', 'DP11', 'DP7_DP8_regex_fallback_alone', 'DP5_goal_binding_bug_fix_couch_scene_alone', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['navmesh_reachability_precheck_before_stair_commit']
+
+  qyAac8rV8Zk: The downstairs stair lies in a disconnected navmesh component regardless of which centroid is selected: [-1.26861111, -8
+  Ruled out: ['DP9', 'DP12', 'SDP-C', 'DP10', 'DP5', 'DP6', 'SDP-D', 'DP7_DP8_regex_fallback', 'DP5_goal_binding_bug_fix', 'ascent_policy_floor_init_timeout_track2', 'ascent_policy_explore_mode_floor_switch_guard_track2']
+  Next levers: ['navmesh_reachability_precheck_before_stair_commit', 'stair_candidate_search_breadth_in_ascent_policy']
+
+  mL8ThkuaVTM: Stair traversal succeeds robustly at step 120 via passive upstairs detection (floor_step resets to 0) in all nine candid
+  Ruled out: ['DP12', 'SDP-C', 'DP10', 'DP5_prompt_augmentation', 'DP6', 'SDP-D', 'DP9', 'DP7_DP8_regex_fallback_alone', 'DP5_goal_binding_bug_fix_toilet_scene_alone', 'DP3_multifloor_trigger_change', 'ascent_policy_floor_init_timeout_track2_stop_intercept', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30', 'ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus']
+  Next levers: ['navmesh_reachability_precheck_for_floor2_toilet_subregion']
+
+=== ASCENT Pipeline Harness: run_eval ===
+Candidate: /home/teeshan/meta_harness_pipeline/runs/candidate_14/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_pipeline habitat_baselines.video_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_14/smoke10_pipeline_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_pipeline/runs/candidate_14/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_pipeline/runs/candidate_14/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta_harness_pipeline/runs/candidate_14/harness.py
+Log:     /home/teeshan/meta_harness_pipeline/runs/candidate_14/smoke10_pipeline.log
+============================================================
+
+
+Eval finished in 1722s  (exit code 0)
+nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [28:10<00:00, 217.91s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.54%
+Till Now Average Dtg: 3.691431294195354
+2026-05-20 13:47:57,570 Video created: /home/teeshan/meta_harness_pipeline/runs/candidate_14/smoke10_pipeline_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-20 13:47:57,571][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:35,  2.27it/s][A
+
+  7%|▋         | 16/217 [00:00<00:05, 38.45it/s][A
+
+ 15%|█▌        | 33/217 [00:00<00:02, 71.47it/s][A
+
+ 23%|██▎       | 50/217 [00:00<00:01, 96.32it/s][A
+
+ 30%|███       | 66/217 [00:00<00:01, 113.32it/s][A
+
+ 38%|███▊      | 83/217 [00:00<00:01, 128.05it/s][A
+
+ 46%|████▌     | 100/217 [00:01<00:00, 138.57it/s][A
+
+ 53%|█████▎    | 116/217 [00:01<00:00, 141.88it/s][A
+
+ 61%|██████    | 132/217 [00:01<00:00, 129.58it/s][A
+
+ 67%|██████▋   | 146/217 [00:01<00:00, 122.84it/s][A
+
+ 73%|███████▎  | 159/217 [00:01<00:00, 119.62it/s][A
+
+ 79%|███████▉  | 172/217 [00:01<00:00, 119.87it/s][A
+
+ 87%|████████▋ | 188/217 [00:01<00:00, 129.87it/s][A
+
+ 93%|█████████▎| 202/217 [00:01<00:00, 132.38it/s][A
+100%|██████████| 217/217 [00:01<00:00, 110.47it/s]
+
+100%|██████████| 8/8 [28:15<00:00, 211.90s/it]
+2026-05-20 13:47:59,823 Average episode reward: 7.7077
+2026-05-20 13:47:59,823 Average episode distance_to_goal: 3.6914
+2026-05-20 13:47:59,823 Average episode success: 0.6250
+2026-05-20 13:47:59,823 Average episode spl: 0.3254
+2026-05-20 13:47:59,823 Average episode soft_spl: 0.3750
+2026-05-20 13:47:59,823 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 13:47:59,823 Average episode traveled_stairs: 0.2500
+2026-05-20 13:47:59,823 Average episode yaw: -0.0000
+2026-05-20 13:47:59,823 Average episode target_detected: 0.6250
+2026-05-20 13:47:59,823 Average episode stop_called: 0.6250
+2026-05-20 13:47:59,823 Average episode num_steps: 234.6250
+2026-05-20 13:47:59,823 Average episode start_yaw: -2.1821
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_pipeline/runs/candidate_14/scores.json
+{
+  "spl": 0.32539999999999997,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.691431294195354,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_pipeline_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] Logged: {'candidate': 'candidate_14', 'split': 'smoke10_pipeline', 'sr': 0.625, 'best_sr': 0.625, 'status': 'backfill', 'timestamp': '2026-05-20T13:56:12'}
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_pipeline/scripts/propose.py
+============================================================
+Building prompt from 15 prior candidate(s)...
+Prompt written to /tmp/ascent_pipeline_proposer_prompt.txt (73435 chars)
+Calling Claude (headless)...
+Traceback (most recent call last):
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 314, in <module>
+    main()
+  File "/home/teeshan/meta_harness_pipeline/scripts/propose.py", line 284, in main
+    result = subprocess.run(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1996, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['claude', '--print', '--output-format', 'text', '--dangerously-skip-permissions']' timed out after 1800 seconds
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta_harness_pipeline/runs/search_log.jsonl
+############################################################

@@ -1,0 +1,31 @@
+{
+  "candidate": "candidate_2",
+  "split": "smoke10_t3",
+  "fingerprints": {
+    "bxsVRursffK": {
+      "seq": "initialize(1-12)\u2192explore(13-121)\u2192get_close_to_stair(122-150)\u2192climb_stair(151-166)\u2192initialize(167-179)\u2192explore(180-180)\u2192get_close_to_stair(181-190)\u2192climb_stair(191-203)\u2192initialize(204-216)\u2192navigate(217-238)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 110,
+        "get_close_to_stair": 39,
+        "climb_stair": 29,
+        "navigate": 22
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "a020a87e",
+      "duplicate_of": null
+    },
+    "4ok3usBNeis": {
+      "seq": "initialize(1-12)\u2192explore(13-235)\u2192get_close_to_stair(236-263)\u2192climb_stair(264-280)",
+      "mode_dist": {
+        "initialize": 12,
+        "explore": 223,
+        "get_close_to_stair": 28,
+        "climb_stair": 17
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "1624ccf6",
+      "duplicate_of": null
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "candidate_1": {
+    "rank": 1,
+    "target_failure_class": "frontier_scoring_bias",
+    "target_scenes": [],
+    "target_file": "frontier.py",
+    "hypothesis": "With no telemetry or failure data yet, the highest-prior risk in zero-shot object-goal navigation is frontier scoring: BLIP-2 semantic scores (Mss) may be poorly calibrated against distance penalty (DP1), causing the agent to commit to semantically plausible but geometrically distant frontiers while ignoring closer, equally valid candidates. This manifests as long detour paths and missed nearby objects.",
+    "proposed_change": "In the frontier scoring function, increase the relative weight of DP1 (distance penalty) by reducing the Mss coefficient from its default value by ~20% (e.g., multiply Mss contribution by 0.8 before summing with DP1 term), so that equidistant frontiers are broken in favor of proximity rather than semantic confidence.",
+    "why_this_will_work": "Distance-weighted frontier selection is a well-established prior in object-goal navigation; BLIP-2 semantic scores carry uncertainty especially for small or occluded objects, so over-relying on Mss causes the agent to chase high-confidence-but-far frontiers. Downweighting Mss reduces this bias without eliminating semantic guidance.",
+    "why_alternatives_rejected": "stair.py and floor.py are only relevant after the agent commits to a floor-switch decision; patch.py addresses structural sim issues not scoring logic; llm.py and dps.py govern carrot waypoint and floor-switch thresholds which are downstream of frontier selection. The frontier scorer is the earliest and highest-leverage intervention point.",
+    "falsifiability_check": "After the fix, frontier selection logs should show a measurable decrease in mean selected-frontier distance-to-agent at decision time, and episode step counts for successful episodes should decrease. If mean selected-frontier distance is unchanged, the weight parameter was not applied.",
+    "predicted_sr_delta": 0.05,
+    "confirmed": true,
+    "actual_outcome": "improved",
+    "actual_sr_delta": 0.4
+  },
+  "candidate_2": {
+    "rank": 1,
+    "target_failure_class": "navmesh_disconnection",
+    "target_scenes": [
+      "p53SfW6mjZe",
+      "XB4GS9ShBRE",
+      "bxsVRursffK"
+    ],
+    "target_file": "patch.py",
+    "hypothesis": "When the goal object resides in a navmesh component disconnected from the agent's starting component (e.g., isolated room or upper floor with no sampled stair crossing), geodesic_distance() returns inf. DP12 floor-switch only fires when the agent enters a stair-proximity zone; a disconnected component means the agent never reaches that zone and exhausts all frontiers on the current floor, terminating without switching.",
+    "proposed_change": "In patch.py, monkey-patch the agent's step() or act() loop to add a disconnection watchdog: track a rolling window of 25 steps; if geodesic_distance to the best BLIP-2 goal candidate remains inf for the entire window AND at least one stair waypoint exists on the current floor navmesh, inject a synthetic DP12 floor-switch trigger by directly calling the floor-switch handler with force=True, bypassing the stair-proximity gate.",
+    "why_this_will_work": "Oracle explicitly classifies p53SfW6mjZe, XB4GS9ShBRE, and bxsVRursffK as navmesh_disconnection \u2014 the strongest available signal. Frame descriptions for all three show the agent exploring indefinitely (step 0 \u2192 step 40-45) without closing on the goal, consistent with inf geodesic keeping DP9 carrot locked to local exploration. Forcing floor-switch on sustained-inf geodesic directly addresses the stall mechanism without touching frontier scoring (already improved in candidate_1).",
+    "why_alternatives_rejected": "frontier.py already patched in candidate_1 and addresses scoring bias, not connectivity. floor.py manages switch logic but lacks visibility into geodesic_distance values before the stair-proximity gate fires. stair.py controls traversal mechanics post-trigger, not the trigger condition itself. patch.py is the correct interception point because it can wrap the full step loop with cross-cutting state the individual DP modules do not share.",
+    "falsifiability_check": "Post-fix logs must emit 'disconnection_watchdog: inf_geodesic_window=25, forcing floor_switch' for all three scenes within the first 40 steps; geodesic_distance telemetry must transition from inf to a finite value within 5 steps of the forced switch.",
+    "predicted_sr_delta": 0.1,
+    "confirmed": false,
+    "actual_outcome": "no_improvement",
+    "actual_sr_delta": -0.033299999999999996
+  },
+  "candidate_3": {
+    "rank": 1,
+    "target_failure_class": "false_positive_stop",
+    "target_scenes": [
+      "mv2HUxq3B53",
+      "qyAac8rV8Zk"
+    ],
+    "target_file": "patch.py",
+    "hypothesis": "ASCENT emits STOP when BLIP-2 ITM score exceeds a low confidence threshold without verifying the agent is physically proximate to the detected object. In mv2HUxq3B53 the TV is visible from the starting position and STOP fires within 13 floor_steps of reinit while the agent is still far from the goal; in qyAac8rV8Zk a toilet object triggers false-positive detection for the TV goal category at a geometrically implausible distance. Neither scene involves stair failure or navmesh disconnection \u2014 the binding failure is at the STOP emission layer.",
+    "proposed_change": "In patch.py, monkey-patch the STOP emission check to enforce two gates before STOP is permitted: (1) BLIP-2 ITM confidence >= 0.50 (raise from current lower effective threshold), and (2) Euclidean distance from agent position to detected bbox centroid <= 2.0m. If either gate fails, suppress STOP, log 'STOP_SUPPRESSED reason=low_confidence conf=X threshold=0.50' or 'STOP_SUPPRESSED reason=proximity dist=Y max=2.0', and continue navigate mode. Both conditions must be satisfied simultaneously.",
+    "why_this_will_work": "mv2HUxq3B53 telemetry shows STOP fires at floor_step 1\u219213 immediately after floor reinit, indicating the agent halts on a TV detection from the starting position before physically closing to the goal \u2014 a classic far-field false positive. The 'STOP_detection_confidence_threshold' and 'false_positive_suppression_by_position_check' are both listed as untested for this scene. For qyAac8rV8Zk, 'false_positive_suppression_for_toilet_goal' is explicitly listed as untested, confirming the existing threshold permits spurious cross-category detections. A compound confidence+proximity gate rejects both failure modes without altering behavior when the agent has legitimately closed to a high-confidence goal.",
+    "why_alternatives_rejected": "DP1 (frontier scoring) is forbidden for this cluster \u2014 failure is at STOP emission, not frontier selection. navmesh_disconnection_watchdog is confirmed behavioral no-op for both scenes (neither involves disconnection). DP9 stair carrot is off the failure path (stair_runs=0 for mv2HUxq3B53; qyAac8rV8Zk stair traversal already succeeds). dps.py handles scalar parameters only and cannot implement a compound gate requiring real-time access to agent position and bbox centroid at STOP decision time \u2014 patch.py monkey-patching is required.",
+    "falsifiability_check": "After the fix, logs must contain 'STOP_SUPPRESSED' entries for mv2HUxq3B53 at floor_step < 20, followed by continued navigate mode steps with decreasing DTG toward the TV. For qyAac8rV8Zk, toilet-triggered STOP entries must be absent; episode must continue until a TV detection fires at distance <= 2.0m. SR for mv2HUxq3B53 must increase from 0 to 1.",
+    "predicted_sr_delta": 0.133,
+    "confirmed": false,
+    "actual_outcome": "no_improvement",
+    "actual_sr_delta": -0.30000000000000004
+  },
+  "candidate_4": {
+    "rank": 1,
+    "target_failure_class": "STOP_gate_calibration",
+    "target_scenes": [
+      "DYehNKdT76V",
+      "Dd4bFSTQ8gi",
+      "zt1RVoi7PcG",
+      "wcojb4TFT35",
+      "mv2HUxq3B53",
+      "q3zU7Yy5E5s"
+    ],
+    "target_file": "hooks.py",
+    "hypothesis": "ASCENT's native STOP threshold is miscalibrated for large furniture: BLIP-2 ITM Mss for couch/bed/chair is structurally ~0.15\u20130.25 even at \u22640.5m proximity due to low visual contrast of large uniform surfaces against backgrounds. The native threshold (and candidate_3's universal 0.50 gate) vetoes all true-positive large-furniture detections. Conversely, for TV, the native threshold permits false-positive STOP on far-field detections (step 24\u201326, mv2HUxq3B53) at low confidence and large distance. A per-category gate in should_stop() can fix both directions: force STOP for large furniture when score \u2265 category-low-threshold AND distance \u2264 relaxed-prox; suppress STOP for TV when score < tv-threshold AND distance > tv-prox.",
+    "proposed_change": "Modify hooks.py HooksMixin. (1) Add _goal_obj dict in on_episode_start: store episode_info['target_object'].lower() keyed by env. (2) Replace the baseline 'return None' in should_stop with per-category logic: _CONF_FORCE = {'couch':0.15,'sofa':0.15,'bed':0.20,'chair':0.25,'armchair':0.25}; _PROX_FORCE = {'couch':3.5,'sofa':3.5,'bed':3.5,'chair':3.0,'armchair':3.0}; _CONF_SUPPRESS = {'tv':0.40,'television':0.40}; _PROX_SUPPRESS = {'tv':2.5,'television':2.5}. If goal in _CONF_FORCE and detection_score >= _CONF_FORCE[goal] and distance_to_detection <= _PROX_FORCE[goal]: log [T8_STOP_FORCE] and return True. If goal in _CONF_SUPPRESS and detection_score < _CONF_SUPPRESS[goal] and distance_to_detection > _PROX_SUPPRESS[goal]: log [T8_STOP_SUPPRESS] and return False. Otherwise: return None.",
+    "why_this_will_work": "DYehNKdT76V telemetry: BLIP-2 raw Mss=0.180 for couch at 0.2m proximity throughout 409-step upper-floor window \u2014 below any \u22650.50 threshold but above 0.15; lowering couch threshold to 0.15 causes should_stop to return True, forcing episode termination with success. zt1RVoi7PcG: agent physically closes to 0.4m from chair centroid during navigate steps 281\u2013309 \u2014 distance gate is satisfied, only confidence is binding; chair threshold of 0.25 unblocks STOP. wcojb4TFT35 and Dd4bFSTQ8gi share identical compound-suppression pattern confirmed by candidates 1 and 2 calling STOP correctly for those scenes (no gate, native threshold). mv2HUxq3B53: candidate_3 proved that blocking TV detections below 0.50 at >2.0m suppresses the false positive at step 24\u201326; using 0.40 threshold with 2.5m distance gate reproduces this suppression while being less restrictive for close true-positive TV detections. The hooks.py SDP-P should_stop hook is called before the native ASCENT stop decision and takes precedence when returning True/False, making this a clean interception point with no side effects on stair or frontier logic.",
+    "why_alternatives_rejected": "patch.py/false_positive_stop is a forbidden pair (candidate_3 failed). patch.py/STOP_gate_calibration would require monkey-patching ascent_policy's action-selection internals, which is more fragile than the clean SDP hook. The erroneous candidate_1 hooks.py attempted a coarse DTG\u22651.5m gate \u2014 that approach blocks all STOP calls when DTG is large, including legitimate far-view detections of large objects, and does not handle the TV false-positive direction. frontier.py and floor.py do not govern STOP decisions. The per-category threshold is the only lever that addresses both large-furniture undershooting (return True) and TV false-positive overshooting (return False) in a single targeted change.",
+    "falsifiability_check": "[T8_STOP_FORCE] must appear in DYehNKdT76V, Dd4bFSTQ8gi, zt1RVoi7PcG, wcojb4TFT35 logs at a step where detection_score is in [0.15,0.30] range; episode must end with success at that step rather than continuing to step 499. [T8_STOP_SUPPRESS] must appear in mv2HUxq3B53 log at step 24\u201326 blocking the false-positive; episode must continue past step 26 (as confirmed working in candidate_3's evaluation). If [T8_STOP_FORCE] never fires for couch scenes, BLIP-2 Mss is below 0.15 even at close range \u2014 lower couch threshold to 0.10 or widen proximity gate to 4.5m.",
+    "predicted_sr_delta": 0.17,
+    "confirmed": false,
+    "actual_outcome": "no_improvement",
+    "actual_sr_delta": 0.0
+  },
+  "candidate_5": {
+    "rank": 1,
+    "target_failure_class": "per_category_stop_gate",
+    "target_scenes": [
+      "DYehNKdT76V",
+      "Dd4bFSTQ8gi",
+      "zt1RVoi7PcG",
+      "wcojb4TFT35",
+      "q3zU7Yy5E5s"
+    ],
+    "target_file": "hooks.py",
+    "hypothesis": "BLIP-2 ITM confidence scores for large furniture (couch, bed, chair) are intrinsically low (~0.10\u20130.18 at closest navigable distances) because these objects have poor visual contrast against room backgrounds. DYehNKdT76V reports Mss=~0.180 for couch even at 0.2m proximity \u2014 any gate threshold above ~0.18 makes couch STOP structurally impossible. candidate_4's per-couch threshold of 0.15 likely resolved the confidence sub-gate but left the 2.0m proximity sub-gate as the binding suppressor for detections triggered from natural navigable ranges (2.0\u20134.5m for large furniture). The compound gate must be replaced with a per-category (conf_threshold, prox_m) lookup that independently calibrates both parameters for each furniture class.",
+    "proposed_change": "In hooks.py STOP gate function, replace the single universal (confidence_threshold, proximity_threshold_m) with a PER_CATEGORY_STOP_PARAMS dict: {'couch': (0.10, 4.5), 'sofa': (0.10, 4.5), 'bed': (0.12, 4.0), 'chair': (0.18, 3.5), 'tv': (0.40, 2.5), 'television': (0.40, 2.5), 'toilet': (0.40, 2.0)}. Default to (0.40, 2.0) for unlisted goal categories. Perform goal_category.lower() lookup into this dict to obtain (conf_thresh, prox_thresh) before evaluating the STOP gate condition (mss >= conf_thresh AND distance_m <= prox_thresh).",
+    "why_this_will_work": "DYehNKdT76V: Mss=~0.180 for couch at 0.2m \u2014 0.15 threshold (candidate_4, ruled out in q3zU7Yy5E5s) sits above the empirical detection floor; 0.10 is below it. q3zU7Yy5E5s explicitly lists 'per_category_couch_threshold_lowered_to_0.10_proximity_gate_widened_to_4.5m' as the remaining untested lever. zt1RVoi7PcG and wcojb4TFT35 both report chair STOP suppressed with the agent at 2.0\u20133.5m bbox distance \u2014 wcojb4TFT35 notes state '2.0m threshold is too tight for chair detections, which can be reliably confirmed from 2.0\u20133.5m'. Dd4bFSTQ8gi's bed STOP was suppressed by the compound gate at step ~49. All five failures share the same mechanism; only the per-category (conf, prox) calibration addresses both sub-gates simultaneously.",
+    "why_alternatives_rejected": "stair.py fixes (floor_reinit, streak threshold) address at most 1\u20132 scenes each. frontier.py changes risk degrading candidate_1's incumbent SR=0.4. patch.py has failed twice: (navmesh_disconnection) and (false_positive_stop). (hooks.py, STOP_gate_calibration) in candidate_4 used 0.15 couch threshold which is above the empirical 0.18 detection floor in DYehNKdT76V and left the 2.0m proximity gate unchanged \u2014 neither sub-gate was fixed for large-furniture categories. The remaining explicitly-listed untested fix for q3zU7Yy5E5s requires BOTH 0.10 threshold AND 4.5m proximity gate together.",
+    "falsifiability_check": "After fix: DYehNKdT76V must log STOP_ACCEPTED (not STOP_SUPPRESSED) for couch detection within the upper-floor window (steps ~83\u2013492); zt1RVoi7PcG must log STOP_ACCEPTED at steps 281\u2013309; wcojb4TFT35 must log STOP_ACCEPTED at steps ~158\u2013167; q3zU7Yy5E5s must not log STOP_SUPPRESSED at floor_step ~42 with DTG ~1.1m; Dd4bFSTQ8gi must log STOP_ACCEPTED at step ~49. TV and toilet scenes must not regress (their gate thresholds are unchanged at 0.40/2.5m and 0.40/2.0m respectively).",
+    "predicted_sr_delta": 0.13,
+    "confirmed": false,
+    "actual_outcome": "no_improvement",
+    "actual_sr_delta": 0.0
+  },
+  "candidate_6": {
+    "rank": 1,
+    "target_failure_class": "floor_reinit_missing_after_stair_success",
+    "target_scenes": [
+      "bxsVRursffK"
+    ],
+    "target_file": "patch.py",
+    "hypothesis": "map_controller._process_stair_climb_state marks SUCCESS (in_stair_map=False) at global step 476 after a 447-step oscillating climb sequence but does not invoke floor_reinit(). Consequently floor_step remains at 293\u2192294 rather than resetting to 0, the occupancy grid retains the pre-climb floor's frontier set, and the agent has no explorable cells on the goal floor. The bed is never detected because the agent cannot navigate to the goal floor's rooms.",
+    "proposed_change": "In patch.py, extend the monkey-patch of _process_stair_climb_state to call self.floor_reinit() immediately after the SUCCESS condition clears in_stair_map (i.e., after detecting the transition from in_stair_map=True to in_stair_map=False). This mirrors the floor_reinit() call that DP12-triggered transitions already perform and that candidates 1 and 2 rely on for 4ok3usBNeis at step 157.",
+    "why_this_will_work": "Telemetry is unambiguous: floor_step=293 at step 476 (SUCCESS declared), floor_step=294 at step 477, zero reset. If floor_reinit() were called, floor_step would reset to 0 and fresh frontiers would be seeded for the new floor. The DP12-triggered path (which works in candidates 1/2 for 4ok3usBNeis) confirms floor_reinit() is the correct post-transition call. climb_direction=2 appears in all 18 T6 stair log entries for this scene, so the SUCCESS branch consistently skips reinit regardless of climb direction.",
+    "why_alternatives_rejected": "DP9 carrot distance and DP12 threshold address oscillation symptoms (447-step climb) but not the absent reinit call. frontier.py and hooks.py changes do not touch the stair-completion code path. floor.py minimum-gate changes affect entry conditions, not post-climb state. The (patch.py, floor_reinit_missing_after_stair_success) pair is new: candidate_2 targeted navmesh_disconnection watchdog in patch.py; candidate_3 targeted false_positive_stop suppression in patch.py.",
+    "falsifiability_check": "Log must show floor_step counter resetting to 0 at the same global step as the SUCCESS transition (previously step 476); explore_mode must restart from floor_step=0 with a non-empty frontier list; agent must enter a new room on the goal floor within 5 explore steps post-reinit.",
+    "predicted_sr_delta": 0.033,
+    "confirmed": false,
+    "actual_outcome": "no_improvement",
+    "actual_sr_delta": 0.0
+  },
+  "candidate_7": {
+    "rank": 1,
+    "target_failure_class": "floor_exploration_budget_window",
+    "target_scenes": [
+      "p53SfW6mjZe",
+      "mL8ThkuaVTM",
+      "XB4GS9ShBRE"
+    ],
+    "target_file": "floor.py",
+    "hypothesis": "The stair-mode transition fires at the wrong floor_step in three scenes: p53SfW6mjZe exhausts 380 of 500 steps on floor-0 (TV is on floor-1), leaving only 13 upper-floor steps after a confirmed physical floor change; mL8ThkuaVTM's look_for_downstair trigger fires at floor_step=47 on floor-2 before the couch room frontier is reached, causing premature oscillation; XB4GS9ShBRE commits to upstairs after only 22\u201347 floor_steps, abandoning the couch present on the starting floor. All three share a missing floor_step budget gate: no minimum exploration requirement before stair entry and no maximum cap before forced transition.",
+    "proposed_change": "In floor.py's floor-switch trigger logic, add two new guards: (1) MAX_FLOOR_STEPS_BEFORE_FORCED_STAIR = 200 \u2014 if floor_step > 200 on the current floor and goal has not been reached, force get_close_to_stair mode regardless of remaining frontier count (addresses p53SfW6mjZe's 380-step over-exploration); (2) MIN_FLOOR_STEPS_ON_FLOOR = 80 \u2014 gate all stair-entry triggers (both look_for_upstair and look_for_downstair) to require floor_step >= 80 on the current floor before allowing mode transition (addresses mL8ThkuaVTM's premature downstair at step 47 and XB4GS9ShBRE's premature upstair at step 22\u201347). These two constants implement a floor_step budget window [80, 200] as a pre-condition evaluated before existing DP12 transition logic.",
+    "why_this_will_work": "p53SfW6mjZe: capping floor-0 at 200 steps provides 200+ upper-floor steps vs current 13 (14x budget increase); TV is confirmed physically reachable post-stair-climb (T6 SUCCESS at step ~393), so additional budget directly translates to exploration coverage. mL8ThkuaVTM: the untested analysis explicitly states 'suppressing look_for_downstair trigger until floor_step>=80 could allow the couch room frontier to be reached before downstairs oscillation begins'; stair traversal already succeeds in candidates 1, 4, 5, and 6 so the sole residual failure is the premature downstair trigger at floor_step=47. XB4GS9ShBRE: the untested list identifies 'minimum starting-floor coverage gate before stair entry' as 'the sole untested lever that addresses the causal bottleneck at step 64'; the couch is present on the starting floor and would be found during the extended exploration window.",
+    "why_alternatives_rejected": "DP12 as sole gate is ruled out for p53SfW6mjZe; DP12 is ruled out entirely for XB4GS9ShBRE \u2014 but the proposed floor_step pre-condition is a NEW gate evaluated before DP12, not a modification of DP12 parameters themselves, consistent with the untested item description. (hooks.py, STOP_gate_calibration) and (hooks.py, per_category_stop_gate) both scored 0.4 with no improvement. (patch.py, false_positive_stop) scored 0.1 SR (severe regression). stair.py T6_EARLY_STAIR_DISABLE streak threshold fixes only mL8ThkuaVTM and provides no lever for p53SfW6mjZe or XB4GS9ShBRE. floor.py has not been targeted in any prior candidate, making (floor.py, floor_exploration_budget_window) a guaranteed new (file, class) pair.",
+    "falsifiability_check": "p53SfW6mjZe: logs must show get_close_to_stair transition at floor_step<=200 (vs 380 baseline); upper-floor floor_step count must exceed 100 (vs 13 baseline). mL8ThkuaVTM: look_for_downstair must NOT appear in logs before floor_step=80 on floor-2; couch room frontier [-2.53, 1.30] vicinity must be visited before any downstair transition. XB4GS9ShBRE: first stair-entry log must appear no earlier than floor_step=80 on starting floor (vs 22\u201347 baseline); couch on starting floor must generate a STOP candidate before stair entry.",
+    "predicted_sr_delta": 0.1,
+    "confirmed": false,
+    "actual_outcome": "no_improvement",
+    "actual_sr_delta": -0.06670000000000004
+  },
+  "candidate_8": {
+    "rank": 1,
+    "target_failure_class": "premature_stair_mode_entry_and_disabled_set_deadlock",
+    "target_scenes": [
+      "XB4GS9ShBRE",
+      "zt1RVoi7PcG",
+      "DYehNKdT76V"
+    ],
+    "target_file": "stair.py",
+    "hypothesis": "Three mechanistically distinct stair.py call-site failures: (1) XB4GS9ShBRE \u2014 the look_for_downstair mode-transition dispatcher fires at floor_step\u224847\u201365 with no floor_step minimum guard, causing the agent to abandon the starting floor where the couch is VLM-confirmed visible from step 18; candidate_7 proved floor.py cannot intercept this trigger because it fires upstream of floor.py's gates. (2) zt1RVoi7PcG \u2014 FORCE_STAIR_SWITCH (T8 floor budget mechanism) repeatedly targets a stair frontier already in T6's disabled_frontiers set, creating a hard T8\u2194T6 deadlock loop from step 203 to episode timeout at step 357; no floor_step guard or frontier scoring change can break this loop without checking the disabled set before issuing FORCE_STAIR_SWITCH. (3) DYehNKdT76V \u2014 T6_CENTROID_BYPASS fires at paused=8 with in_stair_map=False, producing a carrot-strategy landing zone displaced from the couch area and suppressing the Mss signal; gating the bypass on geodesic=inf restores natural centroid behavior where couch Mss is recoverable.",
+    "proposed_change": "(1) In the look_for_downstair transition entry point in stair.py: add guard `if self.floor_step < MIN_LOOK_FOR_DOWNSTAIR (= 80): return False` before mode transition to prevent stair-descent mode before adequate current-floor exploration. (2) Before every FORCE_STAIR_SWITCH emission: add `if target_stair_frontier in self.disabled_frontiers: skip emission and fall back to best non-stair frontier` to break T8\u2194T6 deadlock. (3) In T6_CENTROID_BYPASS conditional: append `and geodesic_distance == float('inf')` so the carrot-strategy bypass only activates on truly disconnected navmesh, not on normally traversable stairs.",
+    "why_this_will_work": "XB4GS9ShBRE: candidate_7 synthesis explicitly states 'trigger fires before floor.py gates can intercept it; call site must be in ascent_policy.py:_climb_stair or the mode-transition dispatcher'; the floor_step=80 threshold sits above the observed trigger range of 47\u201365, guaranteeing the agent remains on the goal floor through the couch-detection window. zt1RVoi7PcG: T8\u2194T6 deadlock is mechanically confirmed via telemetry \u2014 FORCE_STAIR_SWITCH followed immediately by T6 disable is logged continuously steps 203\u2013357; inserting the disabled-set pre-check directly breaks the causal chain. DYehNKdT76V: candidates 2\u20133 show T6_CENTROID_BYPASS fires with in_stair_map=False producing the wrong landing zone; candidate_4 (hooks.py, SR=0.4) confirms the couch is detectable when the agent lands in the correct position, so fixing the bypass condition is sufficient.",
+    "why_alternatives_rejected": "floor.py (candidate_7, SR=0.3333): XB4GS9ShBRE analysis conclusively rules it out \u2014 the stair trigger precedes floor.py interception. hooks.py (candidates 4\u20135, SR=0.4 each): STOP gate changes produced no SR lift above incumbent; couch detection failure in XB4GS9ShBRE is a stair-mode entry timing issue, not a threshold issue. patch.py (candidates 2, 3, 6): the look_for_downstair call site and the T6_CENTROID_BYPASS conditional are owned by the stair module, not a patch injection point; three prior patch.py candidates addressed different failure classes without reaching these call sites. frontier.py (candidate_1, incumbent SR=0.4): controls frontier scoring, not stair-mode entry timing or the disabled-set membership check.",
+    "falsifiability_check": "XB4GS9ShBRE: logs must show look_for_downstair NOT entered before floor_step=80; agent must remain in explore mode past the step-65 threshold observed in all 7 prior candidates. zt1RVoi7PcG: FORCE_STAIR_SWITCH must not re-target the same disabled stair; the repeated FORCE_STAIR_SWITCH + T6-disable log pattern spanning steps 203\u2013357 must be absent; episode must either reach a non-stair frontier or terminate cleanly. DYehNKdT76V: T6_CENTROID_BYPASS log must show geodesic=inf at all activation points; bypass must NOT fire when in_stair_map=False; post-bypass landing position must be within the couch-room frontier zone.",
+    "predicted_sr_delta": 0.1
+  }
+}

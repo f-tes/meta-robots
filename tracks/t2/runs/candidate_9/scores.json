@@ -1,0 +1,12 @@
+{
+  "harness": "/home/teeshan/meta_harness_pipeline/runs/candidate_9/harness.py",
+  "split": "smoke10_pipeline",
+  "metrics": {
+    "spl": 0.3292,
+    "success": 0.625,
+    "num_steps": 130.0,
+    "distance_to_goal": 3.648357067257166,
+    "num_episodes": 8
+  },
+  "timestamp": "2026-05-19T04:19:38"
+}

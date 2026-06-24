@@ -1,0 +1,45 @@
+{
+  "candidate": "candidate_2",
+  "split": "smoke10_t3",
+  "n_episodes": 2,
+  "n_success": 2,
+  "n_failed": 0,
+  "sr": 1.0,
+  "episodes": [
+    {
+      "scene": "bxsVRursffK",
+      "goal": "bed",
+      "episode_id": 0,
+      "success": true,
+      "total_steps": 238,
+      "failure_class": "success",
+      "failure_confidence": "high",
+      "failure_evidence": [],
+      "floor_reinits": 3,
+      "stair_mode_runs": 0,
+      "dp7_calls": 1,
+      "dp7_empty": 0,
+      "dtg_final": null,
+      "dtg_min": null,
+      "dtg_curve": []
+    },
+    {
+      "scene": "4ok3usBNeis",
+      "goal": "tv",
+      "episode_id": 0,
+      "success": true,
+      "total_steps": 280,
+      "failure_class": "success",
+      "failure_confidence": "high",
+      "failure_evidence": [],
+      "floor_reinits": 0,
+      "stair_mode_runs": 0,
+      "dp7_calls": 1,
+      "dp7_empty": 0,
+      "dtg_final": null,
+      "dtg_min": null,
+      "dtg_curve": []
+    }
+  ],
+  "timestamp": "2026-05-29T04:14:15Z"
+}

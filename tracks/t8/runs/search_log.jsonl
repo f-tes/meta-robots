@@ -1,0 +1,7 @@
+{"candidate": "candidate_1", "split": "val_30_t8", "sr": 0.4, "best_sr": 0.4, "status": "improved", "elapsed_s": 11140, "timestamp": "2026-06-23T08:00:32"}
+{"candidate": "candidate_2", "split": "val_30_t8", "sr": 0.3667, "best_sr": 0.4, "status": "no_improvement", "elapsed_s": 14915, "timestamp": "2026-06-23T12:09:06"}
+{"candidate": "candidate_3", "split": "val_30_t8", "sr": 0.1, "best_sr": 0.4, "status": "no_improvement", "elapsed_s": 17678, "timestamp": "2026-06-23T17:03:44"}
+{"candidate": "candidate_4", "split": "val_30_t8", "sr": 0.4, "best_sr": 0.4, "status": "no_improvement", "elapsed_s": 9506, "timestamp": "2026-06-23T19:42:10"}
+{"candidate": "candidate_5", "split": "val_30_t8", "sr": 0.4, "best_sr": 0.4, "status": "no_improvement", "elapsed_s": 9329, "timestamp": "2026-06-23T22:17:38"}
+{"candidate": "candidate_6", "split": "val_30_t8", "sr": 0.4, "best_sr": 0.4, "status": "no_improvement", "elapsed_s": 10201, "timestamp": "2026-06-24T01:07:39"}
+{"candidate": "candidate_7", "split": "val_30_t8", "sr": 0.3333, "best_sr": 0.4, "status": "no_improvement", "elapsed_s": 11163, "timestamp": "2026-06-24T04:13:42"}

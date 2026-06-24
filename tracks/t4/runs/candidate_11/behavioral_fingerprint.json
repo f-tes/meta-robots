@@ -1,0 +1,31 @@
+{
+  "candidate": "candidate_11",
+  "split": "smoke10_t3",
+  "fingerprints": {
+    "bxsVRursffK": {
+      "seq": "initialize(1-12)\u2192explore(13-121)\u2192get_close_to_stair(122-150)\u2192climb_stair(151-166)\u2192initialize(167-179)\u2192explore(180-180)\u2192get_close_to_stair(181-188)\u2192climb_stair(189-203)\u2192initialize(204-216)\u2192navigate(217-245)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 110,
+        "get_close_to_stair": 37,
+        "climb_stair": 31,
+        "navigate": 29
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "b8d83ca9",
+      "duplicate_of": "candidate_0"
+    },
+    "4ok3usBNeis": {
+      "seq": "initialize(1-12)\u2192explore(13-225)\u2192get_close_to_stair(226-251)\u2192climb_stair(252-263)",
+      "mode_dist": {
+        "initialize": 12,
+        "explore": 213,
+        "get_close_to_stair": 26,
+        "climb_stair": 12
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "b4580633",
+      "duplicate_of": null
+    }
+  }
+}

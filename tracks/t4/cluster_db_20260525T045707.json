@@ -1,0 +1,124 @@
+{
+  "clusters": [
+    {
+      "id": "patch_regression",
+      "scenes": [
+        "mL8ThkuaVTM"
+      ],
+      "root_cause_summary": "Candidate_2's hysteresis patch disrupted the passive climb_stair path that candidate_0 used to succeed, diverting the agent into a get_close_to_stair\u2192look_for_downstair oscillation that doubled floor_reinits and exhausted the step budget. The failure is entirely iatrogenic \u2014 the toilet is navmesh-connected and the episode was already solved.",
+      "cross_scene_pattern": "Single-scene cluster. Candidate_0 succeeded at step 312 via passive climb_stair(91-102) with 3 floor_reinits and DTG~0.04. Candidate_2's patch changed entry into stair mode (get_close_to_stair at step 118 instead of climb_stair at step 91), producing a mode-oscillation cycle that inflated reinits to 6 and ran the episode to 499 steps. No other scene shows this pattern because no other scene had a working baseline that the hysteresis patch was then applied to.",
+      "transfer_notes": "This scene reveals that the hysteresis patch is net-negative: it was designed to suppress floor_confusion oscillations but it suppresses the passive climb_stair detection path that is the correct behavior when the agent organically reaches stair geometry during explore mode. The patch must be reverted or narrowed to not fire during the passive stair-detection window. No cross-scene transfer from Clusters disconnected_stair_centroid or disconnected_target_floor_component applies here \u2014 those scenes involve navmesh geometry failures, not patch interference with a working code path.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12_increase_to_80",
+        "floor_confusion_hypothesis",
+        "LLM_DP7",
+        "DP1"
+      ],
+      "highest_leverage_untested": "Revert the hysteresis patch entirely \u2014 candidate_0 succeeded on this scene with no patch at all. The passive climb_stair detection during explore mode is the correct mechanism; removing the patch restores it with near-certainty.",
+      "sr_gain_if_fixed": 0.21,
+      "priority": 1
+    },
+    {
+      "id": "disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid selected by the agent lies in a navmesh-disconnected region; Reach_stair_centroid is False on every approach attempt across all candidates and all centroid variants tested. No parameter tuning can bridge a navmesh gap, and no intrafloor frontier fallback exists once the stair approach budget is consumed.",
+      "cross_scene_pattern": "Identical failure mechanism: Reach_stair_centroid=False persists indefinitely, floor change never occurs, and both scenes terminate with 'no unexplored stairs or frontiers found' immediately after stair disable. Differences in scale: q3zU7Yy5E5s exhausted 5 geometrically distinct centroids across the entire stair region ([-1.3 to -2.1, 3.3 to 3.7]), while qyAac8rV8Zk had a single centroid at [-1.22463054, -8.19236453] with 14+ failed approach attempts and a min_dis_to_downstair oscillating 159\u2013175. Both scenes showed the same post-disable outcome: the intrafloor frontier pool was already fully exhausted when the stair approach began, leaving zero productive fallback steps regardless of how quickly the bad centroid is disabled.",
+      "transfer_notes": "T4_STAIR_FIX in candidate_3 confirmed the navmesh-disconnect diagnosis for both scenes by firing correctly. It saved 37 steps in qyAac8rV8Zk (fewer re-approach cycles) but zero steps in q3zU7Yy5E5s (where the natural disable+reinit already converged at the same episode step). The critical cross-scene insight is that 'faster disable' alone cannot improve SR here \u2014 both scenes need an alternative navigable path to the target floor, not just early termination of the unreachable stair attempt. The intrafloor frontier exhaustion means any fix must find a second floor-transition path or regenerate frontiers with a wider spatial radius before the stair budget is consumed.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP9_carrot_distance",
+        "LLM_DP7",
+        "DP1",
+        "T4_STAIR_FIX_permanent_disable",
+        "all_harness_DPs"
+      ],
+      "highest_leverage_untested": "navmesh_connectivity_precheck_before_stair_centroid_commitment: call habitat_sim.PathFinder.find_path() from agent position to each stair centroid before entering look_for_downstair mode; if the returned path length is infinite (disconnected), skip that centroid immediately and call pathfinder.snap_to_navigable() within a 0.5m search radius to find an adjacent reachable node that could serve as an alternative floor-transition waypoint. Pair with frontier_regeneration_wider_radius to avoid the intrafloor exhaustion trap when all centroid candidates are skipped.",
+      "sr_gain_if_fixed": 0.13,
+      "priority": 2
+    },
+    {
+      "id": "disconnected_target_floor_component",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "The stair IS successfully traversed (floor_step resets to 0 at step 198), but the goal room on floor 2 lies in a navmesh-disconnected subgraph unreachable from the stair landing. The frontier generator only seeds from navmesh-reachable nodes near the landing, producing only 2 low-scoring frontiers that are exhausted in ~16 steps; T4_NOQUIT rescues find an empty frontier pool because the goal-containing component is invisible to the standard frontier-seeding routine.",
+      "cross_scene_pattern": "Single-scene cluster. Unlike disconnected_stair_centroid, the stair itself is reachable and is climbed \u2014 the navmesh disconnection is intra-floor on the target floor (floor 2), between the stair landing subgraph and the bedroom subgraph. All three candidates produced byte-for-byte identical behavioral fingerprints, confirming every harness-level parameter and patch is orthogonal to a post-traversal floor topology failure.",
+      "transfer_notes": "T4_STAIR_FIX (candidate_3) never fires here because the stair is physically traversed, not stalled \u2014 confirming the patch's trigger condition (Pointnav-stopped event) is entirely orthogonal. The disconnected_stair_centroid cluster's precheck lever also does not transfer because the stair landing IS reachable; the disconnection is on floor 2 post-traversal. The shared insight across both navmesh clusters (this one and disconnected_stair_centroid) is that the frontier generator is bounded by the navmesh-reachable subgraph from the agent's current position, making it structurally blind to isolated islands on the same floor.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP1",
+        "LLM_DP7",
+        "DP9",
+        "T4_STAIR_FIX_permanent_disable",
+        "all_harness_DPs"
+      ],
+      "highest_leverage_untested": "frontier_seeding_beyond_stair_landing_via_navmesh_island_detection: after climbing stairs, query habitat_sim.PathFinder to enumerate all disconnected navigable islands on the new floor (e.g., via a bounding-box grid sample), identify islands not reachable from the landing, and inject synthetic frontier waypoints at their centroids \u2014 forcing the agent to attempt cross-component navigation via Pointnav rather than relying solely on reachability-bounded frontier scoring.",
+      "sr_gain_if_fixed": 0.05,
+      "priority": 3
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "LLM_DP7",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes per the mandatory forbidden-moves note; appears in ruled_out_levers for every scene in the database."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes per the mandatory forbidden-moves note; appears in ruled_out_levers for every scene in the database."
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "patch_regression",
+      "reason": "Directly caused the failure in mL8ThkuaVTM by suppressing the passive climb_stair detection path; re-applying it is a known regression confirmed by fingerprint comparison between candidate_0 (SUCCESS) and candidate_2 (FAIL)."
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "disconnected_stair_centroid",
+      "reason": "Candidate_2 applied the patch to both q3zU7Yy5E5s and qyAac8rV8Zk; both produced fingerprints identical to candidate_0, confirming the patch is entirely orthogonal to navmesh-disconnection failures."
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "disconnected_target_floor_component",
+      "reason": "All three candidates for XB4GS9ShBRE produced identical fingerprints; the patch has zero observable effect on post-traversal floor-2 disconnection."
+    },
+    {
+      "lever": "T4_STAIR_FIX_permanent_disable",
+      "cluster": "disconnected_stair_centroid",
+      "reason": "Tested in candidate_3 for both scenes; permanently disabling the bad centroid immediately triggers 'no frontiers found' termination with no SR improvement, because the intrafloor frontier pool is already exhausted \u2014 faster disable does not create a productive fallback path."
+    },
+    {
+      "lever": "T4_STAIR_FIX_permanent_disable",
+      "cluster": "disconnected_target_floor_component",
+      "reason": "Never fires in XB4GS9ShBRE because the stair is physically traversed (Pointnav-stopped trigger condition is never met); the patch's entry condition is orthogonal to post-traversal disconnection."
+    },
+    {
+      "lever": "all_harness_DPs",
+      "cluster": "disconnected_stair_centroid",
+      "reason": "Explicitly ruled out for both q3zU7Yy5E5s and qyAac8rV8Zk; navmesh disconnection is a geometric property of the scene mesh that no decision-point parameter can alter."
+    },
+    {
+      "lever": "all_harness_DPs",
+      "cluster": "disconnected_target_floor_component",
+      "reason": "Three candidate evaluations with different DP settings all produced byte-for-byte identical behavioral fingerprints for XB4GS9ShBRE; the failure mode is structurally outside the DP parameter space."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "disconnected_stair_centroid",
+      "reason": "Floor-switch interval gating is irrelevant when Reach_stair_centroid is False on every approach; no reinitialization cadence can bridge a navmesh gap."
+    },
+    {
+      "lever": "DP9_carrot_distance",
+      "cluster": "disconnected_stair_centroid",
+      "reason": "Carrot waypoint distance only affects Pointnav progress toward a reachable centroid; when the centroid is navmesh-disconnected, Pointnav returns False on every step regardless of carrot distance."
+    }
+  ],
+  "last_updated": "2026-05-25T04:57:07Z"
+}

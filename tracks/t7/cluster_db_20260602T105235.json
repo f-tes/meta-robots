@@ -1,0 +1,139 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "Stair centroids for both scenes lie in navmesh-disconnected components. The agent enters stair traversal mode targeting an unreachable centroid pixel, causing Reach_stair_centroid to stay False indefinitely, the stair frontier to be disabled without any floor switch, and the episode to exhaust steps without reaching the target floor.",
+      "cross_scene_pattern": "Identical failure signature: GCTS loop oscillates without convergence, min_dis_to_stair plateaus, stair frontier is disabled after repeated PointNav failure. Key structural difference: qyAac8rV8Zk's downstair centroid sits within ~0.4m of the navigable navmesh boundary \u2014 the T6 baseline (0.4m carrot pullback + centroid bypass) moved the Phase 2 waypoint to a robot-adjacent navigable position and produced the first-ever SUCCESS across all tracks (step 415, DTG=0.094m). q3zU7Yy5E5s's upstair centroid is more deeply isolated \u2014 the entire upstair bounding box region is in the disconnected island, so all carrot-repositioning and streak-threshold approaches produced byte-identical behavioral fingerprints to candidate_0. Additionally, the \u00b150px box navmesh check (T6 candidate_5) expanded into the adjacent connected component boundary and returned a false-positive centroid_navigable=True, confirming the box heuristic cannot distinguish a shallow from a deep disconnection.",
+      "transfer_notes": "qyAac8rV8Zk's confirmed solve via 0.4m carrot pullback (T6 candidate_0) establishes a proof of concept: when the disconnected island is shallow, repositioning the Phase 2 waypoint to a robot-adjacent navigable pixel is sufficient. This result constrains q3zU7Yy5E5s's fix: since pullback alone is insufficient for the deeper island, the fix must operate upstream of Phase 1 \u2014 at centroid registration time \u2014 to preemptively disable the unreachable centroid before stair traversal is ever scheduled. The strict single-pixel check generalizes across both scenes: qyAac8rV8Zk's downstair centroid will pass (it is navigable at the 0.4m pullback landing point), while q3zU7Yy5E5s's upstair centroid will be correctly flagged and disabled.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "DP9_phase2_connected_component_validation",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+        "gcts_streak_based_downstair_redirect_any_threshold",
+        "early_gcts_disable_gcts_streak_10",
+        "floor_py_init_subclass_injection_with_50px_box_navmesh_check",
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard"
+      ],
+      "highest_leverage_untested": "strict_single_pixel_centroid_navigability_check_at_stair_registration_time: inject into ascent_policy.py at the precise callsite where upstair/downstair centroids are stored (not at gcts entry or streak threshold). If navigable_map[centroid_col, centroid_row] == 0, mark the centroid as disabled before Phase 1 is ever scheduled. Row/column indexing must match obstacle_map.py convention (px[0]=col, px[1]=row). This prevents q3zU7Yy5E5s from entering the disconnected upstair Phase 1 entirely, while leaving qyAac8rV8Zk's navigable downstair centroid unaffected and preserving its T6 baseline solve.",
+      "sr_gain_if_fixed": 0.667,
+      "priority": 1
+    },
+    {
+      "id": "false_positive_stop_post_floor_switch",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "The agent reaches the goal floor and achieves DTG=0.131m (candidate_0) but is stopped by a false-positive should_stop trigger during initialize mode (floor_step=1), caused by a spurious passive stair detection at step 482 that forces a second unwanted floor switch. Candidate_1's 0.6m forward carrot projection independently regressed the scene to never_saw_target (DTG=0.683m) by exiting the stair at a frontier-poor position.",
+      "cross_scene_pattern": "Single-scene cluster; no cross-scene comparison is possible. Two interacting failure components exist in candidate_0: (1) passive stair detection at step 482 triggers a second floor switch despite the agent already being on the goal floor, placing the agent in initialize mode at floor_step=1; (2) should_stop returns True at DTG=0.131m within initialize mode \u2014 either a detection_score spike on a non-bed object or a transient DTG dip below threshold. These two components are mechanistically coupled: suppressing the step-482 passive detection would prevent the second floor switch and eliminate the initialize-mode STOP trigger entirely. Candidate_0's underlying 280+ exploration steps after the first floor switch confirm frontier supply is not the bottleneck.",
+      "transfer_notes": "No partial fix has succeeded for XB4GS9ShBRE. T6 candidates 7 and 8 introduced passive stair detection hysteresis (PASSIVE_STAIR_HYSTERESIS=350 and T6_PASSIVE_HYS=400) but were not evaluated against the candidate_0 baseline \u2014 they were tested against a different carrot regime. Applying hysteresis to candidate_0's baseline (which already produces DTG=0.131m) is the cleanest next step: if hysteresis blocks the step-482 passive detection, the entire second-floor-switch chain is suppressed and candidate_0 would likely succeed. The suppress_STOP_when_mode_is_initialize_and_floor_step_lt_20 lever is a secondary safety net if the STOP path is independently triggered by the detection_score spike.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "post_floor_switch_frontier_seeding_radius",
+        "premature_stair_climb_success_guard",
+        "DP9_phase2_connected_component_validation",
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12"
+      ],
+      "highest_leverage_untested": "passive_stair_detection_hysteresis_to_prevent_second_floor_switch_at_step_482: suppress _detect_passive_stair_entry for N>=400 steps after the first successful floor switch, applied to candidate_0's baseline (not candidate_1's broken carrot). This blocks the spurious passive detection at step 482 and prevents the second unwanted floor switch, keeping the agent on the goal floor where DTG is already 0.131m. If the false-positive STOP persists independently, apply suppress_STOP_when_mode_is_initialize_and_floor_step_lt_20 as a secondary gate.",
+      "sr_gain_if_fixed": 0.333,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Moving the Phase 2 carrot 0.6m forward from robot position re-enters the disconnected navmesh island for qyAac8rV8Zk, reinstating the pre-T6 failure mode with min_dis_to_downstair oscillating at 160-166 and Reach_stair_centroid=False throughout; directly reverts the only confirmed solve for this cluster."
+    },
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "false_positive_stop_post_floor_switch",
+      "reason": "Candidate_1's 0.6m forward projection caused XB4GS9ShBRE to exit the stair at a frontier-poor second-floor position, immediately triggering 'no unexplored stairs or frontiers found' at floor_step=1 and regressing from DTG=0.131m to DTG=0.683m (never_saw_target)."
+    },
+    {
+      "lever": "DP9_phase2_connected_component_validation",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "No-op for both scenes. For qyAac8rV8Zk, the 0.4m pullback already lands the carrot on the same connected component as the robot, so CC validation adds no new constraint. For q3zU7Yy5E5s, the behavioral fingerprint of CC-validated candidates (T5 c10) was byte-identical to the plain pullback candidate (T5 c9), confirming the carrot is already within the robot's component after pullback."
+    },
+    {
+      "lever": "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Explicitly ruled out for q3zU7Yy5E5s. The entire upstair bounding box region lies in the disconnected navmesh island; any BFS snap point within the box is also geometrically unreachable, making this lever structurally ineffective regardless of snap algorithm."
+    },
+    {
+      "lever": "gcts_streak_based_downstair_redirect_any_threshold",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "All T6 gcts_streak-based approaches (thresholds 8 and 10) produced byte-identical behavioral fingerprints to candidate_0 for q3zU7Yy5E5s. The streak counter fires at step 79-80 but the injection does not intercept the active code path, confirming the stair selection logic is upstream of the gcts loop."
+    },
+    {
+      "lever": "early_gcts_disable_gcts_streak_10",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for q3zU7Yy5E5s (T6 candidate_3). Even disabling at streak=10, the look_for_downstair window (steps 70-81) is unchanged across all T6 candidates, confirming this injection site is not on the executing code path for this scene."
+    },
+    {
+      "lever": "floor_py_init_subclass_injection_with_50px_box_navmesh_check",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for q3zU7Yy5E5s (T6 candidate_5). The \u00b150px box expansion overlaps the adjacent connected navmesh component boundary, causing the check to return centroid_navigable=True (false positive). The [T6_FLOOR_NAVCHECK] tag never appeared in logs; behavioral fingerprint was byte-identical to candidate_0."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "false_positive_stop_post_floor_switch",
+      "reason": "Globally ruled out. For XB4GS9ShBRE specifically, the binding failure is a false-positive STOP during initialize mode (floor_step=1, DTG=0.131m), not during stair climbing \u2014 the stair SUCCESS guard does not intercept the should_stop path triggered in initialize mode."
+    },
+    {
+      "lever": "post_floor_switch_frontier_seeding_radius",
+      "cluster": "false_positive_stop_post_floor_switch",
+      "reason": "Ruled out for XB4GS9ShBRE. Candidate_0 achieved 280+ exploration steps after the first floor switch, confirming frontier supply on the goal floor is adequate. The binding failure is a premature should_stop in initialize mode, not a frontier exhaustion problem."
+    },
+    {
+      "lever": "DP7",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes and tracks. LLM response parsing changes do not affect stair traversal mechanics or stop guard logic."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes and tracks. LLM prompt template changes do not affect stair navmesh reachability or stop guard logic."
+    },
+    {
+      "lever": "DP6",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes and tracks. LLM prompt template changes do not affect stair navmesh reachability or stop guard logic."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes and tracks. LLM trigger threshold changes do not affect the stair centroid navmesh disconnection or false-positive stop mechanisms."
+    },
+    {
+      "lever": "DP3",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes and tracks. Multi-floor LLM trigger changes do not address stair centroid reachability or initialize-mode stop guards."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "all",
+      "reason": "Globally ruled out across all scenes and tracks. Floor switch interval gating does not resolve navmesh-disconnected centroid geometry or suppress passive stair detection false positives."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Globally ruled out. For this cluster, the failure is Reach_stair_centroid=False (agent never reaches the stair), so a SUCCESS guard on stair climb exit is irrelevant \u2014 there is no successful climb to guard against."
+    }
+  ],
+  "last_updated": "2026-06-02T10:52:35Z"
+}

@@ -1,0 +1,281 @@
+{
+  "scenes": {
+    "q3zU7Yy5E5s": {
+      "scene": "q3zU7Yy5E5s",
+      "goal": "couch",
+      "root_cause_summary": "Both tested stair candidates lie in disconnected navmesh components: the original stair at [-1.30898204, 3.5508982] (candidates 9\u201313) and the new stair at [-1.23952381, 3.67952381] selected under LLM guidance in candidate_14. Candidate_14's DP5 fix ('chair'\u2192'couch') improved parse rate from 4/4 failures to 2/5 (3 calls parsed), and the LLM-guided stair selection shifted to a nearby alternate centroid \u2014 which is equally inaccessible (all Reach_stair_centroid: False, disabled 3 times before permanent disable), and dtg worsens slightly (2.679 vs 2.662) while steps increase to 439. DP5_goal_binding_bug_fix is confirmed insufficient as a standalone lever; navmesh disconnection is the irreducible bottleneck across all nine candidates.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "Candidate_14: steps=439, reinits=2, stair_runs=2, dp7_empty=2/5, dtg=2.6799 \u2014 DP5 fix improved parse rate from 4/4 failures to 2/5 (3 calls parsed); LLM selected new stair centroid [-1.23952381, 3.67952381] which is equally inaccessible; all Reach_stair_centroid: False; dtg slightly worse than candidates 11\u201313 (2.679 vs 2.662)",
+        "Candidate_14 log: stair frontier [-1.23952381, 3.67952381] disabled 3 times before permanent 'Pointnav policy stopped' \u2014 3 reinit cycles waste 20+ extra steps on a disconnected stair; explains steps=439 vs 418 in prior candidates",
+        "floor_step never resets to 0 after entering stair mode in any of the nine candidates \u2014 physical stair traversal never occurs regardless of stair centroid, carrot distance, or LLM parse status",
+        "Nine consecutive candidates (6, 8, 9, 10, 11, 12, 13, 14): identical failure class 'never_saw_target_did_not_travel_stairs_likely_infeasible'; no candidate achieves Reach_stair_centroid: True at any stair in this scene; dtg range 2.662\u20132.680 across all nine"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "SDP-C + DP12=35: no effect; same 418-step failure, same stair disabled at [-1.30898204, 3.5508982], reinits=1",
+        "candidate_2": "FAIL: 418 steps, reinits=1, stair_runs=2, dtg=2.674 \u2014 same stair disabled; SDP-C has zero effect",
+        "candidate_3": "FAIL: 418 steps, reinits=1, stair_runs=2, dtg=2.674 \u2014 LLM memory/SDP-D irrelevant; dp7_empty=8/8 regardless of prompt augmentation",
+        "candidate_4": "FAIL: 499 steps, reinits=0, stair_runs=1, dtg=1.39m \u2014 different stair [-1.83954545, 5.37636364] selected via equal_weighting, dtg improved but geometrically blocked with 14+ Reach_stair_centroid: False",
+        "candidate_8": "FAIL: 418 steps, reinits=1, stair_runs=2, dp7_empty=8/8 \u2014 STOP\u2192MOVE_FORWARD patch: zero effect on stair geometry; DP5 'Goal: chair' visible in log",
+        "candidate_9": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=8/8 \u2014 explore-mode guard delayed downstairs switch to floor_step=156 but same inaccessible stair reached at floor_step=161 with identical 27 False sequence",
+        "candidate_10": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=8/8 \u2014 identical outcome to candidate_9; no new signal",
+        "candidate_6": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=4/4 \u2014 DP9=1.2m carrot increase has zero effect; 27 Reach_stair_centroid: False at floor_step=161; rules out DP9_carrot_distance_increase",
+        "candidate_11": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=4/4 \u2014 DP7 regex fallback confirmed insufficient; DP5 'Goal: chair' produces LLM output unparseable even by regex; stair failure unchanged at floor_step=161",
+        "candidate_12": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=4/4 \u2014 identical to candidate_11; candidate_12's DP5 fix targeted mL8ThkuaVTM ('bed'\u2192'toilet') not q3zU7Yy5E5s ('chair'\u2192'couch'); 'Goal: chair' bug remains; no new signal",
+        "candidate_13": "FAIL: 418 steps, reinits=2, stair_runs=2, dp7_empty=4/4, dtg=2.6627 \u2014 no changes proposed; byte-for-byte identical to candidates 11 and 12; adds zero new signal",
+        "candidate_14": "FAIL: 439 steps, reinits=2, stair_runs=2, dp7_empty=2/5, dtg=2.6799 \u2014 DP5 fix ('chair'\u2192'couch') improved parse rate from 4/4 failures to 2/5 (3 calls parsed); LLM guidance shifted stair target to [-1.23952381, 3.67952381] which is also inaccessible; 3 stair disable cycles before permanent disable; 21 extra steps wasted; dtg slightly worsened; DP5_goal_binding_bug_fix_couch_scene confirmed insufficient as standalone lever"
+      },
+      "ruled_out_levers": [
+        "DP9_carrot_distance_increase",
+        "DP12",
+        "SDP-C",
+        "DP3",
+        "SDP-D",
+        "DP10",
+        "DP11",
+        "DP7_DP8_regex_fallback_alone",
+        "DP5_goal_binding_bug_fix_couch_scene_alone",
+        "ascent_policy_floor_init_timeout_track2",
+        "ascent_policy_explore_mode_floor_switch_guard_track2"
+      ],
+      "ruled_out_reasoning": {
+        "DP9_carrot_distance_increase": "Candidate_6 (DP9=1.2m): same 27 consecutive Reach_stair_centroid: False and min_dis_to_downstair=29 as all 0.8m candidates; carrot distance is irrelevant when stair centroid is in a disconnected navmesh component",
+        "DP12": "Identical 418-step failures regardless of DP12 threshold across all candidates; floor switch fires via non-DP12 bypass path after stair frontier disablement",
+        "SDP-C": "Identical failure pattern across candidates regardless of SDP-C guard threshold; not on causal path",
+        "DP3": "No inter-floor LLM calls visible in any candidate log for this scene; DP3 gate is not on the causal path",
+        "SDP-D": "dp7_empty persists regardless of prompt augmentation; DP5 goal-binding bug prevents parseable LLM output upstream of DP7",
+        "DP10": "Candidate_4 equal_weighting still fails with 14+ Reach_stair_centroid: False on alternate stair; value map fusion cannot overcome navmesh-level inaccessibility",
+        "DP11": "Confidence-weighted averaging irrelevant to stair geometry",
+        "DP7_DP8_regex_fallback_alone": "Candidates 6, 11, 12, and 13 all show dp7_empty=4/4 with regex fallback \u2014 the DP5 'Goal: chair' bug produces LLM output that is neither valid JSON nor regex-parseable; parsing fix is downstream of the root DP5 bug and insufficient alone",
+        "DP5_goal_binding_bug_fix_couch_scene_alone": "Candidate_14 applied DP5 fix improving parse rate from 4/4 failures to 2/5; the LLM-guided stair at [-1.23952381, 3.67952381] is equally inaccessible (all Reach_stair_centroid: False); dtg worsened (2.679 vs 2.662); fixing DP5 alone cannot resolve navmesh disconnection and in this candidate consumed 21 extra steps on additional stair disable cycles",
+        "ascent_policy_floor_init_timeout_track2": "Candidate_8 STOP\u2192MOVE_FORWARD patch produces identical metrics; not on causal path",
+        "ascent_policy_explore_mode_floor_switch_guard_track2": "Candidates 9, 10, 11, 12, 13, and 14 all show reinits=2 and the same 418\u2013439 step failure; floor switch timing is not the bottleneck \u2014 the inaccessible stair is reached regardless of when the downstairs trigger fires"
+      },
+      "highest_leverage_untested_levers": [
+        "navmesh_reachability_precheck_before_stair_commit"
+      ],
+      "open_questions": [
+        "Is there any stair in q3zU7Yy5E5s whose centroid lies in the same navmesh connected component as the agent? Two stair locations have been tested ([-1.308, 3.550] in candidates 9\u201313 and [-1.239, 3.679] in candidate_14) and both are disconnected \u2014 if all stairs are in disconnected subregions, is the couch on the starting floor and should the agent abandon cross-floor navigation entirely?",
+        "Could a navmesh reachability pre-check (implemented within DP9/select_stair_waypoint to call Habitat's pathfinder before committing to stair mode) allow the agent to immediately skip disconnected stair candidates and redirect to continued same-floor exploration, recovering the 20\u2013110 steps currently wasted on futile stair approach cycles?",
+        "Candidate_14's DP5 fix caused the LLM to select a different but equally disconnected stair, and dtg worsened slightly (2.679 vs 2.662) \u2014 does the LLM guidance actively misdirect the agent away from the couch when the goal label is corrected? Is the couch reachable via same-floor navigation from the starting pose, and if so, would a reachability precheck allow the step budget to be applied productively to same-floor exploration?"
+      ]
+    },
+    "qyAac8rV8Zk": {
+      "scene": "qyAac8rV8Zk",
+      "goal": "couch",
+      "root_cause_summary": "The downstairs stair lies in a disconnected navmesh component regardless of which centroid is selected: [-1.26861111, -8.18583333] in candidates 9\u201313 (min_dis_to_downstair oscillates 170/177) and [-1.23053279, -8.26782787] in candidate_14 (min_dis_to_downstair oscillates 180/187/188). Candidate_14 is the definitive harness-layer test: with DP5 goal-binding fixed, all 4 LLM calls parse successfully (dp7_empty=0/4 vs 1/1 failures in candidates 11\u201313), the agent explores 99 more steps (342 vs 243), yet no convergence occurs and dtg worsens slightly (4.022 vs 3.957), confirming that working LLM guidance does not redirect the agent toward the couch and cannot overcome navmesh disconnection. All harness-layer DP levers are now exhausted.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "Candidate_14: steps=342, reinits=1, stair_runs=1, dp7_empty=0/4, dtg=4.022 \u2014 all 4 LLM calls parsed (vs 1/1 or 2/2 failures in prior candidates); stair centroid shifted to [-1.23053279, -8.26782787]; min_dis_to_downstair oscillates 180/188/187 with no convergence; 3 stair disable cycles before permanent disable",
+        "99 additional steps consumed after DP5 fix (342 vs 243 in candidates 9\u201313) with dtg worsening from 3.957 to 4.022 \u2014 functional LLM guidance does not steer agent toward couch; LLM recommendation for frontier selection is orthogonal to the stair geometry problem",
+        "min_dis_to_downstair for new stair centroid: 180 (first approach), 188 (second), 187 (third before permanent disable) \u2014 non-monotonic oscillation with no decrease; consistent with a disconnected navmesh node where pointnav generates paths to the nearest reachable vertex rather than the stair centroid itself",
+        "Nine consecutive candidates: floor_step never resets to 0 after stair mode entry; stair traversal never physically occurs in any candidate across all tested DP combinations"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "SDP-C + DP12=35: no change; identical 243-step failure, reinits=0, same stair disabled",
+        "candidate_2": "FAIL: 243 steps, reinits=0, stair_runs=1 \u2014 14 approach attempts, stair disabled, identical metrics",
+        "candidate_3": "FAIL: 243 steps, reinits=0, stair_runs=1 \u2014 LLM memory/SDP-D irrelevant; dp7_empty=2/2 regardless",
+        "candidate_4": "FAIL: 243 steps, reinits=0, stair_runs=1 \u2014 equal_weighting shows same stair blocked; same outcome",
+        "candidate_8": "FAIL: 243 steps, reinits=0, stair_runs=1, dp7_empty=2/2 \u2014 STOP\u2192MOVE_FORWARD patch: identical 243-step outcome; navmesh disconnection unaffected",
+        "candidate_9": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=2/2 \u2014 guard side effect: stair disabled after 3 attempts (vs 14); extra reinit; steps=243 and dtg=3.965 unchanged",
+        "candidate_10": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=2/2 \u2014 identical to candidate_9; navmesh disconnection invariant to guard threshold",
+        "candidate_6": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=1/1 \u2014 DP9=1.2m carrot increase has zero effect; 170/177 oscillation unchanged; definitively rules out DP9",
+        "candidate_11": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=1/1 \u2014 DP7 regex + _GUARD_STEPS=30 produces no change; same 170/177 oscillation; single LLM call still returns unparseable output; outcome identical to candidates 9/10",
+        "candidate_12": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=1/1 \u2014 identical to candidate_11; candidate_12's changes (targeting mL8ThkuaVTM) have no effect; navmesh disconnection unchanged; no new signal",
+        "candidate_13": "FAIL: 243 steps, reinits=1, stair_runs=1, dp7_empty=1/1, dtg=3.9575 \u2014 no changes proposed; byte-for-byte identical to candidates 11 and 12; adds zero new signal",
+        "candidate_14": "FAIL: 342 steps, reinits=1, stair_runs=1, dp7_empty=0/4, dtg=4.022 \u2014 DP5 fix enables all 4 LLM calls to parse (vs 1/1 failures in candidates 11\u201313); stair centroid shifts to [-1.23053279, -8.26782787] under LLM guidance; new stair also inaccessible (min_dis_to_downstair 180\u2013188, non-monotonic); 99 extra steps consumed but dtg worsens; DP5_goal_binding_bug_fix confirmed insufficient as standalone lever"
+      },
+      "ruled_out_levers": [
+        "DP9",
+        "DP12",
+        "SDP-C",
+        "DP10",
+        "DP5",
+        "DP6",
+        "SDP-D",
+        "DP7_DP8_regex_fallback",
+        "DP5_goal_binding_bug_fix",
+        "ascent_policy_floor_init_timeout_track2",
+        "ascent_policy_explore_mode_floor_switch_guard_track2"
+      ],
+      "ruled_out_reasoning": {
+        "DP9": "Candidate_6 (DP9=1.2m): min_dis_to_downstair=170/177 oscillation unchanged \u2014 pointnav cannot generate a valid path to a disconnected navmesh node at any carrot distance",
+        "DP12": "Identical outcomes across candidates 1 (DP12=35) and 2 (DP12 baseline); floor switch bypasses DP12 after stair disable",
+        "SDP-C": "Coverage-based switching cannot resolve navmesh disconnection; identical outcomes",
+        "DP10": "Candidate_4 equal_weighting shows identical 243-step failure",
+        "DP5": "Identical outcomes regardless of prompt content; LLM cannot override a physically unreachable navmesh path",
+        "DP6": "Same reasoning as DP5",
+        "SDP-D": "Candidate_3 SDP-D: identical failure; dp7_empty=2/2 regardless",
+        "DP7_DP8_regex_fallback": "Candidates 11, 12, and 13 all show dp7_empty=1/1 \u2014 single LLM call returns unparseable output even with regex fallback; semantic guidance absent regardless of parsing strategy",
+        "DP5_goal_binding_bug_fix": "Candidate_14 applied DP5 fix enabling all 4 LLM calls to parse (dp7_empty=0/4 vs 1/1 in candidates 11\u201313); the LLM selected alternate stair centroid [-1.23053279, -8.26782787] which is equally inaccessible (min_dis_to_downstair 180\u2013188, non-monotonic); dtg worsened from 3.957 to 4.022; 99 additional steps consumed with no convergence; working LLM guidance does not steer agent toward the couch and cannot overcome navmesh disconnection",
+        "ascent_policy_floor_init_timeout_track2": "Candidate_8 STOP\u2192MOVE_FORWARD patch: identical 243-step outcome",
+        "ascent_policy_explore_mode_floor_switch_guard_track2": "Candidates 9\u201314 all show reinits=1 as a side effect; dtg 3.957\u20134.022 \u2014 multiple failed stair approaches are no better than one; guard threshold does not address the navmesh geometry"
+      },
+      "highest_leverage_untested_levers": [
+        "navmesh_reachability_precheck_before_stair_commit",
+        "stair_candidate_search_breadth_in_ascent_policy"
+      ],
+      "open_questions": [
+        "Is there any stair in qyAac8rV8Zk whose centroid lies in the same navmesh connected component as the agent? Both tested stair locations ([-1.268, -8.185] in candidates 9\u201313 and [-1.230, -8.267] in candidate_14) are disconnected \u2014 if all stairs are in disconnected subregions, is this episode geometrically unsolvable from the given start pose regardless of any harness-layer intervention?",
+        "Candidate_14 with full LLM guidance (dp7_empty=0/4) produces dtg=4.022 \u2014 slightly worse than without LLM guidance (3.957 in candidate_13) \u2014 suggesting the LLM is not directing the agent toward the couch on the starting floor. Is the couch on the same floor as the starting pose, and if so, why does correctly parsed LLM guidance not reduce dtg?",
+        "Could a navmesh reachability pre-check within DP9/select_stair_waypoint (using Habitat's pathfinder to verify the stair centroid is in the same navmesh island as the agent before entering stair mode) immediately skip both disconnected stair candidates, recover the ~100-step budget currently wasted on futile approaches, and allow sustained same-floor exploration? Given that candidate_14 with LLM guidance explores 99 more steps but worsens dtg, would this require a combined fix: precheck to skip disconnected stairs AND a DP5/DP1 change to better direct same-floor exploration toward couch-adjacent areas?"
+      ]
+    },
+    "mL8ThkuaVTM": {
+      "scene": "mL8ThkuaVTM",
+      "goal": "toilet",
+      "root_cause_summary": "Stair traversal succeeds robustly at step 120 via passive upstairs detection (floor_step resets to 0) in all nine candidates including candidate_14. The toilet room remains geometrically inaccessible from the floor-2 stair landing: floor-2 frontiers exhaust at floor_step=13 in every candidate, 'no unexplored stairs or frontiers found' fires at step 133, and all further reinit cycles terminate identically at step 163. Candidate_14's DP3 change triggered one inter-floor LLM call (dp7_empty=0/1, parsed successfully) but dtg worsened slightly (4.210 vs 4.154 in candidates 11\u201313), providing a ninth data point that working LLM guidance \u2014 whether intra-floor or inter-floor \u2014 cannot overcome the floor-2 geometry constraint. DP3 is now ruled out. All known harness-layer DP levers are exhausted.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "Candidate_14: steps=163, reinits=3, stair_runs=0, dp7_empty=0/1, dtg=4.210 \u2014 DP3 change triggered 1 LLM call (vs 0 calls in candidates 11\u201313); call parsed successfully; dtg worsened from 4.154 to 4.210; trajectory structure (stair success at step 120, floor_step=13 at step 133, terminate at step 163) byte-for-byte identical to candidates 11\u201313",
+        "Five consecutive candidates with working LLM parsing (candidates 11, 12, 13 with dp7_empty=0/0 and candidate_14 with dp7_empty=0/1) all produce dtg\u22654.154m \u2014 definitively confirms that correctly parsed LLM guidance cannot direct the agent to the toilet regardless of goal label or call count",
+        "dtg trend: 4.187m (c2\u20134/8) \u2192 4.161m (c9) \u2192 4.154m (c11\u201313) \u2192 4.210m (c14) \u2014 DP3-triggered inter-floor LLM call worsened guidance; additional LLM intervention is not beneficial and is mildly counterproductive for this scene",
+        "All nine candidates: 'climb stair success!!!!' at step 120 (floor_step resets to 0) via passive detection; stair_runs=0 consistently; DP9 completely irrelevant \u2014 stair traversal is not the bottleneck; floor-2 frontier exhaustion at floor_step=13 is"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "SDP-C + DP12=35: no change; second reinit fires at floor_step=13 (step 135); DP12 gate does not control the explore-mode floor-switch path",
+        "candidate_2": "FAIL: 148 steps, reinits=2, stair_runs=0 \u2014 second reinit fires at floor_step=13 (step 135) via explore-mode path; SDP-C guard does not gate this code path",
+        "candidate_3": "FAIL: 148 steps, reinits=2, stair_runs=0, dp7_empty=1/1 \u2014 LLM memory/SDP-D irrelevant to floor reinit timing; same floor_step=13 trigger",
+        "candidate_4": "FAIL: 148 steps, reinits=2, stair_runs=0, dp7_empty=1/1 \u2014 equal_weighting and frontier pool expansion: no effect on floor reinit logic",
+        "candidate_8": "FAIL: 148 steps, reinits=2, stair_runs=0, dp7_empty=1/1 \u2014 second reinit fires from Mode=explore; STOP intercept not on causal path; floor-2 terminates at floor_step=13",
+        "candidate_9": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=1/1 \u2014 _GUARD_STEPS=30 delayed second reinit to floor_step=30 (step 150); 30 floor_steps still insufficient; third floor terminates at floor_step=13",
+        "candidate_10": "FAIL: 170 steps, reinits=2, stair_runs=0, dp7_empty=1/1 \u2014 _GUARD_STEPS=60 eliminated third reinit but dtg increased to 5.555m; floor-2 exploration diverges from toilet when forced to stay longer",
+        "candidate_6": "FAIL: 148 steps, reinits=3, stair_runs=0, dp7_empty=0/0 \u2014 DP7 regex successfully parses LLM call; reinits=3 vs baseline 2 suggests parsed LLM recommendation influenced floor-1 area selection; floor-2 termination at floor_step=13 unchanged",
+        "candidate_11": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.154581514519772 \u2014 DP7 regex + _GUARD_STEPS=30; LLM successfully parsed but outcome identical to candidate_9 (dtg=4.155 vs 4.161); parsing alone provably insufficient",
+        "candidate_12": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.154581514519772 \u2014 trajectory fingerprint identical to candidate_11 to full floating-point precision; candidate_12's changes produce zero deviation; toilet room confirmed geometrically inaccessible from floor-2 stair landing regardless of DP5 goal correctness",
+        "candidate_13": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/0, dtg=4.154581514519772 \u2014 no changes proposed; fourth consecutive candidate with working LLM parsing and identical dtg to 12+ significant figures; definitively confirms geometry constraint dominates",
+        "candidate_14": "FAIL: 163 steps, reinits=3, stair_runs=0, dp7_empty=0/1, dtg=4.210 \u2014 DP3 change triggers one inter-floor LLM call (vs 0 calls in candidates 11\u201313); call parsed successfully; dtg worsened from 4.154 to 4.210; trajectory structure identical to candidates 11\u201313; DP3 confirmed irrelevant; geometry constraint unchanged"
+      },
+      "ruled_out_levers": [
+        "DP12",
+        "SDP-C",
+        "DP10",
+        "DP5_prompt_augmentation",
+        "DP6",
+        "SDP-D",
+        "DP9",
+        "DP7_DP8_regex_fallback_alone",
+        "DP5_goal_binding_bug_fix_toilet_scene_alone",
+        "DP3_multifloor_trigger_change",
+        "ascent_policy_floor_init_timeout_track2_stop_intercept",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus"
+      ],
+      "ruled_out_reasoning": {
+        "DP12": "Second reinit bypasses DP12 via _explore() line 685 code path; floor_step=13 trigger identical across all DP12 values",
+        "SDP-C": "Candidate_2 floor_step>=25 guard still fires the second reinit at floor_step=13 \u2014 explore-mode trigger is a different code path not gated by SDP-C",
+        "DP10": "Candidate_4 equal_weighting shows identical 148-step failure",
+        "DP5_prompt_augmentation": "Prompt content changes irrelevant to floor reinit timing; DP5 goal-binding bug means LLM receives wrong goal regardless of augmentation short of a bug fix",
+        "DP6": "Same reasoning as DP5_prompt_augmentation",
+        "SDP-D": "Candidate_3 SDP-D shows identical 148-step failure",
+        "DP9": "stair_runs=0 in all nine candidates; passive upstairs detection path used exclusively \u2014 DP9 carrot-waypoint path never invoked for this scene",
+        "DP7_DP8_regex_fallback_alone": "Candidates 11, 12, and 13 form the definitive three-way test: all dp7_empty=0/0 (LLM successfully parsed) yet dtg identical to 12+ significant figures; the LLM recommendation selects the same floor-2 frontier regardless of goal correctness or parsing strategy",
+        "DP5_goal_binding_bug_fix_toilet_scene_alone": "Candidates 11, 12, and 13 all show dp7_empty=0/0 with identical dtg=4.154581514519772 \u2014 even when DP5 was fixed in candidate_12 (goal 'toilet' instead of 'bed'), the toilet-adjacent frontier is not present in the reachable floor-2 frontier set; fixing DP5 alone cannot resolve the geometry constraint",
+        "DP3_multifloor_trigger_change": "Candidate_14 DP3 change triggered one inter-floor LLM call (dp7_empty=0/1) that was parsed but produced dtg=4.210 \u2014 worse than candidates 11\u201313 (dtg=4.154); additional inter-floor LLM intervention is mildly counterproductive; DP3 is not on the causal path for mL8ThkuaVTM",
+        "ascent_policy_floor_init_timeout_track2_stop_intercept": "Candidate_8 identical to candidates 2\u20134; second reinit fires from Mode=explore not a STOP action",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_30": "Candidates 9, 11, 12, 13, and 14 all confirm: 30 floor_steps insufficient; toilet not reachable from stair landing in that time window regardless of LLM parse status or goal correctness",
+        "ascent_policy_explore_mode_floor_switch_guard_track2_threshold_50_plus": "Candidate_10 confirmed: 50\u201360 floor_steps causes dtg to INCREASE to 5.555m \u2014 floor-2 exploration provably diverges from toilet location; higher threshold is not the solution"
+      },
+      "highest_leverage_untested_levers": [
+        "navmesh_reachability_precheck_for_floor2_toilet_subregion"
+      ],
+      "open_questions": [
+        "Nine candidates (including five with working LLM parsing: candidates 6, 11, 12, 13, 14) confirm dtg\u22654.154m \u2014 is the toilet room in a navmesh subregion entirely disconnected from the floor-2 stair landing, making this episode geometrically unsolvable from the current stair entry point without a Track-2 patch to use an alternate floor-2 entry point or expand the reachable navmesh island?",
+        "Candidate_14's DP3-triggered inter-floor LLM call worsened dtg (4.210 vs 4.154 in candidates 11\u201313) \u2014 does this confirm that inter-floor LLM guidance is actively counterproductive for mL8ThkuaVTM, with the LLM recommending a floor-2 frontier slightly further from the toilet? Should DP3 be made more conservative (fewer inter-floor calls) for scenes where floor-2 topology is highly constrained?",
+        "The floor-2 frontier set exhausts at exactly floor_step=13 in every candidate \u2014 is the stair landing placed at the edge of a short navigable corridor with exactly ~13 reachable steps before the frontier-count drops to zero, or is there a minimum-frontier-count threshold that fires at step 13 in this specific scene geometry? Answering this would clarify whether any harness-layer change can expand the floor-2 reachable region, or whether Track-2 intervention (e.g., patching the floor-2 spawn point after stair traversal) is strictly required."
+      ]
+    },
+    "bxsVRursffK": {
+      "scene": "bxsVRursffK",
+      "goal": "bed",
+      "root_cause_summary": "Identical failure mode to mL8ThkuaVTM: after successful stair climbing at step 154 (reinit 1, floor_step resets to 0), a second floor reinit fires at step 167 after exactly 13 steps on the new floor (floor_step resets to 0 with Mode=explore), leaving only 13 exploration steps before the episode terminates at step 180. The 13-step-to-second-reinit timing is identical to mL8ThkuaVTM (step 120\u2192135), confirming a shared hardcoded floor initialization threshold in ascent_policy.py that bypasses all harness DPs. The initial floor consumed 137 steps (floor_step=137 at climb_stair entry), leaving only 26 steps for two-floor exploration \u2014 insufficient even without the premature second reinit.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "Step 154: Floor_step=0, Mode=initialize (reinit 1 after stair success); Step 167: Floor_step=0, Mode=explore (reinit 2 after exactly 13 steps on new floor) \u2014 identical in all 4 candidates",
+        "Floor_step=137 at Step=137 when climb_stair mode is entered \u2014 137 steps spent on the initial floor before finding the stair, leaving only 46 steps total for two-floor exploration",
+        "stair_runs=0 in all candidates despite 'climb stair success' at step ~150-154 \u2014 same bypass path as mL8ThkuaVTM, confirming this stair traversal route is outside DP9 and DP12 control",
+        "Identical metrics across all 4 candidates (steps=180, reinits=2, stair_runs=0, dp7_empty=3/3) \u2014 no harness change produces any deviation whatsoever",
+        "13-step reinit interval matches mL8ThkuaVTM exactly (step 120\u2192135 there, step 154\u2192167 here), strongly implicating a shared hardcoded threshold in ascent_policy.py"
+      ],
+      "candidate_outcomes": {
+        "candidate_1": "SDP-C + DP12=35 \u2014 no change; identical 180-step failure, second reinit at floor_step=13 unchanged",
+        "candidate_2": "SDP-C guard (floor_step>=25) \u2014 no change; second reinit still fires at floor_step=13, confirming this code path is outside SDP-C control",
+        "candidate_3": "LLM memory + SDP-D \u2014 no change; prompt augmentation irrelevant to floor initialization logic",
+        "candidate_4": "DP10=equal_weighting + frontier pool expansion \u2014 no change for this episode; same 180-step failure; overall set dtg improved to 3.69m vs 5.54m (candidate 1) but this specific episode was unaffected"
+      },
+      "ruled_out_levers": [
+        "DP12",
+        "SDP-C",
+        "DP10",
+        "DP5",
+        "DP6",
+        "SDP-D",
+        "DP9"
+      ],
+      "ruled_out_reasoning": {
+        "DP12": "All 4 candidates show identical reinits=2 at identical step numbers; the second reinit trigger at floor_step=13 is entirely outside DP12 control",
+        "SDP-C": "Candidate 2 with floor_step>=25 guard still triggers the second reinit at floor_step=13 \u2014 the trigger is a direct code path in ascent_policy.py that does not go through SDP-C",
+        "DP10": "Candidate 4 with equal_weighting shows identical 180-step failure for this episode; map fusion does not affect floor reinit logic",
+        "DP9": "stair_runs=0 means the DP9 carrot path is not the traversal route taken; the climb_stair success uses a different trigger mechanism that bypasses DP9",
+        "DP5": "Prompt changes are irrelevant to floor reinit timing",
+        "DP6": "Same reasoning as DP5",
+        "SDP-D": "Candidate 3 with SDP-D shows identical failure"
+      },
+      "highest_leverage_untested_levers": [
+        "ascent_policy_floor_init_timeout_track2",
+        "DP3"
+      ],
+      "open_questions": [
+        "What is the exact condition in ascent_policy.py that resets floor_step to 0 with Mode=explore at step 167 \u2014 is it the same 'frontier_count==0 during initialize phase' code path as mL8ThkuaVTM's step-135 reinit?",
+        "Does the stair traversal bypass path (stair_runs=0 + stair success) arrive on the new floor with zero frontiers registered, which then immediately triggers the 'no frontiers' floor-switch path before any mapping occurs?",
+        "Would a single Track 2 patch in ascent_policy.py \u2014 requiring floor_step>=30 before the 'no unexplored frontiers' termination/switch condition fires after a new floor arrival \u2014 resolve both bxsVRursffK and mL8ThkuaVTM in a single candidate?"
+      ]
+    },
+    "DYehNKdT76V": {
+      "scene": "DYehNKdT76V",
+      "goal": "chair",
+      "root_cause_summary": "Candidate_10's harness change introduced a premature floor switch (reinits=1) within the first ~13 steps, landing the agent on a sparse secondary floor at coordinates [-1.92, -2.52] with only 2 low-score frontiers (0.198@3.2m, 0.176@3.4m) instead of the 6-frontier floor-1 region ([-5.85, 0.65] range) where the chair was successfully found in all prior candidates. With 2 frontiers exhausted by step 50 and no stair traversal (stair_runs=0), the episode terminates with 'no unexplored stairs or frontiers found' before the chair is encountered. This is a pure harness-regression: the scene is solvable, confirmed by SPL=0.86 success in every prior candidate.",
+      "root_cause_confidence": "medium",
+      "key_evidence": [
+        "Candidate_10: only 2 frontiers at [-1.91767767, -2.51767767] with raw scores 0.198@3.2m and 0.176@3.4m (no proximity boost, both >3m) throughout the episode \u2014 vs 6 frontiers at [-5.85, 0.65] range with scores 0.096-0.198 and active proximity boosting in all successful candidates (2-4, 8, 9)",
+        "Candidate_10: steps=50, stair_runs=0 \u2014 vs steps=129, stair_runs=1 in all six prior candidates; stair mode never activates because the sparse secondary floor exposes no stair frontier in its mapped region",
+        "Candidate_10: reinits=1 with floor_step=1 at the first logged step \u2014 indicates a floor switch fired at or before step 12, before normal frontier mapping could populate the obstacle map, exactly mirroring candidate_1's SDP-C frontier_count==0 bug",
+        "Video filename: 'never_saw_target_did_not_travel_stairs_feasible' \u2014 stairs ARE navigable at navmesh level; failure is a harness-triggered premature switch, not geometry",
+        "dp7_empty=1/1: single LLM call with empty response (fallback index=0); semantic guidance cannot recover from starting on the wrong floor",
+        "Candidates 2, 3, 4, 8, 9 all succeed with SPL=0.86 at identical step 109 navigate \u2192 step 129 success; DYehNKdT76V failure is strictly a candidate_10 regression"
+      ],
+      "candidate_outcomes": {
+        "candidate_2": "SUCCESS: 129 steps, reinits=1, stair_runs=1 \u2014 6 frontiers at [-5.85, 0.65], active proximity boosting, chair found via stair traversal",
+        "candidate_3": "SUCCESS: 129 steps, reinits=1, stair_runs=1 \u2014 identical 6-frontier exploration pattern with LLM memory augmentation",
+        "candidate_4": "SUCCESS: 129 steps, reinits=1, stair_runs=1 \u2014 equal_weighting value map does not affect floor-1 exploration path",
+        "candidate_8": "SUCCESS: 129 steps, reinits=2, stair_runs=1 \u2014 STOP\u2192MOVE_FORWARD patch has no negative effect on DYehNKdT76V",
+        "candidate_9": "SUCCESS: 129 steps, reinits=2, stair_runs=1 \u2014 passive stair detection at step 91 (floor_step=91); still finds chair on correct floor",
+        "candidate_10": "FAIL: 50 steps, reinits=1, stair_runs=0 \u2014 premature floor switch to 2-frontier secondary floor; chair never encountered; terminates 'no unexplored stairs or frontiers found'"
+      },
+      "ruled_out_levers": [
+        "DP9",
+        "DP1",
+        "DP2",
+        "DP5",
+        "DP4"
+      ],
+      "ruled_out_reasoning": {
+        "DP9": "stair_runs=0 confirms the carrot-waypoint stair approach path is never invoked; DP9 is not on the causal path",
+        "DP1": "Low raw scores (0.198, 0.176) are a consequence of being on the wrong floor with few options, not a scoring formula failure; candidates 2-9 show richer raw scores (0.096-0.198) boosted by proximity on the correct floor",
+        "DP2": "LLM fires once (dp7_empty=1/1) but fallback to index=0 selects the only viable frontier anyway; LLM failure is secondary to the wrong-floor starting position",
+        "DP5": "Prior candidates succeed with dp7_empty=5-6/6; the chair is found via frontier scoring not LLM guidance \u2014 goal-binding bug is not causally involved in this regression",
+        "DP4": "SSIM deduplication is irrelevant with only 2 frontiers available"
+      },
+      "highest_leverage_untested_levers": [
+        "candidate_10_premature_floor_switch_trigger_isolation",
+        "SDP-C_guard_with_explicit_steps_on_floor_and_frontier_count_check"
+      ],
+      "open_questions": [
+        "What specific harness logic in candidate_10 fires the floor switch at floor_step<=12 \u2014 is it a frontier_count==0 condition that triggers before the obstacle map is populated, re-introducing the same bug as candidate_1's SDP-C regression?",
+        "Is the 2-frontier floor at [-1.92, -2.52] floor 2 (above or below the chair's floor), and would the chair be findable if the agent arrived on it via stair traversal rather than premature harness-triggered switch?",
+        "Does candidate_10's explore-mode guard threshold change interact with a coverage-based switch condition that fires at frontier_count==0 before steps_on_floor reaches a safety minimum?"
+      ]
+    }
+  },
+  "last_updated": "2026-05-20T13:56:12Z"
+}

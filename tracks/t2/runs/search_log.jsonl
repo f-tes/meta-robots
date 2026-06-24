@@ -1,0 +1,14 @@
+{"candidate": "candidate_1", "split": "smoke10_pipeline", "sr": 0.375, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 1205, "timestamp": "2026-05-18T06:20:30"}
+{"candidate": "candidate_2", "split": "smoke10_pipeline", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 1655, "timestamp": "2026-05-18T06:48:05"}
+{"candidate": "candidate_3", "split": "smoke10_pipeline", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 1478, "timestamp": "2026-05-18T07:12:43"}
+{"candidate": "candidate_4", "split": "smoke10_pipeline", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 2844, "timestamp": "2026-05-18T08:00:07"}
+{"candidate": "candidate_5", "split": "smoke10_pipeline", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 1970, "timestamp": "2026-05-18T08:32:57"}
+{"candidate": "candidate_7", "split": "smoke10_pipeline", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 870, "timestamp": "2026-05-19T02:26:34"}
+{"candidate": "candidate_8", "split": "smoke10_pipeline", "sr": 0.625, "best_sr": 0.625, "status": "improved", "elapsed_s": 2587, "timestamp": "2026-05-19T03:09:41"}
+{"candidate": "candidate_9", "split": "smoke10_pipeline", "sr": 0.625, "best_sr": 0.625, "status": "no_improvement", "elapsed_s": 3227, "timestamp": "2026-05-19T04:24:06"}
+{"candidate": "candidate_10", "split": "smoke10_pipeline", "sr": 0.5, "best_sr": 0.625, "status": "no_improvement", "elapsed_s": 2569, "timestamp": "2026-05-19T05:06:55"}
+{"candidate": "candidate_6", "split": "smoke10_pipeline", "sr": 0.625, "best_sr": 0.625, "status": "backfill", "timestamp": "2026-05-20T04:35:47"}
+{"candidate": "candidate_11", "split": "smoke10_pipeline", "sr": 0.625, "best_sr": 0.625, "status": "backfill", "timestamp": "2026-05-20T05:13:39"}
+{"candidate": "candidate_12", "split": "smoke10_pipeline", "sr": 0.625, "best_sr": 0.625, "status": "backfill", "timestamp": "2026-05-20T05:47:09"}
+{"candidate": "candidate_13", "split": "smoke10_pipeline", "sr": 0.625, "best_sr": 0.625, "status": "backfill", "timestamp": "2026-05-20T13:19:19"}
+{"candidate": "candidate_14", "split": "smoke10_pipeline", "sr": 0.625, "best_sr": 0.625, "status": "backfill", "timestamp": "2026-05-20T13:56:12"}

@@ -1,0 +1,141 @@
+{
+  "candidate": "candidate_2",
+  "split": "smoke10_t3",
+  "fingerprints": {
+    "bxsVRursffK": {
+      "seq": "initialize(1-12)\u2192explore(13-121)\u2192get_close_to_stair(122-150)\u2192climb_stair(151-166)\u2192initialize(167-179)\u2192explore(180-180)\u2192get_close_to_stair(181-188)\u2192climb_stair(189-203)\u2192initialize(204-216)\u2192navigate(217-245)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 110,
+        "get_close_to_stair": 37,
+        "climb_stair": 31,
+        "navigate": 29
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "b8d83ca9",
+      "duplicate_of": "candidate_0"
+    },
+    "4ok3usBNeis": {
+      "seq": "initialize(1-12)\u2192explore(13-235)\u2192get_close_to_stair(236-262)\u2192climb_stair(263-272)\u2192explore(273-336)\u2192climb_stair(337-343)\u2192explore(344-349)\u2192navigate(350-374)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 293,
+        "get_close_to_stair": 27,
+        "climb_stair": 17,
+        "navigate": 25
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "6eb67662",
+      "duplicate_of": null
+    },
+    "mL8ThkuaVTM": {
+      "seq": "initialize(1-12)\u2192explore(13-117)\u2192get_close_to_stair(118-128)\u2192look_for_downstair(129-135)\u2192get_close_to_stair(136-140)\u2192climb_stair(141-156)\u2192look_up_back(157-157)\u2192explore(158-195)\u2192initialize(196-207)\u2192explore(208-214)\u2192get_close_to_stair(215-232)\u2192climb_stair(233-237)\u2192initialize(238-250)\u2192explore(251-335)\u2192get_close_to_stair(336-367)\u2192climb_stair(368-383)\u2192initialize(384-396)\u2192explore(397-406)\u2192get_close_to_stair(407-430)\u2192climb_stair(431-442)\u2192initialize(443-455)\u2192explore(456-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 64,
+        "explore": 289,
+        "get_close_to_stair": 90,
+        "look_for_downstair": 7,
+        "climb_stair": 49,
+        "look_up_back": 1
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "51b336f0",
+      "duplicate_of": null
+    },
+    "wcojb4TFT35": {
+      "seq": "initialize(1-12)\u2192explore(13-67)\u2192look_for_downstair(68-68)\u2192look_up_back(69-69)\u2192explore(70-138)\u2192navigate(139-150)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 124,
+        "look_for_downstair": 1,
+        "look_up_back": 1,
+        "navigate": 12
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "cef19f02",
+      "duplicate_of": "candidate_0"
+    },
+    "XB4GS9ShBRE": {
+      "seq": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-150)\u2192get_close_to_stair(151-154)\u2192climb_stair(155-197)\u2192look_down_back(198-198)\u2192explore(199-215)\u2192initialize(216-227)\u2192explore(228-228)\u2192initialize(229-240)\u2192explore(241-241)\u2192initialize(242-253)\u2192explore(254-254)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 49,
+        "navigate": 3,
+        "explore": 126,
+        "get_close_to_stair": 32,
+        "look_up": 1,
+        "climb_stair": 43,
+        "look_down_back": 1
+      },
+      "frontier_exhaustion_step": 227,
+      "seq_hash": "f2baa1ee",
+      "duplicate_of": "candidate_0"
+    },
+    "DYehNKdT76V": {
+      "seq": "initialize(1-12)\u2192explore(13-39)\u2192initialize(40-51)\u2192explore(52-82)\u2192look_for_downstair(83-83)\u2192look_up_back(84-84)\u2192explore(85-108)\u2192navigate(109-129)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 25,
+        "explore": 82,
+        "look_for_downstair": 1,
+        "look_up_back": 1,
+        "navigate": 21
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "57848bff",
+      "duplicate_of": "candidate_0"
+    },
+    "p53SfW6mjZe": {
+      "seq": "initialize(1-12)\u2192look_for_downstair(13-19)\u2192look_up_back(20-20)\u2192explore(21-97)\u2192navigate(98-122)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "look_for_downstair": 7,
+        "look_up_back": 1,
+        "explore": 77,
+        "navigate": 25
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "3c25d30b",
+      "duplicate_of": null
+    },
+    "qyAac8rV8Zk": {
+      "seq": "initialize(1-12)\u2192explore(13-55)\u2192look_for_downstair(56-57)\u2192look_up_back(58-58)\u2192explore(59-163)\u2192get_close_to_stair(164-239)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 148,
+        "look_for_downstair": 2,
+        "look_up_back": 1,
+        "get_close_to_stair": 76
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "4f07b8f9",
+      "duplicate_of": "candidate_0"
+    },
+    "q3zU7Yy5E5s": {
+      "seq": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-183)\u2192look_down(184-184)\u2192look_down_twice(185-185)\u2192climb_stair(186-199)\u2192look_up_back(200-200)\u2192initialize(201-213)\u2192look_for_downstair(214-217)\u2192look_up_back(218-218)\u2192explore(219-345)\u2192navigate(346-348)\u2192explore(349-351)\u2192look_down(352-352)\u2192get_close_to_stair(353-400)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 26,
+        "explore": 288,
+        "look_for_downstair": 16,
+        "look_up_back": 3,
+        "look_down": 2,
+        "look_down_twice": 1,
+        "climb_stair": 14,
+        "navigate": 3,
+        "get_close_to_stair": 48
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "ea6140b2",
+      "duplicate_of": null
+    },
+    "TEEsavR23oF": {
+      "seq": "initialize(1-12)\u2192explore(13-237)\u2192navigate(238-248)",
+      "mode_dist": {
+        "initialize": 12,
+        "explore": 225,
+        "navigate": 11
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "f4050e20",
+      "duplicate_of": "candidate_0"
+    }
+  }
+}

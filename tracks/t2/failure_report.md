@@ -1,0 +1,55 @@
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-18 08:01 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_1 | 0.38 | 8 | 5 | navigation_stair_traverse |
+| candidate_2 | 0.50 | 8 | 4 | navigation_stair_traverse |
+| candidate_3 | 0.50 | 8 | 4 | navigation_stair_traverse |
+| candidate_4 | 0.50 | 8 | 4 | mapping_floor_confusion |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `mapping_floor_confusion` | 8 | 47.1% |
+| 2 | `navigation_stair_traverse` | 7 | 41.2% |
+| 3 | `search_oscillation` | 2 | 11.8% |
+
+## Top 3 Failure Classes — Detail
+
+### `mapping_floor_confusion` (8 episodes)
+
+- **Typical step count:** 164
+- **Typical floor re-inits:** 2.0
+- **Example episodes:**
+  - candidate_1 / unknown (unknown)
+  - candidate_1 / unknown (unknown)
+  - candidate_2 / unknown (unknown)
+
+### `navigation_stair_traverse` (7 episodes)
+
+- **Typical step count:** 318
+- **Typical floor re-inits:** 0.4
+- **Example episodes:**
+  - candidate_1 / unknown (unknown)
+  - candidate_1 / unknown (unknown)
+  - candidate_2 / unknown (unknown)
+
+### `search_oscillation` (2 episodes)
+
+- **Typical step count:** 269
+- **Typical floor re-inits:** 0.0
+- **Example episodes:**
+  - candidate_1 / unknown (unknown)
+  - candidate_4 / unknown (unknown)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `mapping_floor_confusion`
+(8 of 17 failed episodes, 47%)
+
+ASCENT's elevation-based floor detector is triggering spurious re-initialisations.  The agent never settles on a floor long enough to map it.  Patch the floor-change hysteresis in `ascent_policy.py` (Track 2) or increase DP12 minimum interval.

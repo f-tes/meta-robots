@@ -1,0 +1,167 @@
+{
+  "clusters": [
+    {
+      "id": "frontier",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "mL8ThkuaVTM",
+        "mv2HUxq3B53",
+        "p53SfW6mjZe",
+        "TEEsavR23oF",
+        "XB4GS9ShBRE",
+        "DYehNKdT76V",
+        "4ok3usBNeis",
+        "Dd4bFSTQ8gi",
+        "zt1RVoi7PcG",
+        "wcojb4TFT35"
+      ],
+      "root_cause_summary": "Heuristic group: frontier",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "DP7"
+      ],
+      "highest_leverage_untested": "should_stop_detection_score_logging_couch_at_1.1m_dtg",
+      "sr_gain_if_fixed": 1.1,
+      "priority": 1
+    },
+    {
+      "id": "unknown",
+      "scenes": [
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "Heuristic group: unknown",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "DP9",
+        "false_positive_TV_detection_hypothesis",
+        "DP1",
+        "toilet_confidence_distance_threshold_calibration",
+        "DP12",
+        "navmesh_disconnection_watchdog",
+        "candidate_5_per_category_STOP_params_for_this_scene",
+        "candidate_4_TV_suppress_gate_for_this_scene",
+        "DP8",
+        "DP7"
+      ],
+      "highest_leverage_untested": "toilet_false_positive_spatial_verification_bbox_iou",
+      "sr_gain_if_fixed": 0.1,
+      "priority": 2
+    },
+    {
+      "id": "stair",
+      "scenes": [
+        "bxsVRursffK"
+      ],
+      "root_cause_summary": "Heuristic group: stair",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "false_positive_stop_suppression",
+        "per_category_STOP_gate_hooks_py_candidate_4",
+        "per_category_STOP_gate_hooks_py_candidate_5",
+        "DP12",
+        "DP1",
+        "navmesh_disconnection_watchdog",
+        "DP7"
+      ],
+      "highest_leverage_untested": "map_controller.py:_process_stair_climb_state SUCCESS branch \u2014 floor_step=293\u2192294 at steps 476\u2192477 is direct proof floor_reinit() is absent; inserting that call is the minimal single-line fix for this scene",
+      "sr_gain_if_fixed": 0.1,
+      "priority": 3
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "frontier",
+      "reason": "Ruled out in all 11 scenes in cluster"
+    },
+    {
+      "lever": "DP9",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "false_positive_TV_detection_hypothesis",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "toilet_confidence_distance_threshold_calibration",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "candidate_5_per_category_STOP_params_for_this_scene",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "candidate_4_TV_suppress_gate_for_this_scene",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP8",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "unknown",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "false_positive_stop_suppression",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "per_category_STOP_gate_hooks_py_candidate_4",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "per_category_STOP_gate_hooks_py_candidate_5",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    }
+  ],
+  "last_updated": "2026-06-23T21:48:19Z"
+}

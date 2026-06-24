@@ -1,0 +1,11 @@
+{
+  "harness": "/home/teeshan/meta_harness_t7/runs/candidate_base_ascent/harness",
+  "split": "val_200_t7",
+  "metrics": {
+    "success": 0.555,
+    "num_episodes": 200,
+    "spl": 0.27690000000000003,
+    "distance_to_goal": 3.9119214069563895
+  },
+  "timestamp": "2026-06-23T17:10:08"
+}

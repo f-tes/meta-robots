@@ -1,0 +1,139 @@
+{
+  "candidate": "candidate_4",
+  "split": "smoke10_t3",
+  "fingerprints": {
+    "bxsVRursffK": {
+      "seq": "initialize(1-12)\u2192explore(13-121)\u2192get_close_to_stair(122-150)\u2192climb_stair(151-166)\u2192initialize(167-179)\u2192explore(180-180)\u2192get_close_to_stair(181-190)\u2192climb_stair(191-203)\u2192initialize(204-216)\u2192navigate(217-238)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 110,
+        "get_close_to_stair": 39,
+        "climb_stair": 29,
+        "navigate": 22
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "a020a87e",
+      "duplicate_of": "candidate_2"
+    },
+    "4ok3usBNeis": {
+      "seq": "initialize(1-12)\u2192explore(13-235)\u2192get_close_to_stair(236-263)\u2192climb_stair(264-280)\u2192initialize(281-293)\u2192explore(294-302)\u2192get_close_to_stair(303-313)\u2192climb_stair(314-341)\u2192initialize(342-354)\u2192explore(355-431)\u2192navigate(432-485)\u2192explore(486-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 323,
+        "get_close_to_stair": 39,
+        "climb_stair": 45,
+        "navigate": 54
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "7921cbb0",
+      "duplicate_of": null
+    },
+    "mL8ThkuaVTM": {
+      "seq": "initialize(1-12)\u2192explore(13-90)\u2192climb_stair(91-102)\u2192initialize(103-115)\u2192explore(116-186)\u2192get_close_to_stair(187-215)\u2192climb_stair(216-234)\u2192initialize(235-247)\u2192explore(248-257)\u2192get_close_to_stair(258-277)\u2192climb_stair(278-286)\u2192initialize(287-299)\u2192explore(300-400)\u2192navigate(401-410)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 52,
+        "explore": 260,
+        "climb_stair": 40,
+        "get_close_to_stair": 49,
+        "navigate": 10
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "84d06559",
+      "duplicate_of": null
+    },
+    "wcojb4TFT35": {
+      "seq": "initialize(1-12)\u2192explore(13-67)\u2192look_for_downstair(68-68)\u2192look_up_back(69-69)\u2192explore(70-138)\u2192navigate(139-150)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 124,
+        "look_for_downstair": 1,
+        "look_up_back": 1,
+        "navigate": 12
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "cef19f02",
+      "duplicate_of": "candidate_0"
+    },
+    "XB4GS9ShBRE": {
+      "seq": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-150)\u2192get_close_to_stair(151-154)\u2192climb_stair(155-197)\u2192look_down_back(198-198)\u2192initialize(199-211)\u2192explore(212-212)\u2192initialize(213-224)\u2192explore(225-225)\u2192initialize(226-237)\u2192explore(238-238)\u2192initialize(239-250)\u2192explore(251-251)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 62,
+        "navigate": 3,
+        "explore": 110,
+        "get_close_to_stair": 32,
+        "look_up": 1,
+        "climb_stair": 43,
+        "look_down_back": 1
+      },
+      "frontier_exhaustion_step": 224,
+      "seq_hash": "5bcbe14f",
+      "duplicate_of": null
+    },
+    "DYehNKdT76V": {
+      "seq": "initialize(1-12)\u2192explore(13-39)\u2192initialize(40-51)\u2192explore(52-82)\u2192look_for_downstair(83-83)\u2192look_up_back(84-84)\u2192explore(85-108)\u2192navigate(109-129)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 25,
+        "explore": 82,
+        "look_for_downstair": 1,
+        "look_up_back": 1,
+        "navigate": 21
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "57848bff",
+      "duplicate_of": "candidate_0"
+    },
+    "p53SfW6mjZe": {
+      "seq": "initialize(1-12)\u2192look_for_downstair(13-19)\u2192look_up_back(20-20)\u2192explore(21-97)\u2192navigate(98-122)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "look_for_downstair": 7,
+        "look_up_back": 1,
+        "explore": 77,
+        "navigate": 25
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "3c25d30b",
+      "duplicate_of": "candidate_1"
+    },
+    "qyAac8rV8Zk": {
+      "seq": "initialize(1-12)\u2192explore(13-55)\u2192look_for_downstair(56-57)\u2192look_up_back(58-58)\u2192explore(59-163)\u2192get_close_to_stair(164-236)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 148,
+        "look_for_downstair": 2,
+        "look_up_back": 1,
+        "get_close_to_stair": 73
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "14a9ff24",
+      "duplicate_of": null
+    },
+    "q3zU7Yy5E5s": {
+      "seq": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192look_down_twice(180-180)\u2192climb_stair(181-200)\u2192initialize(201-201)\u2192look_up_back(202-202)\u2192initialize(203-214)\u2192explore(215-215)\u2192get_close_to_stair(216-281)\u2192look_down(282-282)\u2192get_close_to_stair(283-298)\u2192look_down_twice(299-299)\u2192climb_stair(300-335)\u2192look_up_back(336-336)\u2192initialize(337-349)\u2192explore(350-374)\u2192look_for_downstair(375-385)\u2192look_up_back(386-386)\u2192explore(387-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 292,
+        "look_for_downstair": 23,
+        "look_up_back": 4,
+        "look_down": 2,
+        "look_down_twice": 2,
+        "climb_stair": 56,
+        "get_close_to_stair": 82
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "63c725f8",
+      "duplicate_of": null
+    },
+    "TEEsavR23oF": {
+      "seq": "initialize(1-12)\u2192explore(13-237)\u2192navigate(238-248)",
+      "mode_dist": {
+        "initialize": 12,
+        "explore": 225,
+        "navigate": 11
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "f4050e20",
+      "duplicate_of": "candidate_0"
+    }
+  }
+}

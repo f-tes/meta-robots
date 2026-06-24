@@ -1,0 +1,22 @@
+{"candidate": "candidate_2", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "backfill", "timestamp": "2026-05-22T06:18:14"}
+{"candidate": "candidate_3", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 3588, "timestamp": "2026-05-22T07:18:02"}
+{"candidate": "candidate_4", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 3571, "timestamp": "2026-05-22T08:17:33"}
+{"candidate": "candidate_5", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "backfill", "timestamp": "2026-05-22T09:14:52"}
+{"candidate": "candidate_6", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 3176, "timestamp": "2026-05-22T10:07:48"}
+{"candidate": "candidate_7", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 3162, "timestamp": "2026-05-22T11:00:30"}
+{"candidate": "candidate_8", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 5429, "timestamp": "2026-05-22T12:31:00"}
+{"candidate": "candidate_9", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 3707, "timestamp": "2026-05-22T13:32:46"}
+{"candidate": "candidate_10", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "improved", "elapsed_s": 3457, "timestamp": "2026-05-22T14:30:23"}
+{"candidate": "candidate_11", "split": "smoke10_t3", "sr": 0.4, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3488, "timestamp": "2026-05-22T15:28:31"}
+{"candidate": "candidate_12", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3905, "timestamp": "2026-05-22T16:33:36"}
+{"candidate": "candidate_13", "split": "smoke10_t3", "sr": 0.3, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 7080, "timestamp": "2026-05-22T18:31:36"}
+{"candidate": "candidate_14", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 6328, "timestamp": "2026-05-22T20:17:04"}
+{"candidate": "candidate_15", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 5854, "timestamp": "2026-05-22T21:54:38"}
+{"candidate": "candidate_16", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3412, "timestamp": "2026-05-22T22:51:30"}
+{"candidate": "candidate_17", "split": "smoke10_t3", "sr": 0.5, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3197, "timestamp": "2026-05-22T23:44:47"}
+{"candidate": "candidate_18", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3060, "timestamp": "2026-05-23T00:35:47"}
+{"candidate": "candidate_19", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3971, "timestamp": "2026-05-23T01:41:58"}
+{"candidate": "candidate_20", "split": "smoke10_t3", "sr": 0.3, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3463, "timestamp": "2026-05-23T02:39:42"}
+{"candidate": "candidate_21", "split": "smoke10_t3", "sr": 0.3, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 5508, "timestamp": "2026-05-23T04:11:29"}
+{"candidate": "candidate_22", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 5239, "timestamp": "2026-05-23T05:38:48"}
+{"candidate": "candidate_23", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.6, "status": "no_improvement", "elapsed_s": 3012, "timestamp": "2026-05-23T06:29:00"}

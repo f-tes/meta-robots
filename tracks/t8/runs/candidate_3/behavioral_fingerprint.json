@@ -1,0 +1,226 @@
+{
+  "candidate": "candidate_3",
+  "split": "val_30_t8",
+  "fingerprints": {
+    "q3zU7Yy5E5s": {
+      "seq": "initialize(1-12)\u2192explore(13-35)\u2192navigate(36-77)\u2192explore(78-79)\u2192navigate(80-84)\u2192explore(85-85)\u2192navigate(86-89)\u2192explore(90-90)\u2192navigate(91-94)\u2192explore(95-96)\u2192navigate(97-98)\u2192explore(99-216)\u2192navigate(217-226)\u2192explore(227-234)\u2192get_close_to_stair(235-263)\u2192climb_stair(264-318)\u2192initialize(319-331)\u2192explore(332-455)\u2192initialize(0-12)\u2192explore(13-37)\u2192look_for_downstair(38-49)\u2192look_up_back(50-50)\u2192explore(51-117)\u2192look_down(118-118)\u2192get_close_to_stair(119-123)\u2192look_down_twice(124-124)\u2192climb_stair(125-140)\u2192look_up_back(141-141)\u2192initialize(142-154)\u2192navigate(155-183)\u2192explore(184-184)\u2192navigate(185-186)\u2192explore(187-191)\u2192navigate(192-194)\u2192explore(195-290)\u2192navigate(291-347)\u2192initialize(348-359)\u2192navigate(360-360)\u2192explore(361-361)\u2192navigate(362-366)\u2192explore(367-369)\u2192navigate(370-378)\u2192explore(379-381)\u2192navigate(382-386)\u2192explore(387-390)\u2192navigate(391-395)\u2192explore(396-488)\u2192get_close_to_stair(489-499)\u2192initialize(0-12)\u2192explore(13-172)\u2192get_close_to_stair(173-197)\u2192climb_stair(198-207)\u2192explore(208-380)\u2192get_close_to_stair(381-426)\u2192climb_stair(427-451)\u2192initialize(452-464)\u2192explore(465-499)\u2192initialize(0-12)\u2192explore(13-41)\u2192navigate(42-104)\u2192explore(105-105)\u2192navigate(106-117)\u2192explore(118-135)\u2192navigate(136-145)\u2192explore(146-199)\u2192navigate(200-240)\u2192explore(241-241)\u2192navigate(242-341)\u2192explore(342-354)\u2192get_close_to_stair(355-361)\u2192look_up(362-362)\u2192get_close_to_stair(363-367)\u2192climb_stair(368-399)\u2192look_down_back(400-400)\u2192explore(401-401)\u2192navigate(402-437)\u2192look_for_downstair(438-440)\u2192look_up_back(441-441)\u2192explore(442-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 103,
+        "explore": 1120,
+        "navigate": 445,
+        "get_close_to_stair": 128,
+        "climb_stair": 138,
+        "look_for_downstair": 15,
+        "look_up_back": 3,
+        "look_down": 1,
+        "look_down_twice": 1,
+        "look_up": 1,
+        "look_down_back": 1
+      },
+      "frontier_exhaustion_step": 454,
+      "seq_hash": "31a0e4e2",
+      "duplicate_of": null
+    },
+    "mL8ThkuaVTM": {
+      "seq": "initialize(1-12)\u2192explore(13-49)\u2192look_for_downstair(50-52)\u2192look_up_back(53-53)\u2192explore(54-104)\u2192look_down(105-105)\u2192climb_stair(106-112)\u2192look_up_back(113-113)\u2192explore(114-125)\u2192navigate(126-146)\u2192explore(147-159)\u2192look_for_downstair(160-163)\u2192look_up_back(164-164)\u2192explore(165-499)\u2192initialize(0-12)\u2192navigate(13-33)\u2192explore(34-104)\u2192get_close_to_stair(105-118)\u2192climb_stair(119-126)\u2192explore(127-475)\u2192get_close_to_stair(476-495)\u2192look_up(496-496)\u2192get_close_to_stair(497-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 26,
+        "explore": 868,
+        "look_for_downstair": 7,
+        "look_up_back": 3,
+        "look_down": 1,
+        "climb_stair": 15,
+        "navigate": 42,
+        "get_close_to_stair": 37,
+        "look_up": 1
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "55327285",
+      "duplicate_of": null
+    },
+    "qyAac8rV8Zk": {
+      "seq": "initialize(1-12)\u2192explore(13-43)\u2192look_for_downstair(44-63)\u2192look_up_back(64-64)\u2192explore(65-75)\u2192navigate(76-105)\u2192explore(106-141)\u2192navigate(142-163)\u2192explore(164-258)\u2192navigate(259-271)\u2192explore(272-272)\u2192get_close_to_stair(273-297)\u2192climb_stair(298-313)\u2192explore(314-319)\u2192navigate(320-343)\u2192explore(344-406)\u2192navigate(407-424)\u2192explore(425-449)\u2192navigate(450-454)\u2192explore(455-460)\u2192navigate(461-470)\u2192explore(471-494)\u2192navigate(495-499)\u2192initialize(0-12)\u2192explore(13-37)\u2192look_for_downstair(38-41)\u2192look_up_back(42-42)\u2192explore(43-234)\u2192look_down(235-235)\u2192get_close_to_stair(236-265)\u2192look_down_twice(266-266)\u2192climb_stair(267-276)\u2192look_up_back(277-277)\u2192explore(278-291)\u2192look_for_downstair(292-294)\u2192look_up_back(295-295)\u2192explore(296-355)\u2192look_down(356-356)\u2192look_down_twice(357-357)\u2192climb_stair(358-367)\u2192look_up_back(368-368)\u2192explore(369-499)\u2192initialize(0-12)\u2192explore(13-33)\u2192navigate(34-42)\u2192explore(43-96)\u2192navigate(97-109)\u2192explore(110-148)\u2192navigate(149-174)\u2192explore(175-347)\u2192navigate(348-368)\u2192explore(369-499)\u2192initialize(0-12)\u2192explore(13-24)\u2192look_for_downstair(25-25)\u2192look_up_back(26-26)\u2192explore(27-30)\u2192get_close_to_stair(31-38)\u2192look_up(39-39)\u2192get_close_to_stair(40-46)\u2192climb_stair(47-56)\u2192look_down_back(57-57)\u2192explore(58-99)\u2192navigate(100-109)\u2192explore(110-110)\u2192look_for_downstair(111-111)\u2192look_up_back(112-112)\u2192explore(113-213)\u2192look_down(214-214)\u2192get_close_to_stair(215-334)\u2192initialize(335-346)\u2192explore(347-357)\u2192get_close_to_stair(358-419)\u2192look_down(420-420)\u2192look_down_twice(421-421)\u2192climb_stair(422-457)\u2192look_up_back(458-458)\u2192explore(459-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 64,
+        "explore": 1350,
+        "look_for_downstair": 29,
+        "look_up_back": 8,
+        "navigate": 206,
+        "get_close_to_stair": 252,
+        "climb_stair": 82,
+        "look_down": 4,
+        "look_down_twice": 3,
+        "look_up": 1,
+        "look_down_back": 1
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "2dfe0e85",
+      "duplicate_of": null
+    },
+    "DYehNKdT76V": {
+      "seq": "initialize(1-12)\u2192explore(13-13)\u2192look_up(14-14)\u2192get_close_to_stair(15-72)\u2192climb_stair(73-82)\u2192look_down_back(83-83)\u2192look_for_downstair(84-84)\u2192look_up_back(85-85)\u2192explore(86-144)\u2192navigate(145-193)\u2192explore(194-211)\u2192navigate(212-215)\u2192explore(216-217)\u2192navigate(218-222)\u2192explore(223-278)\u2192navigate(279-326)\u2192explore(327-327)\u2192navigate(328-329)\u2192explore(330-331)\u2192navigate(332-333)\u2192explore(334-336)\u2192navigate(337-370)\u2192explore(371-431)\u2192navigate(432-432)\u2192explore(433-499)\u2192initialize(0-12)\u2192explore(13-43)\u2192navigate(44-62)\u2192explore(63-460)\u2192climb_stair(461-492)\u2192explore(493-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 26,
+        "explore": 706,
+        "look_up": 1,
+        "get_close_to_stair": 58,
+        "climb_stair": 42,
+        "look_down_back": 1,
+        "look_for_downstair": 1,
+        "look_up_back": 1,
+        "navigate": 164
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "8f36ca9a",
+      "duplicate_of": null
+    },
+    "mv2HUxq3B53": {
+      "seq": "initialize(1-12)\u2192navigate(13-24)\u2192explore(25-108)\u2192navigate(109-136)\u2192explore(137-214)\u2192navigate(215-226)\u2192explore(227-271)\u2192navigate(272-291)\u2192explore(292-305)\u2192navigate(306-318)\u2192explore(319-370)\u2192navigate(371-425)\u2192explore(426-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "navigate": 140,
+        "explore": 347
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "46e028fa",
+      "duplicate_of": null
+    },
+    "4ok3usBNeis": {
+      "seq": "initialize(1-12)\u2192explore(13-143)\u2192navigate(144-157)\u2192explore(158-189)\u2192navigate(190-210)\u2192explore(211-212)\u2192get_close_to_stair(213-236)\u2192look_up(237-237)\u2192get_close_to_stair(238-241)\u2192climb_stair(242-271)\u2192look_down_back(272-272)\u2192explore(273-323)\u2192navigate(324-359)\u2192climb_stair(360-368)\u2192explore(369-377)\u2192navigate(378-390)\u2192explore(391-412)\u2192navigate(413-425)\u2192explore(426-450)\u2192navigate(451-463)\u2192explore(464-472)\u2192navigate(473-480)\u2192explore(481-499)\u2192initialize(0-12)\u2192explore(13-57)\u2192navigate(58-98)\u2192explore(99-215)\u2192get_close_to_stair(216-225)\u2192climb_stair(226-233)\u2192explore(234-256)\u2192get_close_to_stair(257-258)\u2192climb_stair(259-266)\u2192explore(267-304)\u2192look_for_downstair(305-305)\u2192look_up_back(306-306)\u2192explore(307-329)\u2192navigate(330-349)\u2192explore(350-354)\u2192navigate(355-363)\u2192explore(364-364)\u2192navigate(365-367)\u2192explore(368-444)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 26,
+        "explore": 629,
+        "navigate": 191,
+        "get_close_to_stair": 40,
+        "look_up": 1,
+        "climb_stair": 55,
+        "look_down_back": 1,
+        "look_for_downstair": 1,
+        "look_up_back": 1
+      },
+      "frontier_exhaustion_step": 443,
+      "seq_hash": "7858cb4c",
+      "duplicate_of": null
+    },
+    "Dd4bFSTQ8gi": {
+      "seq": "initialize(1-12)\u2192explore(13-31)\u2192navigate(32-70)\u2192explore(71-103)\u2192navigate(104-120)\u2192explore(121-145)\u2192navigate(146-161)\u2192explore(162-196)\u2192navigate(197-209)\u2192explore(210-225)\u2192navigate(226-261)\u2192explore(262-281)\u2192navigate(282-289)\u2192explore(290-426)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 285,
+        "navigate": 129
+      },
+      "frontier_exhaustion_step": 425,
+      "seq_hash": "524172cb",
+      "duplicate_of": null
+    },
+    "5cdEh9F2hJL": {
+      "seq": "initialize(1-12)\u2192navigate(13-20)\u2192explore(21-144)\u2192navigate(145-153)\u2192explore(154-158)\u2192navigate(159-165)\u2192explore(166-170)\u2192navigate(171-178)\u2192explore(179-234)\u2192navigate(235-265)\u2192explore(266-445)\u2192navigate(446-446)\u2192explore(447-476)\u2192navigate(477-487)\u2192explore(488-488)\u2192navigate(489-490)\u2192explore(491-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "navigate": 77,
+        "explore": 410
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "36a533b0",
+      "duplicate_of": null
+    },
+    "p53SfW6mjZe": {
+      "seq": "initialize(1-12)\u2192explore(13-393)\u2192get_close_to_stair(394-452)\u2192climb_stair(453-469)\u2192explore(470-483)\u2192initialize(484-495)\u2192explore(496-499)\u2192initialize(0-12)\u2192explore(13-84)\u2192navigate(85-104)\u2192explore(105-106)\u2192navigate(107-113)\u2192explore(114-339)\u2192navigate(340-354)\u2192explore(355-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 38,
+        "explore": 844,
+        "get_close_to_stair": 59,
+        "climb_stair": 17,
+        "navigate": 42
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "85c7b803",
+      "duplicate_of": null
+    },
+    "TEEsavR23oF": {
+      "seq": "initialize(1-12)\u2192explore(13-71)\u2192navigate(72-77)\u2192explore(78-83)\u2192navigate(84-85)\u2192explore(86-117)\u2192navigate(118-120)\u2192explore(121-499)\u2192initialize(0-12)\u2192explore(13-458)\u2192navigate(459-494)\u2192explore(495-499)\u2192initialize(0-12)\u2192explore(13-74)\u2192navigate(75-92)\u2192explore(93-364)\u2192navigate(365-445)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 1261,
+        "navigate": 146
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "3ba120c9",
+      "duplicate_of": null
+    },
+    "XB4GS9ShBRE": {
+      "seq": "initialize(1-12)\u2192explore(13-26)\u2192navigate(27-28)\u2192explore(29-39)\u2192navigate(40-41)\u2192explore(42-64)\u2192look_for_downstair(65-96)\u2192look_up_back(97-97)\u2192explore(98-219)\u2192navigate(220-223)\u2192explore(224-275)\u2192get_close_to_stair(276-331)\u2192climb_stair(332-340)\u2192explore(341-410)\u2192look_for_downstair(411-431)\u2192navigate(432-433)\u2192look_for_downstair(434-446)\u2192look_up_back(447-447)\u2192explore(448-499)\u2192initialize(0-12)\u2192explore(13-23)\u2192navigate(24-26)\u2192look_for_downstair(27-35)\u2192look_up_back(36-36)\u2192explore(37-214)\u2192get_close_to_stair(215-294)\u2192climb_stair(295-299)\u2192explore(300-356)\u2192look_for_downstair(357-358)\u2192look_up_back(359-359)\u2192explore(360-416)\u2192navigate(417-431)\u2192explore(432-472)\u2192get_close_to_stair(473-499)\u2192initialize(0-12)\u2192explore(13-62)\u2192look_for_downstair(63-63)\u2192look_up_back(64-64)\u2192explore(65-201)\u2192get_close_to_stair(202-256)\u2192initialize(0-12)\u2192explore(13-155)\u2192get_close_to_stair(156-184)\u2192climb_stair(185-217)\u2192climb_stair_initialize(218-218)\u2192explore(219-219)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 52,
+        "explore": 1019,
+        "navigate": 28,
+        "look_for_downstair": 78,
+        "look_up_back": 5,
+        "get_close_to_stair": 247,
+        "climb_stair": 47,
+        "climb_stair_initialize": 1
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "92e86a69",
+      "duplicate_of": null
+    },
+    "zt1RVoi7PcG": {
+      "seq": "initialize(1-12)\u2192explore(13-30)\u2192look_for_downstair(31-32)\u2192look_up_back(33-33)\u2192explore(34-280)\u2192navigate(281-309)\u2192explore(310-416)\u2192navigate(417-424)\u2192explore(425-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 447,
+        "look_for_downstair": 2,
+        "look_up_back": 1,
+        "navigate": 37
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "23ed0e68",
+      "duplicate_of": null
+    },
+    "wcojb4TFT35": {
+      "seq": "initialize(1-12)\u2192explore(13-83)\u2192look_for_downstair(84-84)\u2192look_up_back(85-85)\u2192explore(86-157)\u2192navigate(158-167)\u2192explore(168-326)\u2192get_close_to_stair(327-364)\u2192look_down(365-365)\u2192look_down_twice(366-366)\u2192climb_stair(367-381)\u2192look_up_back(382-382)\u2192explore(383-385)\u2192navigate(386-485)\u2192explore(486-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 319,
+        "look_for_downstair": 1,
+        "look_up_back": 2,
+        "navigate": 110,
+        "get_close_to_stair": 38,
+        "look_down": 1,
+        "look_down_twice": 1,
+        "climb_stair": 15
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "9373b046",
+      "duplicate_of": null
+    },
+    "bxsVRursffK": {
+      "seq": "initialize(1-12)\u2192explore(13-28)\u2192look_for_downstair(29-29)\u2192look_up_back(30-30)\u2192explore(31-47)\u2192look_down(48-48)\u2192look_down_twice(49-49)\u2192climb_stair(50-82)\u2192look_up_back(83-83)\u2192explore(84-174)\u2192get_close_to_stair(175-204)\u2192climb_stair(205-219)\u2192explore(220-448)\u2192navigate(449-451)\u2192climb_stair(452-465)\u2192explore(466-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 387,
+        "look_for_downstair": 1,
+        "look_up_back": 2,
+        "look_down": 1,
+        "look_down_twice": 1,
+        "climb_stair": 62,
+        "get_close_to_stair": 30,
+        "navigate": 3
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "49123548",
+      "duplicate_of": null
+    },
+    "6s7QHgap2fW": {
+      "seq": "initialize(1-12)\u2192explore(13-31)\u2192navigate(32-34)\u2192explore(35-125)\u2192navigate(126-137)\u2192explore(138-166)\u2192navigate(167-169)\u2192explore(170-244)\u2192navigate(245-260)\u2192explore(261-262)\u2192navigate(263-362)\u2192explore(363-499)",
+      "mode_dist": {
+        "initialize": 12,
+        "explore": 353,
+        "navigate": 134
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "7073e372",
+      "duplicate_of": null
+    }
+  }
+}

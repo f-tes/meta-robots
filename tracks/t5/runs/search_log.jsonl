@@ -1,0 +1,21 @@
+{"candidate": "candidate_0", "split": "smoke10_t3", "sr": 0.7, "best_sr": 0.7, "status": "backfill", "timestamp": "2026-05-29T02:14:33"}
+{"candidate": "candidate_1", "split": "smoke10_t3", "sr": 0.7, "best_sr": 0.7, "status": "no_improvement", "elapsed_s": 2988, "timestamp": "2026-05-29T03:59:02"}
+{"candidate": "candidate_2", "split": "smoke10_t3", "sr": null, "best_sr": 0.7, "status": "parse_error", "elapsed_s": 1037, "timestamp": "2026-05-29T04:16:18"}
+{"candidate": "candidate_3", "split": "smoke10_t3", "sr": null, "best_sr": 0.7, "status": "parse_error", "elapsed_s": 1165, "timestamp": "2026-05-29T04:35:43"}
+{"candidate": "candidate_4", "split": "smoke10_t3", "sr": 0.6, "best_sr": 0.7, "status": "no_improvement", "elapsed_s": 4484, "timestamp": "2026-05-29T05:50:27"}
+{"candidate": "candidate_5", "split": "smoke10_t3", "sr": null, "best_sr": 0.7, "status": "parse_error", "elapsed_s": 1111, "timestamp": "2026-05-29T06:08:58"}
+{"candidate": "candidate_6", "split": "smoke10_t3", "sr": null, "best_sr": 0.7, "status": "parse_error", "elapsed_s": 873, "timestamp": "2026-05-29T06:23:31"}
+{"candidate": "candidate_7", "split": "smoke10_t3", "sr": null, "best_sr": 0.7, "status": "parse_error", "elapsed_s": 1028, "timestamp": "2026-05-29T06:40:39"}
+{"candidate": "candidate_8", "split": "smoke10_t3", "sr": 0.7, "best_sr": 0.7, "status": "no_improvement", "elapsed_s": 3923, "timestamp": "2026-05-29T07:46:02"}
+{"candidate": "candidate_9", "split": "smoke10_t3", "sr": 0.8, "best_sr": 0.8, "status": "improved", "elapsed_s": 3887, "timestamp": "2026-05-29T08:50:49"}
+{"iteration": 10, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-29T13:25:20"}
+{"iteration": 11, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-29T17:58:27"}
+{"iteration": 12, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-29T22:37:30"}
+{"iteration": 13, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-30T03:13:18"}
+{"iteration": 14, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-30T07:47:43"}
+{"iteration": 15, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-30T12:21:05"}
+{"iteration": 16, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-30T16:54:29"}
+{"iteration": 17, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-30T21:28:53"}
+{"iteration": 18, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-31T02:02:01"}
+{"iteration": 19, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-31T06:36:36"}
+{"iteration": 20, "status": "propose_failed", "best_sr": 0.8, "timestamp": "2026-05-31T11:13:25"}

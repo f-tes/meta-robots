@@ -1,0 +1,3865 @@
+
+############################################################
+  ASCENT Track 5 Search Loop
+  split=smoke10_t3  max_candidates=20
+  patience=20  propose_retries=3
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.700
+
+############################################################
+  Iteration 1/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_1...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 8011 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_1
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map only covers the lower ~2/3 of the physical stair geometry. When the robot reaches the unmapped upper portion, is_robot_in_stair_map_fast flips to False while the robot is still mid-stair, triggering a false SUCCESS. Patching the success condition to additionally require a floor change confirmation or a minimum step count prevents premature exit.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 8626 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_1/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_1/harness/
+
+[loop] New candidate: candidate_1
+
+============================================================
+  Validate candidate_1
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_1
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_1
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_1
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_1 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_1
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] Parsing smoke10_t3.log ...
+  [classify] Prompt written to /tmp/ascent_classify_prompt.txt (7,312 chars)
+  [classify] Calling Claude ...
+  [classify] Claude returned 10 classification(s)
+  [classify] Written: /home/teeshan/meta_harness_t5/runs/candidate_1/failure_classification.json
+  [classify] SR=0.70  success=7  failed=3
+    OK scene=bxsVRursffK  class=success  conf=high
+    OK scene=4ok3usBNeis  class=success  conf=high
+    OK scene=mL8ThkuaVTM  class=success  conf=high
+    OK scene=wcojb4TFT35  class=success  conf=high
+    FAIL scene=XB4GS9ShBRE  class=navmesh_disconnection  conf=high
+    OK scene=DYehNKdT76V  class=success  conf=high
+    OK scene=p53SfW6mjZe  class=success  conf=high
+    FAIL scene=qyAac8rV8Zk  class=navmesh_disconnection  conf=high
+    FAIL scene=q3zU7Yy5E5s  class=navmesh_disconnection  conf=medium
+    OK scene=TEEsavR23oF  class=success  conf=high
+  [fingerprint] Parsing smoke10_t3.log ...
+  [fingerprint] Written: /home/teeshan/meta_harness_t5/runs/candidate_1/behavioral_fingerprint.json
+    bxsVRursffK: hash=9b495bf9  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-121)→get_close_to_stair(122-150)→climb_stair(151-298)→initialize(299-311...
+    4ok3usBNeis: hash=9efc02c3  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-235)→get_close_to_stair(236-262)→climb_stair(263-341)→explore(342-346)→n...
+    mL8ThkuaVTM: hash=3f83a993  modes=['initialize', 'explore', 'climb_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-90)→climb_stair(91-231)→explore(232-262)→navigate(263-274)→initialize(0-...
+    wcojb4TFT35: hash=cef19f02  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-67)→look_for_downstair(68-68)→look_up_back(69-69)→explore(70-138)→naviga...
+    XB4GS9ShBRE: hash=f2baa1ee  modes=['initialize', 'navigate', 'explore', 'get_close_to_stair', 'look_up', 'climb_stair', 'look_down_back']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→navigate(13-14)→explore(15-50)→navigate(51-51)→explore(52-121)→get_close_to_stair(1...
+    DYehNKdT76V: hash=57848bff  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-39)→initialize(40-51)→explore(52-82)→look_for_downstair(83-83)→look_up_b...
+    p53SfW6mjZe: hash=3c25d30b  modes=['initialize', 'look_for_downstair', 'look_up_back', 'explore', 'navigate']
+      seq=initialize(1-12)→look_for_downstair(13-19)→look_up_back(20-20)→explore(21-97)→navigate(98-122)→initi...
+    qyAac8rV8Zk: hash=4f07b8f9  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'get_close_to_stair']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-55)→look_for_downstair(56-57)→look_up_back(58-58)→explore(59-163)→get_cl...
+    q3zU7Yy5E5s: hash=8ad429e3  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'look_down', 'look_down_twice', 'climb_stair', 'get_close_to_stair', 'look_up']
+      seq=initialize(1-12)→explore(13-69)→look_for_downstair(70-81)→look_up_back(82-82)→explore(83-178)→look_d...
+    TEEsavR23oF: hash=f4050e20  modes=['initialize', 'explore', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-237)→navigate(238-248)
+
+=== run_analyzer (T4): candidate_1 ===
+  Failing scenes: ['XB4GS9ShBRE', 'qyAac8rV8Zk', 'q3zU7Yy5E5s']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (71,461 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_t5/analysis_db.json
+
+  XB4GS9ShBRE: The stair was correctly physically traversed (T5_STAIR_CLIMB_EVAL SUCCESS at paused_step=20, floor_step confirmed reset 
+  Ruled out: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'DP9', 'premature_stair_climb_success_guard']
+  Next levers: ['post_floor_switch_frontier_seeding_radius', 'DP10_DP11_value_map_upper_floor_coverage', 'navmesh_connectivity_precheck_for_floor_skip', 'upper_floor_re_exploration_after_NOQUIT_rescue']
+  Hypothesis confirmed=False: Hypothesis refuted on two independent grounds: (1) SUCCESS fired at paused_step=20 which already sat
+
+  qyAac8rV8Zk: The downstair centroid at [-1.22463054, -8.19236453] lies in a navmesh-disconnected component: pointnav never converges 
+  Ruled out: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'DP1', 'premature_stair_climb_success_guard']
+  Next levers: ['early_abort_on_N_consecutive_centroid_failures_with_floor_skip', 'DP9_stair_carrot_distance_for_downstair', 'alternative_stair_entry_point_sampling_from_connected_navmesh_boundary']
+  Hypothesis confirmed=False: Hypothesis is off-target for this scene: qyAac8rV8Zk fails on downstair centroid reachability (get_c
+
+  q3zU7Yy5E5s: The upstairs stair centroid lies in a navmesh-disconnected component regardless of the exact centroid coordinates: candi
+  Ruled out: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'DP9', 'premature_stair_climb_success_guard']
+  Next levers: ['early_abort_on_N_consecutive_centroid_failures_with_permanent_stair_disable', 'stair_centroid_navmesh_reachability_precheck_before_get_close_to_stair', 'alternative_stair_entry_point_sampling_from_connected_navmesh_boundary']
+  Hypothesis confirmed=False: Hypothesis is off-target: q3zU7Yy5E5s fails because Reach_stair_centroid never becomes True (the sta
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T035901.json
+
+  2 cluster(s) synthesized:
+    [1] navmesh_disconnected_stair_centroid  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.37  highest_leverage=stair_centroid_navmesh_reachability_precheck_before_get_close_to_stair combined with alternative_stair_entry_point_sampling_from_connected_navmesh_boundary: before committing to get_close_to_stair, run a navmesh reachability query from the agent's current position to the candidate centroid; if unreachable, resample candidate entry points by walking the navmesh boundary of the stair footprint until a connected point is found, or trigger an early floor-skip if no reachable entry exists
+    [2] post_floor_switch_frontier_exhaustion  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.13  highest_leverage=navmesh_connectivity_precheck_for_floor_skip combined with post_floor_switch_frontier_seeding_radius and DP10_DP11_value_map_upper_floor_coverage: at floor switch, assess whether the newly activated floor has sufficient connected frontier coverage; if the frontier set is sparse (< threshold) or the goal semantic region appears disconnected from reachable space, either seed additional frontiers at an expanded radius from the switch point or trigger a skip to an alternative floor before exhausting the step budget on dead-end reinits
+
+  15 forbidden move(s):
+    DP7 (navmesh_disconnected_stair_centroid): Ruled out for both q3zU7Yy5E5s and qyAac8rV8Zk; LLM response parsing operates on
+    DP5 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; LLM prompt construction cannot alter navmesh geometry
+    DP6 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; same rationale as DP5 — prompt content has no causal 
+    DP2 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; the LLM trigger threshold governs frontier ranking, n
+    DP3 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; multi-floor LLM selection is downstream of a successf
+    DP12 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; floor-switch interval gating is irrelevant when the s
+    premature_stair_climb_success_guard (navmesh_disconnected_stair_centroid): Explicitly confirmed off-target by candidate_1 experiments on both scenes: is_ro
+    DP7 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM frontier parsing cannot generate new frontiers in
+    DP5 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM prompts have no effect on post-switch frontier su
+    DP6 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; same rationale as DP5.
+    DP2 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM trigger threshold does not affect the structural 
+    DP3 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; multi-floor LLM selection is downstream of the fronti
+    DP12 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; adjusting floor-switch interval does not fix the spar
+    DP9 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; stair carrot waypoint distance is irrelevant after th
+    premature_stair_climb_success_guard (post_floor_switch_frontier_exhaustion): Confirmed off-target for XB4GS9ShBRE by candidate_1: T5_STAIR_CLIMB_EVAL SUCCESS
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_1
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_1/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_1/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_1/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_1/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_1/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_1/smoke10_t3.log
+============================================================
+
+
+Eval finished in 2066s  (exit code 0)
+_block_size=16, resizing from (2551, 960) to (2560, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/248 [00:00<02:20,  1.76it/s][A
+
+  3%|▎         | 7/248 [00:00<00:18, 13.01it/s][A
+
+  5%|▌         | 13/248 [00:00<00:10, 22.81it/s][A
+
+  8%|▊         | 20/248 [00:00<00:06, 33.08it/s][A
+
+ 11%|█         | 27/248 [00:01<00:05, 41.74it/s][A
+
+ 14%|█▎        | 34/248 [00:01<00:04, 48.61it/s][A
+
+ 17%|█▋        | 41/248 [00:01<00:03, 52.68it/s][A
+
+ 19%|█▉        | 48/248 [00:01<00:03, 55.18it/s][A
+
+ 22%|██▏       | 55/248 [00:01<00:03, 57.20it/s][A
+
+ 25%|██▌       | 62/248 [00:01<00:03, 58.67it/s][A
+
+ 28%|██▊       | 69/248 [00:01<00:03, 59.33it/s][A
+
+ 31%|███       | 76/248 [00:01<00:02, 60.15it/s][A
+
+ 33%|███▎      | 83/248 [00:01<00:02, 60.69it/s][A
+
+ 36%|███▋      | 90/248 [00:02<00:02, 61.96it/s][A
+
+ 39%|███▉      | 97/248 [00:02<00:02, 63.29it/s][A
+
+ 42%|████▏     | 104/248 [00:02<00:02, 64.33it/s][A
+
+ 45%|████▍     | 111/248 [00:02<00:02, 65.12it/s][A
+
+ 48%|████▊     | 118/248 [00:02<00:01, 66.07it/s][A
+
+ 50%|█████     | 125/248 [00:02<00:01, 66.48it/s][A
+
+ 53%|█████▎    | 132/248 [00:02<00:01, 65.77it/s][A
+
+ 56%|█████▌    | 139/248 [00:02<00:01, 66.10it/s][A
+
+ 59%|█████▉    | 146/248 [00:02<00:01, 66.24it/s][A
+
+ 62%|██████▏   | 153/248 [00:02<00:01, 66.18it/s][A
+
+ 65%|██████▍   | 160/248 [00:03<00:01, 66.09it/s][A
+
+ 67%|██████▋   | 167/248 [00:03<00:01, 65.75it/s][A
+
+ 70%|███████   | 174/248 [00:03<00:01, 64.48it/s][A
+
+ 73%|███████▎  | 181/248 [00:03<00:01, 63.39it/s][A
+
+ 76%|███████▌  | 188/248 [00:03<00:00, 63.44it/s][A
+
+ 79%|███████▊  | 195/248 [00:03<00:00, 63.09it/s][A
+
+ 81%|████████▏ | 202/248 [00:03<00:00, 62.37it/s][A
+
+ 84%|████████▍ | 209/248 [00:03<00:00, 61.85it/s][A
+
+ 87%|████████▋ | 216/248 [00:03<00:00, 61.74it/s][A
+
+ 90%|████████▉ | 223/248 [00:04<00:00, 61.79it/s][A
+
+ 93%|█████████▎| 230/248 [00:04<00:00, 60.72it/s][A
+
+ 96%|█████████▌| 237/248 [00:04<00:00, 60.89it/s][A
+
+ 98%|█████████▊| 244/248 [00:04<00:00, 61.35it/s][A
+100%|██████████| 248/248 [00:04<00:00, 55.26it/s]
+
+100%|██████████| 10/10 [34:03<00:00, 204.32s/it]
+2026-05-29 03:52:04,352 Average episode reward: 9.5536
+2026-05-29 03:52:04,353 Average episode distance_to_goal: 2.5678
+2026-05-29 03:52:04,353 Average episode success: 0.7000
+2026-05-29 03:52:04,353 Average episode spl: 0.3055
+2026-05-29 03:52:04,353 Average episode soft_spl: 0.3463
+2026-05-29 03:52:04,353 Average episode distance_to_goal_reward: 0.0000
+2026-05-29 03:52:04,353 Average episode traveled_stairs: 0.4000
+2026-05-29 03:52:04,353 Average episode yaw: -30.0000
+2026-05-29 03:52:04,353 Average episode target_detected: 0.7000
+2026-05-29 03:52:04,353 Average episode stop_called: 0.7000
+2026-05-29 03:52:04,353 Average episode num_steps: 263.9000
+2026-05-29 03:52:04,353 Average episode start_yaw: -0.1150
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_1/scores.json
+{
+  "success": 0.7,
+  "num_episodes": 10,
+  "spl": 0.3055,
+  "distance_to_goal": 2.567754480428994
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 7 successful video(s) from smoke10_t3_videos
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] No improvement: candidate_1 SR=0.700 (best=0.700)
+
+[loop] Logged: {'candidate': 'candidate_1', 'split': 'smoke10_t3', 'sr': 0.7, 'best_sr': 0.7, 'status': 'no_improvement', 'elapsed_s': 2988, 'timestamp': '2026-05-29T03:59:02'}
+
+############################################################
+  Iteration 2/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_2...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 8551 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_2
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   stair.py
+  Hypothesis: The stair centroid computed from the stair pixel map lands on non-navigable riser geometry. By snapping it to the nearest reachable navmesh cell before dispatching PointNav, we give the navigator a valid goal it can actually route to, preventing the convergence stall and subsequent frontier exhaustion.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 9168 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_2/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_2/harness/
+
+[loop] New candidate: candidate_2
+
+============================================================
+  Validate candidate_2
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_2
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_2
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_2
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_2 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_2
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] Parsing smoke10_t3.log ...
+  [classify] Prompt written to /tmp/ascent_classify_prompt.txt (2,612 chars)
+  [classify] Calling Claude ...
+  [classify] Claude returned 2 classification(s)
+  [classify] Written: /home/teeshan/meta_harness_t5/runs/candidate_2/failure_classification.json
+  [classify] SR=1.00  success=2  failed=0
+    OK scene=bxsVRursffK  class=success  conf=high
+    OK scene=4ok3usBNeis  class=success  conf=high
+  [fingerprint] Parsing smoke10_t3.log ...
+  [fingerprint] Written: /home/teeshan/meta_harness_t5/runs/candidate_2/behavioral_fingerprint.json
+    bxsVRursffK: hash=a020a87e  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-121)→get_close_to_stair(122-150)→climb_stair(151-166)→initialize(167-179...
+    4ok3usBNeis: hash=1624ccf6  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair']
+      seq=initialize(1-12)→explore(13-235)→get_close_to_stair(236-263)→climb_stair(264-280)
+
+=== run_analyzer (T4): candidate_2 ===
+  No failing episodes — skipping analysis.
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T041618.json
+
+  2 cluster(s) synthesized:
+    [1] navmesh_disconnected_stair_centroid  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.667  highest_leverage=stair_centroid_navmesh_reachability_precheck_before_get_close_to_stair: before committing pointnav to a stair centroid, verify the centroid is in the same connected navmesh component as the robot; on disconnection, fall back to alternative_stair_entry_point_sampling_from_connected_navmesh_boundary (sample N candidate entry points from the navmesh boundary nearest the stair polygon and pick the closest reachable one) or trigger early_abort_with_floor_skip after a threshold of consecutive failures
+    [2] post_floor_switch_frontier_exhaustion  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.333  highest_leverage=post_floor_switch_frontier_seeding_radius combined with navmesh_connectivity_precheck_for_floor_skip: immediately after a confirmed floor switch (floor_step==0), seed frontiers at an expanded radius to cover the new floor more broadly; simultaneously check whether the goal object category's likely regions are reachable from the robot's landing navmesh component, and if not, skip to the next floor or trigger upper_floor_re_exploration_after_NOQUIT_rescue with a wider search polygon
+
+  15 forbidden move(s):
+    DP7 (navmesh_disconnected_stair_centroid): Ruled out in both q3zU7Yy5E5s and qyAac8rV8Zk; also globally forbidden. LLM resp
+    DP5 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; also globally forbidden. LLM prompt construction canno
+    DP6 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; also globally forbidden. Same reasoning as DP5: prompt
+    DP2 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; also globally forbidden. LLM trigger threshold is irre
+    DP3 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; also globally forbidden. Multi-floor LLM logic is neve
+    DP12 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; also globally forbidden. Floor-switch interval gating 
+    premature_stair_climb_success_guard (navmesh_disconnected_stair_centroid): Ruled out in both scenes; also globally forbidden. This guard operates inside _p
+    DP7 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; also globally forbidden. LLM parsing does not affect 
+    DP5 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; also globally forbidden. Prompt construction cannot e
+    DP6 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; also globally forbidden. Same reasoning as DP5.
+    DP2 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; also globally forbidden. LLM trigger threshold does n
+    DP3 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; also globally forbidden. Multi-floor LLM logic is not
+    DP12 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; also globally forbidden. The floor switch already suc
+    premature_stair_climb_success_guard (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; also globally forbidden. Stair traversal was confirme
+    DP9 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE. Stair carrot waypoint distance only governs locomotio
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_2
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_2/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_2/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_2/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_2/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_2/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_2/smoke10_t3.log
+============================================================
+
+
+Eval finished in 424s  (exit code 1)
+id=True climb_direction=1 → PENDING  # src: map_controller.py:Map_Controller._process_stair_climb_state
+Climb Stair - Distance Change: 0.00m, Climb Stair Paused Step: 0
+Env: 0 | Step: 280 | Floor_step: 280 | Mode: climb_stair | Stair_flag: 1 | Action: 1
+Reach_stair_centroid: True
+[T5_INIT_GUARD] env=0 — skipping duplicate init for floor 1
+climb stair success!!!!
+[T5_STAIR_CLIMB_EVAL] env=0 paused_step=1 in_stair_map=False reach_centroid=True climb_direction=1 → SUCCESS  # src: map_controller.py:Map_Controller._process_stair_climb_state
+[DP1] frontier scores (raw→enhanced, dist): 0.112→0.886@0.3m, 0.112→0.462@1.1m
+Error executing job with overrides: ['habitat_baselines.eval.split=smoke10_t3', 'habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_2/smoke10_t3_videos', 'habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_2/tb', 'habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_2/stats', 'habitat_baselines.eval.video_option=["disk"]', 'habitat.simulator.habitat_sim_v0.gpu_device_id=0']
+Traceback (most recent call last):
+  File "/home/teeshan/ascent_pipeline/ascent/run.py", line 89, in main
+    execute_exp(cfg, "eval" if cfg.habitat_baselines.evaluate else "train")
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/run.py", line 62, in execute_exp
+    trainer.eval()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/common/base_trainer.py", line 129, in eval
+    self._eval_checkpoint(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_trainer.py", line 196, in _eval_checkpoint
+    action_data = self._agent.actor_critic.act(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 623, in act
+    pointnav_action = self._explore(observations, env, masks)
+  File "/home/teeshan/meta_harness_t5/runs/candidate_2/harness/patch.py", line 91, in _patched_explore
+    result = _orig_explore(policy_self, observations, env, masks)
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 732, in _explore
+    best_frontier, best_value = self.llm_planner._get_best_frontier_with_llm(
+  File "/home/teeshan/ascent_pipeline/ascent/llm_planner.py", line 134, in _get_best_frontier_with_llm
+    best_frontier, best_value = self._decide_frontier_with_llm(obstacle_map, object_map, sorted_pts, sorted_values, env, topk, use_multi_floor,
+  File "/home/teeshan/ascent_pipeline/ascent/llm_planner.py", line 221, in _decide_frontier_with_llm
+    floor_num_steps, image_rgb = obstacle_map[env].extract_frontiers_with_image(sorted_pts[idx])
+  File "/home/teeshan/ascent_pipeline/ascent/mapping/obstacle_map.py", line 439, in extract_frontiers_with_image
+    floor_num_steps = self.frontier_visualization_info[tuple(frontier)]['floor_num_steps']
+KeyError: (6.076776695296639, 1.25)
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+ 10%|█         | 1/10 [06:41<1:00:17, 401.98s/it]
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_2/scores.json
+{
+  "success": 1.0,
+  "num_episodes": 1,
+  "spl": 0.4181,
+  "distance_to_goal": 0.030671238899230957
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 1 successful video(s) from smoke10_t3_videos
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] Logged: {'candidate': 'candidate_2', 'split': 'smoke10_t3', 'sr': None, 'best_sr': 0.7, 'status': 'parse_error', 'elapsed_s': 1037, 'timestamp': '2026-05-29T04:16:18'}
+
+############################################################
+  Iteration 3/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_3...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 8798 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_3
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   stair.py
+  Hypothesis: The stair centroid computed from the stair pixel map lands on a navmesh-disconnected riser geometry cell. PointNav stalls indefinitely trying to reach an unreachable coordinate, consuming all remaining steps without progress. Snapping the approach target to the nearest connected navmesh cell will allow PointNav to converge and the agent to reach the stair physically.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 10113 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_3/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_3/harness/
+
+[loop] New candidate: candidate_3
+
+============================================================
+  Validate candidate_3
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_3
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_3
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_3 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_3
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] Parsing smoke10_t3.log ...
+  [classify] Prompt written to /tmp/ascent_classify_prompt.txt (2,612 chars)
+  [classify] Calling Claude ...
+  [classify] Claude returned 2 classification(s)
+  [classify] Written: /home/teeshan/meta_harness_t5/runs/candidate_3/failure_classification.json
+  [classify] SR=1.00  success=2  failed=0
+    OK scene=bxsVRursffK  class=success  conf=high
+    OK scene=4ok3usBNeis  class=success  conf=high
+  [fingerprint] Parsing smoke10_t3.log ...
+[1m[FINGERPRINT] WARNING: candidate_3 is a behavioral NO-OP — identical to candidate_2 on all scenes. This change had zero observable effect.[0m
+  [fingerprint] Written: /home/teeshan/meta_harness_t5/runs/candidate_3/behavioral_fingerprint.json
+    bxsVRursffK: hash=a020a87e  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']  DUPLICATE of candidate_2
+      seq=initialize(1-12)→explore(13-121)→get_close_to_stair(122-150)→climb_stair(151-166)→initialize(167-179...
+    4ok3usBNeis: hash=1624ccf6  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair']  DUPLICATE of candidate_2
+      seq=initialize(1-12)→explore(13-235)→get_close_to_stair(236-263)→climb_stair(264-280)
+
+=== run_analyzer (T4): candidate_3 ===
+  No failing episodes — skipping analysis.
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T043543.json
+
+  2 cluster(s) synthesized:
+    [1] stair_centroid_navmesh_unreachable  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.37  highest_leverage=stair_centroid_navmesh_reachability_precheck_before_get_close_to_stair: before entering get_close_to_stair, query the navmesh to verify the centroid shares the same connected component as the agent's current position; if disconnected, immediately invoke alternative_stair_entry_point_sampling_from_connected_navmesh_boundary (resample from the navmesh boundary nearest the stair polygon) or trigger early_abort_on_N_consecutive_centroid_failures_with_floor_skip to bypass the unreachable stair entirely
+    [2] post_floor_switch_frontier_exhaustion  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.13  highest_leverage=post_floor_switch_frontier_seeding_radius: after a confirmed floor switch, increase the frontier seeding radius to populate more of the new floor's navmesh, combined with DP10_DP11_value_map_upper_floor_coverage to inject semantic signal into unexplored regions; if frontier supply remains below a minimum threshold after N reinits, trigger navmesh_connectivity_precheck_for_floor_skip to detect and abandon the disconnected goal floor rather than looping through NOQUIT rescues
+
+  10 forbidden move(s):
+    DP7 (all_clusters): Mandatory globally forbidden move; LLM response parsing has no causal path to st
+    DP5 (all_clusters): Mandatory globally forbidden move; LLM prompt content cannot affect navmesh conn
+    DP6 (all_clusters): Mandatory globally forbidden move; same reasoning as DP5
+    DP2 (all_clusters): Mandatory globally forbidden move; LLM trigger threshold is upstream of and caus
+    DP3 (all_clusters): Mandatory globally forbidden move; multi-floor LLM path cannot resolve geometric
+    DP12 (all_clusters): Mandatory globally forbidden move; floor-switch interval gating is irrelevant wh
+    premature_stair_climb_success_guard (all_clusters): Mandatory globally forbidden move; empirically confirmed off-target for all thre
+    DP9 (stair_centroid_navmesh_unreachable): Ruled out for q3zU7Yy5E5s (stair-climb evaluation is never entered so carrot way
+    DP9 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE: stair was successfully traversed at paused_step=20, s
+    DP1 (stair_centroid_navmesh_unreachable): Ruled out for qyAac8rV8Zk: frontier scoring cannot affect pointnav convergence t
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_3
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_3/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_3/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_3/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_3/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_3/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_3/smoke10_t3.log
+============================================================
+
+
+Eval finished in 425s  (exit code 1)
+id=True climb_direction=1 → PENDING  # src: map_controller.py:Map_Controller._process_stair_climb_state
+Climb Stair - Distance Change: 0.00m, Climb Stair Paused Step: 0
+Env: 0 | Step: 280 | Floor_step: 280 | Mode: climb_stair | Stair_flag: 1 | Action: 1
+Reach_stair_centroid: True
+[T5_INIT_GUARD] env=0 — skipping duplicate init for floor 1
+climb stair success!!!!
+[T5_STAIR_CLIMB_EVAL] env=0 paused_step=1 in_stair_map=False reach_centroid=True climb_direction=1 → SUCCESS  # src: map_controller.py:Map_Controller._process_stair_climb_state
+[DP1] frontier scores (raw→enhanced, dist): 0.112→0.886@0.3m, 0.112→0.462@1.1m
+Error executing job with overrides: ['habitat_baselines.eval.split=smoke10_t3', 'habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_3/smoke10_t3_videos', 'habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_3/tb', 'habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_3/stats', 'habitat_baselines.eval.video_option=["disk"]', 'habitat.simulator.habitat_sim_v0.gpu_device_id=0']
+Traceback (most recent call last):
+  File "/home/teeshan/ascent_pipeline/ascent/run.py", line 89, in main
+    execute_exp(cfg, "eval" if cfg.habitat_baselines.evaluate else "train")
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/run.py", line 62, in execute_exp
+    trainer.eval()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/common/base_trainer.py", line 129, in eval
+    self._eval_checkpoint(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_trainer.py", line 196, in _eval_checkpoint
+    action_data = self._agent.actor_critic.act(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 623, in act
+    pointnav_action = self._explore(observations, env, masks)
+  File "/home/teeshan/meta_harness_t5/runs/candidate_3/harness/patch.py", line 99, in _patched_explore
+    result = _orig_explore(policy_self, observations, env, masks)
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 732, in _explore
+    best_frontier, best_value = self.llm_planner._get_best_frontier_with_llm(
+  File "/home/teeshan/ascent_pipeline/ascent/llm_planner.py", line 134, in _get_best_frontier_with_llm
+    best_frontier, best_value = self._decide_frontier_with_llm(obstacle_map, object_map, sorted_pts, sorted_values, env, topk, use_multi_floor,
+  File "/home/teeshan/ascent_pipeline/ascent/llm_planner.py", line 221, in _decide_frontier_with_llm
+    floor_num_steps, image_rgb = obstacle_map[env].extract_frontiers_with_image(sorted_pts[idx])
+  File "/home/teeshan/ascent_pipeline/ascent/mapping/obstacle_map.py", line 439, in extract_frontiers_with_image
+    floor_num_steps = self.frontier_visualization_info[tuple(frontier)]['floor_num_steps']
+KeyError: (6.076776695296639, 1.25)
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+ 10%|█         | 1/10 [06:43<1:00:29, 403.29s/it]
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_3/scores.json
+{
+  "success": 1.0,
+  "num_episodes": 1,
+  "spl": 0.4181,
+  "distance_to_goal": 0.030671238899230957
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 1 successful video(s) from smoke10_t3_videos
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] Logged: {'candidate': 'candidate_3', 'split': 'smoke10_t3', 'sr': None, 'best_sr': 0.7, 'status': 'parse_error', 'elapsed_s': 1165, 'timestamp': '2026-05-29T04:35:43'}
+
+############################################################
+  Iteration 4/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_4...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 9045 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_4
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   stair.py
+  Hypothesis: The stair centroid computed from the stair pixel map lands on a geometrically isolated navmesh island that PointNav cannot route to from the agent's current position. Snapping to the nearest navigable point eliminates the infinite PointNav stall and allows stair approach to succeed.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 11032 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_4/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_4/harness/
+
+[loop] New candidate: candidate_4
+
+============================================================
+  Validate candidate_4
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_4
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_4
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_4
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_4 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_4
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] Parsing smoke10_t3.log ...
+  [classify] Prompt written to /tmp/ascent_classify_prompt.txt (7,379 chars)
+  [classify] Calling Claude ...
+  [classify] Claude returned 10 classification(s)
+  [classify] Written: /home/teeshan/meta_harness_t5/runs/candidate_4/failure_classification.json
+  [classify] SR=0.60  success=6  failed=4
+    OK scene=bxsVRursffK  class=success  conf=high
+    FAIL scene=4ok3usBNeis  class=navmesh_disconnection  conf=high
+    OK scene=mL8ThkuaVTM  class=success  conf=high
+    OK scene=wcojb4TFT35  class=success  conf=high
+    FAIL scene=XB4GS9ShBRE  class=navmesh_disconnection  conf=high
+    OK scene=DYehNKdT76V  class=success  conf=high
+    OK scene=p53SfW6mjZe  class=success  conf=high
+    FAIL scene=qyAac8rV8Zk  class=navmesh_disconnection  conf=high
+    FAIL scene=q3zU7Yy5E5s  class=navmesh_disconnection  conf=high
+    OK scene=TEEsavR23oF  class=success  conf=high
+  [fingerprint] Parsing smoke10_t3.log ...
+  [fingerprint] Written: /home/teeshan/meta_harness_t5/runs/candidate_4/behavioral_fingerprint.json
+    bxsVRursffK: hash=a020a87e  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']  DUPLICATE of candidate_2
+      seq=initialize(1-12)→explore(13-121)→get_close_to_stair(122-150)→climb_stair(151-166)→initialize(167-179...
+    4ok3usBNeis: hash=7921cbb0  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-235)→get_close_to_stair(236-263)→climb_stair(264-280)→initialize(281-293...
+    mL8ThkuaVTM: hash=84d06559  modes=['initialize', 'explore', 'climb_stair', 'get_close_to_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-90)→climb_stair(91-102)→initialize(103-115)→explore(116-186)→get_close_t...
+    wcojb4TFT35: hash=cef19f02  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-67)→look_for_downstair(68-68)→look_up_back(69-69)→explore(70-138)→naviga...
+    XB4GS9ShBRE: hash=5bcbe14f  modes=['initialize', 'navigate', 'explore', 'get_close_to_stair', 'look_up', 'climb_stair', 'look_down_back']
+      seq=initialize(1-12)→navigate(13-14)→explore(15-50)→navigate(51-51)→explore(52-121)→get_close_to_stair(1...
+    DYehNKdT76V: hash=57848bff  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-39)→initialize(40-51)→explore(52-82)→look_for_downstair(83-83)→look_up_b...
+    p53SfW6mjZe: hash=3c25d30b  modes=['initialize', 'look_for_downstair', 'look_up_back', 'explore', 'navigate']  DUPLICATE of candidate_1
+      seq=initialize(1-12)→look_for_downstair(13-19)→look_up_back(20-20)→explore(21-97)→navigate(98-122)→initi...
+    qyAac8rV8Zk: hash=14a9ff24  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'get_close_to_stair']
+      seq=initialize(1-12)→explore(13-55)→look_for_downstair(56-57)→look_up_back(58-58)→explore(59-163)→get_cl...
+    q3zU7Yy5E5s: hash=63c725f8  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'look_down', 'look_down_twice', 'climb_stair', 'get_close_to_stair']
+      seq=initialize(1-12)→explore(13-69)→look_for_downstair(70-81)→look_up_back(82-82)→explore(83-178)→look_d...
+    TEEsavR23oF: hash=f4050e20  modes=['initialize', 'explore', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-237)→navigate(238-248)
+  Claude call failed: Command '['claude', '--print', '--output-format', 'text']' timed out after 600 seconds
+
+=== run_analyzer (T4): candidate_4 ===
+  Failing scenes: ['4ok3usBNeis', 'XB4GS9ShBRE', 'qyAac8rV8Zk', 'q3zU7Yy5E5s']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (127,183 chars)
+  Calling Claude for failure analysis...
+  Empty response. Skipping db update.
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T055027.json
+
+  2 cluster(s) synthesized:
+    [1] stair_centroid_navmesh_disconnect  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.67  highest_leverage=alternative_stair_entry_point_sampling_from_connected_navmesh_boundary — instead of targeting the geometric centroid, sample candidate stair entry points from the navmesh-reachable boundary of the stair map footprint. This directly fixes the root cause by replacing the disconnected centroid with a reachable approach point. If sampling still yields no reachable point, fall back to early_abort_on_N_consecutive_centroid_failures_with_floor_skip to prevent episode waste and attempt a floor skip via the LLM-200 path.
+    [2] post_floor_switch_frontier_exhaustion  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.33  highest_leverage=post_floor_switch_frontier_seeding_radius combined with DP10_DP11_value_map_upper_floor_coverage — increase frontier seeding radius immediately after a floor switch so exploration fans out beyond the stair landing before frontiers are exhausted. Pair with navmesh_connectivity_precheck_for_floor_skip: if the goal's navmesh component is confirmed disconnected from the landing, skip re-exploration and trigger the LLM-200 floor-skip path rather than spending five floor_reinits and two NOQUIT rescues on an unreachable region.
+
+  15 forbidden move(s):
+    DP7 (stair_centroid_navmesh_disconnect): LLM response parsing is never the bottleneck — the agent never reaches the stair
+    DP5 (stair_centroid_navmesh_disconnect): LLM prompt content cannot affect navmesh topology. Ruled out in both scenes.
+    DP6 (stair_centroid_navmesh_disconnect): LLM prompt content cannot affect navmesh topology. Ruled out in both scenes.
+    DP2 (stair_centroid_navmesh_disconnect): LLM trigger threshold is irrelevant: the failure occurs in get_close_to_stair mo
+    DP3 (stair_centroid_navmesh_disconnect): Multi-floor LLM selection cannot resolve a disconnected centroid. Ruled out in b
+    DP12 (stair_centroid_navmesh_disconnect): Floor switch interval gating is never reached — the agent never successfully app
+    premature_stair_climb_success_guard (stair_centroid_navmesh_disconnect): The stair-climb evaluation phase (_process_stair_climb_stat) is never entered be
+    DP7 (post_floor_switch_frontier_exhaustion): LLM response parsing does not affect frontier seeding density or navmesh connect
+    DP5 (post_floor_switch_frontier_exhaustion): LLM prompt content cannot seed additional frontiers on the upper floor or repair
+    DP6 (post_floor_switch_frontier_exhaustion): LLM prompt content cannot seed additional frontiers on the upper floor or repair
+    DP2 (post_floor_switch_frontier_exhaustion): LLM trigger threshold does not affect post-switch frontier supply. The LLM alrea
+    DP3 (post_floor_switch_frontier_exhaustion): Multi-floor LLM is downstream of the frontier supply problem. Ruled out for XB4G
+    DP12 (post_floor_switch_frontier_exhaustion): Floor switch interval gating was already passed (floor switch confirmed at step 
+    DP9 (post_floor_switch_frontier_exhaustion): Stair carrot waypoint distance is irrelevant post-traversal; the stair was alrea
+    premature_stair_climb_success_guard (post_floor_switch_frontier_exhaustion): The stair WAS successfully traversed (paused_step=20 already exceeds any plausib
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_4
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_4/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_4/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_4/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_4/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_4/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_4/smoke10_t3.log
+============================================================
+
+
+Eval finished in 2194s  (exit code 0)
+o_block_size=16, resizing from (2551, 960) to (2560, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/248 [00:00<03:12,  1.28it/s][A
+
+  3%|▎         | 7/248 [00:00<00:23, 10.19it/s][A
+
+  5%|▌         | 13/248 [00:00<00:12, 18.93it/s][A
+
+  8%|▊         | 20/248 [00:01<00:07, 28.56it/s][A
+
+ 11%|█         | 27/248 [00:01<00:06, 36.51it/s][A
+
+ 14%|█▎        | 34/248 [00:01<00:04, 42.88it/s][A
+
+ 17%|█▋        | 41/248 [00:01<00:04, 48.11it/s][A
+
+ 19%|█▉        | 48/248 [00:01<00:03, 52.14it/s][A
+
+ 22%|██▏       | 55/248 [00:01<00:03, 54.94it/s][A
+
+ 25%|██▌       | 62/248 [00:01<00:03, 56.04it/s][A
+
+ 28%|██▊       | 69/248 [00:01<00:03, 57.32it/s][A
+
+ 31%|███       | 76/248 [00:02<00:02, 58.26it/s][A
+
+ 33%|███▎      | 83/248 [00:02<00:02, 60.25it/s][A
+
+ 36%|███▋      | 90/248 [00:02<00:02, 61.14it/s][A
+
+ 39%|███▉      | 97/248 [00:02<00:02, 61.32it/s][A
+
+ 42%|████▏     | 104/248 [00:02<00:02, 61.77it/s][A
+
+ 45%|████▍     | 111/248 [00:02<00:02, 61.17it/s][A
+
+ 48%|████▊     | 118/248 [00:02<00:02, 62.00it/s][A
+
+ 50%|█████     | 125/248 [00:02<00:01, 62.67it/s][A
+
+ 53%|█████▎    | 132/248 [00:02<00:01, 62.29it/s][A
+
+ 56%|█████▌    | 139/248 [00:03<00:01, 61.83it/s][A
+
+ 59%|█████▉    | 146/248 [00:03<00:01, 62.54it/s][A
+
+ 62%|██████▏   | 153/248 [00:03<00:01, 63.20it/s][A
+
+ 65%|██████▍   | 160/248 [00:03<00:01, 63.71it/s][A
+
+ 67%|██████▋   | 167/248 [00:03<00:01, 62.41it/s][A
+
+ 70%|███████   | 174/248 [00:03<00:01, 61.29it/s][A
+
+ 73%|███████▎  | 181/248 [00:03<00:01, 60.99it/s][A
+
+ 76%|███████▌  | 188/248 [00:03<00:00, 61.09it/s][A
+
+ 79%|███████▊  | 195/248 [00:03<00:00, 61.25it/s][A
+
+ 81%|████████▏ | 202/248 [00:04<00:00, 61.36it/s][A
+
+ 84%|████████▍ | 209/248 [00:04<00:00, 61.25it/s][A
+
+ 87%|████████▋ | 216/248 [00:04<00:00, 61.04it/s][A
+
+ 90%|████████▉ | 223/248 [00:04<00:00, 61.34it/s][A
+
+ 93%|█████████▎| 230/248 [00:04<00:00, 60.61it/s][A
+
+ 96%|█████████▌| 237/248 [00:04<00:00, 61.05it/s][A
+
+ 98%|█████████▊| 244/248 [00:04<00:00, 62.04it/s][A
+100%|██████████| 248/248 [00:04<00:00, 51.68it/s]
+
+100%|██████████| 10/10 [36:10<00:00, 217.09s/it]
+2026-05-29 05:37:38,680 Average episode reward: 8.0097
+2026-05-29 05:37:38,680 Average episode distance_to_goal: 3.8463
+2026-05-29 05:37:38,680 Average episode success: 0.6000
+2026-05-29 05:37:38,680 Average episode spl: 0.2800
+2026-05-29 05:37:38,680 Average episode soft_spl: 0.3223
+2026-05-29 05:37:38,680 Average episode distance_to_goal_reward: 0.0000
+2026-05-29 05:37:38,680 Average episode traveled_stairs: 0.4000
+2026-05-29 05:37:38,680 Average episode yaw: -3.0000
+2026-05-29 05:37:38,680 Average episode target_detected: 0.6000
+2026-05-29 05:37:38,680 Average episode stop_called: 0.6000
+2026-05-29 05:37:38,680 Average episode num_steps: 279.2000
+2026-05-29 05:37:38,680 Average episode start_yaw: -0.9004
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_4/scores.json
+{
+  "success": 0.6,
+  "num_episodes": 10,
+  "spl": 0.28,
+  "distance_to_goal": 3.8463218934834003
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 6 successful video(s) from smoke10_t3_videos
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] No improvement: candidate_4 SR=0.600 (best=0.700)
+
+[loop] Logged: {'candidate': 'candidate_4', 'split': 'smoke10_t3', 'sr': 0.6, 'best_sr': 0.7, 'status': 'no_improvement', 'elapsed_s': 4484, 'timestamp': '2026-05-29T05:50:27'}
+
+############################################################
+  Iteration 5/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_5...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 9312 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_5
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   stair.py
+  Hypothesis: The stair centroid computed from the pixel map falls on geometrically non-navigable riser geometry. Snapping to the nearest navmesh-connected cell before issuing PointNav will allow the agent to actually reach the stair approach zone instead of stalling indefinitely.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 11947 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_5/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_5/harness/
+
+[loop] New candidate: candidate_5
+
+============================================================
+  Validate candidate_5
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_5
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_5
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_5
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_5 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_5
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] No episodes parsed.
+No result produced.
+  [classify] Parsing smoke10_t3.log ...
+  [fingerprint] No step data found.
+No fingerprint result produced.
+  [fingerprint] Parsing smoke10_t3.log ...
+
+=== run_analyzer (T4): candidate_5 ===
+  No failure_classification.json found — run classify_failures.py first.
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T060858.json
+
+  2 cluster(s) synthesized:
+    [1] navmesh_disconnected_stair_centroid  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.67  highest_leverage=early_abort_on_N_consecutive_centroid_failures_with_floor_skip — after N consecutive Reach_stair_centroid:False results, permanently disable the unreachable stair frontier and trigger a floor skip; optionally combined with alternative_stair_entry_point_sampling_from_connected_navmesh_boundary to resample entry from the nearest navmesh-connected boundary before aborting entirely. This is the only fix that addresses the shared causal mechanism (centroid unreachability) directly rather than a downstream symptom.
+    [2] post_stair_frontier_exhaustion_with_goal_navmesh_disconnect  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.33  highest_leverage=post_floor_switch_frontier_seeding_radius — increase the initial frontier seeding radius after a floor switch to prevent immediate frontier exhaustion on sparse upper floors; paired with navmesh_connectivity_precheck_for_floor_skip to detect provably unreachable goal regions on the target floor before committing to the switch, enabling a skip to an alternative floor or exploration strategy.
+
+  15 forbidden move(s):
+    premature_stair_climb_success_guard (navmesh_disconnected_stair_centroid): The stair-climb evaluation branch (paused_step guard inside _process_stair_climb
+    premature_stair_climb_success_guard (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): The stair is already traversed successfully in XB4GS9ShBRE (paused_step=20 > MIN
+    DP9 (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): Stair carrot waypoint distance is irrelevant in XB4GS9ShBRE because the stair wa
+    DP7 (navmesh_disconnected_stair_centroid): LLM response parsing is not on the causal path; both q3zU7Yy5E5s and qyAac8rV8Zk
+    DP7 (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): Post-stair frontier exhaustion and goal navmesh disconnection in XB4GS9ShBRE are
+    DP5 (navmesh_disconnected_stair_centroid): LLM prompt content cannot alter navmesh geometry; ruled out for both q3zU7Yy5E5s
+    DP5 (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): LLM prompt content cannot increase post-stair frontier density or fix goal navme
+    DP6 (navmesh_disconnected_stair_centroid): Same as DP5: LLM prompt variants have no effect on whether the stair centroid li
+    DP6 (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): Same as DP5: LLM prompt variants cannot fix sparse post-stair frontiers or goal 
+    DP2 (navmesh_disconnected_stair_centroid): LLM trigger threshold is irrelevant; the failure occurs in get_close_to_stair po
+    DP2 (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): LLM trigger threshold cannot address sparse post-stair frontier supply or goal r
+    DP3 (navmesh_disconnected_stair_centroid): Multi-floor LLM component operates on frontier selection, not centroid reachabil
+    DP3 (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): Multi-floor LLM component ruled out for XB4GS9ShBRE; frontier exhaustion is a ge
+    DP12 (navmesh_disconnected_stair_centroid): Floor switch interval is irrelevant; no floor switch is ever triggered in either
+    DP12 (post_stair_frontier_exhaustion_with_goal_navmesh_disconnect): Floor switch interval cannot increase frontier density on the upper floor or rep
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_5
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_5/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_5/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_5/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_5/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_5/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_5/smoke10_t3.log
+============================================================
+
+
+Eval finished in 16s  (exit code 1)
+eshan/ascent_pipeline/ascent/ascent_trainer.py", line 101, in _eval_checkpoint
+    self._agent = self._create_agent(None)
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/ppo_trainer.py", line 123, in _create_agent
+    return baseline_registry.get_agent_access_mgr(
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 83, in __init__
+    self._init_policy_and_updater(lr_schedule_fn, resume_state)
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 86, in _init_policy_and_updater
+    self._actor_critic = self._create_policy()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 194, in _create_policy
+    actor_critic = policy.from_config(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 91, in from_config
+    return cls(**kwargs)
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 119, in __init__
+    self._pointnav_policy: List[WrappedPointNavResNetPolicy] = [
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 120, in <listcomp>
+    WrappedPointNavResNetPolicy(kwargs["pointnav_policy_path"], original_config=config) for _ in range(self._num_envs)
+  File "/home/teeshan/ascent_pipeline/ascent/pointnav_policy.py", line 67, in __init__
+    self.policy.to(device)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1160, in to
+    return self._apply(convert)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 218, in _apply
+    self._init_flat_weights()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 155, in _init_flat_weights
+    self.flatten_parameters()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 206, in flatten_parameters
+    torch._cudnn_rnn_flatten_weight(
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+
+--- Step 3: Parse metrics ---
+WARNING: could not parse metrics. Check log manually.
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_5/scores.json
+{
+  "parse_error": true
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] Logged: {'candidate': 'candidate_5', 'split': 'smoke10_t3', 'sr': None, 'best_sr': 0.7, 'status': 'parse_error', 'elapsed_s': 1111, 'timestamp': '2026-05-29T06:08:58'}
+
+############################################################
+  Iteration 6/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_6...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 9556 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_6
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   stair.py
+  Hypothesis: The stair centroid computed from the pixel map lands on a geometrically inaccessible navmesh cell (riser face, disconnected island). BFS-snapping to the nearest navigable cell gives PointNav a reachable goal, unblocking convergence.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 12499 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_6/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_6/harness/
+
+[loop] New candidate: candidate_6
+
+============================================================
+  Validate candidate_6
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_6
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_6
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_6
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_6 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_6
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] No episodes parsed.
+No result produced.
+  [classify] Parsing smoke10_t3.log ...
+  [fingerprint] No step data found.
+No fingerprint result produced.
+  [fingerprint] Parsing smoke10_t3.log ...
+
+=== run_analyzer (T5): candidate_6 ===
+  No failure_classification.json found — run classify_failures.py first.
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T062331.json
+
+  2 cluster(s) synthesized:
+    [1] stair_centroid_navmesh_disconnection  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.53  highest_leverage=stair_centroid_navmesh_reachability_precheck_before_get_close_to_stair: before committing to get_close_to_stair, run a navmesh pathfinding query from the robot's current position to the stair centroid; if no path exists, immediately fall back to alternative_stair_entry_point_sampling_from_connected_navmesh_boundary (sample the nearest reachable navmesh vertex within the stair bounding box) or trigger early_abort_on_N_consecutive_centroid_failures_with_floor_skip. This addresses both the upstair and downstair variants with a single guard.
+    [2] post_floor_switch_frontier_exhaustion  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.13  highest_leverage=post_floor_switch_frontier_seeding_radius: after a confirmed floor switch, expand the initial frontier seeding radius to span a significantly larger portion of the new floor's connected navmesh components, so post-switch exploration is not limited to the two nearest frontiers (0.2m and 2.2m). This should be combined with navmesh_connectivity_precheck_for_floor_skip to detect and preemptively skip floors where the goal object lies in a disconnected component, redirecting exploration budget to reachable floors.
+
+  17 forbidden move(s):
+    DP7 (stair_centroid_navmesh_disconnection): LLM response parsing is off-causal-path in both scenes: the floor switch never o
+    DP7 (post_floor_switch_frontier_exhaustion): Globally ruled out; ruled out in XB4GS9ShBRE explicitly.
+    DP5 (stair_centroid_navmesh_disconnection): LLM prompt tuning cannot affect navmesh topology; ruled out in both cluster scen
+    DP5 (post_floor_switch_frontier_exhaustion): Globally ruled out; ruled out in XB4GS9ShBRE.
+    DP6 (stair_centroid_navmesh_disconnection): Globally ruled out; ruled out in both cluster scenes.
+    DP6 (post_floor_switch_frontier_exhaustion): Globally ruled out; ruled out in XB4GS9ShBRE.
+    DP2 (stair_centroid_navmesh_disconnection): LLM trigger threshold cannot repair a disconnected navmesh centroid; ruled out i
+    DP2 (post_floor_switch_frontier_exhaustion): Globally ruled out; ruled out in XB4GS9ShBRE.
+    DP3 (stair_centroid_navmesh_disconnection): Multi-floor LLM path is never reached when floor switch never occurs; ruled out 
+    DP3 (post_floor_switch_frontier_exhaustion): Globally ruled out; ruled out in XB4GS9ShBRE.
+    DP12 (stair_centroid_navmesh_disconnection): Floor switch interval gating is irrelevant when the stair approach itself fails;
+    DP12 (post_floor_switch_frontier_exhaustion): Globally ruled out; ruled out in XB4GS9ShBRE.
+    premature_stair_climb_success_guard (stair_centroid_navmesh_disconnection): Candidate_1 applied this guard to both scenes; identical behavioral fingerprints
+    premature_stair_climb_success_guard (post_floor_switch_frontier_exhaustion): Candidate_1 applied this guard to XB4GS9ShBRE; it had zero effect because SUCCES
+    DP9 (stair_centroid_navmesh_disconnection): Stair carrot waypoint distance (look_for_downstair mode) is irrelevant when get_
+    DP9 (post_floor_switch_frontier_exhaustion): Stair carrot distance is irrelevant post-traversal; the stair was already succes
+    DP1 (stair_centroid_navmesh_disconnection): Frontier scoring cannot affect centroid reachability; ruled out explicitly for q
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_6
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_6/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_6/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_6/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_6/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_6/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_6/smoke10_t3.log
+============================================================
+
+
+Eval finished in 17s  (exit code 1)
+le_fn, resume_state)
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 86, in _init_policy_and_updater
+    self._actor_critic = self._create_policy()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 194, in _create_policy
+    actor_critic = policy.from_config(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 91, in from_config
+    return cls(**kwargs)
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 119, in __init__
+    self._pointnav_policy: List[WrappedPointNavResNetPolicy] = [
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 120, in <listcomp>
+    WrappedPointNavResNetPolicy(kwargs["pointnav_policy_path"], original_config=config) for _ in range(self._num_envs)
+  File "/home/teeshan/ascent_pipeline/ascent/pointnav_policy.py", line 67, in __init__
+    self.policy.to(device)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1160, in to
+    return self._apply(convert)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 218, in _apply
+    self._init_flat_weights()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 155, in _init_flat_weights
+    self.flatten_parameters()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 206, in flatten_parameters
+    torch._cudnn_rnn_flatten_weight(
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 18.00 MiB. GPU 0 has a total capacty of 93.02 GiB of which 11.38 MiB is free. Process 47259 has 1.22 GiB memory in use. Process 47260 has 1.48 GiB memory in use. Process 47262 has 6.19 GiB memory in use. Process 47263 has 1.77 GiB memory in use. Process 47261 has 2.79 GiB memory in use. Process 61485 has 37.91 GiB memory in use. Process 2089654 has 40.68 GiB memory in use. Including non-PyTorch memory, this process has 782.75 MiB memory in use. Of the allocated memory 32.33 MiB is allocated by PyTorch, and 11.67 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+
+--- Step 3: Parse metrics ---
+WARNING: could not parse metrics. Check log manually.
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_6/scores.json
+{
+  "parse_error": true
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] Logged: {'candidate': 'candidate_6', 'split': 'smoke10_t3', 'sr': None, 'best_sr': 0.7, 'status': 'parse_error', 'elapsed_s': 873, 'timestamp': '2026-05-29T06:23:31'}
+
+############################################################
+  Iteration 7/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_7...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 9800 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_7
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   hooks.py
+  Hypothesis: PointNav cannot converge to a navmesh-disconnected stair centroid, but no abort budget exists — the agent retries indefinitely and eventually runs out of steps. Adding a per-stair consecutive-failure limit causes the agent to give up on the unreachable stair and continue exploring the current floor, recovering at least partial episode value.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 13427 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_7/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_7/harness/
+
+[loop] New candidate: candidate_7
+
+============================================================
+  Validate candidate_7
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_7
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_7
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_7
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_7 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_7
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] No episodes parsed.
+No result produced.
+  [classify] Parsing smoke10_t3.log ...
+  [fingerprint] No step data found.
+No fingerprint result produced.
+  [fingerprint] Parsing smoke10_t3.log ...
+
+=== run_analyzer (T5): candidate_7 ===
+  No failure_classification.json found — run classify_failures.py first.
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T064039.json
+
+  2 cluster(s) synthesized:
+    [1] navmesh_disconnected_stair_centroid  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.667  highest_leverage=stair_centroid_navmesh_reachability_precheck_before_get_close_to_stair with fallback to alternative_stair_entry_point_sampling_from_connected_navmesh_boundary — a precheck that queries navmesh connectivity before committing to a centroid prevents all wasted steps and can immediately trigger either a resampled entry point or a floor-skip, covering both the upstair (q3zU7Yy5E5s) and downstair (qyAac8rV8Zk) failure variants
+    [2] post_floor_switch_frontier_exhaustion  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.333  highest_leverage=post_floor_switch_frontier_seeding_radius — expanding the initial frontier seeding radius immediately after a confirmed floor switch would generate a denser frontier set on the new floor, preventing the 16-step collapse; if the goal region remains navmesh-disconnected after expanded seeding, navmesh_connectivity_precheck_for_floor_skip becomes the next lever
+
+  15 forbidden move(s):
+    DP7 (navmesh_disconnected_stair_centroid): Ruled out in both q3zU7Yy5E5s and qyAac8rV8Zk; LLM frontier selection and respon
+    DP5 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; LLM prompt content has no effect on navmesh connectivi
+    DP6 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; same reasoning as DP5 — prompt engineering cannot reso
+    DP2 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; the LLM trigger threshold is irrelevant when the failu
+    DP3 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; multi-floor LLM logic is a downstream path that is nev
+    DP12 (navmesh_disconnected_stair_centroid): Ruled out in both scenes; floor switch interval tuning presupposes a floor switc
+    premature_stair_climb_success_guard (navmesh_disconnected_stair_centroid): Ruled out in both scenes and confirmed harmful: the stair-climb phase (paused_st
+    DP7 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM frontier selection cannot generate frontiers in n
+    DP5 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM prompt content cannot affect navmesh connectivity
+    DP6 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; same as DP5.
+    DP2 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM trigger threshold tuning cannot help when the bot
+    DP3 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; multi-floor LLM already fired successfully (floor swi
+    DP9 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; stair carrot waypoint distance is irrelevant — the st
+    DP12 (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE; floor switch interval cannot address a post-switch fr
+    premature_stair_climb_success_guard (post_floor_switch_frontier_exhaustion): Ruled out for XB4GS9ShBRE with zero behavioral effect confirmed: paused_step=20 
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_7
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_7/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_7/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_7/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_7/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_7/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_7/smoke10_t3.log
+============================================================
+
+
+Eval finished in 17s  (exit code 1)
+ule_fn, resume_state)
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 86, in _init_policy_and_updater
+    self._actor_critic = self._create_policy()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/rl/ppo/single_agent_access_mgr.py", line 194, in _create_policy
+    actor_critic = policy.from_config(
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 91, in from_config
+    return cls(**kwargs)
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 119, in __init__
+    self._pointnav_policy: List[WrappedPointNavResNetPolicy] = [
+  File "/home/teeshan/ascent_pipeline/ascent/ascent_policy.py", line 120, in <listcomp>
+    WrappedPointNavResNetPolicy(kwargs["pointnav_policy_path"], original_config=config) for _ in range(self._num_envs)
+  File "/home/teeshan/ascent_pipeline/ascent/pointnav_policy.py", line 67, in __init__
+    self.policy.to(device)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1160, in to
+    return self._apply(convert)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/module.py", line 810, in _apply
+    module._apply(fn)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 218, in _apply
+    self._init_flat_weights()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 155, in _init_flat_weights
+    self.flatten_parameters()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 206, in flatten_parameters
+    torch._cudnn_rnn_flatten_weight(
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 18.00 MiB. GPU 0 has a total capacty of 93.02 GiB of which 7.38 MiB is free. Process 47259 has 1.22 GiB memory in use. Process 47260 has 1.48 GiB memory in use. Process 47262 has 6.19 GiB memory in use. Process 47263 has 1.77 GiB memory in use. Process 47261 has 2.79 GiB memory in use. Process 61485 has 37.91 GiB memory in use. Process 2089654 has 40.68 GiB memory in use. Including non-PyTorch memory, this process has 782.75 MiB memory in use. Of the allocated memory 32.33 MiB is allocated by PyTorch, and 11.67 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+
+--- Step 3: Parse metrics ---
+WARNING: could not parse metrics. Check log manually.
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_7/scores.json
+{
+  "parse_error": true
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] Logged: {'candidate': 'candidate_7', 'split': 'smoke10_t3', 'sr': None, 'best_sr': 0.7, 'status': 'parse_error', 'elapsed_s': 1028, 'timestamp': '2026-05-29T06:40:39'}
+
+############################################################
+  Iteration 8/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_8...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 10042 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_8
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map only covers the lower ~2/3 of the physical stair. When the robot climbs into the unmapped upper third, is_robot_in_stair_map_fast flips to False while paused_step is still low (<30), satisfying the current success condition and firing a false SUCCESS before the physical floor transition is complete.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 13366 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_8/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_8/harness/
+
+[loop] New candidate: candidate_8
+
+============================================================
+  Validate candidate_8
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_8
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_8
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_8
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_8 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_8
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] Parsing smoke10_t3.log ...
+  [classify] Prompt written to /tmp/ascent_classify_prompt.txt (7,262 chars)
+  [classify] Calling Claude ...
+  [classify] Claude returned 10 classification(s)
+  [classify] Written: /home/teeshan/meta_harness_t5/runs/candidate_8/failure_classification.json
+  [classify] SR=0.70  success=7  failed=3
+    OK scene=bxsVRursffK  class=success  conf=high
+    OK scene=4ok3usBNeis  class=success  conf=high
+    FAIL scene=mL8ThkuaVTM  class=goal_not_seen  conf=high
+    OK scene=wcojb4TFT35  class=success  conf=high
+    FAIL scene=XB4GS9ShBRE  class=goal_detection_false_positive  conf=high
+    OK scene=DYehNKdT76V  class=success  conf=high
+    OK scene=p53SfW6mjZe  class=success  conf=high
+    OK scene=qyAac8rV8Zk  class=success  conf=high
+    FAIL scene=q3zU7Yy5E5s  class=stair_not_traversed  conf=medium
+    OK scene=TEEsavR23oF  class=success  conf=high
+  [fingerprint] Parsing smoke10_t3.log ...
+  [fingerprint] Written: /home/teeshan/meta_harness_t5/runs/candidate_8/behavioral_fingerprint.json
+    bxsVRursffK: hash=0d0b315f  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'climb_stair_initialize', 'navigate']
+      seq=initialize(1-12)→explore(13-121)→get_close_to_stair(122-150)→climb_stair(151-313)→climb_stair_initia...
+    4ok3usBNeis: hash=6c004249  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'climb_stair_initialize', 'look_for_downstair', 'look_up_back', 'navigate']
+      seq=initialize(1-12)→explore(13-235)→get_close_to_stair(236-262)→climb_stair(263-356)→climb_stair_initia...
+    mL8ThkuaVTM: hash=0133b321  modes=['initialize', 'explore', 'climb_stair', 'climb_stair_initialize', 'look_for_downstair', 'look_up_back', 'get_close_to_stair']
+      seq=initialize(1-12)→explore(13-90)→climb_stair(91-318)→climb_stair_initialize(319-319)→explore(320-378)...
+    wcojb4TFT35: hash=cef19f02  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-67)→look_for_downstair(68-68)→look_up_back(69-69)→explore(70-138)→naviga...
+    XB4GS9ShBRE: hash=c8d15211  modes=['initialize', 'navigate', 'explore', 'get_close_to_stair', 'look_up', 'climb_stair', 'climb_stair_initialize']
+      seq=initialize(1-12)→navigate(13-14)→explore(15-50)→navigate(51-51)→explore(52-121)→get_close_to_stair(1...
+    DYehNKdT76V: hash=57848bff  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-39)→initialize(40-51)→explore(52-82)→look_for_downstair(83-83)→look_up_b...
+    p53SfW6mjZe: hash=3c25d30b  modes=['initialize', 'look_for_downstair', 'look_up_back', 'explore', 'navigate']  DUPLICATE of candidate_1
+      seq=initialize(1-12)→look_for_downstair(13-19)→look_up_back(20-20)→explore(21-97)→navigate(98-122)→initi...
+    qyAac8rV8Zk: hash=ea393776  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'get_close_to_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-55)→look_for_downstair(56-57)→look_up_back(58-58)→explore(59-163)→get_cl...
+    q3zU7Yy5E5s: hash=19ddfb98  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'look_down', 'look_down_twice', 'climb_stair', 'climb_stair_initialize']
+      seq=initialize(1-12)→explore(13-69)→look_for_downstair(70-81)→look_up_back(82-82)→explore(83-178)→look_d...
+    TEEsavR23oF: hash=f4050e20  modes=['initialize', 'explore', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-237)→navigate(238-248)
+  Claude call failed: Command '['claude', '--print', '--output-format', 'text']' timed out after 600 seconds
+
+=== run_analyzer (T5): candidate_8 ===
+  Failing scenes: ['mL8ThkuaVTM', 'XB4GS9ShBRE', 'q3zU7Yy5E5s']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (124,725 chars)
+  Calling Claude for failure analysis...
+  Empty response. Skipping db update.
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (10,514 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T074602.json
+
+  2 cluster(s) synthesized:
+    [1] navmesh_disconnected_stair_centroid  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.67  highest_leverage=alternative_stair_entry_point_sampling_from_connected_navmesh_boundary combined with early_abort_on_N_consecutive_centroid_failures_with_floor_skip: after N consecutive Reach_stair_centroid: False (e.g., N=10), abandon the centroid and (1) sample candidate waypoints from the navmesh boundary nearest the stair polygon to find a reachable approach, or (2) if no reachable entry exists, execute a floor_skip to treat the stair as bypassed and reinitialize exploration on the target floor. A navmesh reachability precheck (stair_centroid_navmesh_reachability_precheck_before_get_close_to_stair) before entering get_close_to_stair would catch this class at zero cost.
+    [2] post_stair_frontier_exhaustion  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.33  highest_leverage=post_floor_switch_frontier_seeding_radius: after a confirmed floor switch (floor_step reset to 0), proactively seed additional synthetic frontier candidates at a wider search radius (e.g., 3–5 m) around the arrival position before running standard frontier scoring, preventing immediate exhaustion from a sparse local frontier set. Should be paired with DP10_DP11_value_map_upper_floor_coverage (ensure value map is reset and propagated for the new floor) and navmesh_connectivity_precheck_for_floor_skip (detect goal-region disconnection at switch time to decide whether to skip to a higher floor rather than exhausting frontiers on a disconnected one).
+
+  15 forbidden move(s):
+    DP7 (navmesh_disconnected_stair_centroid): Ruled out in both q3zU7Yy5E5s and qyAac8rV8Zk; LLM response parsing operates on 
+    DP5 (navmesh_disconnected_stair_centroid): Ruled out in both cluster members; LLM prompt content cannot alter navmesh topol
+    DP6 (navmesh_disconnected_stair_centroid): Ruled out in both cluster members; same rationale as DP5 — prompt engineering ca
+    DP2 (navmesh_disconnected_stair_centroid): Ruled out in both cluster members; LLM trigger threshold governs frontier select
+    DP3 (navmesh_disconnected_stair_centroid): Ruled out in both cluster members; multi-floor LLM logic cannot fire when the ag
+    DP12 (navmesh_disconnected_stair_centroid): Ruled out in both cluster members; floor-switch interval gating is irrelevant wh
+    premature_stair_climb_success_guard (navmesh_disconnected_stair_centroid): Ruled out in both cluster members and confirmed off-target by direct experiment:
+    DP7 (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM response parsing on frontier ranking cannot gener
+    DP5 (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM prompt content cannot seed frontiers or repair na
+    DP6 (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE; same rationale as DP5.
+    DP2 (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE; LLM trigger threshold is irrelevant once the frontier
+    DP3 (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE; multi-floor LLM behavior cannot address the sparse fr
+    DP12 (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE; floor-switch interval is irrelevant — the floor switc
+    DP9 (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE; stair carrot waypoint distance governs look_for_downs
+    premature_stair_climb_success_guard (post_stair_frontier_exhaustion): Ruled out for XB4GS9ShBRE and confirmed off-target by direct experiment: SUCCESS
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_8
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_8/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_8/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_8/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_8/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_8/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_8/smoke10_t3.log
+============================================================
+
+
+Eval finished in 2652s  (exit code 0)
+ess rate: 70.00% (7 out of 10)
+Till Now Average Spl: 30.75%
+Till Now Average Dtg: 2.2006371166557073
+2026-05-29 07:32:21,991 Video created: /home/teeshan/meta_harness_t5/runs/candidate_8/smoke10_t3_videos/scene=TEEsavR23oF-episode=0-goal=chair-success=1.00-spl=0.18-soft_spl=0.18-num_steps=249.00-did_not_fail.mp4
+
+
+  0%|          | 0/248 [00:00<?, ?it/s][A[2026-05-29 07:32:21,992][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2551, 960) to (2560, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/248 [00:00<02:44,  1.51it/s][A
+
+  3%|▎         | 8/248 [00:00<00:17, 13.38it/s][A
+
+  6%|▋         | 16/248 [00:00<00:08, 26.37it/s][A
+
+  9%|▉         | 23/248 [00:00<00:06, 35.30it/s][A
+
+ 13%|█▎        | 32/248 [00:01<00:04, 47.33it/s][A
+
+ 17%|█▋        | 41/248 [00:01<00:03, 56.04it/s][A
+
+ 20%|█▉        | 49/248 [00:01<00:03, 58.77it/s][A
+
+ 24%|██▍       | 59/248 [00:01<00:02, 67.98it/s][A
+
+ 29%|██▊       | 71/248 [00:01<00:02, 81.22it/s][A
+
+ 33%|███▎      | 82/248 [00:01<00:01, 88.45it/s][A
+
+ 38%|███▊      | 93/248 [00:01<00:01, 94.44it/s][A
+
+ 42%|████▏     | 104/248 [00:01<00:01, 97.89it/s][A
+
+ 46%|████▋     | 115/248 [00:01<00:01, 101.01it/s][A
+
+ 51%|█████     | 126/248 [00:02<00:01, 101.19it/s][A
+
+ 55%|█████▌    | 137/248 [00:02<00:01, 91.49it/s] [A
+
+ 59%|█████▉    | 147/248 [00:02<00:01, 92.11it/s][A
+
+ 63%|██████▎   | 157/248 [00:02<00:00, 93.77it/s][A
+
+ 68%|██████▊   | 168/248 [00:02<00:00, 97.48it/s][A
+
+ 72%|███████▏  | 178/248 [00:02<00:00, 93.17it/s][A
+
+ 76%|███████▌  | 188/248 [00:02<00:00, 86.88it/s][A
+
+ 79%|███████▉  | 197/248 [00:02<00:00, 86.68it/s][A
+
+ 83%|████████▎ | 206/248 [00:02<00:00, 84.12it/s][A
+
+ 87%|████████▋ | 215/248 [00:03<00:00, 82.99it/s][A
+
+ 90%|█████████ | 224/248 [00:03<00:00, 70.47it/s][A
+
+ 94%|█████████▎| 232/248 [00:03<00:00, 69.58it/s][A
+
+ 97%|█████████▋| 240/248 [00:03<00:00, 66.39it/s][A
+
+100%|██████████| 248/248 [00:03<00:00, 67.43it/s][A
+100%|██████████| 248/248 [00:03<00:00, 68.07it/s]
+
+100%|██████████| 10/10 [43:50<00:00, 263.07s/it]
+2026-05-29 07:32:27,036 Average episode reward: 9.8603
+2026-05-29 07:32:27,036 Average episode distance_to_goal: 2.2006
+2026-05-29 07:32:27,036 Average episode success: 0.7000
+2026-05-29 07:32:27,036 Average episode spl: 0.3075
+2026-05-29 07:32:27,036 Average episode soft_spl: 0.3355
+2026-05-29 07:32:27,036 Average episode distance_to_goal_reward: 0.0000
+2026-05-29 07:32:27,036 Average episode traveled_stairs: 0.5000
+2026-05-29 07:32:27,036 Average episode yaw: -15.0000
+2026-05-29 07:32:27,036 Average episode target_detected: 0.8000
+2026-05-29 07:32:27,036 Average episode stop_called: 0.7000
+2026-05-29 07:32:27,036 Average episode num_steps: 324.3000
+2026-05-29 07:32:27,036 Average episode start_yaw: -0.4816
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_8/scores.json
+{
+  "success": 0.7,
+  "num_episodes": 10,
+  "spl": 0.3075,
+  "distance_to_goal": 2.2006371166557073
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 7 successful video(s) from smoke10_t3_videos
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] No improvement: candidate_8 SR=0.700 (best=0.700)
+
+[loop] Logged: {'candidate': 'candidate_8', 'split': 'smoke10_t3', 'sr': 0.7, 'best_sr': 0.7, 'status': 'no_improvement', 'elapsed_s': 3923, 'timestamp': '2026-05-29T07:46:02'}
+
+############################################################
+  Iteration 9/20  best_SR=0.700
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_9...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_0/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 10297 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_9
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   dps.py
+  Hypothesis: The stair centroid lands inside non-navigable riser geometry; offsetting the carrot waypoint 0.5m back toward the robot places it on the adjacent navigable floor tile, allowing PointNav to converge and the stair-enter proximity trigger to fire.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 14383 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+
+Harness directory written: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+Done. Harness at: /home/teeshan/meta_harness_t5/runs/candidate_9/harness/
+
+[loop] New candidate: candidate_9
+
+============================================================
+  Validate candidate_9
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/validate_harness.py /home/teeshan/meta_harness_t5/runs/candidate_9
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_9
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+
+============================================================
+  Eval candidate_9
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/run_eval.py --candidate /home/teeshan/meta_harness_t5/runs/candidate_9 --split smoke10_t3
+============================================================
+Validating: /home/teeshan/meta_harness_t5/runs/candidate_9
+  FILE OK   __init__.py
+  FILE OK   meta.py
+  FILE OK   patch.py
+  FILE OK   dps.py
+  FILE OK   stair.py
+  FILE OK   frontier.py
+  FILE OK   llm.py
+  FILE OK   floor.py
+  FILE OK   hooks.py
+  OK   [apply]
+  OK   [custom_stair_approach]
+  OK   [should_abort_stair_attempt]
+  OK   [post_floor_transition]
+  OK   [on_stair_approach]
+  OK   [build_exploration_memory]
+  OK   [on_frontier_exhausted]
+  OK   [on_frontier_evaluated]
+  OK   [get_llm_config]
+  OK   [augment_intrafloor_prompt]
+  OK   [augment_interfloor_prompt]
+  OK   [on_llm_call]
+  OK   [should_force_floor_switch_by_coverage]
+  OK   [get_floor_switch_target]
+  OK   [on_episode_start]
+  OK   [log_step]
+  OK   [should_stop]
+  OK   [filter_object_detections]
+  OK   [replace_policy]
+  OK   [on_pointnav_failure]
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 32 methods and 9 files validated.
+  [classify] Parsing smoke10_t3.log ...
+  [classify] Prompt written to /tmp/ascent_classify_prompt.txt (7,207 chars)
+  [classify] Calling Claude ...
+  [classify] Claude returned 10 classification(s)
+  [classify] Written: /home/teeshan/meta_harness_t5/runs/candidate_9/failure_classification.json
+  [classify] SR=0.80  success=8  failed=2
+    OK scene=bxsVRursffK  class=success  conf=high
+    OK scene=4ok3usBNeis  class=success  conf=high
+    OK scene=mL8ThkuaVTM  class=success  conf=high
+    OK scene=wcojb4TFT35  class=success  conf=high
+    FAIL scene=XB4GS9ShBRE  class=false_positive_detection  conf=high
+    OK scene=DYehNKdT76V  class=success  conf=high
+    OK scene=p53SfW6mjZe  class=success  conf=high
+    OK scene=qyAac8rV8Zk  class=success  conf=high
+    FAIL scene=q3zU7Yy5E5s  class=stair_not_traversed  conf=medium
+    OK scene=TEEsavR23oF  class=success  conf=high
+  [fingerprint] Parsing smoke10_t3.log ...
+  [fingerprint] Written: /home/teeshan/meta_harness_t5/runs/candidate_9/behavioral_fingerprint.json
+    bxsVRursffK: hash=4e79f609  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-121)→get_close_to_stair(122-150)→climb_stair(151-164)→initialize(165-177...
+    4ok3usBNeis: hash=04acd524  modes=['initialize', 'explore', 'get_close_to_stair', 'climb_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-235)→get_close_to_stair(236-262)→climb_stair(263-274)→explore(275-300)→g...
+    mL8ThkuaVTM: hash=536039e8  modes=['initialize', 'explore', 'climb_stair', 'look_for_downstair', 'look_up_back', 'get_close_to_stair', 'navigate']
+      seq=initialize(1-12)→explore(13-90)→climb_stair(91-102)→explore(103-197)→look_for_downstair(198-200)→loo...
+    wcojb4TFT35: hash=cef19f02  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-67)→look_for_downstair(68-68)→look_up_back(69-69)→explore(70-138)→naviga...
+    XB4GS9ShBRE: hash=b4b0d8d5  modes=['initialize', 'navigate', 'explore', 'get_close_to_stair', 'look_up', 'climb_stair', 'climb_stair_initialize']
+      seq=initialize(1-12)→navigate(13-14)→explore(15-50)→navigate(51-51)→explore(52-121)→get_close_to_stair(1...
+    DYehNKdT76V: hash=57848bff  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-39)→initialize(40-51)→explore(52-82)→look_for_downstair(83-83)→look_up_b...
+    p53SfW6mjZe: hash=82877dd6  modes=['initialize', 'look_for_downstair', 'look_up_back', 'explore', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→look_for_downstair(13-19)→look_up_back(20-20)→explore(21-97)→navigate(98-121)→initi...
+    qyAac8rV8Zk: hash=ea393776  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'get_close_to_stair', 'navigate']  DUPLICATE of candidate_8
+      seq=initialize(1-12)→explore(13-55)→look_for_downstair(56-57)→look_up_back(58-58)→explore(59-163)→get_cl...
+    q3zU7Yy5E5s: hash=4e8a04e7  modes=['initialize', 'explore', 'look_for_downstair', 'look_up_back', 'look_down', 'look_down_twice', 'climb_stair']
+      seq=initialize(1-12)→explore(13-69)→look_for_downstair(70-81)→look_up_back(82-82)→explore(83-178)→look_d...
+    TEEsavR23oF: hash=f4050e20  modes=['initialize', 'explore', 'navigate']  DUPLICATE of candidate_0
+      seq=initialize(1-12)→explore(13-237)→navigate(238-248)
+
+=== run_analyzer (T5): candidate_9 ===
+  Failing scenes: ['XB4GS9ShBRE', 'q3zU7Yy5E5s']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (97,051 chars)
+  Calling Claude for failure analysis...
+  Received 2 analysis(es)
+  analysis_db.json written: /home/teeshan/meta_harness_t5/analysis_db.json
+
+  XB4GS9ShBRE: In candidates 0/1/4, the stair was traversed (SUCCESS at paused_step=20) but the exit position yielded only 2 frontiers 
+  Ruled out: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard', 'post_floor_switch_frontier_seeding_radius']
+  Next levers: ['detection_confidence_threshold_for_stop_action', 'dtg_gated_stop_guard', 'goal_bbox_overlap_verification_before_stop']
+  Hypothesis confirmed=True: XB4GS9ShBRE was not a target scene for candidate_9's hypothesis, yet the DP9 pullback was decisively
+
+  q3zU7Yy5E5s: The upstairs stair centroid lies in a structurally disconnected navmesh region: Phase 1 of _climb_stair (PointNav approa
+  Ruled out: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard', 'DP9_phase2_pullback_alone']
+  Next levers: ['stair_centroid_navmesh_reachability_precheck_with_connected_component_sampling', 'early_permanent_stair_disable_after_N_centroid_failures', 'Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box']
+  Hypothesis confirmed=False: Hypothesis is partially confirmed for q3zU7Yy5E5s: the DP9 pullback improved stair_runs (1→2) and DT
+
+=== cluster_synthesizer: /home/teeshan/meta_harness_t5 ===
+  Scenes with analysis: 3
+  Global forbidden moves detected: ['DP7', 'DP5', 'DP6', 'DP2', 'DP3', 'DP12', 'premature_stair_climb_success_guard']
+  Prompt written to /tmp/ascent_cluster_prompt.txt (11,487 chars)
+  Calling Claude for cluster synthesis...
+  Written: /home/teeshan/meta_harness_t5/cluster_db_20260529T085049.json
+
+  2 cluster(s) synthesized:
+    [1] navmesh_disconnected_stair_centroid  scenes=['q3zU7Yy5E5s', 'qyAac8rV8Zk']  sr_gain_if_fixed=0.32  highest_leverage=stair_centroid_navmesh_reachability_precheck_with_connected_component_sampling: before initiating Phase 1 PointNav, verify that the centroid is in the same navmesh connected component as the robot; if not, resample the approach target from navigable points on the boundary of the stair bounding box via BFS on the navmesh graph. If no connected approach point exists after exhaustive sampling, trigger early_permanent_stair_disable_after_N_centroid_failures and route directly to floor reinit, preventing the 35+ wasted steps.
+    [2] stair_exit_frontier_exhaustion_then_false_positive_stop  scenes=['XB4GS9ShBRE']  sr_gain_if_fixed=0.29  highest_leverage=dtg_gated_stop_guard combined with goal_bbox_overlap_verification_before_stop: suppress the STOP action unless DTG is below a tight threshold (e.g., <0.5m) AND the detection bounding box confirms spatial overlap with the goal object, preventing false positive stops when the agent is geometrically near but visually unconfirmed. Given candidate_9 already achieves DTG=0.131m, this fix has near-certain SR impact for this scene.
+
+  16 forbidden move(s):
+    DP7 (navmesh_disconnected_stair_centroid): Ruled out for both q3zU7Yy5E5s and qyAac8rV8Zk; LLM frontier-response parsing is
+    DP5 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; LLM prompt engineering cannot alter navmesh topology 
+    DP6 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; same reason as DP5.
+    DP2 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; the LLM trigger threshold governs frontier scoring, n
+    DP3 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; multi-floor LLM logic does not affect Phase 1 PointNa
+    DP12 (navmesh_disconnected_stair_centroid): Ruled out for both scenes; floor-switch interval tuning cannot bootstrap a floor
+    premature_stair_climb_success_guard (navmesh_disconnected_stair_centroid): Ruled out for both scenes; the failure is in Phase 1 centroid approach (never re
+    DP9_phase2_pullback_alone (navmesh_disconnected_stair_centroid): Ruled out as a standalone fix for q3zU7Yy5E5s (confirmed: DTG improved but stair
+    DP7 (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE; LLM frontier parsing does not influence Phase 2 stair
+    DP5 (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE.
+    DP6 (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE.
+    DP2 (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE.
+    DP3 (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE.
+    DP12 (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE; floor-switch interval is irrelevant once the agent is
+    premature_stair_climb_success_guard (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE; stair traversal proceeds to genuine SUCCESS (paused_s
+    post_floor_switch_frontier_seeding_radius (stair_exit_frontier_exhaustion_then_false_positive_stop): Ruled out for XB4GS9ShBRE; after DP9 pullback resolved the frontier exhaustion p
+
+=== ASCENT Track 5: run_eval ===
+Candidate: /home/teeshan/meta_harness_t5/runs/candidate_9
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+[run_eval] GPU 1 free memory: 78491 MiB >= 30000 MiB — starting eval.
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_t3 habitat_baselines.video_dir=/home/teeshan/meta_harness_t5/runs/candidate_9/smoke10_t3_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta_harness_t5/runs/candidate_9/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta_harness_t5/runs/candidate_9/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness dir: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+Log: /home/teeshan/meta_harness_t5/runs/candidate_9/smoke10_t3.log
+============================================================
+
+
+Eval finished in 2432s  (exit code 0)
+_block_size=16, resizing from (2551, 960) to (2560, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/248 [00:00<02:37,  1.57it/s][A
+
+  3%|▎         | 7/248 [00:00<00:20, 11.99it/s][A
+
+  5%|▌         | 13/248 [00:00<00:10, 21.74it/s][A
+
+  8%|▊         | 20/248 [00:00<00:07, 31.99it/s][A
+
+ 11%|█         | 27/248 [00:01<00:05, 40.16it/s][A
+
+ 14%|█▎        | 34/248 [00:01<00:04, 47.25it/s][A
+
+ 17%|█▋        | 41/248 [00:01<00:03, 52.63it/s][A
+
+ 19%|█▉        | 48/248 [00:01<00:03, 55.27it/s][A
+
+ 22%|██▏       | 55/248 [00:01<00:03, 58.32it/s][A
+
+ 25%|██▌       | 62/248 [00:01<00:03, 60.40it/s][A
+
+ 28%|██▊       | 69/248 [00:01<00:02, 61.40it/s][A
+
+ 31%|███       | 76/248 [00:01<00:02, 61.91it/s][A
+
+ 33%|███▎      | 83/248 [00:01<00:02, 62.57it/s][A
+
+ 36%|███▋      | 90/248 [00:02<00:02, 63.41it/s][A
+
+ 39%|███▉      | 97/248 [00:02<00:02, 63.41it/s][A
+
+ 42%|████▏     | 104/248 [00:02<00:02, 63.65it/s][A
+
+ 45%|████▍     | 111/248 [00:02<00:02, 64.26it/s][A
+
+ 48%|████▊     | 118/248 [00:02<00:01, 65.19it/s][A
+
+ 50%|█████     | 125/248 [00:02<00:01, 64.52it/s][A
+
+ 53%|█████▎    | 132/248 [00:02<00:01, 64.39it/s][A
+
+ 56%|█████▌    | 139/248 [00:02<00:01, 63.79it/s][A
+
+ 59%|█████▉    | 146/248 [00:02<00:01, 64.06it/s][A
+
+ 62%|██████▏   | 153/248 [00:03<00:01, 64.28it/s][A
+
+ 65%|██████▍   | 160/248 [00:03<00:01, 64.53it/s][A
+
+ 67%|██████▋   | 167/248 [00:03<00:01, 63.99it/s][A
+
+ 70%|███████   | 174/248 [00:03<00:01, 64.53it/s][A
+
+ 73%|███████▎  | 181/248 [00:03<00:01, 64.68it/s][A
+
+ 76%|███████▌  | 188/248 [00:03<00:00, 65.11it/s][A
+
+ 79%|███████▊  | 195/248 [00:03<00:00, 65.98it/s][A
+
+ 81%|████████▏ | 202/248 [00:03<00:00, 66.65it/s][A
+
+ 84%|████████▍ | 209/248 [00:03<00:00, 67.22it/s][A
+
+ 87%|████████▋ | 216/248 [00:03<00:00, 66.71it/s][A
+
+ 90%|████████▉ | 223/248 [00:04<00:00, 67.04it/s][A
+
+ 93%|█████████▎| 230/248 [00:04<00:00, 67.51it/s][A
+
+ 96%|█████████▌| 237/248 [00:04<00:00, 67.78it/s][A
+
+ 98%|█████████▊| 244/248 [00:04<00:00, 68.14it/s][A
+100%|██████████| 248/248 [00:04<00:00, 55.86it/s]
+
+100%|██████████| 10/10 [40:12<00:00, 241.24s/it]
+2026-05-29 08:37:32,801 Average episode reward: 11.3788
+2026-05-29 08:37:32,801 Average episode distance_to_goal: 0.9460
+2026-05-29 08:37:32,801 Average episode success: 0.8000
+2026-05-29 08:37:32,801 Average episode spl: 0.3416
+2026-05-29 08:37:32,801 Average episode soft_spl: 0.3686
+2026-05-29 08:37:32,801 Average episode distance_to_goal_reward: 0.0000
+2026-05-29 08:37:32,801 Average episode traveled_stairs: 0.5000
+2026-05-29 08:37:32,801 Average episode yaw: 12.0000
+2026-05-29 08:37:32,801 Average episode target_detected: 0.9000
+2026-05-29 08:37:32,801 Average episode stop_called: 0.8000
+2026-05-29 08:37:32,801 Average episode num_steps: 310.4000
+2026-05-29 08:37:32,801 Average episode start_yaw: -1.2670
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta_harness_t5/runs/candidate_9/scores.json
+{
+  "success": 0.8,
+  "num_episodes": 10,
+  "spl": 0.34159999999999996,
+  "distance_to_goal": 0.9460171023383737
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 8 successful video(s) from smoke10_t3_videos
+
+--- Step 5: Behavioral fingerprint ---
+
+--- Step 6: Analyze failures ---
+
+--- Step 7: Cluster synthesizer ---
+
+[loop] *** NEW BEST: candidate_9 SR=0.800 (was 0.700) ***
+
+[loop] Logged: {'candidate': 'candidate_9', 'split': 'smoke10_t3', 'sr': 0.8, 'best_sr': 0.8, 'status': 'improved', 'elapsed_s': 3887, 'timestamp': '2026-05-29T08:50:49'}
+
+############################################################
+  Iteration 10/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_10...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 10535 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_10
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   dps.py
+  Hypothesis: candidate_9 improved SR to 0.8 by snapping to the nearest navigable point, but the snap still fails for downstairs centroids where the nearest navigable cell is on a different connected component than the robot's starting position. The fix must additionally verify connected-component membership and resample from the correct component boundary.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 15840 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_10.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_11...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 10770 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_11
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   dps.py
+  Hypothesis: candidate_9 improved SR to 0.8 by snapping to the nearest navigable point, but the snapped point may still be unreachable via pathfinding if it lies in a different connected component of the navmesh. The missing check is path-reachability from the robot's current position, not just local navigability.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 16417 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_11.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_12...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 11005 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_12
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_premature_stop
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE (confirmed by paused_step=20 → SUCCESS), the agent fires stop because detection confidence crosses its threshold while the robot is still far from the goal object on the sparsely-explored destination floor. A DTG gate will suppress premature stop and force the agent to navigate toward the goal region.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 16130 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_12.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 10, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-29T13:25:20'}
+
+############################################################
+  Iteration 11/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_13...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 11232 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_13
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_goal_inaccessibility
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE the agent exits onto a navmesh-sparse region yielding only 2 frontiers. The stop action fires prematurely because should_stop evaluates detection confidence without gating on DTG or frontier count, so the agent halts before exploring enough of the destination floor to find the goal.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 16904 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_13.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_14...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 11459 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_14
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_goal_inaccessibility
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE, the agent exits the stair into a navmesh-isolated pocket with only 2 reachable frontiers. The should_stop hook fires prematurely on detection confidence before the agent has adequately explored the destination floor. Adding a post-floor-switch frontier-count guard prevents premature stop and forces re-seeding of exploration around the stair exit.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 17961 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_14.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_15...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 11686 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_15
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_goal_inaccessibility
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE, the agent exits the stair into a navmesh-disconnected pocket with only 2 frontiers. Once those 2 frontiers are exhausted, should_stop fires on the first high-confidence detection even though the robot is geometrically far from the goal and cannot navigate to it. Adding a DTG-gated and bbox-overlap-verified stop guard prevents premature stop when the goal is not physically reachable from the current position.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 18770 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_15.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 11, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-29T17:58:27'}
+
+############################################################
+  Iteration 12/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_16...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 11913 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_16
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map covers only the lower ~2/3 of the physical stair. When the robot ascends into the unmapped upper third, is_robot_in_stair_map_fast returns False even though the climb is incomplete. The existing paused_step<30 guard is too permissive — success fires at paused_step=20 when the robot drifts into the uncovered region. Prior candidates 1/8 likely adjusted only the paused_step threshold (still vulnerable to intermediate-step exits), not the structural absence of a 'was inside map' precondition. The was_ever_in_stair_map gate closes the logical gap: success is only valid if the robot demonstrably passed through the mapped lower zone.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 19846 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_16.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_17...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 12155 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_17
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map covers only the lower ~2/3 of the physical stair. When the robot climbs past the mapped region, is_robot_in_stair_map_fast returns False mid-stair and the existing guard (paused_step < 30) fires SUCCESS prematurely. A vertical displacement check is a physical invariant that cannot fire until the robot has truly changed floors.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 20108 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_17.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_18...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 12397 chars
+
+Phase 1: attempt 1/3...
+Phase 1: timed out.
+
+Phase 1: attempt 2/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_18
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map covers only the lower ~2/3 of the physical stair. When the robot walks off the top of the mapped region it is still on the source floor, but `is_robot_in_stair_map_fast` returns False, which (combined with paused_step<30) immediately triggers SUCCESS. The floor index has not changed, so gating on floor-index change prevents the false positive and forces the agent to continue climbing until it genuinely reaches the target floor.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 20872 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_18.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 12, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-29T22:37:30'}
+
+############################################################
+  Iteration 13/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_19...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 12639 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_19
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   dps.py
+  Hypothesis: candidate_9 improved SR to 0.8 by snapping to nearest navigable point, but the snap radius was fixed and could still land inside riser geometry in scenes where stair bounding boxes are narrow; expanding BFS radius iteratively with a perimeter-preference and a dynamic carrot distance will handle the remaining disconnected-centroid failures
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 21059 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_19.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_20...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 12874 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_20
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_goal_inaccessibility
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE (confirmed by floor_step reset at paused_step=20), the agent fires a spurious stop because detection confidence is high from peripheral vision while DTG is still large. The agent never closes the distance because only 2 frontiers are seeded post-switch, and stop fires before any of them are explored. A DTG gate prevents termination when the agent hasn't yet approached the goal.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 21302 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_20.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_21...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 13101 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_21
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   dps.py
+  Hypothesis: candidate_9 snaps to nearest navigable cell but that cell may belong to a disconnected navmesh island. Connectivity-aware sampling (island_id match) ensures the waypoint is actually reachable from the robot's current position, eliminating the root cause of PointNav non-convergence in both disconnected-centroid scenes.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 22549 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_21.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 13, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-30T03:13:18'}
+
+############################################################
+  Iteration 14/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_22...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 13336 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_22
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_premature_stop
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE the agent enters a sparse navmesh region with only 2 frontiers; the detection model sees the goal at confidence above threshold but the robot is still >2 m away. The unguarded confidence check fires stop too early. Adding a DTG gate prevents premature termination and forces the agent to approach closer before stopping.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 22672 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_22.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_23...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 13563 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_23
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at ~67% of the physical stair height. When the robot climbs past the mapped region it exits the stair map, triggering the `not in_stair_map` branch. With paused_step still < 30 the harness declares SUCCESS before the robot has actually reached the upper floor, leaving it stranded mid-stair with degraded frontier coverage.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 23931 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_23.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_24...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 13805 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_24
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   dps.py
+  Hypothesis: candidate_9 improved SR to 0.8 by snapping to nearest navigable cell, but the snapped cell may still be in a disconnected navmesh component from the robot's current position. The BFS snap finds the geometrically nearest navigable point but does not verify same-component reachability, so PointNav still fails to converge in scenes where the stair footprint straddles a navmesh island.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 25387 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_24.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 14, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-30T07:47:43'}
+
+############################################################
+  Iteration 15/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_25...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 14040 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_25
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at approximately 67% of the physical stair length (upper portion not visible from below at map-build time). The success condition `is_robot_in_stair_map_fast=False AND paused_step<30` therefore fires as soon as the robot exits the mapped lower portion, while it is still physically mid-stair. Adding a minimum step count AND a height-gain gate ensures the robot has physically cleared the full stair before SUCCESS is declared.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 25792 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_25.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_26...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 14282 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_26
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at approximately 67% of the physical stair height (unmapped from the originating floor's perspective). When the robot exits the mapped region mid-climb at paused_step < 20, the existing condition fires SUCCESS even though the robot has not yet reached the destination floor. Adding a minimum paused_step gate (>=20) AND a height-gain check ensures success only fires when the robot is genuinely on or past the stair apex.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 26354 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_26.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_27...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 14524 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_27
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at approximately 67% of the physical stair length (the top portion is not visible/mapped from below). When the robot walks off the top edge of the pixel map mid-stair, is_robot_in_stair_map_fast returns False while paused_step is still low (<30), satisfying the premature SUCCESS condition. The robot is not yet on the destination floor, so subsequent navigation fails.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 27390 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_27.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 15, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-30T12:21:05'}
+
+############################################################
+  Iteration 16/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_28...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 14766 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_28
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map covers only the lower ~2/3 of the physical stair. When the robot exits the mapped region near the top it is still physically mid-stair, but `is_robot_in_stair_map_fast` returns False because the pixel map ends. With paused_step still < 30 the SUCCESS branch fires, the climb is declared complete, and the robot is deposited mid-stair with no floor transition. Adding a floor-change confirmation gate prevents false-positive SUCCESS.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 27451 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_28.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_29...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 15008 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_29
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at ~67% of the physical stair height (the upper portion is not mapped from below). When the robot exits the mapped region mid-stair, is_robot_in_stair_map_fast returns False, and the existing paused_step<30 guard fires SUCCESS even though the robot is still on the riser and has not reached the destination floor. Adding an elevation-gain gate ensures SUCCESS only fires after the robot has physically ascended enough to be on the upper floor.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 28652 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_29.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_30...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 15250 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_30
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map only covers the lower ~2/3 of the physical stair from the bottom-up view. When the robot reaches the unmapped upper portion, is_robot_in_stair_map_fast returns False even though the robot has not yet exited onto the destination floor. The paused_step<30 guard is too permissive and fires SUCCESS before the robot completes the stair traversal, leaving it stranded mid-stair with an incorrect floor assignment.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 28878 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_30.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 16, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-30T16:54:29'}
+
+############################################################
+  Iteration 17/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_31...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 15492 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_31
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at approximately 67% of the physical stair length (upper portion is not mapped from below). When the robot reaches the unmapped upper zone, is_robot_in_stair_map_fast returns False too early, and the paused_step<30 guard immediately declares SUCCESS before the robot has physically cleared the stair. Requiring a minimum paused_step threshold before allowing the False→SUCCESS transition ensures the robot has spent enough time climbing before success is declared.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 29346 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_31.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_32...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 15734 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_32
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map is computed from the robot's perspective on the origin floor and only covers the lower ~2/3 of the physical stair structure. When the robot walks up the stair into the unmapped upper third, is_robot_in_stair_map_fast returns False (robot is no longer in the known map region), and since paused_step<30 is satisfied, SUCCESS is declared prematurely — the robot is ejected back onto the origin floor navmesh context without having reached the destination floor. Adding a minimum floor-height delta guard (z displacement ≥ threshold) ensures SUCCESS only fires when the robot has physically ascended to the destination floor elevation.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 30390 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_32.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_33...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 15976 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_33
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_premature_stop
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE (stair traversed at paused_step=20), the agent emerges near the stair exit with only 2 accessible frontiers. Detection confidence for the target object spikes because the object is visible across the disconnected navmesh region, triggering should_stop before the agent can navigate toward the goal. The fix prevents stop from firing when the robot is more than 1.5 m from the goal, forcing continued frontier exploration.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 30362 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_33.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 17, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-30T21:28:53'}
+
+############################################################
+  Iteration 18/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_34...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 16203 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_34
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at ~67% of the physical stair height. When the robot exits the mapped region (is_robot_in_stair_map_fast flips to False) while paused_step is still <30, _process_stair_climb_state fires SUCCESS too early — the robot is only 2/3 up the stair. The fix adds an elevation gate so SUCCESS requires the robot to have actually ascended to the stair top, not merely left the (incomplete) pixel map.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 31300 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_34.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_35...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 16445 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_35
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at approximately 67% of the physical stair length (upper third is unmapped from below). When the robot reaches the unmapped upper portion, is_robot_in_stair_map_fast flips to False while paused_step is still low (e.g. 5-15), triggering premature SUCCESS before the robot has cleared the stair top. Adding a minimum paused_step threshold of 20 ensures the robot has traversed enough of the stair before success is declared.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 32124 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_35.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_36...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 16687 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_36
+
+Selected hypothesis (rank 1):
+  Target: navmesh_disconnected_stair_centroid
+  File:   dps.py
+  Hypothesis: candidate_9 improved SR to 0.8 by snapping to nearest navigable cell, but the snapped cell may still be in a disconnected navmesh component from the robot's current position (different island), causing PointNav to still fail to converge. Adding a reachability filter on top of navigability will prevent routing to disconnected stair cells.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 32508 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_36.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 18, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-31T02:02:01'}
+
+############################################################
+  Iteration 19/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_37...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 16922 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_37
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map covers only the lower ~2/3 of the physical stair. When the robot exits the mapped region mid-climb (is_robot_in_stair_map_fast=False) with paused_step<30, the system incorrectly declares climb SUCCESS before the robot has actually reached the destination floor, depositing it at an intermediate position with limited navmesh connectivity.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 33098 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_37.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_38...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 17164 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_38
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: Candidates 1 and 8 applied the paused_step threshold fix and got delta=0.0, not because the fix was wrong, but because the stair centroid was navmesh-disconnected (qyAac8rV8Zk/q3zU7Yy5E5s), so the agent never reached the stairs at all and the patched condition never fired. Candidate_9 resolved the approach problem (DP9 snap to navigable). Now that the robot can reliably reach and begin climbing, the premature-success patch has a live code path to improve — the same fix that was inert before candidate_9 should now register as a meaningful SR gain.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 34102 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_38.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_39...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 17406 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_39
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map covers only the lower ~2/3 of the physical stair, so the robot exits the mapped region while still physically mid-stair. A single-frame `is_robot_in_stair_map_fast=False` check fires SUCCESS prematurely. Requiring N consecutive out-of-map frames plus a minimum paused_step ensures the robot has actually cleared the full physical stair before declaring success.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 34799 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_39.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 19, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-31T06:36:36'}
+
+############################################################
+  Iteration 20/20  best_SR=0.800
+############################################################
+
+[loop] Propose attempt 1/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_40...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 17648 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_40
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map terminates at ~67% of the physical stair height, so `is_robot_in_stair_map_fast=False` can become True while the robot is still mid-ramp. SUCCESS fires prematurely (confirmed at paused_step=20 in XB4GS9ShBRE), placing the agent back on the wrong floor region with only 2 accessible frontiers.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 35406 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_40.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 2/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_41...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 17890 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_41
+
+Selected hypothesis (rank 1):
+  Target: premature_stair_climb_success
+  File:   patch.py
+  Hypothesis: The stair pixel map covers only the lower ~2/3 of the physical stair. When the robot exits the mapped region mid-climb, is_robot_in_stair_map_fast flips to False while paused_step is still low, triggering a false SUCCESS. Adding a floor-elevation check prevents the false trigger — SUCCESS is only declared when the robot is both out of the map AND at destination-floor height.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 35978 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_41.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Propose attempt 3/3
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta_harness_t5/scripts/propose.py
+============================================================
+Proposing candidate_42...
+Incumbent best harness: /home/teeshan/meta_harness_t5/runs/candidate_9/harness
+
+=== Phase 1: Hypothesis Generation ===
+Phase 1 prompt: 18132 chars
+
+Phase 1: attempt 1/3...
+Hypothesis written to /home/teeshan/meta_harness_t5/hypothesis_db.json for candidate_42
+
+Selected hypothesis (rank 1):
+  Target: post_floor_switch_premature_stop
+  File:   hooks.py
+  Hypothesis: After the successful floor switch in XB4GS9ShBRE (floor_step reset confirmed, paused_step=20 success), the agent exits the stair into a navmesh-disconnected region with only 2 frontiers. should_stop fires on high detection confidence before the robot has physically converged to the goal, producing a false-positive stop far from the target.
+
+=== Phase 2: Harness Writing ===
+Phase 2 prompt: 35935 chars
+
+Phase 2: Calling Claude Code (attempt 1/3)...
+Phase 2 attempt 1: timed out.
+
+Phase 2: Calling Claude Code (attempt 2/3)...
+Phase 2 attempt 2: timed out.
+
+Phase 2: Calling Claude Code (attempt 3/3)...
+Phase 2 attempt 3: timed out.
+
+All Phase 2 retries exhausted. No harness written for candidate_42.
+
+[loop] FAILED: Propose next candidate
+
+[loop] Logged: {'iteration': 20, 'status': 'propose_failed', 'best_sr': 0.8, 'timestamp': '2026-05-31T11:13:25'}
+
+############################################################
+  Track 5 search complete. Best SR=0.800
+############################################################

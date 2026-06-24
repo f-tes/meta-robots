@@ -1,0 +1,132 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid lies in a navmesh-disconnected component; Phase 1 PointNav approach never converges (Reach_stair_centroid: False on every attempt), the frontier is disabled without any floor switch, and no amount of Phase 2 or LLM tuning bridges the geometric disconnection.",
+      "cross_scene_pattern": "Identical mechanism: both scenes show Reach_stair_centroid: False on every logged attempt before the frontier is permanently disabled. Differences: (1) q3zU7Yy5E5s targets an upstair centroid and has been tested across 11 candidates (T2+T5) with multiple distinct coordinates all unreachable \u2014 confirming a regional navmesh disconnection, not a single bad point; qyAac8rV8Zk targets a downstair centroid with min_dis_to_downstair oscillating 160\u2013166 pixels and has only 2 tested candidates. (2) DP9 pullback (Phase 2) improved q3zU7Yy5E5s DTG from ~2.84m to 1.045m and doubled stair_runs, but neither run traversed the stair; qyAac8rV8Zk has not yet been tested with DP9. (3) Behavioral fingerprints are identical within each scene across all candidates, confirming zero Phase 1 behavioral change from every fix applied so far.",
+      "transfer_notes": "The DP9 Phase 2 pullback on q3zU7Yy5E5s demonstrated that changing the post-failure robot exit position after a failed centroid approach can improve downstream floor-level exploration (DTG 2.84\u21921.045m) even without stair traversal. This suggests applying DP9 to qyAac8rV8Zk as a palliative is worth attempting but cannot be the primary fix \u2014 the decisive lever must operate in Phase 1. The multi-coordinate failure in q3zU7Yy5E5s (two distinct centroids both unreachable) rules out single-point perturbation strategies and confirms that connected-component sampling across the stair bounding box is required.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "DP9_phase2_pullback_alone"
+      ],
+      "highest_leverage_untested": "stair_centroid_navmesh_reachability_precheck_with_connected_component_sampling: before initiating Phase 1 PointNav, verify that the centroid is in the same navmesh connected component as the robot; if not, resample the approach target from navigable points on the boundary of the stair bounding box via BFS on the navmesh graph. If no connected approach point exists after exhaustive sampling, trigger early_permanent_stair_disable_after_N_centroid_failures and route directly to floor reinit, preventing the 35+ wasted steps.",
+      "sr_gain_if_fixed": 0.32,
+      "priority": 1
+    },
+    {
+      "id": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Stair traversal succeeds but the default Phase 2 exit position yields an impoverished upper-floor frontier supply exhausted in ~16 steps; after DP9 pullback resolves the exit position problem (DTG=0.131m in candidate_9), the remaining failure is a false positive STOP \u2014 goal detection fires at step 499 without the target bbox being satisfied.",
+      "cross_scene_pattern": "Single-scene cluster with two sequential failure modes resolved in series: (1) poor stair exit \u2192 2-frontier exhaustion \u2192 5 floor reinits (fixed incidentally by DP9 in candidate_9, which reset paused_step 3\u00d7 during Phase 2 and exited at a richer position); (2) false positive STOP at step 499 when DTG=0.131m (goal essentially found but STOP issued without bbox verification). The candidate_9 mode fingerprint is identical in prefix to candidates 0/1/4/8, confirming the behavioral divergence occurs during Phase 2 stair traversal, not before.",
+      "transfer_notes": "DP9 pullback was designed for q3zU7Yy5E5s but incidentally transformed XB4GS9ShBRE's outcome, revealing that Phase 2 waypoint geometry determines which upper-floor region the robot enters after stair traversal \u2014 a transferable insight for any multi-floor scene where stair exit position drives frontier coverage. The candidate_8 GUARD_STEPS=35 result (blocking SUCCESS exit for 23 extra steps while already off navmesh in look_for_downstair mode) confirms that time-based Phase 2 guards are hazardous; geometry-aware checks are preferable.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "post_floor_switch_frontier_seeding_radius"
+      ],
+      "highest_leverage_untested": "dtg_gated_stop_guard combined with goal_bbox_overlap_verification_before_stop: suppress the STOP action unless DTG is below a tight threshold (e.g., <0.5m) AND the detection bounding box confirms spatial overlap with the goal object, preventing false positive stops when the agent is geometrically near but visually unconfirmed. Given candidate_9 already achieves DTG=0.131m, this fix has near-certain SR impact for this scene.",
+      "sr_gain_if_fixed": 0.29,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both q3zU7Yy5E5s and qyAac8rV8Zk; LLM frontier-response parsing is downstream of stair selection and cannot influence Phase 1 PointNav convergence to a geometrically disconnected centroid."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; LLM prompt engineering cannot alter navmesh topology or make a disconnected centroid reachable."
+    },
+    {
+      "lever": "DP6",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; same reason as DP5."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; the LLM trigger threshold governs frontier scoring, not Phase 1 centroid approach geometry."
+    },
+    {
+      "lever": "DP3",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; multi-floor LLM logic does not affect Phase 1 PointNav convergence."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; floor-switch interval tuning cannot bootstrap a floor switch that Phase 1 failure prevents from ever occurring."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for both scenes; the failure is in Phase 1 centroid approach (never reaches the stair), not in premature Phase 2 success detection."
+    },
+    {
+      "lever": "DP9_phase2_pullback_alone",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out as a standalone fix for q3zU7Yy5E5s (confirmed: DTG improved but stair was not traversed across 2 attempts); structurally insufficient for qyAac8rV8Zk as well since Phase 1 disconnection must be resolved before Phase 2 parameters matter."
+    },
+    {
+      "lever": "DP7",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE; LLM frontier parsing does not influence Phase 2 stair exit position or goal-detection STOP logic."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE."
+    },
+    {
+      "lever": "DP6",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE."
+    },
+    {
+      "lever": "DP3",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE; floor-switch interval is irrelevant once the agent is on the correct floor near the goal."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE; stair traversal proceeds to genuine SUCCESS (paused_step resets confirm real movement), so a success guard would not fire."
+    },
+    {
+      "lever": "post_floor_switch_frontier_seeding_radius",
+      "cluster": "stair_exit_frontier_exhaustion_then_false_positive_stop",
+      "reason": "Ruled out for XB4GS9ShBRE; after DP9 pullback resolved the frontier exhaustion problem, the active failure is false positive STOP \u2014 seeding radius does not affect goal-detection logic."
+    }
+  ],
+  "last_updated": "2026-05-29T08:50:49Z"
+}

@@ -1,0 +1,163 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_stair_pre_climb",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair region is navmesh-disconnected area-wide: Reach_stair_centroid is False on every approach attempt regardless of which centroid is targeted, floor_step never resets to 0, and the agent never successfully enters another floor across any candidate.",
+      "cross_scene_pattern": "Identical: no floor_step reset in any candidate, Reach_stair_centroid=False on every attempt, behavioral fingerprints match exactly across all ~9 tested candidates per scene. Differs: q3zU7Yy5E5s locks onto a single centroid [-2.12, 3.27] and re-enables it after each disable; qyAac8rV8Zk cycles through two disable events per episode, and candidate_35's RSD shifted its targeted centroid by ~0.04m but that centroid was equally disconnected (+4 steps only, no path found).",
+      "transfer_notes": "qyAac8rV8Zk proved that centroid identity is irrelevant \u2014 shifting centroid selection by 0.04m via RSD density effects did not find a connected path, confirming the entire stair region is disconnected. q3zU7Yy5E5s's permanent single-centroid lock proved that blacklisting (T4_STAIR_BL) cannot help either, since the region as a whole is disconnected. Together, these scenes establish that any fix operating on centroid selection, scoring, or approach timing is structurally orthogonal; the fix must query navmesh topology directly before committing to get_close_to_stair mode.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP9_carrot_distance",
+        "LLM_DP7",
+        "DP1",
+        "T4_STAIR_FIX_permanent_disable",
+        "T4_STAIR_MEM_llm_memory_injection",
+        "all_harness_DPs",
+        "step_budget_on_look_for_downstair",
+        "no_progress_counter_on_look_for_downstair",
+        "pre_entry_pathfinder_feasibility_gate_at_look_for_downstair",
+        "mode_attempt_registry",
+        "T4_STAIR_BL_centroid_blacklist",
+        "T4_STRETCH_path_stretch_detector",
+        "blip2_gradient_overshoot_detector",
+        "room_scale_saturation_discount_RSD"
+      ],
+      "highest_leverage_untested": "habitat_navmesh_island_radius_query: before entering get_close_to_stair mode, call sim.pathfinder.island_radius(stair_centroid) or is_navigable with tight tolerance to confirm the centroid shares the agent's connected navmesh component; if disconnected, bypass get_close_to_stair entirely and fall back to passive_floor_detection_triggering_climb_stair_without_get_close_to_stair_prerequisite (analogous to candidate_10's passive upstairs trigger), which provides an alternative floor-transition path that does not depend on centroid reachability",
+      "sr_gain_if_fixed": 0.26,
+      "priority": 1
+    },
+    {
+      "id": "rsd_regression",
+      "scenes": [
+        "p53SfW6mjZe"
+      ],
+      "root_cause_summary": "Candidate_35's room-scale saturation discount (RSD) reduced the raw BLIP-2 score of the TV-containing frontier from 0.107 to 0.021 at step 78 \u2014 19 steps before the navigate trigger fires in all 12 successful candidates \u2014 deflecting the agent to a different frontier, initiating a 100-step detour, and pinning all zones at DENSITY_FLOOR for the remainder of the 499-step episode.",
+      "cross_scene_pattern": "Single scene. 12 of 13 prior candidates solved it with identical fingerprints via explore(21-97)\u2192navigate(98)\u2192SUCCESS. Candidate_35 alone diverges at step 78 when the density multiplier suppresses the TV-area zone, producing a full-budget failure. Late-episode scores (steps ~420-493) are uniformly ~0.034 with no recovery path once DENSITY_FLOOR is reached everywhere.",
+      "transfer_notes": "XB4GS9ShBRE's candidate_35 analysis confirmed RSD is fully orthogonal to navmesh failures (RSD was active on floor 2, reducing a frontier from 0.107 to 0.021, with zero behavioral change), which isolates the p53SfW6mjZe regression to the specific case where a genuine high-BLIP-2 signal exists and is incorrectly suppressed alongside saturated background. The fix must be a protection gate on raw score, not a global RSD parameter change, because DENSITY_DECAY/DENSITY_FLOOR adjustments would weaken RSD for all scenes while only p53SfW6mjZe requires high-value frontier immunity.",
+      "cluster_ruled_out_levers": [
+        "DP9",
+        "DP12",
+        "DP1_raw_scores",
+        "LLM_DP7",
+        "T4_STAIR_FIX",
+        "T4_STAIR_MEM",
+        "T4_STAIR_BL",
+        "mode_attempt_registry",
+        "blip2_gradient_overshoot_detector",
+        "T4_COV_GATE_B"
+      ],
+      "highest_leverage_untested": "RSD_score_floor_protection: inside the density discount computation, add a gate \u2014 if a frontier's raw BLIP-2 score exceeds a threshold (e.g. 0.10), bypass the density multiplier entirely for that frontier, preserving genuine target-object signals while still suppressing uniformly low-scoring saturated zones; this is a minimal, targeted change that does not alter RSD behavior for sub-threshold frontiers",
+      "sr_gain_if_fixed": 0.17,
+      "priority": 2
+    },
+    {
+      "id": "hysteresis_regression",
+      "scenes": [
+        "mL8ThkuaVTM"
+      ],
+      "root_cause_summary": "Candidate_2's hysteresis patch suppressed the passive climb_stair detection path that candidate_0 uses to succeed, diverting the agent into an oscillating get_close_to_stair\u2192look_for_downstair cycle starting at step 118 that tripled floor reinits (3\u21926) and exhausted the 499-step budget; the toilet is 2D-connected to the agent start and requires no explicit stair targeting.",
+      "cross_scene_pattern": "Single scene. Candidate_0 solves it via passive climb_stair(91-102) with floor_step reset at step 287, DTG~0.04. All subsequent candidates carrying the hysteresis patch fail via stair-mode oscillation. Failure tag 'feasible' confirms navmesh connectivity is not an issue \u2014 this is a pure behavioral regression.",
+      "transfer_notes": "Candidate_0's success is an existence proof: the scene is solvable today with no new mechanism. The regression is fully isolated to ascent_policy.py's stair approach logic added in candidate_2 \u2014 passive climb_stair during explore mode must not be gated by the hysteresis patch. Unlike the navmesh clusters, this requires no new capability, only a revert or a guard condition on the patch.",
+      "cluster_ruled_out_levers": [
+        "DP12_increase_to_80",
+        "floor_confusion_hypothesis",
+        "LLM_DP7",
+        "DP1"
+      ],
+      "highest_leverage_untested": "revert_hysteresis_patch: restore candidate_0's ascent_policy.py stair handling so that passive climb_stair detection fires during explore mode without requiring a get_close_to_stair prerequisite; alternatively, add a guard in the hysteresis patch that only activates when the floor_step counter indicates the agent has already been exploring the current floor for a minimum number of steps, leaving early passive stair opportunities unblocked",
+      "sr_gain_if_fixed": 0.16,
+      "priority": 3
+    },
+    {
+      "id": "navmesh_floor2_post_climb",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "The stair is physically traversed (floor_step resets to 0 at step 198, floor 2 entered at step 199), but floor 2 presents only 2 frontiers at the stair landing within a navmesh-disconnected subgraph that excludes the bed room; after exhausting these 2 frontiers in ~16 floor_steps the episode terminates with no reachable path to the target.",
+      "cross_scene_pattern": "Single scene. All 14 tested candidates produce an identical post-climb sequence: 2 frontiers exhausted at steps 199-215, reinit fires with 'no unexplored stairs or frontiers', T4_NOQUIT rescues at steps 228 and 241 find empty frontier pools, episode ends at step 254. The behavioral fingerprint is invariant across every intervention tested.",
+      "transfer_notes": "Candidate_35's RSD was active on floor 2 (reducing the 0.9m frontier score from 0.107 to 0.021) with zero behavioral change, confirming that the failure is determined entirely by frontier count (2 in a disconnected subgraph) rather than frontier scores. This establishes a hard boundary: no scoring-based fix can help. Unlike the navmesh_stair_pre_climb cluster where the disconnection is at the stair centroid, here the stair is successfully traversed and the disconnection is in the destination floor's navmesh layout \u2014 requiring a different detection point (post-climb frontier census) and a different recovery mechanism (frontier seeding or fallback entry point).",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP1",
+        "LLM_DP7",
+        "DP9",
+        "T4_STAIR_FIX_permanent_disable",
+        "T4_STAIR_MEM_llm_memory_injection",
+        "all_harness_DPs",
+        "step_budget_on_look_for_downstair",
+        "no_progress_counter_on_look_for_downstair",
+        "pre_entry_pathfinder_feasibility_gate_at_look_for_downstair",
+        "mode_attempt_registry",
+        "blip2_gradient_overshoot_detector",
+        "room_scale_saturation_discount_RSD"
+      ],
+      "highest_leverage_untested": "navmesh_subgraph_connectivity_check_before_floor2_exploration: after floor-2 entry, if total reachable frontier count is <= 2 and all frontiers lie within 2m of the stair landing, detect the sparse-frontier condition and trigger one of: (a) frontier_seeding_beyond_stair_landing_via_3d_raycast_or_room_boundary_detection to project candidate frontiers into adjacent navmesh regions, or (b) downstairs_fallback_to_retry_different_floor_entry_point_after_floor2_exhaustion to re-approach the stair from a different angle and seed the floor-2 subgraph from a second navmesh entry",
+      "sr_gain_if_fixed": 0.09,
+      "priority": 4
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "LLM_DP7",
+      "cluster": "all",
+      "reason": "Globally forbidden across all scenes and clusters per problem statement."
+    },
+    {
+      "lever": "room_scale_saturation_discount_RSD",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "Candidate_35 confirmed RSD shifted qyAac8rV8Zk's centroid by ~0.04m with no path improvement (+4 steps only); the mechanism operates on frontier scores, not navmesh topology, and cannot make a disconnected stair centroid reachable."
+    },
+    {
+      "lever": "room_scale_saturation_discount_RSD",
+      "cluster": "navmesh_floor2_post_climb",
+      "reason": "Confirmed orthogonal on XB4GS9ShBRE: RSD reduced the 0.9m floor-2 frontier score from 0.107 to 0.021 with zero behavioral change; floor-2 failure is determined by frontier count in a disconnected subgraph, not frontier scores."
+    },
+    {
+      "lever": "room_scale_saturation_discount_RSD",
+      "cluster": "rsd_regression",
+      "reason": "RSD without a high-BLIP-2 protection gate IS the root cause of the p53SfW6mjZe regression; applying it unmodified will reproduce the failure."
+    },
+    {
+      "lever": "T4_STAIR_BL_centroid_blacklist",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "Area-wide navmesh disconnection means every centroid in the stair region is unreachable; blacklisting individual centroids does not expose a connected alternative \u2014 qyAac8rV8Zk's RSD-shifted centroid proved this empirically."
+    },
+    {
+      "lever": "pre_entry_pathfinder_feasibility_gate_at_look_for_downstair",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "A find_path-based gate uses the same Habitat pathfinder already returning Reach_stair_centroid=False; it would block stair attempts correctly but provides no alternative floor-transition path, yielding the same terminal outcome with earlier episode termination."
+    },
+    {
+      "lever": "all_harness_DPs",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "No harness DP controls navmesh topology; the 12 original DPs adjust scoring weights, thresholds, intervals, and distances \u2014 none can change whether a stair centroid is in a connected navmesh component."
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "Tested and confirmed zero behavioral change on both q3zU7Yy5E5s and qyAac8rV8Zk (fingerprints identical); also known to cause regression on mL8ThkuaVTM, making it harmful with no upside for this cluster."
+    },
+    {
+      "lever": "blip2_gradient_overshoot_detector",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "Candidate_32 confirmed zero behavioral change on both q3zU7Yy5E5s and qyAac8rV8Zk; stair non-traversal is a navmesh topology problem, not a BLIP-2 signal overshoot problem."
+    },
+    {
+      "lever": "step_budget_on_look_for_downstair",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "Tested (present in ruled_out for both cluster members); budgeting exits stair mode early but re-enables the same disconnected stair on the next reinit cycle \u2014 the agent returns to the same centroid, producing the same failure with extra reinit overhead."
+    },
+    {
+      "lever": "no_progress_counter_on_look_for_downstair",
+      "cluster": "navmesh_stair_pre_climb",
+      "reason": "Same failure mode as step_budget: exits stair mode without providing an alternative floor-transition path; the disconnected centroid is re-enabled on the next reinit, resetting the counter and reproducing the failure."
+    }
+  ],
+  "last_updated": "2026-05-28T13:35:02Z"
+}

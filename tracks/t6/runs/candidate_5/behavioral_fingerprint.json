@@ -1,0 +1,141 @@
+{
+  "candidate": "candidate_5",
+  "split": "smoke10_t3",
+  "fingerprints": {
+    "bxsVRursffK": {
+      "seq": "initialize(1-12)\u2192explore(13-121)\u2192get_close_to_stair(122-150)\u2192climb_stair(151-164)\u2192initialize(165-177)\u2192explore(178-186)\u2192get_close_to_stair(187-188)\u2192climb_stair(189-199)\u2192initialize(200-212)\u2192navigate(213-232)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 39,
+        "explore": 118,
+        "get_close_to_stair": 31,
+        "climb_stair": 25,
+        "navigate": 20
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "51ac2cda",
+      "duplicate_of": "candidate_3"
+    },
+    "4ok3usBNeis": {
+      "seq": "initialize(1-12)\u2192explore(13-235)\u2192get_close_to_stair(236-262)\u2192climb_stair(263-274)\u2192explore(275-300)\u2192get_close_to_stair(301-303)\u2192climb_stair(304-315)\u2192explore(316-321)\u2192navigate(322-344)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 255,
+        "get_close_to_stair": 30,
+        "climb_stair": 24,
+        "navigate": 23
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "04acd524",
+      "duplicate_of": "candidate_0"
+    },
+    "mL8ThkuaVTM": {
+      "seq": "initialize(1-12)\u2192explore(13-90)\u2192climb_stair(91-102)\u2192explore(103-197)\u2192look_for_downstair(198-200)\u2192look_up_back(201-201)\u2192explore(202-218)\u2192get_close_to_stair(219-268)\u2192climb_stair(269-279)\u2192look_for_downstair(280-280)\u2192look_up_back(281-281)\u2192explore(282-310)\u2192navigate(311-324)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 219,
+        "climb_stair": 23,
+        "look_for_downstair": 4,
+        "look_up_back": 2,
+        "get_close_to_stair": 50,
+        "navigate": 14
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "12ce435f",
+      "duplicate_of": "candidate_3"
+    },
+    "wcojb4TFT35": {
+      "seq": "initialize(1-12)\u2192explore(13-67)\u2192look_for_downstair(68-68)\u2192look_up_back(69-69)\u2192explore(70-138)\u2192navigate(139-150)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "explore": 124,
+        "look_for_downstair": 1,
+        "look_up_back": 1,
+        "navigate": 12
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "cef19f02",
+      "duplicate_of": "candidate_0"
+    },
+    "XB4GS9ShBRE": {
+      "seq": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-150)\u2192get_close_to_stair(151-155)\u2192climb_stair(156-194)\u2192look_down_back(195-195)\u2192explore(196-249)\u2192navigate(250-254)\u2192climb_stair(255-260)\u2192explore(261-262)\u2192navigate(263-273)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "navigate": 19,
+        "explore": 162,
+        "get_close_to_stair": 33,
+        "look_up": 1,
+        "climb_stair": 45,
+        "look_down_back": 1
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "b6a3360d",
+      "duplicate_of": "candidate_3"
+    },
+    "DYehNKdT76V": {
+      "seq": "initialize(1-12)\u2192explore(13-39)\u2192initialize(40-51)\u2192explore(52-82)\u2192look_for_downstair(83-83)\u2192look_up_back(84-84)\u2192explore(85-108)\u2192navigate(109-129)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 25,
+        "explore": 82,
+        "look_for_downstair": 1,
+        "look_up_back": 1,
+        "navigate": 21
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "57848bff",
+      "duplicate_of": "candidate_0"
+    },
+    "p53SfW6mjZe": {
+      "seq": "initialize(1-12)\u2192look_for_downstair(13-19)\u2192look_up_back(20-20)\u2192explore(21-97)\u2192navigate(98-121)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 13,
+        "look_for_downstair": 7,
+        "look_up_back": 1,
+        "explore": 77,
+        "navigate": 24
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "82877dd6",
+      "duplicate_of": "candidate_0"
+    },
+    "qyAac8rV8Zk": {
+      "seq": "initialize(1-12)\u2192explore(13-55)\u2192look_for_downstair(56-57)\u2192look_up_back(58-58)\u2192explore(59-163)\u2192get_close_to_stair(164-239)\u2192initialize(240-251)\u2192explore(252-398)\u2192navigate(399-415)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 25,
+        "explore": 295,
+        "look_for_downstair": 2,
+        "look_up_back": 1,
+        "get_close_to_stair": 76,
+        "navigate": 17
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "ea393776",
+      "duplicate_of": "candidate_0"
+    },
+    "q3zU7Yy5E5s": {
+      "seq": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192look_down_twice(180-180)\u2192climb_stair(181-198)\u2192look_up_back(199-199)\u2192initialize(200-212)\u2192look_for_downstair(213-213)\u2192look_up_back(214-214)\u2192explore(215-222)\u2192climb_stair(223-229)\u2192explore(230-241)\u2192look_down(242-242)\u2192climb_stair(243-249)\u2192look_up_back(250-250)\u2192explore(251-259)\u2192climb_stair(260-261)\u2192explore(262-272)\u2192look_down(273-273)\u2192look_down_twice(274-274)\u2192climb_stair(275-281)\u2192look_up_back(282-282)\u2192explore(283-293)\u2192climb_stair(294-302)\u2192explore(303-359)\u2192initialize(360-371)\u2192explore(372-499)\u2192initialize(0-0)",
+      "mode_dist": {
+        "initialize": 38,
+        "explore": 389,
+        "look_for_downstair": 13,
+        "look_up_back": 5,
+        "look_down": 3,
+        "look_down_twice": 2,
+        "climb_stair": 50
+      },
+      "frontier_exhaustion_step": 358,
+      "seq_hash": "4e8a04e7",
+      "duplicate_of": "candidate_0"
+    },
+    "TEEsavR23oF": {
+      "seq": "initialize(1-12)\u2192explore(13-237)\u2192navigate(238-248)",
+      "mode_dist": {
+        "initialize": 12,
+        "explore": 225,
+        "navigate": 11
+      },
+      "frontier_exhaustion_step": null,
+      "seq_hash": "f4050e20",
+      "duplicate_of": "candidate_0"
+    }
+  }
+}

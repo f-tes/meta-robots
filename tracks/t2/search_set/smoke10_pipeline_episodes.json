@@ -1,0 +1,82 @@
+[
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00843-DYehNKdT76V/DYehNKdT76V.basis.glb",
+    "start_position": [
+      -3.80945,
+      0.13651,
+      -0.56724
+    ],
+    "object_category": "toilet"
+  },
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00814-p53SfW6mjZe/p53SfW6mjZe.basis.glb",
+    "start_position": [
+      -1.20831,
+      -2.99519,
+      1.57306
+    ],
+    "object_category": "toilet"
+  },
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00802-wcojb4TFT35/wcojb4TFT35.basis.glb",
+    "start_position": [
+      -0.7356,
+      -0.20508,
+      -13.61349
+    ],
+    "object_category": "chair"
+  },
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00835-q3zU7Yy5E5s/q3zU7Yy5E5s.basis.glb",
+    "start_position": [
+      -4.48623,
+      2.63522,
+      -2.95484
+    ],
+    "object_category": "chair"
+  },
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00800-TEEsavR23oF/TEEsavR23oF.basis.glb",
+    "start_position": [
+      -9.19294,
+      0.16338,
+      -0.85771
+    ],
+    "object_category": "plant"
+  },
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00832-qyAac8rV8Zk/qyAac8rV8Zk.basis.glb",
+    "start_position": [
+      -6.00569,
+      0.0192,
+      4.09056
+    ],
+    "object_category": "chair"
+  },
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00820-mL8ThkuaVTM/mL8ThkuaVTM.basis.glb",
+    "start_position": [
+      1.35611,
+      2.25745,
+      -0.96189
+    ],
+    "object_category": "sofa"
+  },
+  {
+    "episode_id": "0",
+    "scene_id": "hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb",
+    "start_position": [
+      -5.52711,
+      0.02468,
+      -4.52785
+    ],
+    "object_category": "toilet"
+  }
+]

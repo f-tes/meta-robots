@@ -1,0 +1,251 @@
+{
+  "clusters": [
+    {
+      "id": "false_positive_stop",
+      "scenes": [
+        "mv2HUxq3B53",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "STOP is emitted on a visually similar non-goal object because the BLIP-2 detection confidence threshold is too permissive. In both scenes the agent has never meaningfully approached the actual goal (avg DTG ~9.9 in mv2HUxq3B53; toilet episode in qyAac8rV8Zk fires at step 110) but a distractor object clears the detection gate.",
+      "cross_scene_pattern": "Identical: false_positive STOP tag, agent never within approach distance of actual goal, stair and multi-floor mechanics entirely off the failure path, both candidates confirmed as behavioral no-ops via identical fingerprints. Different: mv2HUxq3B53 fires immediately after a no-frontiers floor reinit (floor_step=0, 13-step episode); qyAac8rV8Zk fires at step 110 during the toilet episode without any floor switch \u2014 the TV goal in the same scene succeeds normally, isolating the failure to the detection gate for the toilet class specifically.",
+      "transfer_notes": "Candidate_1 (DP1 coefficient) and candidate_2 (navmesh watchdog) patches had zero observable effect on both scenes, confirming the failure lives entirely in the detection-to-STOP layer. Any fix must act at STOP emission time: raising the BLIP-2 confidence threshold or adding a proximity pre-check before STOP is allowed to fire. qyAac8rV8Zk's TV success in the same scene demonstrates that the rest of the pipeline (stair traversal, LLM selection) is sound \u2014 only the per-class detection gate is miscalibrated for these goal categories.",
+      "cluster_ruled_out_levers": [
+        "DP1",
+        "DP2",
+        "DP3",
+        "DP5",
+        "DP6",
+        "DP7",
+        "DP8",
+        "DP9",
+        "DP12",
+        "stair_traversal",
+        "navmesh_disconnection_watchdog"
+      ],
+      "highest_leverage_untested": "STOP_detection_confidence_threshold: raise the minimum BLIP-2 ITM score required to emit STOP, combined with a minimum proximity check (agent must be within N meters of the detected bbox centroid before STOP is permitted) to reject geometrically implausible detections regardless of classifier score.",
+      "sr_gain_if_fixed": 0.222,
+      "priority": 1
+    },
+    {
+      "id": "premature_floor_departure",
+      "scenes": [
+        "XB4GS9ShBRE",
+        "q3zU7Yy5E5s"
+      ],
+      "root_cause_summary": "The agent transitions away from the current floor before adequately covering it, despite the goal object being confirmed reachable there. In XB4GS9ShBRE the couch is visible at step 0 but stair mode is entered at step 47\u201364; in q3zU7Yy5E5s a non-stair floor switch fires at floor_step 63 while the agent is within 1.1 m of the couch.",
+      "cross_scene_pattern": "Identical: goal confirmed on current floor before floor switch, floor switch fires before BLIP-2 detection triggers, goal is never found post-switch, both candidate patches confirmed as behavioral no-ops. Different: XB4GS9ShBRE uses a stair-mode transition (look_for_downstair entry, stair_mode_runs > 0) and compounds the failure with a post-switch oscillation trap on a single semantically irrelevant frontier; q3zU7Yy5E5s uses a non-stair floor switch path (stair_mode_runs=0, frontier exhaustion or LLM-200) and exhibits 25% stochastic SR when BLIP-2 happens to fire before floor_step 63. The trigger mechanism differs (stair-proximity gate vs. frontier exhaustion) but the causal chain is the same: floor dwell time is capped below the detection window needed.",
+      "transfer_notes": "q3zU7Yy5E5s's 25% SR (episodes where BLIP-2 fires before floor_step 63) is the strongest cross-scene signal: the goal IS detectable if floor dwell time is extended, confirming the fix must be a minimum-coverage gate rather than detection or scoring tuning. This finding transfers directly to XB4GS9ShBRE \u2014 the couch visible at step 0 would have been detected given adequate floor_step budget. The candidate_2 watchdog actively degraded q3zU7Yy5E5s (DTG 1.106\u21923.879) by injecting false floor switches on a geometrically reachable scene, reinforcing that any floor-switch intervention must be conditioned on floor coverage rather than navmesh topology.",
+      "cluster_ruled_out_levers": [
+        "DP1",
+        "DP2",
+        "DP3",
+        "DP7",
+        "DP8",
+        "DP12",
+        "navmesh_disconnection_watchdog",
+        "candidate_2_watchdog_mechanism"
+      ],
+      "highest_leverage_untested": "Minimum current-floor coverage gate before any floor switch (stair-mode or non-stair): require floor_step >= threshold (e.g., 100) AND/OR a minimum explored frontier cell count before look_for_downstair activation or frontier-exhaustion floor reinit is permitted. A single unified gate addresses both scenes' failure modes and is directly supported by q3zU7Yy5E5s's evidence that longer floor dwell time produces successful detection.",
+      "sr_gain_if_fixed": 0.222,
+      "priority": 2
+    },
+    {
+      "id": "goal_floor_budget_deficit",
+      "scenes": [
+        "mL8ThkuaVTM",
+        "p53SfW6mjZe"
+      ],
+      "root_cause_summary": "The agent physically traverses the stairs and reaches the goal floor, but has insufficient step budget remaining (or the look_for_downstair trigger fires before adequate goal-floor coverage) to locate the goal object. In p53SfW6mjZe, uncapped floor-0 exploration consumes 380\u2013439 of ~499 steps, leaving only 12\u201313 floor_steps on the upper floor; in mL8ThkuaVTM, floor-2 frontiers exhaust at floor_step \u2248 47 triggering premature descent.",
+      "cross_scene_pattern": "Identical: stair traversal physically succeeds (floor_step resets to 0 confirmed in candidate_1 for both), goal floor reached, goal not found within available post-traversal budget, DP1 changes had zero effect. Different: p53SfW6mjZe's failure is uncapped floor-0 exploration consuming the episode budget before stair transition (step-budget starvation on arrival); mL8ThkuaVTM's failure is the look_for_downstair trigger firing too early post-arrival after only 47 floor_steps (coverage starvation on goal floor). p53SfW6mjZe hits genuine frontier exhaustion on a genuinely small upper-floor navmesh; mL8ThkuaVTM oscillates between floors without reaching the couch room.",
+      "transfer_notes": "Candidate_1 in both scenes confirms stairs are traversable without watchdog intervention, ruling out stair mechanics as the bottleneck. p53SfW6mjZe candidate_2's watchdog-injected early stair probe (steps 171\u2013180, aborting with Reach_stair_centroid: False at min_dis 305\u2013318) wasted steps without advancing the floor switch, demonstrating that premature stair attempts are harmful \u2014 the correct intervention is a committed, deadline-driven stair transition via a floor-0 budget cap, not a speculative early probe. This finding constrains how the fix is applied: the cap must force a hard transition, not a soft probe.",
+      "cluster_ruled_out_levers": [
+        "DP1",
+        "DP2",
+        "DP7",
+        "candidate_2_watchdog_mechanism",
+        "stair_physical_traversal_failure",
+        "navmesh_disconnection_blocking_stair_zone",
+        "geodesic_inf_watchdog"
+      ],
+      "highest_leverage_untested": "Floor-0 exploration budget cap (hard ceiling, e.g., 200 floor_steps) that forces committed transition to get_close_to_stair regardless of remaining floor-0 frontiers, combined with a raised look_for_downstair suppression threshold on the goal floor (e.g., require floor_step >= 80 after stair arrival before descent trigger fires). These two controls jointly address p53SfW6mjZe's step-budget starvation and mL8ThkuaVTM's coverage starvation without requiring navmesh-topology assumptions.",
+      "sr_gain_if_fixed": 0.222,
+      "priority": 3
+    },
+    {
+      "id": "stair_success_no_reinit",
+      "scenes": [
+        "bxsVRursffK"
+      ],
+      "root_cause_summary": "_process_stair_climb_state's SUCCESS branch does not call floor_reinit(), leaving the agent's occupancy map anchored to the pre-climb floor (floor_step increments 293\u2192294 rather than resetting to 0) even after physically exiting the stair polygon. With only 23 steps remaining post-SUCCESS, a false_positive STOP on a non-target object terminates the episode.",
+      "cross_scene_pattern": "Single scene. T6 telemetry provides the complete mechanistic chain: in_stair_map=False + reach_centroid=True + climb_direction=2 at paused_step=3 confirms physical stair exit; floor_step=293\u2192294 at step 476\u2013477 confirms floor_reinit() was never called. Two prior aborted climb cycles (paused_step resets 10\u21920 and 7\u21920) consumed approximately 447 steps before successful exit, compounding the budget deficit at SUCCESS.",
+      "transfer_notes": "Candidate_2's navmesh watchdog was irrelevant (reach_centroid=True throughout all 18 T6 entries) \u2014 this is a pure code omission in the SUCCESS branch, not a navmesh or parameter issue. The climb_direction=2 semantic must be validated before applying the fix: if direction=2 means descend and the agent starts on the lowest floor, SUCCESS could mean 'exited stair polygon downward without reaching a new floor', in which case floor_reinit() should only fire when direction indicates upward traversal to a new floor. DP9 tuning (stair carrot) may reduce the two aborted cycles and recover step budget as a secondary improvement.",
+      "cluster_ruled_out_levers": [
+        "DP1",
+        "DP7",
+        "DP12",
+        "navmesh_disconnection_watchdog"
+      ],
+      "highest_leverage_untested": "Add floor_reinit() to _process_stair_climb_state SUCCESS branch: floor_step=293\u2192294 post-SUCCESS is direct proof the call is absent. Validate climb_direction=2 semantics before applying \u2014 reinit should only fire when SUCCESS represents arrival on a new floor, not a downward exit to the origin floor.",
+      "sr_gain_if_fixed": 0.111,
+      "priority": 4
+    },
+    {
+      "id": "watchdog_regression_reachable_stair",
+      "scenes": [
+        "DYehNKdT76V"
+      ],
+      "root_cause_summary": "The T6_CENTROID_BYPASS watchdog fires on a geometrically reachable stair (candidate_1 confirms natural centroid reach with finite geodesic distance) after 22 consecutive Reach_stair_centroid: False entries, delaying the floor switch by 152 steps and leaving only 264 steps to explore the target floor \u2014 insufficient to locate the couch across 5 reinits.",
+      "cross_scene_pattern": "Single scene; collateral regression not in candidate_2's target scene list. The critical discriminator is finite vs. infinite geodesic distance: candidate_1 proves natural centroid reach is possible for this scene's stair geometry, meaning the 22 consecutive False entries reflect carrot-geometry near-misses rather than genuine navmesh disconnection. The watchdog's paused=8 trigger threshold does not distinguish between these two cases.",
+      "transfer_notes": "The 22 consecutive Reach_stair_centroid: False entries before bypass fires suggest DP9 (stair carrot distance) is also miscalibrated for this scene's stair layout \u2014 carrot geometry causes repeated near-misses that satisfy the watchdog trigger even when geodesic connectivity exists. A geodesic-distance gate would suppress the watchdog entirely and restore natural centroid behavior; a DP9 fix would reduce the False count and might prevent watchdog activation indirectly. Both levers are additive, but the geodesic gate is the minimal sufficient fix.",
+      "cluster_ruled_out_levers": [
+        "DP1",
+        "DP7",
+        "DP12",
+        "navmesh_disconnection_as_root_cause"
+      ],
+      "highest_leverage_untested": "Geodesic-distance gate on T6_CENTROID_BYPASS activation: the watchdog should only fire when geodesic_distance=inf (genuinely navmesh-disconnected stair); finite geodesic distance at any point during the approach window suppresses activation and restores natural centroid behavior, eliminating the 152-step delay for scenes where the stair is physically reachable.",
+      "sr_gain_if_fixed": 0.111,
+      "priority": 5
+    },
+    {
+      "id": "premature_stop_approach_deficit",
+      "scenes": [
+        "TEEsavR23oF"
+      ],
+      "root_cause_summary": "The correct goal (toilet) is detected on the starting floor but STOP fires within 5 navigate steps (step 72\u219277), leaving the agent marginally outside the evaluation success radius. The structural failure repeats identically across all 4 episodes and both candidates, indicating a fixed navigate-window budget constraint rather than stochastic detection or exploration failure.",
+      "cross_scene_pattern": "Single scene. Key distinguisher from the false_positive_stop cluster: the toilet is correctly identified (VLM confirms bathroom visibility at frames ~27 and ~69) \u2014 this is a correct detection at insufficient proximity, not a wrong-object detection. stair_mode_runs=0, floor_reinits=1 (initial setup only), and LLM never invoked confirm the failure is entirely within the single-floor navigate/STOP handoff on the starting floor.",
+      "transfer_notes": "Both candidate patches (DP1 coefficient, navmesh watchdog) confirmed as behavioral no-ops via identical fingerprints, isolating the failure completely to the STOP emission logic. No exploration or floor-switching lever can address this failure. The 5-step navigate window is the binding constraint \u2014 any fix must extend effective approach distance before STOP is allowed, either by requiring a minimum proximity or by extending the navigate budget explicitly.",
+      "cluster_ruled_out_levers": [
+        "DP1",
+        "DP2",
+        "DP3",
+        "DP7",
+        "DP9",
+        "DP12",
+        "navmesh_disconnection_watchdog",
+        "stair_traversal"
+      ],
+      "highest_leverage_untested": "navigate_mode_minimum_approach_distance_before_STOP: require the agent to close to within a minimum distance (e.g., 1.0 m) of the detected goal bbox centroid before STOP is permitted, extending the effective navigate window beyond 5 steps for detections where the agent is geometrically outside the success radius at detection time.",
+      "sr_gain_if_fixed": 0.111,
+      "priority": 6
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "all",
+      "reason": "Mandatory global forbidden move \u2014 ruled out for all 9 scenes in the database per standing constraint."
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "false_positive_stop",
+      "reason": "Confirmed behavioral no-op for mv2HUxq3B53 and qyAac8rV8Zk via identical fingerprints; neither scene involves navmesh disconnection and the watchdog never triggered."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "false_positive_stop",
+      "reason": "Ruled out for both scenes \u2014 failure is at STOP emission layer, not frontier scoring. DP1 coefficient reduction had zero observable effect in both candidates."
+    },
+    {
+      "lever": "stair_traversal",
+      "cluster": "false_positive_stop",
+      "reason": "stair_runs=0 in mv2HUxq3B53; the TV episode (which already succeeds) uses normal stair traversal in qyAac8rV8Zk. Stair mechanics are entirely off the failure path for the failing episodes in this cluster."
+    },
+    {
+      "lever": "DP9",
+      "cluster": "false_positive_stop",
+      "reason": "Stair centroid approach never invoked for either failing episode; DP9 carrot distance has no causal path to the detection confidence failure."
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "premature_floor_departure",
+      "reason": "Actively counterproductive for q3zU7Yy5E5s (couch is geometrically reachable; watchdog false-fired and degraded scene-avg DTG from 1.106 to 3.879 with zero SR improvement). Confirmed zero-effect for XB4GS9ShBRE candidate_2."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "premature_floor_departure",
+      "reason": "Identical behavioral fingerprints across both candidates for both scenes confirm DP1 coefficient change did not alter exploration path or floor-switch timing."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "premature_floor_departure",
+      "reason": "Ruled out for both XB4GS9ShBRE and q3zU7Yy5E5s \u2014 LLM frontier selection is not causally involved in the floor departure timing failure; dp7_empty and LLM invocation counts are not the binding constraint."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "premature_floor_departure",
+      "reason": "Ruled out as the primary gate for this cluster: q3zU7Yy5E5s uses a non-stair floor switch path (stair_mode_runs=0) that bypasses DP12 proximity logic entirely; XB4GS9ShBRE's stair-mode entry also predates DP12 gate relevance."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "goal_floor_budget_deficit",
+      "reason": "Ruled out for both scenes \u2014 BLIP-2 frontier scores are uniformly -1.000 for mL8ThkuaVTM (any multiplier irrelevant); p53SfW6mjZe coefficient change had no effect on floor-0 exploration duration. Scoring does not govern step budget allocation."
+    },
+    {
+      "lever": "stair_physical_traversal_failure",
+      "cluster": "goal_floor_budget_deficit",
+      "reason": "Candidate_1 in both mL8ThkuaVTM and p53SfW6mjZe confirms successful stair traversal with floor_step resetting to 0. The stair mechanics work; the failure is post-traversal budget allocation."
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "goal_floor_budget_deficit",
+      "reason": "Candidate_2 watchdog caused regression in mL8ThkuaVTM (get-close mode on disconnected object, 32+ forcing move forward, never reached stair) and injected a wasted early stair probe in p53SfW6mjZe (steps 171\u2013180, aborted). Watchdog is harmful for both scenes where stair geometry is accessible."
+    },
+    {
+      "lever": "geodesic_inf_watchdog",
+      "cluster": "goal_floor_budget_deficit",
+      "reason": "Explicitly ruled out for p53SfW6mjZe; the scene's stair is reachable and the watchdog's early probe consumed steps without advancing the floor switch, worsening outcome."
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "stair_success_no_reinit",
+      "reason": "reach_centroid=True throughout all 18 T6 entries for bxsVRursffK; the watchdog never triggered and is causally irrelevant to the missing floor_reinit() call in the SUCCESS branch."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "stair_success_no_reinit",
+      "reason": "DP12 gates periodic floor reinit during normal exploration, but the missing reinit in bxsVRursffK occurs inside _process_stair_climb_state SUCCESS \u2014 a code path that is invoked directly on stair exit and bypasses DP12 entirely."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "stair_success_no_reinit",
+      "reason": "Ruled out \u2014 BLIP-2 frontier scores are uniformly -1.000 for this scene; DP1 changes have no causal path to the missing floor_reinit() code bug."
+    },
+    {
+      "lever": "navmesh_disconnection_as_root_cause",
+      "cluster": "watchdog_regression_reachable_stair",
+      "reason": "candidate_1 proves natural centroid reach is possible for DYehNKdT76V with finite geodesic distance. The stair is geometrically reachable; the watchdog fires incorrectly due to carrot-geometry near-misses, not genuine disconnection."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "watchdog_regression_reachable_stair",
+      "reason": "Ruled out for DYehNKdT76V \u2014 the 152-step floor-switch delay is caused by the T6_CENTROID_BYPASS watchdog patch, not DP12 interval miscalibration."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "watchdog_regression_reachable_stair",
+      "reason": "Ruled out for DYehNKdT76V \u2014 frontier scoring is not causally involved in the watchdog activation or the 152-step delay."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "premature_stop_approach_deficit",
+      "reason": "Behavioral fingerprints are identical across both candidates for TEEsavR23oF; DP1 coefficient change had zero observable effect on the navigate/STOP sequence."
+    },
+    {
+      "lever": "stair_traversal",
+      "cluster": "premature_stop_approach_deficit",
+      "reason": "stair_mode_runs=0 for TEEsavR23oF; the toilet is on the starting floor and stair mechanics are entirely off the failure path."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "premature_stop_approach_deficit",
+      "reason": "Ruled out for TEEsavR23oF \u2014 no floor switch occurs (floor_reinits=1 is initial setup only); DP12 proximity logic never engaged."
+    },
+    {
+      "lever": "navmesh_disconnection_watchdog",
+      "cluster": "premature_stop_approach_deficit",
+      "reason": "Confirmed behavioral no-op for TEEsavR23oF via identical fingerprints; scene is single-floor, watchdog never triggered."
+    }
+  ],
+  "last_updated": "2026-06-23T12:09:06Z"
+}

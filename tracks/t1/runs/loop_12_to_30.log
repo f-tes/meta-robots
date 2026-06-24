@@ -1,0 +1,2950 @@
+Building prompt from 12 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (360904 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_12] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T023708.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 02:37 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_12 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_12 / q3zU7Yy5E5s (couch)
+  - candidate_12 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_12 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_12 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (87,533 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: The downstair centroid at [-1.30898204, 3.5508982] is physically unreachable: after entering stair mode at step 390 (flo
+  Ruled out: ['DP9', 'DP12', 'DP4', 'DP3', 'DP5', 'DP6', 'DP7', 'DP8', 'DP2']
+  Next levers: ["Stair centroid offset (Track 2 / ascent_policy.py): compute the approach waypoint as the nearest navigable cell within 0.5m of the stair mesh centroid rather than the centroid itself; would directly address the 'centroid inside collision geometry' hypothesis", 'Approach fallback: when Reach_stair_centroid stays False for more than ~15 steps, shift the target waypoint laterally by 0.3–0.5m and re-dispatch pointnav; a DP9-adjacent harness-visible parameter could expose this without Track 2 changes', 'Stair detection filter: before accepting a stair centroid, verify it lies in the navigable area of the occupancy map; reject and re-sample if not']
+
+  qyAac8rV8Zk: The downstair centroid at [-1.26861111, -8.18583333] is unreachable and the agent is actively routed away from it during
+  Ruled out: ['DP9', 'DP12', 'DP4', 'DP3', 'DP5', 'DP6', 'DP7', 'DP8', 'DP2']
+  Next levers: ['Stair centroid validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, verify the centroid is reachable on the nav_mesh; if not, sample the nearest navigable cell within a search radius', 'Multi-hypothesis stair approach: when min_dis_to_downstair increases over 3+ consecutive steps (agent moving away), the current approach direction is obstructed; try approaching from a different azimuth by sampling navigable cells around the stair bounding box', 'Stair re-detection: after a failed stair approach, re-run stair detection from a different viewpoint to test whether a valid centroid exists elsewhere on the same stair geometry']
+
+  mL8ThkuaVTM: The agent physically climbs the stairs successfully at step 120 (floor_step resets to 0, confirmed by 'climb stair succe
+  Ruled out: ['DP12', 'DP9', 'DP4', 'DP3', 'DP5', 'DP6', 'DP2', 'DP7', 'DP8']
+  Next levers: ["Track 2 fix to 'all floors explored' termination condition in ascent_policy.py: the floor_explored flag fires after only 13 steps on floor 2 — investigate whether the condition checks frontier count rather than spatial coverage percentage; a coverage-based guard (e.g., do not stop unless floor area coverage > 25%) would directly prevent the 13-step exhaustion from triggering termination", 'Frontier seeding after stair climb (Track 2 / ascent_policy.py): the 2nd floor is exhausted in ~13 steps, suggesting the frontier map is seeded from a narrow region around the stair landing position; re-running full frontier expansion from scratch on the new floor (rather than incrementally from the landing point) could expose more navigable area', "Stair landing offset (DP9-adjacent Track 2): the landing position after stair success is fixed by the carrot endpoint; if the carrot deposits the agent at a dead-end near the stair top, a small lateral offset at landing time might place the agent in a better-connected part of floor 2 with more frontier visibility — this would not change DP9's approach behavior but would affect post-climb exploration coverage"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_12/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_12/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_12/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1995s  (exit code 0)
+nds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [32:45<00:00, 237.96s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 27.03%
+Till Now Average Dtg: 3.6730880406685174
+2026-05-19 02:37:03,715 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 02:37:03,716][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2551, 960) to (2560, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:21,  2.65it/s][A
+
+  7%|▋         | 16/217 [00:00<00:04, 42.61it/s][A
+
+ 16%|█▌        | 34/217 [00:00<00:02, 80.05it/s][A
+
+ 24%|██▎       | 51/217 [00:00<00:01, 105.47it/s][A
+
+ 31%|███       | 67/217 [00:00<00:01, 120.96it/s][A
+
+ 39%|███▊      | 84/217 [00:00<00:00, 134.38it/s][A
+
+ 47%|████▋     | 102/217 [00:00<00:00, 145.59it/s][A
+
+ 55%|█████▌    | 120/217 [00:01<00:00, 154.97it/s][A
+
+ 64%|██████▍   | 139/217 [00:01<00:00, 163.53it/s][A
+
+ 73%|███████▎  | 158/217 [00:01<00:00, 168.89it/s][A
+
+ 82%|████████▏ | 177/217 [00:01<00:00, 172.94it/s][A
+
+ 90%|████████▉ | 195/217 [00:01<00:00, 173.52it/s][A
+
+ 98%|█████████▊| 213/217 [00:01<00:00, 171.07it/s][A
+100%|██████████| 217/217 [00:01<00:00, 131.93it/s]
+
+100%|██████████| 8/8 [32:50<00:00, 246.30s/it]
+2026-05-19 02:37:05,681 Average episode reward: 7.7461
+2026-05-19 02:37:05,681 Average episode distance_to_goal: 3.6731
+2026-05-19 02:37:05,681 Average episode success: 0.6250
+2026-05-19 02:37:05,681 Average episode spl: 0.2703
+2026-05-19 02:37:05,681 Average episode soft_spl: 0.3198
+2026-05-19 02:37:05,681 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 02:37:05,681 Average episode traveled_stairs: 0.2500
+2026-05-19 02:37:05,681 Average episode yaw: -26.2500
+2026-05-19 02:37:05,681 Average episode target_detected: 0.6250
+2026-05-19 02:37:05,681 Average episode stop_called: 0.6250
+2026-05-19 02:37:05,681 Average episode num_steps: 214.5000
+2026-05-19 02:37:05,681 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/scores.json
+{
+  "spl": 0.2703,
+  "success": 0.625,
+  "num_steps": 168.0,
+  "distance_to_goal": 3.6730880406685174,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 5: Analyze failures ---
+Building prompt from 13 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (393897 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_13] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T031726.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 03:17 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_13 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_13 / q3zU7Yy5E5s (couch)
+  - candidate_13 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_13 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_13 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (92,409 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: The downstair centroid at [-1.30898204, 3.5508982] lies inside or immediately adjacent to scene collision geometry and i
+  Ruled out: ['DP9', 'DP12', 'DP4', 'DP3', 'DP5', 'DP6', 'DP7', 'DP8', 'DP2', 'DP1']
+  Next levers: ["Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project the centroid onto the nav_mesh and snap to the nearest navigable cell within a search radius (0.3–0.5m); this directly addresses the 'centroid inside collision geometry' root cause and is the only lever left on the causal path", 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample — handles the case where the centroid snapping above still fails due to narrow stair geometry', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check (not full path planning) before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: The downstair centroid at [-1.26861111, -8.18583333] is unreachable and the agent is actively deflected away from it: mi
+  Ruled out: ['DP9', 'DP12', 'DP4', 'DP3', 'DP5', 'DP6', 'DP7', 'DP8', 'DP2', 'DP1']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): the min_dis=170 reading suggests the centroid is placed far from any navigable region; snapping to nearest navigable cell before dispatch would directly fix a registration error of this magnitude', 'Multi-hypothesis stair approach with azimuth sampling (Track 2 / ascent_policy.py): when min_dis_to_downstair increases over 3+ consecutive steps, the current approach direction is obstructed; sample navigable cells in a half-ring around the stair bounding box and re-dispatch from the closest reachable sample — the increasing min_dis pattern is a reliable signal that would trigger this fallback', 'Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after a failed stair approach, move the agent to a new viewpoint 1–2m away from the last attempted approach position and re-run stair detection; this tests whether a valid centroid exists on the same stair geometry from a different angle']
+
+  mL8ThkuaVTM: The agent physically climbs the stairs successfully at step 120 (floor_step resets to 0, 'climb stair success!!!!' confi
+  Ruled out: ['DP12', 'DP9', 'DP4', 'DP3', 'DP5', 'DP6', 'DP2', 'DP7', 'DP8', 'DP1']
+  Next levers: ["Track 2 fix to 'all floors explored' termination condition in ascent_policy.py: the floor_explored flag fires after only 13 steps on floor 2 — investigate whether the condition counts frontier cells rather than checking spatial coverage percentage; adding a guard (e.g., do not declare a floor fully explored unless floor_step > min_floor_explore_steps OR coverage > N%) would directly prevent the 13-step false-exhaustion from triggering the global stop", 'Frontier re-seeding after stair climb (Track 2 / ascent_policy.py): the floor 2 frontier pool is exhausted in 13 steps, strongly suggesting frontier expansion is seeded from a narrow landing footprint around the stair top rather than running full breadth-first expansion from all navigable cells on the new floor; re-running complete frontier expansion on floor initialization after a successful stair climb could expose the full navigable area including toilet-containing rooms', 'Stair landing offset / relocation (Track 2 / ascent_policy.py): if the carrot deposits the agent at a dead-end area near the stair top with limited frontier visibility, a forced exploratory move of 1–2m in the highest-entropy direction immediately after floor_step=0 could place the agent in a better-connected region of floor 2 before frontier exhaustion is evaluated', "Minimum floor exploration guard in harness (DP12-adjacent): expose a new harness parameter min_floor_steps that prevents the 'all floors explored' branch from firing until floor_step exceeds the threshold — this would require a Track 2 hook in ascent_policy.py to read the harness parameter, but it sits on the direct causal path"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_13/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_13/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_13/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1879s  (exit code 0)
+nds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [30:46<00:00, 231.14s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.6652470754343085
+2026-05-19 03:17:21,685 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 03:17:21,686][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:33,  2.31it/s][A
+
+  7%|▋         | 16/217 [00:00<00:05, 38.44it/s][A
+
+ 16%|█▌        | 34/217 [00:00<00:02, 74.78it/s][A
+
+ 24%|██▍       | 53/217 [00:00<00:01, 104.96it/s][A
+
+ 32%|███▏      | 70/217 [00:00<00:01, 122.34it/s][A
+
+ 40%|████      | 87/217 [00:00<00:00, 135.36it/s][A
+
+ 48%|████▊     | 104/217 [00:01<00:00, 143.58it/s][A
+
+ 56%|█████▌    | 121/217 [00:01<00:00, 150.34it/s][A
+
+ 64%|██████▍   | 139/217 [00:01<00:00, 156.84it/s][A
+
+ 72%|███████▏  | 156/217 [00:01<00:00, 159.88it/s][A
+
+ 80%|███████▉  | 173/217 [00:01<00:00, 161.50it/s][A
+
+ 88%|████████▊ | 190/217 [00:01<00:00, 162.48it/s][A
+
+ 95%|█████████▌| 207/217 [00:01<00:00, 162.68it/s][A
+100%|██████████| 217/217 [00:01<00:00, 125.63it/s]
+
+100%|██████████| 8/8 [30:51<00:00, 231.46s/it]
+2026-05-19 03:17:23,713 Average episode reward: 7.7710
+2026-05-19 03:17:23,713 Average episode distance_to_goal: 3.6652
+2026-05-19 03:17:23,713 Average episode success: 0.6250
+2026-05-19 03:17:23,713 Average episode spl: 0.3268
+2026-05-19 03:17:23,713 Average episode soft_spl: 0.3766
+2026-05-19 03:17:23,713 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 03:17:23,713 Average episode traveled_stairs: 0.2500
+2026-05-19 03:17:23,713 Average episode yaw: -26.2500
+2026-05-19 03:17:23,713 Average episode target_detected: 0.6250
+2026-05-19 03:17:23,713 Average episode stop_called: 0.6250
+2026-05-19 03:17:23,713 Average episode num_steps: 197.5000
+2026-05-19 03:17:23,713 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.6652470754343085,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 5: Analyze failures ---
+Building prompt from 14 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (428624 chars)
+Calling Claude (headless)...
+Traceback (most recent call last):
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/propose.py", line 278, in <module>
+    if __name__ == "__main__":
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/propose.py", line 248, in main
+    print("Calling Claude (headless)...")
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1996, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['claude', '--print', '--output-format', 'text']' timed out after 900 seconds
+
+############################################################
+  ASCENT Meta-Harness Search Loop
+  split=smoke10_remaining  max_candidates=19  patience=19
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.500
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.375
+[loop] Found existing result: candidate_5 SR=0.375
+[loop] Found existing result: candidate_6 SR=0.500
+[loop] Found existing result: candidate_7 SR=0.500
+[loop] Found existing result: candidate_9 SR=1.000
+[loop] Found existing result: candidate_10 SR=0.625
+[loop] Found existing result: candidate_11 SR=0.500
+
+############################################################
+  Iteration 1/19  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_12
+
+============================================================
+  Validate candidate_12
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py
+============================================================
+
+============================================================
+  Eval candidate_12 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_12/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_12 SR=0.625 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_12', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 2562, 'timestamp': '2026-05-19T02:40:18'}
+
+############################################################
+  Iteration 2/19  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_13
+
+============================================================
+  Validate candidate_13
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py
+============================================================
+
+============================================================
+  Eval candidate_13 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_13/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_13 SR=0.625 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_13', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 2349, 'timestamp': '2026-05-19T03:19:26'}
+
+############################################################
+  Iteration 3/19  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=1.000
+  Results in /home/teeshan/meta-ascent/meta_harness/runs/search_log.jsonl
+############################################################
+Building prompt from 14 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (203992 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_14] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T051553.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 05:15 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_14 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_14 / q3zU7Yy5E5s (couch)
+  - candidate_14 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_14 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_14 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (96,681 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: The downstair centroid at [-1.30898204, 3.5508982] lies inside or immediately adjacent to scene collision geometry and i
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ["Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project the centroid onto the nav_mesh and snap to the nearest navigable cell within a search radius (0.3–0.5m); this directly addresses the 'centroid inside collision geometry' root cause and is the only lever left on the causal path", 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: The downstair centroid at [-1.26861111, -8.18583333] is unreachable and the agent is actively deflected away from it: mi
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): the min_dis=170 reading suggests the centroid is placed far from any navigable region; snapping to nearest navigable cell before dispatch would directly fix a registration error of this magnitude', 'Multi-hypothesis stair approach with azimuth sampling (Track 2 / ascent_policy.py): when min_dis_to_downstair increases over 3+ consecutive steps, the current approach direction is obstructed; sample navigable cells in a half-ring around the stair bounding box and re-dispatch from the closest reachable sample — the increasing 170→177 min_dis pattern is a reliable deflection signal that would trigger this fallback', 'Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after a failed stair approach, move the agent to a new viewpoint 1–2m away from the last attempted approach position and re-run stair detection; this tests whether a valid centroid exists on the same stair geometry from a different angle']
+
+  mL8ThkuaVTM: The agent physically climbs the stairs successfully at step 120 (floor_step resets to 0, 'climb stair success!!!!' confi
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ["Track 2 fix to 'all floors explored' termination condition in ascent_policy.py: the floor_explored flag fires after only 13 steps on floor 2 — investigate whether the condition counts frontier cells rather than checking spatial coverage percentage; adding a guard (e.g., do not declare a floor fully explored unless floor_step > min_floor_explore_steps OR coverage > N%) would directly prevent the 13-step false-exhaustion from triggering the global stop", 'Frontier re-seeding after stair climb (Track 2 / ascent_policy.py): the floor 2 frontier pool is exhausted in 13 steps, strongly suggesting frontier expansion is seeded from a narrow landing footprint around the stair top rather than running full breadth-first expansion from all navigable cells on the new floor; re-running complete frontier expansion on floor initialization after a successful stair climb could expose the full navigable area including toilet-containing rooms', 'Stair landing offset / relocation (Track 2 / ascent_policy.py): if the carrot deposits the agent at a dead-end area near the stair top with limited frontier visibility, a forced exploratory move of 1–2m in the highest-entropy direction immediately after floor_step=0 could place the agent in a better-connected region of floor 2 before frontier exhaustion is evaluated', "Minimum floor exploration guard in harness (DP12-adjacent, requires Track 2 hook): expose a new harness parameter min_floor_steps that prevents the 'all floors explored' branch from firing until floor_step exceeds the threshold — this sits directly on the causal path but requires ascent_policy.py to read the harness parameter"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_14/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_14/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_14/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1778s  (exit code 0)
+unds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [29:08<00:00, 219.42s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 31.64%
+Till Now Average Dtg: 3.666607454768382
+2026-05-19 05:15:48,261 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 05:15:48,261][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2551, 960) to (2560, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:34,  2.29it/s][A
+
+  7%|▋         | 15/217 [00:00<00:05, 36.26it/s][A
+
+ 16%|█▌        | 34/217 [00:00<00:02, 76.01it/s][A
+
+ 24%|██▍       | 53/217 [00:00<00:01, 106.09it/s][A
+
+ 32%|███▏      | 70/217 [00:00<00:01, 123.71it/s][A
+
+ 41%|████      | 88/217 [00:00<00:00, 138.64it/s][A
+
+ 49%|████▉     | 107/217 [00:01<00:00, 150.90it/s][A
+
+ 58%|█████▊    | 126/217 [00:01<00:00, 160.24it/s][A
+
+ 66%|██████▋   | 144/217 [00:01<00:00, 159.78it/s][A
+
+ 74%|███████▍  | 161/217 [00:01<00:00, 159.69it/s][A
+
+ 82%|████████▏ | 178/217 [00:01<00:00, 159.17it/s][A
+
+ 90%|████████▉ | 195/217 [00:01<00:00, 159.67it/s][A
+
+ 98%|█████████▊| 212/217 [00:01<00:00, 161.82it/s][A
+100%|██████████| 217/217 [00:01<00:00, 126.30it/s]
+
+100%|██████████| 8/8 [29:13<00:00, 219.18s/it]
+2026-05-19 05:15:50,288 Average episode reward: 7.7700
+2026-05-19 05:15:50,288 Average episode distance_to_goal: 3.6666
+2026-05-19 05:15:50,288 Average episode success: 0.6250
+2026-05-19 05:15:50,288 Average episode spl: 0.3164
+2026-05-19 05:15:50,288 Average episode soft_spl: 0.3661
+2026-05-19 05:15:50,288 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 05:15:50,288 Average episode traveled_stairs: 0.2500
+2026-05-19 05:15:50,288 Average episode yaw: -26.2500
+2026-05-19 05:15:50,288 Average episode target_detected: 0.6250
+2026-05-19 05:15:50,288 Average episode stop_called: 0.6250
+2026-05-19 05:15:50,288 Average episode num_steps: 197.1250
+2026-05-19 05:15:50,288 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/scores.json
+{
+  "spl": 0.3164,
+  "success": 0.625,
+  "num_steps": 159.0,
+  "distance_to_goal": 3.666607454768382,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 15 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (206672 chars)
+Calling Claude (headless)...
+ERROR: Claude output does not contain ASCENTHarness class.
+Raw output:
+ ```python
+        distance = 1.2
+
+        if depth_map.size == 0:
+            return np.array([
+                robot_xy[0] + distance * np.cos(heading),
+                robot_xy[1] + distance * np.sin(heading),
+            ])
+
+        max_value = np.max(depth_map)
+        if max_value == 0:
+            return np.array([
+                robot_xy[0] + distance * np.cos(heading),
+                robot_xy[1] + distance * np.sin(heading),
+            ])
+
+        max_indices = np.argwhere(depth_map == max_value)
+        center_point = np.mean(max_indices, axis=0).astype(int)
+        u = center_point[1]
+        normalized_u = float(np.clip((u - cx) / cx, -1.0, 1.0))
+        angle_offset = normalized_u * (camera_fov / 2)
+        target_heading = (heading - angle_offset) % (2 * np.pi)
+
+        candidate_xy = np.array([
+            robot_xy[0] + distance * np.cos(target_heading),
+            robot_xy[1] + distance * np.sin(target_heading),
+        ])
+        candidate_px = xy_to_px_fn(np.atleast_2d(candidate_xy))
+        robot_px = xy_to_px_fn(np.atleast_2d(robot_xy))
+
+        if (
+            len(last_carrot_xy) == 0
+            or stair_end_px.size == 0
+            or np.linalg.norm(stair_end_px - robot_px[0]) <= 0.5 * pixels_per_meter
+            or disable_end
+        ):
+            return candidate_xy
+
+        l1_candidate = float(
+            np.abs(stair_end_px[0] - candidate_px[0][0])
+            + np.abs(stair_end_px[1] - candidate_px[0][1])
+        )
+        l1_last = float(
+            np.abs(stair_end_px[0] - last_carrot_px[0][0])
+            + np.abs(stair_end_px[1] - last_carrot_px[0][1])
+        )
+        return candidate_xy if l1_last > l1_candidate else last_carrot_xy
+
+    # ------------------------------------------------------------------
+    # DP 10 — Value-map fusion type (baseline retained)
+    # ------------------------------------------------------------------
+    def get_value_map_fusion_type(self) -> str:
+        """Return fusion strategy: 'default', 'replace', or 'equal_weighting'.
+
+        Baseline 'default' retained. candidate_2 confirmed 'equal_weighting'
+        causes NaN propagation via division-by-zero in DP11 for unobserved cells,
+        crashing 4/8 episodes. 'replace' untested but not on the causal path for
+        any remaining failure class.
+        """
+        return "default"
+
+    # ------------------------------------------------------------------
+    # DP 11 — Value-map confidence update (baseline retained)
+    # ------------------------------------------------------------------
+    def update_value_map(
+        self,
+        curr_conf: np.ndarray,
+        new_conf: np.ndarray,
+        curr_vals: np.ndarray,
+        new_vals: np.ndarray,
+        use_max_confidence: bool,
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Fuse new observations into the value map."""
+        if use_max_confidence:
+            higher = new_conf > curr_conf
+            updated_vals = curr_vals.copy()
+            updated_vals[higher]
+
+############################################################
+  ASCENT Meta-Harness Search Loop
+  split=smoke10_remaining  max_candidates=17  patience=17
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.500
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.375
+[loop] Found existing result: candidate_5 SR=0.375
+[loop] Found existing result: candidate_6 SR=0.500
+[loop] Found existing result: candidate_7 SR=0.500
+[loop] Found existing result: candidate_9 SR=1.000
+[loop] Found existing result: candidate_10 SR=0.625
+[loop] Found existing result: candidate_11 SR=0.500
+[loop] Found existing result: candidate_12 SR=0.625
+[loop] Found existing result: candidate_13 SR=0.625
+
+############################################################
+  Iteration 1/17  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_14
+
+============================================================
+  Validate candidate_14
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py
+============================================================
+
+============================================================
+  Eval candidate_14 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_14/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_14 SR=0.625 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_14', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 2408, 'timestamp': '2026-05-19T05:18:34'}
+
+############################################################
+  Iteration 2/17  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=1.000
+  Results in /home/teeshan/meta-ascent/meta_harness/runs/search_log.jsonl
+############################################################
+Building prompt from 15 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (206672 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_15] SR=0.50  4 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T061027.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 06:10 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_15 | 0.50 | 8 | 4 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 50.0% |
+| 2 | `mapping_floor_confusion` | 2 | 50.0% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 308
+- **Typical floor re-inits:** 1.0
+- **Example episodes:**
+  - candidate_15 / q3zU7Yy5E5s (couch)
+  - candidate_15 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (2 episodes)
+
+- **Typical step count:** 168
+- **Typical floor re-inits:** 2.5
+- **Example episodes:**
+  - candidate_15 / mL8ThkuaVTM (toilet)
+  - candidate_15 / bxsVRursffK (bed)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 4 failed episodes, 50%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_15 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM', 'bxsVRursffK']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (126,127 chars)
+  Calling Claude for failure analysis...
+  Received 4 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: The scene contains at least two unreachable stair centroids: [-1.30898204, 3.5508982] (downstairs, attempted in candidat
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3–0.5m); directly addresses both blocked centroids confirmed across 8 candidates', 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: Two distinct stair centroid failure sub-modes are confirmed across 8 candidates. In candidates 10–14, centroid [-1.26861
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173→161) but Reach_stair_centroid stays False — centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c10–14) and the approach-but-blocked sub-mode (c15)', 'Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern in c10–14), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15', "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1–2m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c10–14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"]
+
+  mL8ThkuaVTM: The agent physically climbs the stairs successfully at step 120 (floor_step resets to 0, 'climb stair success!!!!' confi
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ["Track 2 fix to 'all floors explored' termination condition in ascent_policy.py: floor_explored flag fires after only 13 steps on floor 2 — add guard (do not declare fully explored unless floor_step > min_floor_explore_steps OR spatial coverage > N%) to prevent the 13-step false-exhaustion that is invariant across all 8 candidates", 'Frontier re-seeding after stair climb (Track 2 / ascent_policy.py): frontier expansion appears seeded from narrow landing footprint around stair top rather than full BFS from all navigable cells; re-running complete frontier expansion on floor initialization after successful stair climb could expose toilet-containing rooms outside the landing footprint', "Minimum floor exploration guard via harness parameter (requires Track 2 hook): expose harness parameter min_floor_steps that prevents 'all floors explored' branch from firing until floor_step exceeds threshold — sits directly on causal path but requires ascent_policy.py to read the harness parameter"]
+
+  bxsVRursffK: Success in this 3-floor scene (bed on floor 3) requires two sequential stair climbs and is sensitive to both DP9 and DP1
+  Ruled out: ['DP12', 'DP3', 'DP5', 'DP6', 'DP2', 'DP10']
+  Next levers: ["DP9=1.2m with DP10='default' is the confirmed winning configuration for this scene — must be preserved in all future candidates; DP10='replace' is confirmed harmful and must not be re-applied", "Track 2 fix to floor-2 frontier seeding after stair climb (ascent_policy.py): the 13-step detection window is narrow and sensitive to landing position; re-running full BFS frontier expansion from all navigable cells after successful stair climb (rather than narrow landing-footprint seeding) would make second-staircase detection robust to the landing position variance induced by DP changes — this fix would simultaneously address mL8ThkuaVTM's identical exhaustion mechanism", "Minimum floor exploration guard (Track 2 / ascent_policy.py): the same 13-step exhaustion pattern fires in mL8ThkuaVTM (always) and bxsVRursffK under DP10='replace'; a min_floor_steps guard preventing 'all floors explored' termination until floor_step exceeds threshold would protect both scenes against premature-exhaustion regressions caused by future DP changes that shift landing position"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_15/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_15/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_15/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1379s  (exit code 0)
+pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [22:23<00:00, 166.42s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.00000% (0.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.00000
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 5.43639
+Till Now Average Success rate: 50.00% (4 out of 8)
+Till Now Average Spl: 24.88%
+Till Now Average Dtg: 4.126599332783371
+Episode 0 in scene bxsVRursffK failed due to 'never_saw_target_traveled_stairs_likely_infeasible'.
+2026-05-19 06:10:23,432 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=0.00-spl=0.00-soft_spl=0.34-num_steps=188.00-never_saw_target_traveled_stairs_likely_infeasible.mp4
+
+
+  0%|          | 0/187 [00:00<?, ?it/s][A[2026-05-19 06:10:23,433][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2551, 960) to (2560, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  1%|          | 1/187 [00:00<01:09,  2.67it/s][A
+
+  9%|▊         | 16/187 [00:00<00:04, 42.68it/s][A
+
+ 18%|█▊        | 34/187 [00:00<00:01, 79.94it/s][A
+
+ 27%|██▋       | 51/187 [00:00<00:01, 104.91it/s][A
+
+ 36%|███▋      | 68/187 [00:00<00:00, 121.40it/s][A
+
+ 45%|████▍     | 84/187 [00:00<00:00, 131.59it/s][A
+
+ 53%|█████▎    | 100/187 [00:01<00:00, 136.83it/s][A
+
+ 62%|██████▏   | 116/187 [00:01<00:00, 140.99it/s][A
+
+ 71%|███████   | 132/187 [00:01<00:00, 143.99it/s][A
+
+ 80%|████████  | 150/187 [00:01<00:00, 153.71it/s][A
+
+ 89%|████████▉ | 167/187 [00:01<00:00, 157.17it/s][A
+
+ 98%|█████████▊| 184/187 [00:01<00:00, 158.53it/s][A
+100%|██████████| 187/187 [00:01<00:00, 121.23it/s]
+
+100%|██████████| 8/8 [22:28<00:00, 168.53s/it]
+2026-05-19 06:10:25,242 Average episode reward: 6.9894
+2026-05-19 06:10:25,242 Average episode distance_to_goal: 4.1266
+2026-05-19 06:10:25,242 Average episode success: 0.5000
+2026-05-19 06:10:25,242 Average episode spl: 0.2488
+2026-05-19 06:10:25,242 Average episode soft_spl: 0.3550
+2026-05-19 06:10:25,242 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 06:10:25,242 Average episode traveled_stairs: 0.2500
+2026-05-19 06:10:25,242 Average episode yaw: -22.5000
+2026-05-19 06:10:25,242 Average episode target_detected: 0.5000
+2026-05-19 06:10:25,242 Average episode stop_called: 0.5000
+2026-05-19 06:10:25,242 Average episode num_steps: 205.2500
+2026-05-19 06:10:25,242 Average episode start_yaw: -1.0040
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/scores.json
+{
+  "spl": 0.2488,
+  "success": 0.5,
+  "num_steps": 162.0,
+  "distance_to_goal": 4.126599332783371,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 4 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 16 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (210601 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_16] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T064407.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 06:44 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_16 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_16 / q3zU7Yy5E5s (couch)
+  - candidate_16 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_16 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_16 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (99,086 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: The scene contains at least two unreachable stair centroids: [-1.30898204, 3.5508982] (downstairs, attempted in candidat
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3–0.5m); directly addresses both blocked centroids confirmed across 9 candidates', 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: Two distinct stair centroid failure sub-modes are confirmed across 9 candidates. In candidates 11–14 and 16, centroid [-
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173→161) but Reach_stair_centroid stays False — centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c11–c14, c16) and the approach-but-blocked sub-mode (c15)', 'Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern in c11–c14, c16), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15', "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1–2m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c11–c14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"]
+
+  mL8ThkuaVTM: The agent physically climbs the stairs successfully at step 120 (floor_step resets to 0, 'climb stair success!!!!' confi
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ["Track 2 fix to 'all floors explored' termination condition in ascent_policy.py: floor_explored flag fires after only 13 steps on floor 2 — add guard (do not declare fully explored unless floor_step > min_floor_explore_steps OR spatial coverage > N%) to prevent the 13-step false-exhaustion that is invariant across all 9 candidates; candidate_16 listed this fix but trajectory confirms it was not implemented", 'Frontier re-seeding after stair climb (Track 2 / ascent_policy.py): frontier expansion appears seeded from narrow landing footprint around stair top rather than full BFS from all navigable cells; re-running complete frontier expansion on floor initialization after successful stair climb could expose toilet-containing rooms outside the landing footprint; candidate_16 listed this fix but trajectory confirms it was not implemented', "Minimum floor exploration guard via harness parameter (requires Track 2 hook in ascent_policy.py): expose harness parameter min_floor_steps that prevents 'all floors explored' branch from firing until floor_step exceeds threshold — sits directly on causal path but requires ascent_policy.py to read the harness parameter"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_16/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_16/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_16/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1390s  (exit code 0)
+pile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [22:45<00:00, 176.64s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.6652470754343085
+2026-05-19 06:44:03,025 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 06:44:03,026][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:25,  2.52it/s][A
+
+  8%|▊         | 17/217 [00:00<00:04, 43.56it/s][A
+
+ 16%|█▌        | 35/217 [00:00<00:02, 79.53it/s][A
+
+ 24%|██▍       | 53/217 [00:00<00:01, 106.15it/s][A
+
+ 33%|███▎      | 71/217 [00:00<00:01, 126.06it/s][A
+
+ 41%|████      | 89/217 [00:00<00:00, 139.36it/s][A
+
+ 49%|████▉     | 106/217 [00:01<00:00, 148.11it/s][A
+
+ 57%|█████▋    | 124/217 [00:01<00:00, 155.13it/s][A
+
+ 65%|██████▌   | 142/217 [00:01<00:00, 159.72it/s][A
+
+ 74%|███████▍  | 161/217 [00:01<00:00, 166.17it/s][A
+
+ 82%|████████▏ | 179/217 [00:01<00:00, 165.55it/s][A
+
+ 92%|█████████▏| 199/217 [00:01<00:00, 173.04it/s][A
+100%|██████████| 217/217 [00:01<00:00, 131.91it/s]
+
+100%|██████████| 8/8 [22:49<00:00, 171.20s/it]
+2026-05-19 06:44:04,949 Average episode reward: 7.7710
+2026-05-19 06:44:04,949 Average episode distance_to_goal: 3.6652
+2026-05-19 06:44:04,949 Average episode success: 0.6250
+2026-05-19 06:44:04,949 Average episode spl: 0.3268
+2026-05-19 06:44:04,949 Average episode soft_spl: 0.3766
+2026-05-19 06:44:04,949 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 06:44:04,949 Average episode traveled_stairs: 0.2500
+2026-05-19 06:44:04,949 Average episode yaw: -26.2500
+2026-05-19 06:44:04,949 Average episode target_detected: 0.6250
+2026-05-19 06:44:04,949 Average episode stop_called: 0.6250
+2026-05-19 06:44:04,949 Average episode num_steps: 197.5000
+2026-05-19 06:44:04,949 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.6652470754343085,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 17 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (222859 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py
+  FAIL — could not load harness:
+Traceback (most recent call last):
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 130, in validate
+    harness = load_harness(harness_path)
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 121, in load_harness
+    spec.loader.exec_module(mod)
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py", line 4, in <module>
+    class ASCENTHarness:
+  File "/home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py", line 27, in ASCENTHarness
+    sorted_values: List[float],
+NameError: name 'List' is not defined
+
+Building prompt from 18 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (222637 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_18] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T072634.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 07:26 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_18 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_18 / q3zU7Yy5E5s (couch)
+  - candidate_18 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_18 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_18 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (104,104 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: Both detected stair centroids in scene q3zU7Yy5E5s are inside collision geometry: centroid [-1.30898204, 3.5508982] (sel
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3–0.5m); directly addresses both blocked centroids confirmed across 10 candidates', 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: Two distinct stair centroid failure sub-modes are confirmed across 10 candidates. In candidates 11–14, 16, and 18, centr
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173→161) but Reach_stair_centroid stays False — centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c11–c14, c16, c18) and the approach-but-blocked sub-mode (c15)', 'Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern confirmed in c11–c14, c16, c18), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15', "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1–2m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c11–c14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"]
+
+  mL8ThkuaVTM: The agent physically climbs the stairs successfully at step 120 (floor_step resets to 0, 'climb stair success!!!!' confi
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ["Track 2 fix to 'all floors explored' termination condition in ascent_policy.py: floor_explored flag fires after only 13 steps on floor 2 — add guard (do not declare fully explored unless floor_step > min_floor_explore_steps OR spatial coverage > N%) to prevent the 13-step false-exhaustion that is invariant across all 10 candidates; candidate_16 listed this fix but trajectory confirms it was not implemented", 'Frontier re-seeding after stair climb (Track 2 / ascent_policy.py): frontier expansion appears seeded from narrow landing footprint around stair top rather than full BFS from all navigable cells; re-running complete frontier expansion on floor initialization after successful stair climb could expose toilet-containing rooms outside the landing footprint; confirmed not implemented across 10 candidates', "Minimum floor exploration guard via harness parameter (requires Track 2 hook in ascent_policy.py): expose harness parameter min_floor_steps that prevents 'all floors explored' branch from firing until floor_step exceeds threshold — sits directly on causal path but requires ascent_policy.py to read the harness parameter"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_18/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_18/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_18/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1499s  (exit code 0)
+unds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [24:34<00:00, 190.11s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.42%
+Till Now Average Dtg: 3.663802961993497
+2026-05-19 07:26:30,204 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 07:26:30,205][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:27,  2.48it/s][A
+
+  7%|▋         | 16/217 [00:00<00:04, 40.70it/s][A
+
+ 15%|█▌        | 33/217 [00:00<00:02, 74.98it/s][A
+
+ 24%|██▍       | 52/217 [00:00<00:01, 105.88it/s][A
+
+ 32%|███▏      | 70/217 [00:00<00:01, 125.17it/s][A
+
+ 40%|████      | 87/217 [00:00<00:00, 137.52it/s][A
+
+ 48%|████▊     | 104/217 [00:01<00:00, 146.80it/s][A
+
+ 56%|█████▌    | 122/217 [00:01<00:00, 154.87it/s][A
+
+ 65%|██████▍   | 140/217 [00:01<00:00, 161.24it/s][A
+
+ 72%|███████▏  | 157/217 [00:01<00:00, 162.70it/s][A
+
+ 80%|████████  | 174/217 [00:01<00:00, 163.97it/s][A
+
+ 88%|████████▊ | 191/217 [00:01<00:00, 163.69it/s][A
+
+ 96%|█████████▌| 208/217 [00:01<00:00, 165.14it/s][A
+100%|██████████| 217/217 [00:01<00:00, 128.59it/s]
+
+100%|██████████| 8/8 [24:39<00:00, 184.94s/it]
+2026-05-19 07:26:32,170 Average episode reward: 7.7597
+2026-05-19 07:26:32,170 Average episode distance_to_goal: 3.6638
+2026-05-19 07:26:32,170 Average episode success: 0.6250
+2026-05-19 07:26:32,170 Average episode spl: 0.3242
+2026-05-19 07:26:32,170 Average episode soft_spl: 0.3741
+2026-05-19 07:26:32,170 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 07:26:32,170 Average episode traveled_stairs: 0.2500
+2026-05-19 07:26:32,170 Average episode yaw: -26.2500
+2026-05-19 07:26:32,170 Average episode target_detected: 0.6250
+2026-05-19 07:26:32,170 Average episode stop_called: 0.6250
+2026-05-19 07:26:32,170 Average episode num_steps: 210.2500
+2026-05-19 07:26:32,170 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/scores.json
+{
+  "spl": 0.32420000000000004,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.663802961993497,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 19 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (227266 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py --split smoke10_remaining
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_19] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T075928.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 07:59 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_19 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_19 / q3zU7Yy5E5s (couch)
+  - candidate_19 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 148
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_19 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_19 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (102,780 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: Both detected stair centroids in scene q3zU7Yy5E5s are inside collision geometry: centroid [-1.30898204, 3.5508982] (sel
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3–0.5m); directly addresses both blocked centroids confirmed across 11 candidates', 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: Two distinct stair centroid failure sub-modes are confirmed across 11 candidates. In candidates 11–14, 16, 18, and 19, c
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173→161) but Reach_stair_centroid stays False — centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c11–c14, c16, c18, c19) and the approach-but-blocked sub-mode (c15)', 'Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern confirmed in c11–c14, c16, c18, c19), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15', "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1–2m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c11–c14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"]
+
+  mL8ThkuaVTM: The agent physically climbs the stairs successfully at step 120 (floor_step resets to 0, 'climb stair success!!!!' confi
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ["Track 2 fix to 'all floors explored' termination condition in ascent_policy.py: floor_explored flag fires after only 13 steps on floor 2 — add guard (do not declare fully explored unless floor_step > min_floor_explore_steps OR spatial coverage > N%) to prevent the 13-step false-exhaustion that is invariant across all 11 candidates; candidates 16 and 18 listed this fix but trajectory confirms it was never implemented", 'Frontier re-seeding after stair climb (Track 2 / ascent_policy.py): frontier expansion appears seeded from narrow landing footprint around stair top rather than full BFS from all navigable cells; re-running complete frontier expansion on floor initialization after successful stair climb could expose toilet-containing rooms outside the landing footprint; confirmed not implemented across 11 candidates', "Minimum floor exploration guard via harness parameter (requires Track 2 hook in ascent_policy.py): expose harness parameter min_floor_steps that prevents 'all floors explored' branch from firing until floor_step exceeds threshold — sits directly on causal path but requires ascent_policy.py to read the harness parameter"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_19/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_19/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_19/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1429s  (exit code 0)
+unds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [23:19<00:00, 181.84s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.6652470754343085
+2026-05-19 07:59:23,310 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 07:59:23,311][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:29,  2.41it/s][A
+
+  7%|▋         | 16/217 [00:00<00:05, 39.63it/s][A
+
+ 15%|█▌        | 33/217 [00:00<00:02, 73.37it/s][A
+
+ 23%|██▎       | 50/217 [00:00<00:01, 98.53it/s][A
+
+ 31%|███       | 67/217 [00:00<00:01, 116.79it/s][A
+
+ 39%|███▊      | 84/217 [00:00<00:01, 129.84it/s][A
+
+ 47%|████▋     | 101/217 [00:01<00:00, 140.48it/s][A
+
+ 55%|█████▌    | 120/217 [00:01<00:00, 151.99it/s][A
+
+ 63%|██████▎   | 137/217 [00:01<00:00, 156.65it/s][A
+
+ 71%|███████   | 154/217 [00:01<00:00, 159.45it/s][A
+
+ 79%|███████▉  | 172/217 [00:01<00:00, 162.88it/s][A
+
+ 87%|████████▋ | 189/217 [00:01<00:00, 164.28it/s][A
+
+ 95%|█████████▌| 207/217 [00:01<00:00, 167.30it/s][A
+100%|██████████| 217/217 [00:01<00:00, 126.02it/s]
+
+100%|██████████| 8/8 [23:24<00:00, 175.59s/it]
+2026-05-19 07:59:25,313 Average episode reward: 7.7710
+2026-05-19 07:59:25,313 Average episode distance_to_goal: 3.6652
+2026-05-19 07:59:25,313 Average episode success: 0.6250
+2026-05-19 07:59:25,313 Average episode spl: 0.3268
+2026-05-19 07:59:25,313 Average episode soft_spl: 0.3766
+2026-05-19 07:59:25,313 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 07:59:25,314 Average episode traveled_stairs: 0.2500
+2026-05-19 07:59:25,314 Average episode yaw: -26.2500
+2026-05-19 07:59:25,314 Average episode target_detected: 0.6250
+2026-05-19 07:59:25,314 Average episode stop_called: 0.6250
+2026-05-19 07:59:25,314 Average episode num_steps: 197.5000
+2026-05-19 07:59:25,314 Average episode start_yaw: -1.8549
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.6652470754343085,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 20 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (236412 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py --split smoke10_remaining
+
+############################################################
+  ASCENT Meta-Harness Search Loop
+  split=smoke10_remaining  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.500
+[loop] Found existing result: candidate_2 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.375
+[loop] Found existing result: candidate_5 SR=0.375
+[loop] Found existing result: candidate_6 SR=0.500
+[loop] Found existing result: candidate_7 SR=0.500
+[loop] Found existing result: candidate_9 SR=1.000
+[loop] Found existing result: candidate_10 SR=0.625
+[loop] Found existing result: candidate_11 SR=0.500
+[loop] Found existing result: candidate_12 SR=0.625
+[loop] Found existing result: candidate_13 SR=0.625
+[loop] Found existing result: candidate_14 SR=0.625
+
+############################################################
+  Iteration 1/15  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_15
+
+============================================================
+  Validate candidate_15
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py
+============================================================
+
+============================================================
+  Eval candidate_15 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_15/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_15 SR=0.500 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_15', 'split': 'smoke10_remaining', 'sr': 0.5, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 2138, 'timestamp': '2026-05-19T06:18:05'}
+
+############################################################
+  Iteration 2/15  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_16
+
+============================================================
+  Validate candidate_16
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py
+============================================================
+
+============================================================
+  Eval candidate_16 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_16/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_16 SR=0.625 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_16', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 1763, 'timestamp': '2026-05-19T06:47:28'}
+
+############################################################
+  Iteration 3/15  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_17
+
+============================================================
+  Validate candidate_17
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py
+============================================================
+
+[loop] FAILED: Validate candidate_17 (exit 1)
+
+[loop] Logged: {'candidate': 'candidate_17', 'split': 'smoke10_remaining', 'sr': None, 'status': 'validation_failed', 'timestamp': '2026-05-19T06:57:41'}
+
+############################################################
+  Iteration 4/15  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_18
+
+============================================================
+  Validate candidate_18
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py
+============================================================
+
+============================================================
+  Eval candidate_18 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_18/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_18 SR=0.625 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_18', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 1884, 'timestamp': '2026-05-19T07:29:05'}
+
+############################################################
+  Iteration 5/15  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_19
+
+============================================================
+  Validate candidate_19
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py
+============================================================
+
+============================================================
+  Eval candidate_19 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_19/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_19 SR=0.625 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_19', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 1984, 'timestamp': '2026-05-19T08:02:09'}
+
+############################################################
+  Iteration 6/15  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] New candidate: candidate_20
+
+============================================================
+  Validate candidate_20
+WARNING:root:[Track2] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+WARNING:root:[Track2] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_20] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260519T084843.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-19 08:48 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_20 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_20 / q3zU7Yy5E5s (couch)
+  - candidate_20 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 250
+- **Typical floor re-inits:** 5.0
+- **Example episodes:**
+  - candidate_20 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_20 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (104,978 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: Both detected stair centroids in scene q3zU7Yy5E5s are inside collision geometry: centroid [-1.30898204, 3.5508982] (sel
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3–0.5m); directly addresses both blocked centroids confirmed across 12 candidates', 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: Two distinct stair centroid failure sub-modes are confirmed across 12 candidates. In candidates 11–14, 16, 18, 19, and 2
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173→161) but Reach_stair_centroid stays False — centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c11–c14, c16, c18, c19, c20) and the approach-but-blocked sub-mode (c15)', 'Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern confirmed in c11–c14, c16, c18, c19, c20), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15', "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1–2m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c11–c14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"]
+
+  mL8ThkuaVTM: The agent physically climbs the stairs at step 120 ('climb stair success!!!!' confirmed in all 12 candidates) but the fl
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Frontier re-seeding from ALL navigable cells after stair climb (Track 2 / ascent_policy.py): candidate_20 proved the monkey-patch approach works and that extended exploration exposes new frontiers (e.g., [3.88535534, -0.08535534]), but DTG worsened to 4.71 because the frontiers seeded from the narrow landing footprint lead to dead-end rooms away from the toilet; a full BFS seed from all navigable cells on the new floor would expose rooms in all directions rather than just the stair-landing neighborhood — this is the highest-priority remaining fix', "Combined 'all floors explored' guard + BFS re-seeding (Track 2 / ascent_policy.py): candidate_20's partial success shows the reinit-count extension alone is insufficient; the fix must combine (a) a minimum floor_step threshold before declaring a floor exhausted AND (b) BFS re-seeding from all nav_mesh cells at floor initialization rather than from the landing footprint alone", 'Second staircase detection during extended exploration (Track 2 / ascent_policy.py): candidate_20 shows stair_runs=0 in the 102-step extended phase — no upstairs or downstairs staircase was detected from the landing area; if the toilet is on floor 3, passive stair detection must be triggered from the broader frontier set exposed by the full BFS re-seed; the current passive detection at step 91 triggers from floor-1 frontiers, not floor-2 landing frontiers']
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_20/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_20/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_20/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1543s  (exit code 0)
+gl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [25:15<00:00, 205.69s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 4.131346695299726
+2026-05-19 08:48:37,310 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-19 08:48:38,345][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:38,  2.20it/s][A
+
+  7%|▋         | 15/217 [00:00<00:05, 35.09it/s][A
+
+ 14%|█▍        | 31/217 [00:00<00:02, 66.18it/s][A
+
+ 22%|██▏       | 47/217 [00:00<00:01, 90.56it/s][A
+
+ 29%|██▉       | 63/217 [00:00<00:01, 109.28it/s][A
+
+ 37%|███▋      | 80/217 [00:00<00:01, 125.34it/s][A
+
+ 45%|████▍     | 97/217 [00:01<00:00, 136.89it/s][A
+
+ 52%|█████▏    | 113/217 [00:01<00:00, 141.68it/s][A
+
+ 59%|█████▉    | 129/217 [00:01<00:00, 146.88it/s][A
+
+ 68%|██████▊   | 147/217 [00:01<00:00, 154.86it/s][A
+
+ 76%|███████▌  | 164/217 [00:01<00:00, 158.18it/s][A
+
+ 83%|████████▎ | 181/217 [00:01<00:00, 155.16it/s][A
+
+ 91%|█████████ | 198/217 [00:01<00:00, 157.14it/s][A
+
+ 99%|█████████▉| 215/217 [00:01<00:00, 158.22it/s][A
+100%|██████████| 217/217 [00:01<00:00, 119.39it/s]
+
+100%|██████████| 8/8 [25:21<00:00, 190.19s/it]
+2026-05-19 08:48:40,449 Average episode reward: 7.2921
+2026-05-19 08:48:40,449 Average episode distance_to_goal: 4.1313
+2026-05-19 08:48:40,449 Average episode success: 0.6250
+2026-05-19 08:48:40,449 Average episode spl: 0.3268
+2026-05-19 08:48:40,449 Average episode soft_spl: 0.3391
+2026-05-19 08:48:40,449 Average episode distance_to_goal_reward: 0.0000
+2026-05-19 08:48:40,449 Average episode traveled_stairs: 0.2500
+2026-05-19 08:48:40,449 Average episode yaw: -15.0000
+2026-05-19 08:48:40,449 Average episode target_detected: 0.6250
+2026-05-19 08:48:40,449 Average episode stop_called: 0.6250
+2026-05-19 08:48:40,449 Average episode num_steps: 210.2500
+2026-05-19 08:48:40,449 Average episode start_yaw: -1.6585
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 4.131346695299726,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+Building prompt from 21 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (244559 chars)
+Calling Claude (headless)...
+Traceback (most recent call last):
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/propose.py", line 279, in <module>
+    main()
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/propose.py", line 249, in main
+    result = subprocess.run(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1996, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['claude', '--print', '--output-format', 'text', '--dangerously-skip-permissions']' timed out after 1800 seconds
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py
+============================================================
+
+============================================================
+  Eval candidate_20 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_20/harness.py --split smoke10_remaining
+============================================================
+
+[loop] No improvement: candidate_20 SR=0.625 (best=1.000)
+
+[loop] Logged: {'candidate': 'candidate_20', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 1.0, 'status': 'no_improvement', 'elapsed_s': 3215, 'timestamp': '2026-05-19T08:55:44'}
+
+############################################################
+  Iteration 7/15  best_SR=1.000
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=1.000
+  Results in /home/teeshan/meta-ascent/meta_harness/runs/search_log.jsonl
+############################################################
+
+############################################################
+  ASCENT Meta-Harness Search Loop
+  split=smoke10_remaining  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.375
+[loop] Found existing result: candidate_5 SR=0.375
+[loop] Found existing result: candidate_6 SR=0.500
+[loop] Found existing result: candidate_7 SR=0.500
+[loop] Found existing result: candidate_10 SR=0.625
+[loop] Found existing result: candidate_11 SR=0.500
+[loop] Found existing result: candidate_12 SR=0.625
+[loop] Found existing result: candidate_13 SR=0.625
+[loop] Found existing result: candidate_14 SR=0.625
+[loop] Found existing result: candidate_15 SR=0.500
+[loop] Found existing result: candidate_16 SR=0.625
+[loop] Found existing result: candidate_18 SR=0.625
+[loop] Found existing result: candidate_19 SR=0.625
+[loop] Found existing result: candidate_20 SR=0.625
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+
+############################################################
+  ASCENT Meta-Harness Search Loop
+  split=smoke10_remaining  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.375
+[loop] Found existing result: candidate_5 SR=0.375
+[loop] Found existing result: candidate_6 SR=0.500
+[loop] Found existing result: candidate_7 SR=0.500
+[loop] Found existing result: candidate_10 SR=0.625
+[loop] Found existing result: candidate_11 SR=0.500
+[loop] Found existing result: candidate_12 SR=0.625
+[loop] Found existing result: candidate_13 SR=0.625
+[loop] Found existing result: candidate_14 SR=0.625
+[loop] Found existing result: candidate_15 SR=0.500
+[loop] Found existing result: candidate_16 SR=0.625
+[loop] Found existing result: candidate_18 SR=0.625
+[loop] Found existing result: candidate_19 SR=0.625
+[loop] Found existing result: candidate_20 SR=0.625
+
+[loop] Backfilling 1 unevaluated candidate(s): ['candidate_17']
+
+============================================================
+  Validate candidate_17 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py
+============================================================
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py
+  FAIL — could not load harness:
+Traceback (most recent call last):
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 130, in validate
+    harness = load_harness(harness_path)
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 121, in load_harness
+    spec.loader.exec_module(mod)
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py", line 4, in <module>
+    class ASCENTHarness:
+  File "/home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py", line 27, in ASCENTHarness
+    sorted_values: List[float],
+NameError: name 'List' is not defined
+
+
+[loop] FAILED: Validate candidate_17 (backfill) (exit 1)
+[loop] Skipping candidate_17 — validation failed.
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+Building prompt from 21 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (161984 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py --split smoke10_remaining
+Building prompt from 21 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (161984 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py --split smoke10_remaining
+
+[loop] New candidate: candidate_22
+
+============================================================
+  Validate candidate_22
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py
+============================================================
+WARNING:root:[Track2c21] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+
+============================================================
+  Eval candidate_22 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py --split smoke10_remaining
+============================================================
+WARNING:root:[Track2c21] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_22] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260520T045907.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 04:59 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_22 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_22 / q3zU7Yy5E5s (couch)
+  - candidate_22 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 171
+- **Typical floor re-inits:** 4.0
+- **Example episodes:**
+  - candidate_22 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_22 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (107,801 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: Both detected stair centroids in scene q3zU7Yy5E5s are inside collision geometry: centroid [-1.30898204, 3.5508982] (sel
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3–0.5m); directly addresses both blocked centroids confirmed across 13 candidates', 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: Two distinct stair centroid failure sub-modes are confirmed across 13 candidates. In candidates 11–14, 16, 18, 19, 20, a
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173→161) but Reach_stair_centroid stays False — centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c11–c14, c16, c18, c19, c20, c22) and the approach-but-blocked sub-mode (c15)', 'Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern confirmed in c11–c14, c16, c18, c19, c20, c22), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15', "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1–2m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c11–c14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"]
+
+  mL8ThkuaVTM: The agent physically climbs stairs at step 120 ('climb stair success!!!!' confirmed in all 13 candidates) but BFS seedin
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Frontier re-seeding from ALL navigable cells after stair climb (Track 2 / ascent_policy.py): candidate_22 decisively proved that 1 extra reinit cycle (23 extra steps, DTG=4.168 ≈ baseline 4.180) is equivalent to running the same narrow 13-step landing footprint cycle twice; candidate_20 proved 2 extra cycles (102 extra steps) also fails; the fix must change WHAT frontiers are seeded, not HOW MANY reinit cycles are allowed — full BFS from all navigable cells on the new floor is the minimum necessary change', "Combined 'all floors explored' guard + BFS re-seeding (Track 2 / ascent_policy.py): the reinit-count extension (proven functional in both c20 and c22) is a necessary scaffolding but insufficient alone; the fix must combine (a) a minimum floor_step threshold before declaring a floor exhausted AND (b) BFS re-seeding from all nav_mesh cells at floor initialization rather than from the landing footprint alone", "Second staircase detection during extended exploration (Track 2 / ascent_policy.py): candidate_22's stair_runs=0 and dp7_empty=0/0 in the single reinit extension phase confirm that passive stair detection does not fire from the landing footprint even with extra time; if the toilet is on floor 3, passive stair detection must be triggered from the broader frontier set exposed by the full BFS re-seed"]
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_22/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_22/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_22/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1902s  (exit code 0)
+unds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [31:00<00:00, 240.11s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.6543732808786444
+2026-05-20 04:59:01,692 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-20 04:59:01,692][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:26,  2.51it/s][A
+
+ 10%|▉         | 21/217 [00:00<00:03, 53.79it/s][A
+
+ 18%|█▊        | 38/217 [00:00<00:02, 84.97it/s][A
+
+ 27%|██▋       | 59/217 [00:00<00:01, 118.60it/s][A
+
+ 35%|███▌      | 76/217 [00:00<00:01, 93.34it/s] [A
+
+ 41%|████      | 89/217 [00:01<00:01, 89.83it/s][A
+
+ 50%|████▉     | 108/217 [00:01<00:00, 110.83it/s][A
+
+ 58%|█████▊    | 125/217 [00:01<00:00, 124.42it/s][A
+
+ 65%|██████▍   | 140/217 [00:01<00:00, 128.90it/s][A
+
+ 71%|███████▏  | 155/217 [00:01<00:00, 107.95it/s][A
+
+ 77%|███████▋  | 168/217 [00:01<00:00, 101.92it/s][A
+
+ 87%|████████▋ | 188/217 [00:01<00:00, 123.67it/s][A
+
+ 95%|█████████▌| 207/217 [00:01<00:00, 138.50it/s][A
+100%|██████████| 217/217 [00:02<00:00, 106.52it/s]
+
+100%|██████████| 8/8 [31:06<00:00, 233.27s/it]
+2026-05-20 04:59:04,405 Average episode reward: 7.7790
+2026-05-20 04:59:04,406 Average episode distance_to_goal: 3.6544
+2026-05-20 04:59:04,406 Average episode success: 0.6250
+2026-05-20 04:59:04,406 Average episode spl: 0.3268
+2026-05-20 04:59:04,406 Average episode soft_spl: 0.3769
+2026-05-20 04:59:04,406 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 04:59:04,406 Average episode traveled_stairs: 0.2500
+2026-05-20 04:59:04,406 Average episode yaw: -22.5000
+2026-05-20 04:59:04,406 Average episode target_detected: 0.6250
+2026-05-20 04:59:04,406 Average episode stop_called: 0.6250
+2026-05-20 04:59:04,406 Average episode num_steps: 200.3750
+2026-05-20 04:59:04,406 Average episode start_yaw: -1.7894
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_22/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.6543732808786444,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] No improvement: candidate_22 SR=0.625 (best=0.625)
+
+[loop] Logged: {'candidate': 'candidate_22', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 0.625, 'status': 'no_improvement', 'elapsed_s': 3812, 'timestamp': '2026-05-20T05:03:49'}
+
+############################################################
+  Iteration 2/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+Building prompt from 23 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (175337 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py --split smoke10_remaining
+
+[loop] New candidate: candidate_23
+
+============================================================
+  Validate candidate_23
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py
+============================================================
+WARNING:root:[Track2c23] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+
+============================================================
+  Eval candidate_23 on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py --split smoke10_remaining
+============================================================
+WARNING:root:[Track2c23] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_23] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260520T054227.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 05:42 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_23 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_23 / q3zU7Yy5E5s (couch)
+  - candidate_23 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 224
+- **Typical floor re-inits:** 3.0
+- **Example episodes:**
+  - candidate_23 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_23 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (110,148 chars)
+  Calling Claude for failure analysis...
+  Received 3 analysis(es)
+  analysis_db.json written: /home/teeshan/meta-ascent/meta_harness/analysis_db.json
+
+  q3zU7Yy5E5s: Both detected stair centroids in scene q3zU7Yy5E5s are inside collision geometry: centroid [-1.30898204, 3.5508982] (sel
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check (Track 2 / ascent_policy.py): before dispatching pointnav to a stair centroid, project onto the nav_mesh and snap to nearest navigable cell within a search radius (0.3–0.5m); directly addresses both blocked centroids confirmed across 14 candidates', 'Stair approach fallback with lateral sampling (Track 2 / ascent_policy.py): when Reach_stair_centroid stays False for N consecutive steps (e.g., N=10), sample navigable cells in a ring around the stair bounding box at increasing radii and re-dispatch pointnav to the closest reachable sample', 'Stair frontier rejection before dispatch (Track 2 / ascent_policy.py): verify a stair centroid is reachable by running a path-existence check before accepting it as a valid stair frontier; discard and re-sample if no path exists']
+
+  qyAac8rV8Zk: Two distinct stair centroid failure sub-modes are confirmed across 14 candidates. In candidates 11–14, 16, 18, 19, 20, 2
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Stair centroid nav_mesh validity check with nearest-navigable-cell snapping (Track 2 / ascent_policy.py): candidate_15 shows the new centroid can be approached (min_dis 173→161) but Reach_stair_centroid stays False — centroid likely sits on a stair-step ledge or obstacle boundary reachable in 2D grid distance but blocked in 3D simulation; snapping to nearest truly-navigable cell before dispatch addresses both the deflection sub-mode (c11–c14, c16, c18, c19, c20, c22, c23) and the approach-but-blocked sub-mode (c15)', 'Deflection-aware stair re-approach (Track 2 / ascent_policy.py): when min_dis increases over 3+ consecutive steps (deflection pattern confirmed in c11–c14, c16, c18, c19, c20, c22, c23), sample navigable cells in a half-ring around the stair bounding box and re-dispatch; this signal is reliably distinct from the decreasing-but-blocked pattern in c15', "Stair re-detection from a different viewpoint (Track 2 / ascent_policy.py): after pointnav abort, move 1–2m from last approach position and re-run stair detection; candidate_15's different centroid (only ~0.07m from the c11–c14 centroid in x, ~0.08m in y) suggests detection is view-dependent and a better-positioned viewpoint may yield a navigable centroid"]
+
+  mL8ThkuaVTM: The agent physically climbs stairs at step 120 ('climb stair success!!!!' confirmed in all 14 candidates) but BFS seedin
+  Ruled out: ['DP1', 'DP2', 'DP3', 'DP4', 'DP5', 'DP6', 'DP7', 'DP8', 'DP9', 'DP10', 'DP11', 'DP12']
+  Next levers: ['Frontier re-seeding from ALL navigable cells after stair climb (Track 2 / ascent_policy.py): candidate_23 decisively closes the direction-of-advance hypothesis — both FWD (c20) and perpendicular-LEFT (c23) advance from the landing converge to the same dead-end [3.88535534, -0.08535534]; the fix must change WHAT nav_mesh cells are used to seed the frontier BFS, not which direction the agent advances or how many reinit cycles are allowed; full BFS from all navigable cells on floor 2 is the minimum necessary change', "Combined 'all floors explored' guard threshold + full BFS re-seeding (Track 2 / ascent_policy.py): the reinit-count extension mechanism (proven functional in c20 and c22) is necessary scaffolding but insufficient alone; the fix must combine (a) a minimum floor_step threshold before declaring a floor exhausted AND (b) BFS re-seeding from all nav_mesh cells at floor initialization rather than the landing footprint", 'Second staircase detection during extended exploration (Track 2 / ascent_policy.py): candidate_22 (stair_runs=0, dp7_empty=0/0) and candidate_23 (stair_runs=0, dp7_empty=0/2 but no stair re-detection) both confirm that passive stair detection does not fire from the explored landing area and dead-end corridor; if the toilet is on floor 3, second-stair detection must be triggered from a broader frontier set exposed by the full BFS re-seed']
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_23/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_23/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_23/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1827s  (exit code 0)
+unds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [29:49<00:00, 226.06s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 4.086143963213544
+2026-05-20 05:42:23,197 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-20 05:42:23,198][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:24,  2.56it/s][A
+
+  8%|▊         | 17/217 [00:00<00:04, 44.44it/s][A
+
+ 16%|█▌        | 35/217 [00:00<00:02, 81.48it/s][A
+
+ 24%|██▍       | 53/217 [00:00<00:01, 108.77it/s][A
+
+ 33%|███▎      | 71/217 [00:00<00:01, 127.97it/s][A
+
+ 41%|████      | 89/217 [00:00<00:00, 140.85it/s][A
+
+ 50%|████▉     | 108/217 [00:01<00:00, 153.97it/s][A
+
+ 59%|█████▊    | 127/217 [00:01<00:00, 162.13it/s][A
+
+ 67%|██████▋   | 145/217 [00:01<00:00, 167.23it/s][A
+
+ 75%|███████▌  | 163/217 [00:01<00:00, 170.61it/s][A
+
+ 83%|████████▎ | 181/217 [00:01<00:00, 173.37it/s][A
+
+ 92%|█████████▏| 199/217 [00:01<00:00, 172.16it/s][A
+
+100%|██████████| 217/217 [00:01<00:00, 173.96it/s][A
+100%|██████████| 217/217 [00:01<00:00, 133.96it/s]
+
+100%|██████████| 8/8 [29:53<00:00, 224.21s/it]
+2026-05-20 05:42:25,106 Average episode reward: 7.3406
+2026-05-20 05:42:25,106 Average episode distance_to_goal: 4.0861
+2026-05-20 05:42:25,106 Average episode success: 0.6250
+2026-05-20 05:42:25,107 Average episode spl: 0.3268
+2026-05-20 05:42:25,107 Average episode soft_spl: 0.3410
+2026-05-20 05:42:25,107 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 05:42:25,107 Average episode traveled_stairs: 0.2500
+2026-05-20 05:42:25,107 Average episode yaw: -15.0000
+2026-05-20 05:42:25,107 Average episode target_detected: 0.6250
+2026-05-20 05:42:25,107 Average episode stop_called: 0.6250
+2026-05-20 05:42:25,107 Average episode num_steps: 207.0000
+2026-05-20 05:42:25,107 Average episode start_yaw: -1.6585
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_23/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 4.086143963213544,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] No improvement: candidate_23 SR=0.625 (best=0.625)
+
+[loop] Logged: {'candidate': 'candidate_23', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 0.625, 'status': 'no_improvement', 'elapsed_s': 2636, 'timestamp': '2026-05-20T05:47:46'}
+
+############################################################
+  Iteration 3/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+Building prompt from 24 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (179676 chars)
+Calling Claude (headless)...
+ERROR: Claude output does not contain ASCENTHarness class.
+Raw output:
+ ```python
+            updated_vals = curr_vals * w1_c + new_vals * w2_c
+            updated_conf = curr_conf * w1 + new_conf * w2
+            return updated_conf, updated_vals
+
+    # ------------------------------------------------------------------
+    # DP 12 — Floor-switch timing (baseline 50)
+    # ------------------------------------------------------------------
+    def should_attempt_floor_switch(self, floor_steps: int) -> bool:
+        """Baseline 50-step minimum retained.
+
+        c11 (DP12=100): identical 148-step trajectory for mL8ThkuaVTM — the
+        'all floors explored' no-frontier termination bypasses DP12 entirely.
+        c4/c5 (DP12=35): confirmed regression SR 0.50→0.375. Floor switches in
+        q3zU7Yy5E5s/qyAac8rV8Zk go via Stair_flag=2 path, not the DP12-gated
+        reinit path. DP12 in ruled_out_levers for all 3 failing scenes.
+        """
+        return floor_steps >= 50
+```
+
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta-ascent/meta_harness/runs/search_log.jsonl
+############################################################
+
+############################################################
+  ASCENT Meta-Harness Search Loop
+  split=smoke10_remaining  max_candidates=15  patience=15
+############################################################
+
+[loop] Found existing result: candidate_0 SR=0.500
+[loop] Found existing result: candidate_1 SR=0.500
+[loop] Found existing result: candidate_3 SR=0.500
+[loop] Found existing result: candidate_4 SR=0.375
+[loop] Found existing result: candidate_5 SR=0.375
+[loop] Found existing result: candidate_6 SR=0.500
+[loop] Found existing result: candidate_7 SR=0.500
+[loop] Found existing result: candidate_10 SR=0.625
+[loop] Found existing result: candidate_11 SR=0.500
+[loop] Found existing result: candidate_12 SR=0.625
+[loop] Found existing result: candidate_13 SR=0.625
+[loop] Found existing result: candidate_14 SR=0.625
+[loop] Found existing result: candidate_15 SR=0.500
+[loop] Found existing result: candidate_16 SR=0.625
+[loop] Found existing result: candidate_18 SR=0.625
+[loop] Found existing result: candidate_19 SR=0.625
+[loop] Found existing result: candidate_20 SR=0.625
+[loop] Found existing result: candidate_22 SR=0.625
+[loop] Found existing result: candidate_23 SR=0.625
+
+[loop] Backfilling 2 unevaluated candidate(s): ['candidate_17', 'candidate_21']
+
+============================================================
+  Validate candidate_17 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py
+============================================================
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py
+  FAIL — could not load harness:
+Traceback (most recent call last):
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 130, in validate
+    harness = load_harness(harness_path)
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 121, in load_harness
+    spec.loader.exec_module(mod)
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py", line 4, in <module>
+    class ASCENTHarness:
+  File "/home/teeshan/meta-ascent/meta_harness/runs/candidate_17/harness.py", line 27, in ASCENTHarness
+    sorted_values: List[float],
+NameError: name 'List' is not defined
+
+
+[loop] FAILED: Validate candidate_17 (backfill) (exit 1)
+[loop] Skipping candidate_17 — validation failed.
+
+============================================================
+  Validate candidate_21 (backfill)
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py
+============================================================
+WARNING:root:[Track2c21] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+
+============================================================
+  Eval candidate_21 (backfill) on smoke10_remaining
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py --split smoke10_remaining
+============================================================
+WARNING:root:[Track2c21] Could not patch _explore: No module named 'ascent'
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py
+  OK   [compute_frontier_value]
+  OK   [should_trigger_llm]
+  OK   [should_trigger_multifloor_llm]
+  OK   [filter_diverse_frontiers]
+  OK   [build_intrafloor_prompt]
+  OK   [build_interfloor_prompt]
+  OK   [parse_intrafloor_response]
+  OK   [parse_interfloor_response]
+  OK   [select_stair_waypoint]
+  OK   [get_value_map_fusion_type]
+  OK   [update_value_map]
+  OK   [should_attempt_floor_switch]
+
+✓ All 12 decision methods validated successfully.
+  [candidate_21] SR=0.62  3 failed  primary=navigation_stair_traverse
+           → /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/failure_classification.json
+
+Report written to /home/teeshan/meta-ascent/meta_harness/failure_report_20260520T131605.md
+
+============================================================
+# ASCENT Failure Classification Report
+
+_Generated: 2026-05-20 13:16 UTC_
+
+## Candidate Summary
+
+| Candidate | SR | #Episodes | #Failed | Primary Failure Class |
+|-----------|-----|-----------|---------|----------------------|
+| candidate_21 | 0.62 | 8 | 3 | navigation_stair_traverse |
+
+## Global Failure Class Counts (all candidates combined)
+
+| Rank | Failure Class | Count | % of All Failures |
+|------|---------------|-------|------------------|
+| 1 | `navigation_stair_traverse` | 2 | 66.7% |
+| 2 | `mapping_floor_confusion` | 1 | 33.3% |
+
+## Top 3 Failure Classes — Detail
+
+### `navigation_stair_traverse` (2 episodes)
+
+- **Typical step count:** 330
+- **Typical floor re-inits:** 1.5
+- **Example episodes:**
+  - candidate_21 / q3zU7Yy5E5s (couch)
+  - candidate_21 / qyAac8rV8Zk (couch)
+
+### `mapping_floor_confusion` (1 episodes)
+
+- **Typical step count:** 171
+- **Typical floor re-inits:** 4.0
+- **Example episodes:**
+  - candidate_21 / mL8ThkuaVTM (toilet)
+
+## Recommendation for Next Candidate
+
+**Most frequent unresolved failure class:** `navigation_stair_traverse`
+(2 of 3 failed episodes, 67%)
+
+The agent enters `look_for_downstair` mode but cannot physically navigate the stairs — the stair-waypoint strategy (DP9) or the floor-switch trigger (DP12) needs to be more aggressive.  Consider: (1) lowering the DP12 minimum-step interval from 50 to 20 steps, (2) increasing the DP9 carrot distance from 0.8 m to 1.2 m, or (3) using `should_force_floor_switch_by_coverage` (Track 2 SDP) to force floor changes when <20% of frontiers remain.
+
+
+=== run_analyzer: candidate_21 ===
+  Failing scenes: ['q3zU7Yy5E5s', 'qyAac8rV8Zk', 'mL8ThkuaVTM']
+  Prompt written to /tmp/ascent_analyzer_prompt.txt (112,314 chars)
+  Calling Claude for failure analysis...
+  Could not extract analyses JSON from Claude output.
+  First 1500 chars of output:
+
+
+
+=== ASCENT Meta-Harness: run_eval ===
+Candidate: /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py
+
+--- Step 1: Validate harness ---
+
+--- Step 2: Run Habitat eval ---
+
+============================================================
+Running: /home/teeshan/miniconda3/envs/habitat_clean/bin/python -u -m ascent.run habitat_baselines.eval.split=smoke10_remaining habitat_baselines.video_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_21/smoke10_remaining_videos habitat_baselines.tensorboard_dir=/home/teeshan/meta-ascent/meta_harness/runs/candidate_21/tb habitat_baselines.checkpoint_folder=/home/teeshan/meta-ascent/meta_harness/runs/candidate_21/stats habitat_baselines.eval.video_option=["disk"] habitat.simulator.habitat_sim_v0.gpu_device_id=0
+Harness: /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/harness.py
+Log:     /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/smoke10_remaining.log
+============================================================
+
+
+Eval finished in 1559s  (exit code 0)
+otropic
+    GL_KHR_debug
+    GL_KHR_parallel_shader_compile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+
+100%|██████████| 8/8 [25:15<00:00, 196.38s/it]Success rate of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 100.00000% (1.0 out of 1)
+Average Spl of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.44923
+Average Dtg of Scene data/scene_datasets/hm3d/val/00873-bxsVRursffK/bxsVRursffK.basis.glb: 0.05934
+Till Now Average Success rate: 62.50% (5 out of 8)
+Till Now Average Spl: 32.68%
+Till Now Average Dtg: 3.6543732808786444
+2026-05-20 13:16:00,793 Video created: /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/smoke10_remaining_videos/scene=bxsVRursffK-episode=0-goal=bed-success=1.00-spl=0.45-soft_spl=0.45-num_steps=218.00-did_not_fail.mp4
+
+
+  0%|          | 0/217 [00:00<?, ?it/s][A[2026-05-20 13:16:00,795][imageio_ffmpeg][WARNING] - IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (2337, 960) to (2352, 960) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+
+
+  0%|          | 1/217 [00:00<01:26,  2.51it/s][A
+
+  9%|▉         | 20/217 [00:00<00:03, 51.45it/s][A
+
+ 18%|█▊        | 38/217 [00:00<00:02, 85.40it/s][A
+
+ 25%|██▌       | 55/217 [00:00<00:01, 107.97it/s][A
+
+ 35%|███▍      | 75/217 [00:00<00:01, 133.32it/s][A
+
+ 46%|████▌     | 99/217 [00:00<00:00, 163.49it/s][A
+
+ 57%|█████▋    | 124/217 [00:01<00:00, 188.01it/s][A
+
+ 68%|██████▊   | 148/217 [00:01<00:00, 200.73it/s][A
+
+ 78%|███████▊  | 170/217 [00:01<00:00, 199.13it/s][A
+
+ 88%|████████▊ | 192/217 [00:01<00:00, 202.94it/s][A
+
+ 99%|█████████▊| 214/217 [00:01<00:00, 200.13it/s][A
+100%|██████████| 217/217 [00:01<00:00, 148.35it/s]
+
+100%|██████████| 8/8 [25:20<00:00, 190.08s/it]
+2026-05-20 13:16:02,659 Average episode reward: 7.7790
+2026-05-20 13:16:02,659 Average episode distance_to_goal: 3.6544
+2026-05-20 13:16:02,659 Average episode success: 0.6250
+2026-05-20 13:16:02,659 Average episode spl: 0.3268
+2026-05-20 13:16:02,659 Average episode soft_spl: 0.3769
+2026-05-20 13:16:02,659 Average episode distance_to_goal_reward: 0.0000
+2026-05-20 13:16:02,659 Average episode traveled_stairs: 0.2500
+2026-05-20 13:16:02,659 Average episode yaw: -22.5000
+2026-05-20 13:16:02,659 Average episode target_detected: 0.6250
+2026-05-20 13:16:02,659 Average episode stop_called: 0.6250
+2026-05-20 13:16:02,659 Average episode num_steps: 200.3750
+2026-05-20 13:16:02,659 Average episode start_yaw: -1.7894
+
+
+--- Step 3: Parse metrics ---
+
+Scores written to /home/teeshan/meta-ascent/meta_harness/runs/candidate_21/scores.json
+{
+  "spl": 0.3268,
+  "success": 0.625,
+  "num_steps": 130.0,
+  "distance_to_goal": 3.6543732808786444,
+  "num_episodes": 8
+}
+
+--- Step 4: Classify failures ---
+
+--- Step 4b: Prune successful videos ---
+  Deleted 5 successful-episode video(s) from smoke10_remaining_videos
+
+--- Step 5: Analyze failures ---
+
+[loop] Logged: {'candidate': 'candidate_21', 'split': 'smoke10_remaining', 'sr': 0.625, 'best_sr': 0.625, 'status': 'backfill', 'timestamp': '2026-05-20T13:21:57'}
+
+############################################################
+  Iteration 1/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+Building prompt from 24 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (85631 chars)
+Calling Claude (headless)...
+
+Proposed harness written to: /home/teeshan/meta-ascent/meta_harness/runs/candidate_24/harness.py
+Next step: python /home/teeshan/meta-ascent/meta_harness/scripts/run_eval.py --candidate /home/teeshan/meta-ascent/meta_harness/runs/candidate_24/harness.py --split smoke10_remaining
+
+[loop] New candidate: candidate_24
+
+============================================================
+  Validate candidate_24
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py /home/teeshan/meta-ascent/meta_harness/runs/candidate_24/harness.py
+============================================================
+Validating: /home/teeshan/meta-ascent/meta_harness/runs/candidate_24/harness.py
+  FAIL — could not load harness:
+Traceback (most recent call last):
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 130, in validate
+    harness = load_harness(harness_path)
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/validate_harness.py", line 124, in load_harness
+    return mod.ASCENTHarness()
+TypeError: __init__() missing 1 required positional argument: 'policy'
+
+
+[loop] FAILED: Validate candidate_24 (exit 1)
+
+[loop] Logged: {'candidate': 'candidate_24', 'split': 'smoke10_remaining', 'sr': None, 'status': 'validation_failed', 'timestamp': '2026-05-20T13:45:57'}
+
+############################################################
+  Iteration 2/15  best_SR=0.625
+############################################################
+
+============================================================
+  Propose next candidate
+  /home/teeshan/miniconda3/envs/habitat_clean/bin/python /home/teeshan/meta-ascent/meta_harness/scripts/propose.py
+============================================================
+Building prompt from 25 prior candidate(s)...
+Prompt written to /tmp/ascent_proposer_prompt.txt (65239 chars)
+Calling Claude (headless)...
+Traceback (most recent call last):
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/propose.py", line 291, in <module>
+    main()
+  File "/home/teeshan/meta-ascent/meta_harness/scripts/propose.py", line 261, in main
+    result = subprocess.run(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1996, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['claude', '--print', '--output-format', 'text', '--dangerously-skip-permissions']' timed out after 1800 seconds
+
+[loop] FAILED: Propose next candidate (exit 1)
+[loop] Proposal failed. Stopping.
+
+############################################################
+  Search complete. Best SR=0.625
+  Results in /home/teeshan/meta-ascent/meta_harness/runs/search_log.jsonl
+############################################################

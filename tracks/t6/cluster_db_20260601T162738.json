@@ -1,0 +1,124 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_centroid",
+      "scenes": [
+        "qyAac8rV8Zk",
+        "q3zU7Yy5E5s"
+      ],
+      "root_cause_summary": "The upstair centroid in both scenes lies in a navmesh-disconnected component, making the Phase 1 stair waypoint geometrically unreachable. No streak-based disable or redirect mechanism has produced any observable behavioral change (byte-identical fingerprints across all candidates), because the Phase 1 window is too short and/or the disconnected region is larger than any BFS snap or CC-validated carrot has bridged.",
+      "cross_scene_pattern": "IDENTICAL: upstair centroid is off-navmesh; Reach_stair_centroid: False throughout Phase 1; no floor transition is achieved without an explicit carrot mechanism placing the Phase 2 waypoint on the robot's navigable component. DIFFERENT: qyAac8rV8Zk was fully solved by T6 candidate_0 (0.4m pullback + centroid bypass at paused=8\u2192Phase 2) proving the mechanism works when the carrot lands in the robot's component \u2014 candidate_1's 0.6m projection immediately reinstated disconnection (min_dis_to_downstair oscillates 160\u2013166, DTG=2.075m). q3zU7Yy5E5s has a Phase 1 window of only 12 steps and centroid at [-2.12, 3.28]; every pullback variant tested has been a behavioral no-op, indicating the disconnected region fully encloses the stair bounding box so no radial offset reaches the navigable component.",
+      "transfer_notes": "qyAac8rV8Zk's T6 candidate_0 success proves that centroid bypass + 0.4m carrot pullback is sufficient and fragile: reverting 0.6m\u21920.4m is an immediate, zero-risk fix for that scene. For q3zU7Yy5E5s, the Phase 1 window (12 steps) is categorically too short for any streak-count trigger; the only untested lever that bypasses this window entirely is a navmesh connectivity pre-check at Phase 1 entry \u2014 if the upstair centroid pixel is not in the navigable map, immediately redirect to the downstair centroid without attempting any Phase 1 approach. This skips Phase 1 for q3zU7Yy5E5s while being a no-op for scenes where the centroid is reachable.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "DP9_phase2_connected_component_validation",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+        "gcts_streak_based_downstair_redirect_any_threshold",
+        "early_gcts_disable_gcts_streak_10",
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard"
+      ],
+      "highest_leverage_untested": "Two-part cluster fix: (1) restore DP9 0.4m carrot pullback as sole carrot mechanism (drop 0.6m projection) to recover qyAac8rV8Zk \u2014 already proven in T6 candidate_0; (2) navmesh_connectivity_check_at_Phase1_entry: at gcts_step=0, if upstair centroid pixel is not set in navigable_map, immediately invoke downstair redirect (force climb_direction=2) without entering any Phase 1 GCTS loop \u2014 this is the only mechanism that bypasses the 12-step Phase 1 window for q3zU7Yy5E5s entirely.",
+      "sr_gain_if_fixed": 0.667,
+      "priority": 1
+    },
+    {
+      "id": "false_positive_stop_initialize_mode",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Candidate_0 (baseline) reached DTG=0.131m at step 499 but triggered a false-positive STOP during initialize mode (floor_step=1 after the second floor switch), preventing goal confirmation. Candidate_1 introduced a compounding regression: its 0.6m forward projection produced zero paused_step resets during Phase 2 stair traversal (vs three in candidate_0), exiting at a frontier-poor second-floor position and degrading DTG from 0.131m to 0.683m.",
+      "cross_scene_pattern": "Single-scene cluster. The binding failure in candidate_0 is a should_stop return during initialize mode at step 499 when the agent is within 0.131m DTG but floor_step=1 (floor not yet explored, no frontier established). Candidate_1's 0.6m forward projection is a distinct regression layered on top: zero paused_step resets \u2192 shallow traversal \u2192 no second-floor frontiers \u2192 episode ends at step 257. Both failures must be addressed: revert to 0.4m pullback to restore the frontier-rich traversal, then suppress the false-positive STOP during initialize mode.",
+      "transfer_notes": "The candidate_0 vs candidate_1 contrast isolates the two failure modes cleanly: the 0.6m projection regression is upstream (frontier supply), and the false-positive stop is downstream (goal confirmation). Reverting to 0.4m pullback is a prerequisite because it restores the three paused_step resets and 280+ explore steps seen in candidate_0. Once the agent can reach near-goal DTG again, the stop guard (suppress STOP when mode==initialize AND floor_step<20) is the remaining fix \u2014 this guard is a no-op in all other scenes where the agent does not stop in initialize mode near the goal.",
+      "cluster_ruled_out_levers": [
+        "DP9_phase2_forward_projection_0.6m",
+        "DP9_phase2_connected_component_validation",
+        "post_floor_switch_frontier_seeding_radius",
+        "passive_stair_detection_hysteresis_to_prevent_second_floor_switch_at_step_482",
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard"
+      ],
+      "highest_leverage_untested": "suppress_STOP_when_mode_is_initialize_and_floor_step_lt_20: in should_stop (or its hook), gate the STOP action on floor_step>=20 when mode==initialize \u2014 this directly prevents the false-positive at step 499 DTG=0.131m. Must be paired with restoring DP9 0.4m carrot pullback (drop 0.6m projection) to recover the frontier-rich Phase 2 traversal that candidate_1 destroyed.",
+      "sr_gain_if_fixed": 0.333,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "Candidate_1 confirmed: 0.6m projection moves the Phase 2 carrot back into the disconnected navmesh region in qyAac8rV8Zk (min_dis_to_downstair oscillates 160\u2013166, Reach_stair_centroid False throughout, DTG=2.075m vs 0.094m in candidate_0). Globally forbidden per NOTE."
+    },
+    {
+      "lever": "DP9_phase2_forward_projection_0.6m",
+      "cluster": "false_positive_stop_initialize_mode",
+      "reason": "Caused the candidate_1 regression in XB4GS9ShBRE: zero paused_step resets (vs three in candidate_0) \u2192 zero second-floor frontiers \u2192 DTG degraded from 0.131m to 0.683m. Globally forbidden per NOTE."
+    },
+    {
+      "lever": "gcts_streak_based_downstair_redirect_any_threshold",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "All threshold variants tested (N=8, 10, 30) produced byte-identical behavioral fingerprints for q3zU7Yy5E5s; Phase 1 window is 12 steps and sporadic True ticks reset the streak counter, making it impossible to reach any meaningful threshold within the window."
+    },
+    {
+      "lever": "DP9_phase2_connected_component_validation",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "Behavioral fingerprint identical to DP9 0.4m pullback (T5 candidate_10 confirmed for both q3zU7Yy5E5s and qyAac8rV8Zk); for q3zU7Yy5E5s the entire stair bounding box is disconnected so CC validation finds no valid point and falls back to the disconnected centroid."
+    },
+    {
+      "lever": "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "Ruled out for q3zU7Yy5E5s: the disconnected region fully encloses the stair bounding box; BFS flood-fill finds no navigable pixel within the box and the snap falls back to the original disconnected centroid, producing a behavioral no-op."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "navmesh_disconnected_centroid",
+      "reason": "Globally forbidden per NOTE. These scenes fail during Phase 1 approach (centroid unreachable), not during stair climb success evaluation."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "false_positive_stop_initialize_mode",
+      "reason": "Globally forbidden per NOTE. XB4GS9ShBRE's binding failure is a false-positive STOP in should_stop during initialize mode at DTG=0.131m \u2014 a different code path from the stair climb success gate."
+    },
+    {
+      "lever": "DP7",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP5",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP6",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP2",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP3",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "all",
+      "reason": "Ruled out in all 3 analyzed scenes"
+    }
+  ],
+  "last_updated": "2026-06-01T16:27:38Z"
+}

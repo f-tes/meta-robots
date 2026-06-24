@@ -1,0 +1,293 @@
+{
+  "scenes": {
+    "XB4GS9ShBRE": {
+      "scene": "XB4GS9ShBRE",
+      "goal": "bed",
+      "root_cause_summary": "The stair traversal and upper-floor exploration are solved by candidate_9's DP9 Phase 2 waypoint pullback (three paused_step resets during ascent \u2192 different stair exit position \u2192 280+ exploration steps \u2192 DTG=0.131m). The binding failure is a false positive STOP at step 499 when the agent is within 0.131m of the bed but calls STOP on a non-bed object. candidate_10 had zero observable effect on this scene (not a target scene; behavioral fingerprint confirmed identical to candidate_9 by WARNING, same DTG=0.13135256990790367, same passive detection sequence at step 482, same second floor switch at step 491).",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "candidate_10 T5_STAIR_CLIMB_EVAL sequence identical to candidate_9: paused_step 11\u201319 \u2192 reset 0 \u2192 1 \u2192 reset 0 \u2192 SUCCESS at paused_step=1 (in_stair_map=False); three resets confirm robot moved >0.2m each time, producing same diverged stair exit vs candidates 0/1 monotonic 16\u219220",
+        "candidate_10 DTG=0.13135256990790367 exactly matching candidate_9 to 16 decimal places \u2014 confirmed from per-scene DTG log",
+        "candidate_10 passive upstairs detection at step 482, second climb_stair mode at step 488, floor_step=0 at step 491 \u2014 byte-identical to candidate_9 sequence",
+        "candidate_10 failure class=goal_false_positive, steps=499, reinits=3 \u2014 identical to candidate_9; XB4GS9ShBRE was not a target scene for candidate_10's fix",
+        "WARNING: identical sequences ['candidate_10', 'candidate_1', 'candidate_0', 'candidate_9'] \u2014 candidate_10 added no new behavioral variation for this scene",
+        "candidates 0/1/4: paused_step monotonically 16\u219217\u219218\u219219\u219220\u2192SUCCESS; robot barely moves in Phase 2, exits stair into frontier-sparse corner (2 frontiers at 0.2m and 2.2m), frontier exhaustion at steps 213\u2013216"
+      ],
+      "candidate_outcomes": {
+        "candidate_0": "Baseline T4. SUCCESS at paused_step=20, floor_step=0 at step 198. Post-switch: only 2 frontiers at 0.2m and 2.2m (DP1 logs steps 199\u2013215). Frontier exhaustion at step 216 \u2192 'In all floors, no unexplored stairs or frontiers found, stopping.' NOQUIT rescues at steps 228 and 241. Five floor_reinits. Episode ends at step 254. never_saw_target. SR=0.7.",
+        "candidate_1": "Identical to candidate_0 (fingerprint match). MIN_STAIR_STEPS=15 guard never triggered (paused_step=20 already satisfies it). Same step count (254), reinits (5), NOQUIT timing. never_saw_target. SR=0.7.",
+        "candidate_4": "BFS snap + stale-state fix. SUCCESS at paused_step=20 (same as 0/1). Frontier exhaustion at step 213 (3 steps earlier). Same structural failure. Episode ends at step 251. never_saw_target. SR=0.6 overall.",
+        "candidate_8": "GUARD_STEPS=35. GUARD_HOLDING from paused_step=12 through 30 (all in_stair_map=False) \u2014 23 extra steps in Phase 2 stair limbo. Agent exits to climb_stair_initialize at floor_step=385, navigate at step 386. false_positive at step ~419. SR=0.6 overall.",
+        "candidate_9": "DP9 carrot pullback 0.5m toward robot. Phase 2 waypoint changed; paused_step reset 3\u00d7 during ascent (robot moved >0.2m each time). SUCCESS at paused_step=1 with different stair exit position yielding rich frontier supply. ~280 steps of exploration (steps 199\u2013479). DTG reached 0.131m. Passive detection at step 482 \u2192 second stair climb \u2192 SUCCESS at paused_step=2 \u2192 floor_step=0 at step 491. false_positive at step 499. SR=0.8 overall.",
+        "candidate_10": "DP9 connected-component validated carrot. XB4GS9ShBRE is NOT a target scene for candidate_10. Behavioral fingerprint identical to candidate_9 (WARNING confirmed). Same paused_step reset pattern during ascent, same DTG=0.131m, same passive detection sequence at step 482, same second floor switch at step 491, same false_positive at step 499. The connected-component check had zero effect here \u2014 XB4GS9ShBRE's Phase 2 carrot was already on the robot's navmesh component following candidate_9's pullback. SR=0.8 (unchanged)."
+      },
+      "ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "post_floor_switch_frontier_seeding_radius",
+        "DP9_phase2_connected_component_validation"
+      ],
+      "ruled_out_reasoning": {
+        "DP7": "dp7_empty=0/0 across all candidates: zero LLM calls; LLM parsing has no causal role.",
+        "DP5": "No LLM calls triggered; DP5 goal binding cannot affect this episode.",
+        "DP6": "Same as DP5.",
+        "DP2": "No LLM calls triggered; trigger threshold not gating any decision.",
+        "DP3": "Same as DP2.",
+        "DP12": "Floor switching driven exclusively by 'no frontiers \u2192 navigate to unexplored floor' path (step 216 in candidates 0/1) or passive detection (step 482 in candidates 9/10); DP12 50-step interval gate is not the active path in any candidate.",
+        "premature_stair_climb_success_guard": "candidate_1 (guard=15) had zero effect \u2014 paused_step=20 already satisfies it. candidate_8 (guard=35) caused GUARD_HOLDING waste resulting in floor_step=385 at stair exit and SR regression. The guard mechanism is counterproductive for this scene.",
+        "post_floor_switch_frontier_seeding_radius": "candidate_9 refutes this: abundant frontiers appear without any seeding change when Phase 2 trajectory changes (2 frontiers in candidates 0/1 \u2192 rich supply in candidates 9/10 purely from different stair exit position).",
+        "DP9_phase2_connected_component_validation": "candidate_10 is byte-identical to candidate_9 (same DTG, same mode sequence, same step count) \u2014 the connected-component check found the existing Phase 2 carrot already on the robot's component and returned it unchanged. Zero behavioral effect confirmed. This lever is not on the causal path for the remaining failure (false positive detection)."
+      },
+      "highest_leverage_untested_levers": [
+        "detection_confidence_threshold_for_stop_action",
+        "dtg_gated_stop_guard",
+        "goal_bbox_overlap_verification_before_stop"
+      ],
+      "open_questions": [
+        "What object was mistakenly detected as 'bed' at step 499 when DTG=0.131m \u2014 a nearby sofa, mattress, or pillow that shares visual features with the bed goal class?",
+        "Would requiring DTG < 1.5m before allowing STOP prevent the false positive while still permitting true positive stops near the goal?",
+        "Is the second floor reached at step 491 the bed's intended floor, or did passive detection send the agent to a third floor where a different object appeared at DTG=0.131m?",
+        "Why does the connected-component check not fire for XB4GS9ShBRE even though the scene was not targeted \u2014 does the check only run when the centroid is in a disconnected component, and XB4GS9ShBRE's centroid is already on the robot's component?"
+      ],
+      "causal_graph": {
+        "DP9_pullback\u2192different_Phase2_waypoint\u2192paused_step_resets\u2192different_stair_exit_position": "Confirmed by candidates 9 and 10: 3 resets in paused_step (\u2026\u219219\u21920\u21921\u21920\u2192SUCCESS at 1) vs monotonic 16\u219220 in candidates 0/1; each reset requires >0.2m robot movement",
+        "different_stair_exit_position\u2192richer_frontier_supply\u2192280+_exploration_steps": "Confirmed: candidates 9/10 steps=499 vs 254 in candidates 0/1; multiple DP1 frontier entries visible in candidates 9/10 vs only 2 entries before exhaustion in candidates 0/1",
+        "richer_exploration\u2192DTG_0.131m": "Confirmed: candidates 9/10 DTG_min=0.131 vs never_saw_target in candidates 0/1/4",
+        "passive_stair_detection_step482\u2192second_floor_switch_step491\u21928_steps\u2192false_positive_step499": "Confirmed by candidates 9 and 10: identical sequence in both",
+        "GUARD_STEPS_35\u2192GUARD_HOLDING_23_extra_steps\u2192floor_step_385_at_exit\u2192wasted_budget": "Confirmed by candidate_8: GUARD_HOLDING from paused_step=12 to 30 all with in_stair_map=False",
+        "candidate_10_connected_component_check\u2192no_effect_on_XB4GS9ShBRE": "Confirmed by identical behavioral fingerprint: Phase 2 carrot was already on robot's component after candidate_9's pullback; check returned same carrot"
+      },
+      "decision_point_attribution": {
+        "critical_step": 499,
+        "description": "In candidates 9 and 10, the false positive STOP fires at step 499 when DTG=0.131m \u2014 the agent reached the bed floor and approached within 13cm but called STOP on a non-bed object. This is the binding failure for these candidates. In candidates 0/1/4, the critical step was 213\u2013216 where frontier exhaustion (only 2 frontiers at 0.2m and 2.2m) terminated exploration after 14\u201317 post-stair steps due to the stair exit position placing the robot in a frontier-sparse corner."
+      },
+      "contrastive_analysis": {
+        "n_success": 0,
+        "n_fail": 6,
+        "note": "Candidates 0/1/4 fail with never_saw_target (frontier exhaustion at steps 213\u2013216; monotonic paused_step 16\u219220 indicates minimal Phase 2 movement, landing in frontier-sparse corner). Candidates 8/9/10 fail with false_positive after reaching the bed floor. The bifurcation point is Phase 2 waypoint geometry: a different carrot position changes the stair exit trajectory and frontier supply. candidate_10 is identical to candidate_9 (not targeted), confirming all Phase 2/stair geometry improvements are exhausted and detection quality is the remaining gap."
+      },
+      "behavioral_fingerprints": {
+        "candidate_0": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-...[monotonic paused_step 16\u219220\u2192SUCCESS, 2 frontiers post-switch, exhaustion step 216, terminate ~254]",
+        "identical_candidates": [
+          "candidate_10",
+          "candidate_9",
+          "candidate_1",
+          "candidate_0"
+        ],
+        "candidate_1": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-...[identical to candidate_0, terminate ~254]",
+        "candidate_4": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-...[frontier exhaust step 213, terminate ~251]",
+        "candidate_8": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-...[GUARD_HOLDING paused_step 12\u201330\u2192climb_stair_initialize step 385\u2192navigate step 386\u2192false_positive ~419]",
+        "candidate_9": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-...[paused_step_resets\u2192SUCCESS paused_step=1\u2192extensive_explore(199-479)\u2192passive_detection(482)\u2192climb_stair(488-491)\u2192initialize\u2192false_positive(499)]",
+        "candidate_10": "initialize(1-12)\u2192navigate(13-14)\u2192explore(15-50)\u2192navigate(51-51)\u2192explore(52-121)\u2192get_close_to_stair(122-149)\u2192look_up(150-...[IDENTICAL to candidate_9: same paused_step_resets\u2192SUCCESS paused_step=1\u2192extensive_explore(199-479)\u2192passive_detection(482)\u2192climb_stair(488-491)\u2192initialize\u2192false_positive(499)]"
+      },
+      "telemetry_insights": {
+        "llm_parse_rate_trend": "N/A (0 LLM calls in all candidates for this scene)",
+        "frontier_supply_at_stair_trigger": "5 entries",
+        "stair_dist_at_disable": [],
+        "dtg_min_achieved": 0.131
+      },
+      "hypothesis_outcome": {
+        "hypothesis": "candidate_9 improved SR to 0.8 by snapping the Phase 2 carrot toward the robot, but the snap still fails for downstairs centroids where the nearest navigable cell is on a different connected component. Adding connected-component membership verification and resampling from the correct component boundary would fix the remaining failures.",
+        "predicted_sr_delta": 0.1,
+        "confirmed": false,
+        "assessment": "XB4GS9ShBRE was not a target scene for candidate_10's hypothesis, so the predicted delta is inapplicable here. The connected-component check had zero observable effect (behavioral fingerprint identical to candidate_9, DTG=0.131m unchanged). The binding failure is a false positive STOP at step 499 \u2014 entirely unrelated to DP9 carrot connectivity \u2014 and requires a detection confidence or DTG-gating fix."
+      }
+    },
+    "qyAac8rV8Zk": {
+      "scene": "qyAac8rV8Zk",
+      "goal": "couch",
+      "root_cause_summary": "The downstair centroid at [-1.22463054, -8.19236453] lies in a navmesh-disconnected component: pointnav never converges (min_dis_to_downstair oscillates between 160 and 166 pixels across all logged attempts, Reach_stair_centroid remains False on every attempt), and the frontier is disabled twice without any floor switch. Candidate_1's patch targets 'premature_stair_climb_success' \u2014 a failure class unrelated to this scene's downstair centroid reachability problem \u2014 and produces bit-for-bit identical logs and mode sequences, confirming the patch is entirely off the causal path for this scene.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "min_dis_to_downstair oscillates 166\u2192160 in both candidates with no convergence: navmesh boundary prevents pointnav from closing the distance",
+        "Reach_stair_centroid: False on every logged stair approach attempt in both candidates \u2014 centroid [-1.22463054, -8.19236453] never reached",
+        "Frontier [-1.22463054 -8.19236453] disabled twice identically in both candidates: 'disabled due to no movement or reaching start' then 'Pointnav policy stopped. Disabling stair frontier'",
+        "Mode sequences IDENTICAL across candidate_0 and candidate_1 ('WARNING: candidates with identical sequences'): get_close_to_stair(164-239) terminates episode in both",
+        "candidate_1 targets TARGET_SCENES=[q3zU7Yy5E5s, XB4GS9ShBRE] \u2014 qyAac8rV8Zk is not in scope for the patch; the patch mechanism (upstair paused_step guard) cannot affect downstair centroid approach logic",
+        "stair_mode_runs=1 but tag 'did_not_travel_stairs': mode entered but stair physically not traversed in both candidates",
+        "Prior T2 confirmed alternate centroids [-1.26861111, -8.18583333] and [-1.23053279, -8.26782787] are equally inaccessible across T2 candidates 9\u201314"
+      ],
+      "candidate_outcomes": {
+        "candidate_0": "Baseline T4 fixes. look_for_downstair steps 56\u201357 (brief detection), then explore(59\u2013163). get_close_to_stair from step 164; centroid never reached in 76 stair-approach steps. Frontier disabled twice. floor_reinits=1, episode ends step 239 still in stair approach. Couch on lower floor never accessed.",
+        "candidate_1": "Premature stair-climb success guard applied (upstair only). This patch is off-target for qyAac8rV8Zk which fails on downstair centroid reachability. All log signals are bit-for-bit identical to candidate_0: same min_dis_to_downstair oscillation, same two frontier disables at identical steps, same mode sequence, same step count (239). SR unchanged at 0.0."
+      },
+      "ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "DP1",
+        "premature_stair_climb_success_guard"
+      ],
+      "ruled_out_reasoning": {
+        "DP7": "dp7_empty=0/0, llm_parse_rate=1.00: all LLM calls parsed successfully; response parsing not a factor.",
+        "DP5": "Parse rate=1.00 confirms goal-binding works; prior T2 showed DP5 fix shifted centroid to [-1.23053279, -8.26782787] which is equally disconnected.",
+        "DP6": "Same as DP5: alternate centroid equally inaccessible.",
+        "DP2": "LLM calls made and parsed successfully; trigger threshold not suppressing guidance.",
+        "DP3": "Same as DP2.",
+        "DP12": "floor_reinits=1 and agent stuck in get_close_to_stair(164-239); DP12 minimum-interval gate is not the bottleneck \u2014 agent never exhausts same-floor frontiers.",
+        "DP1": "Frontier scoring correctly selects valid same-floor frontiers during explore(59\u2013163); failure is in stair centroid reachability, not frontier ranking.",
+        "premature_stair_climb_success_guard": "Patch addresses upstair is_robot_in_stair_map_fast logic only; qyAac8rV8Zk fails on downstair centroid approach via get_close_to_stair. Logs are identical across both candidates confirming no causal connection."
+      },
+      "highest_leverage_untested_levers": [
+        "early_abort_on_N_consecutive_centroid_failures_with_floor_skip",
+        "DP9_stair_carrot_distance_for_downstair",
+        "alternative_stair_entry_point_sampling_from_connected_navmesh_boundary"
+      ],
+      "open_questions": [
+        "Is the oscillation between min_dis_to_downstair=160 and 166 evidence of the agent reaching the nearest connected navmesh cell but unable to cross into the disconnected stair region?",
+        "Does the stair centroid at [-1.22463054, -8.19236453] have a finite geodesic distance from start? If finite, the stair is on the navmesh but the centroid selection targets an off-navmesh sub-cell.",
+        "Is there a connected navmesh cell within the stair detection region that could serve as an approach target, and could a persistent centroid failure trigger a spatial search for such a cell?",
+        "After N consecutive Reach_stair_centroid:False failures (e.g., 10 steps), could the agent skip to the next floor entirely rather than exhausting all remaining steps in futile approach attempts?"
+      ],
+      "causal_graph": {
+        "downstair_centroid_in_disconnected_navmesh \u2192 pointnav_cannot_converge": "Confirmed in both candidates: min_dis_to_downstair oscillates 160\u2013166, never approaches 0",
+        "pointnav_cannot_converge \u2192 Reach_stair_centroid_always_False": "Confirmed in both candidates: every logged entry is False",
+        "Reach_stair_centroid_always_False \u2192 stair_frontier_disabled_twice": "Confirmed in both candidates: two identical disable log lines",
+        "frontier_disabled + no_alternate_stair_path \u2192 couch_unreachable": "Confirmed: 'never_saw_target' tag, couch on lower floor never explored",
+        "re-enter_get_close_to_stair(164-239) \u2192 episode_timeout": "Confirmed in both candidates: mode sequence ends in stair approach at step 239",
+        "candidate_1_patch_off_target \u2192 zero_behavioral_change": "Confirmed: identical fingerprints, identical logs, identical outcomes"
+      },
+      "decision_point_attribution": {
+        "critical_step": 164,
+        "description": "At step 164 the agent enters get_close_to_stair targeting the navmesh-disconnected centroid [-1.22463054, -8.19236453]. From this step forward the episode is locked in both candidates: min_dis_to_downstair plateaus and Reach_stair_centroid remains False for all remaining 76 steps, with two frontier disables that each re-trigger the same stair approach. Step 164 is the point of no return in both candidates."
+      },
+      "contrastive_analysis": {
+        "n_success": 0,
+        "n_fail": 2,
+        "note": "No successes across either candidate. Mode sequences are identical (WARNING confirmed). Candidate_1 patch is off-target for this scene's failure class. Prior T2 exhausted all nearby alternate centroids with identical results. The failure is structurally invariant to all harness-layer changes tested so far."
+      },
+      "behavioral_fingerprints": {
+        "candidate_0": "initialize(1-12)\u2192explore(13-55)\u2192look_for_downstair(56-57)\u2192look_up_back(58-58)\u2192explore(59-163)\u2192get_close_to_stair(164-239)",
+        "identical_candidates": [
+          "candidate_0",
+          "candidate_1"
+        ],
+        "candidate_1": "initialize(1-12)\u2192explore(13-55)\u2192look_for_downstair(56-57)\u2192look_up_back(58-58)\u2192explore(59-163)\u2192get_close_to_stair(164-239)"
+      },
+      "telemetry_insights": {
+        "llm_parse_rate_trend": "stable (1.00 in both candidates)",
+        "frontier_supply_at_stair_trigger": "5 entries",
+        "stair_dist_at_disable": [
+          160,
+          160
+        ],
+        "dtg_min_achieved": -1.0
+      },
+      "hypothesis_outcome": {
+        "hypothesis": "Premature stair-climb success guard: patch _process_stair_climb_state to require paused_step>=MIN_STAIR_STEPS=15 before upstair SUCCESS fires.",
+        "predicted_sr_delta": 0.15,
+        "confirmed": false,
+        "assessment": "Hypothesis is off-target for this scene: qyAac8rV8Zk fails on downstair centroid reachability (get_close_to_stair, Reach_stair_centroid:False), not upstair is_robot_in_stair_map_fast premature success. Logs and mode sequences are bit-for-bit identical across both candidates. SR delta = 0.0."
+      }
+    },
+    "q3zU7Yy5E5s": {
+      "scene": "q3zU7Yy5E5s",
+      "goal": "couch",
+      "root_cause_summary": "The upstairs stair centroid lies in a structurally disconnected navmesh region, causing Phase 1 centroid approach to always fail (35+ consecutive Reach_stair_centroid: False in candidates 0/1 before frontier disable). candidate_10 is behaviorally identical to candidate_9 (WARNING: identical sequences confirmed; DTG=1.0452762778020568 matching to 16 decimal places; same frontier coordinate sequence in DP1 logs), proving the connected-component validation of the Phase 2 carrot had zero effect \u2014 the Phase 2 carrot in candidate_9 was already on the robot's connected component, and Phase 1 navmesh disconnection remains the unresolved bottleneck across all 6 tested candidates.",
+      "root_cause_confidence": "high",
+      "key_evidence": [
+        "candidate_10 DP1 frontier logs bit-for-bit identical to candidate_9: same frontier coordinates ([-0.95, 0.72071068], [-0.36767767, 0.06767767], [-0.35, -0.96464466], [0.2, -1.71464466], etc.) in the same order with same enhanced scores",
+        "candidate_10 DTG=1.0452762778020568 exactly matching candidate_9 to 16 decimal places \u2014 confirms zero behavioral divergence from candidate_9",
+        "WARNING: candidates with identical sequences: ['candidate_10', 'candidate_9'] \u2014 full mode sequence hash confirms no change from connected-component check",
+        "candidate_10 failure tag: never_saw_target_did_not_travel_stairs_likely_infeasible; stair_runs=2, reinits=3, steps=499 \u2014 identical to candidate_9",
+        "candidates 0/1: 35+ consecutive Reach_stair_centroid: False entries before 'Pointnav policy stopped. Disabling stair frontier [-2.12027027 3.27567568]' \u2014 Phase 1 centroid approach fails before Phase 2 is ever reached normally",
+        "candidate_8: downstairs centroid IS reachable (T5_STAIR_CLIMB_EVAL shows reach_centroid=True with climb_direction=2 at paused_step=22,23,24) but GUARD_STEPS=35 prevents SUCCESS exit as paused_step cycles 0\u21921\u21922\u21923\u2192reset indefinitely \u2014 confirming the downstairs stair geometry is physically traversable but incorrectly locked by the guard",
+        "T2 prior: three distinct centroid coordinates all producing Reach_stair_centroid: False \u2014 disconnection is structural and coordinate-invariant for this stair's upstairs approach"
+      ],
+      "candidate_outcomes": {
+        "candidate_0": "Baseline T4. look_for_downstair steps 70\u201381 (aborted). explore(83\u2013178) exhausts same-floor frontiers. Upstair centroid [-2.12027027, 3.27567568] targeted; 35+ consecutive Reach_stair_centroid: False. Frontier disabled. floor_reinits=2. Episode ends at step 381. never_saw_target. SR=0.7.",
+        "candidate_1": "Premature stair guard (MIN_STAIR_STEPS=15). Guard structurally off-path: Reach_stair_centroid never becomes True so Phase 3 of _process_stair_climb_state is never entered. Centroid shifted to [-2.10394737, 3.27368421] (equally inaccessible). 75-step regression (381\u2192456), soft_spl degradation (0.16\u21920.11). SR=0.7.",
+        "candidate_4": "BFS snap + stale-state fix. Episode runs to step 499, floor_reinits=3, stair_runs=2. Frontier fixation on [0.25, -1.72928932] for many consecutive steps (BFS snap interference). DTG~4.27m (degraded). SR=0.6 overall.",
+        "candidate_8": "GUARD_STEPS=35. Active stair attempt is downstairs (climb_direction=2); reach_centroid=True confirmed at paused_step=22\u201324. GUARD_HOLDING as paused_step cycles 0\u21921\u21922\u21923\u2192reset repeatedly \u2014 robot moves each cycle (>0.2m resets paused_step) but never reaches paused_step=35. stair_runs=1. DTG~2.44m. SR=0.7.",
+        "candidate_9": "DP9 carrot pullback 0.5m toward robot (this IS a target scene). stair_runs=2 (+1 vs candidate_0). DTG improved 2.84\u21921.045m. Diverse DP1 frontier exploration across many positions. Stair not traversed (traveled_stairs=False). Episode ends at step 499. SR=0.8 overall \u2014 improvement attributable to qyAac8rV8Zk succeeding, not this scene.",
+        "candidate_10": "DP9 connected-component validated carrot (this IS a target scene). Behavioral fingerprint IDENTICAL to candidate_9 (WARNING confirmed). Same DP1 frontier coordinate sequence, same DTG=1.045m, same failure tag, same stair_runs=2, same reinits=3, same steps=499. The connected-component check returned the same Phase 2 carrot as candidate_9 \u2014 the carrot was already on the robot's navmesh component. Zero improvement. SR=0.8 (unchanged). Hypothesis falsified for this scene."
+      },
+      "ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "DP9_phase2_pullback_alone",
+        "DP9_phase2_connected_component_validation",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box"
+      ],
+      "ruled_out_reasoning": {
+        "DP7": "dp7_empty=0/1 across candidates 0/1/8/9/10: the one LLM call is always parsed (rate 1.00). LLM parsing not a factor.",
+        "DP5": "Parse rate 1.00; T2 fix shifted centroid to equally inaccessible coordinate. Insufficient standalone lever.",
+        "DP6": "Same as DP5.",
+        "DP2": "One LLM call made and parsed per candidate; trigger threshold not suppressing guidance.",
+        "DP3": "Same as DP2.",
+        "DP12": "floor_reinits=2\u20133 driven by 'no frontiers \u2192 navigate to unexplored floor' path, not DP12 interval gate.",
+        "premature_stair_climb_success_guard": "Reach_stair_centroid never becomes True for the upstairs attempt in candidates 0/1 \u2014 Phase 3 of _process_stair_climb_state is never entered. Guard condition is structurally unreachable for this Phase 1 failure mode.",
+        "DP9_phase2_pullback_alone": "candidate_9 improved stair_runs (1\u21922) and DTG (2.84\u21921.045m) but did not achieve stair traversal. Phase 2 improvements alone are insufficient when Phase 1 centroid approach fails to produce reach_centroid=True.",
+        "DP9_phase2_connected_component_validation": "candidate_10 is bit-for-bit identical to candidate_9 (same DTG to 16 decimal places, same frontier sequence) \u2014 the check found the existing carrot already on the robot's component and returned it unchanged. This explicitly falsifies the hypothesis that Phase 2 carrot connectivity was the bottleneck.",
+        "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box": "Ruled out by implication of candidate_10's identity with candidate_9: any improvement to Phase 2 carrot navigability is already achieved by candidate_9's pullback. Phase 2 carrot quality is not the bottleneck \u2014 Phase 1 centroid unreachability is."
+      },
+      "highest_leverage_untested_levers": [
+        "Phase1_centroid_skip_for_disconnected_stair_centroid",
+        "centroid_bypass_steps_reduction_to_0_or_1",
+        "downstairs_traversal_success_gate_fix_for_reachable_centroid",
+        "early_permanent_stair_disable_after_first_centroid_failure"
+      ],
+      "open_questions": [
+        "Is the couch on the floor accessible via downstairs (climb_direction=2)? candidate_8 confirms the downstairs centroid is reachable (reach_centroid=True confirmed by T5_STAIR_CLIMB_EVAL at paused_step=22\u201324) \u2014 if the couch is on the lower floor, removing or correcting the GUARD for the downstairs case may be the direct solution.",
+        "In candidates 9/10, which stair directions do the 2 stair_runs correspond to? Without T5_STAIR_CLIMB_EVAL entries visible in the q3zU7Yy5E5s logs for these candidates, it is unknown whether both attempts are upstairs (Phase 1 fails both times) or whether one is downstairs.",
+        "If centroid_bypass_steps is reduced from 8 to 0\u20131 for disconnected centroids, would the Phase 2 carrot (confirmed on robot's component by candidate_10) enable enough stair traversal attempts within the step budget to achieve floor exit?",
+        "candidate_8's GUARD_HOLDING shows the robot exited in_stair_map (in_stair_map=False) and was actively moving (paused_step cycling 0\u20133) during the downstairs attempt \u2014 would removing the GUARD entirely for climb_direction=2 allow SUCCESS to fire on the next in_stair_map=False transition?"
+      ],
+      "causal_graph": {
+        "upstair_centroid_in_disconnected_navmesh\u2192Reach_stair_centroid_always_False": "Confirmed in candidates 0/1: 35+ consecutive False before disable; T2 candidates 9\u201314 confirmed structural invariance across three distinct centroid coordinates",
+        "Reach_stair_centroid_always_False\u2192Phase3_never_entered\u2192paused_step_guard_never_evaluated": "Confirmed: _process_stair_climb_state Phase 3 requires reach_centroid=True; all guard-based patches are structurally off-path for this failure",
+        "DP9_pullback\u2192Phase2_carrot_already_on_robot_component\u2192partial_improvement(stair_runs_2,DTG_1.045)": "Confirmed by candidate_10: connected-component check returned same carrot, identical DTG and frontier sequence; improvement from candidate_9 is fully explained by better post-centroid_bypass Phase 2 trajectory",
+        "DP9_connected_component_check\u2192no_change_from_candidate_9": "Confirmed: identical behavioral fingerprint (WARNING), identical DTG to 16 decimal places, identical frontier coordinate sequence in DP1 logs",
+        "candidate_8_GUARD_35\u2192perpetual_GUARD_HOLDING_for_reachable_downstairs\u2192stair_not_traversed": "Confirmed: paused_step cycling 0\u21921\u21922\u21923\u2192reset with in_stair_map=False and reach_centroid=True for climb_direction=2; robot moves each cycle but never reaches paused_step=35",
+        "structural_navmesh_disconnection\u2192no_Phase2_modification_achieves_traversal": "Confirmed across 6 T5 candidates and 6 T2 candidates for the upstairs stair; downstairs stair shows different pattern (reachable centroid in candidate_8)"
+      },
+      "decision_point_attribution": {
+        "critical_step": 178,
+        "description": "Step 178 is the last step of explore(83\u2013178) in all 6 candidates before re-entering stair navigation (look_down at step 179). Same-floor frontiers are exhausted and the disconnected upstair centroid is the only known path to the couch's floor. All Phase 2 modifications tested (pullback in candidate_9, connected-component check in candidate_10) produce identical post-step-178 behavior, confirming the bottleneck is Phase 1 centroid approach which no post-step-178 Phase 2 fix can overcome."
+      },
+      "contrastive_analysis": {
+        "n_success": 0,
+        "n_fail": 6,
+        "note": "No successes across any candidate. Candidates 9 and 10 are identical (best performance, DTG=1.045m, stair_runs=2) \u2014 candidate_10 proving the Phase 2 carrot was already optimal confirms that all Phase 2 improvements are exhausted. The next lever must address Phase 1 directly: either skip Phase 1 for disconnected centroids, reduce centroid_bypass_steps to near-zero so more Phase 2 budget is available, or fix the downstairs traversal path (candidate_8 shows downstairs centroid IS reachable but GUARD prevents SUCCESS)."
+      },
+      "behavioral_fingerprints": {
+        "candidate_0": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192...[35+ centroid failures upstairs, stair disable, terminate ~381]",
+        "identical_candidates": [
+          "candidate_10",
+          "candidate_9"
+        ],
+        "candidate_1": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192...[shifted centroid equally disabled, terminate ~456]",
+        "candidate_4": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192...[BFS snap, frontier fixation on [0.25,-1.72928932], terminate 499]",
+        "candidate_8": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192...[GUARD_HOLDING downstairs climb_direction=2 paused_step cycling 0\u20133 indefinitely, terminate 499]",
+        "candidate_9": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192...[DP9 pullback, 2 stair attempts, diverse frontier exploration, terminate 499, DTG=1.045m]",
+        "candidate_10": "initialize(1-12)\u2192explore(13-69)\u2192look_for_downstair(70-81)\u2192look_up_back(82-82)\u2192explore(83-178)\u2192look_down(179-179)\u2192...[IDENTICAL to candidate_9: same frontier sequence, same stair_runs=2, same DTG=1.045m, terminate 499]"
+      },
+      "telemetry_insights": {
+        "llm_parse_rate_trend": "stable (1.00 in all candidates; 0/1 LLM call per run, always parsed)",
+        "frontier_supply_at_stair_trigger": "5 entries",
+        "stair_dist_at_disable": [],
+        "dtg_min_achieved": 1.045
+      },
+      "hypothesis_outcome": {
+        "hypothesis": "candidate_9 improved SR to 0.8 by pulling the Phase 2 carrot back toward the robot, but the carrot still lands in a disconnected navmesh component for qyAac8rV8Zk and q3zU7Yy5E5s. Adding connected-component membership verification and resampling from the stair bounding box boundary projected onto the navigable floor would fix the remaining failures.",
+        "predicted_sr_delta": 0.1,
+        "confirmed": false,
+        "assessment": "Hypothesis is falsified for q3zU7Yy5E5s: candidate_10 is bit-for-bit identical to candidate_9 (DTG=1.045m matched to 16 decimal places, identical DP1 frontier sequence, identical failure tag). The connected-component check confirmed the Phase 2 carrot was already on the robot's component \u2014 the mechanism was correctly diagnosed but the target was wrong. The bottleneck is Phase 1 centroid approach (structural navmesh disconnection), not Phase 2 carrot connectivity. All Phase 2 improvement levers are now exhausted; the next lever must address Phase 1 directly."
+      }
+    }
+  },
+  "last_updated": "2026-06-01T10:32:48Z"
+}

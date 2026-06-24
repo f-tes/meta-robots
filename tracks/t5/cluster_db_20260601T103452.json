@@ -1,0 +1,112 @@
+{
+  "clusters": [
+    {
+      "id": "navmesh_disconnected_stair_centroid",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid falls in a structurally disconnected navmesh component, causing Phase 1 pointnav to fail unconditionally on every approach attempt. The agent cycles through stair-approach mode until the episode budget expires without ever traversing the floor.",
+      "cross_scene_pattern": "Identical: both scenes show Reach_stair_centroid=False on every logged attempt with no convergence, no floor switch ever completes, and all DP9 Phase 2 carrot improvements (pullback in candidate_9, connected-component validation in candidate_10) produced zero behavioral change because Phase 2 is never entered when Phase 1 perpetually fails. Different: q3zU7Yy5E5s is an upstairs centroid disconnection (35+ consecutive failures, climb_direction=up) where candidate_9 managed one extra stair_run via improved Phase 2 positioning; qyAac8rV8Zk is a downstairs centroid disconnection (min_dis_to_downstair oscillates 160\u2013166px, dual stair-frontier disables) where no candidate reached Phase 2 at all.",
+      "transfer_notes": "Candidate_9's DP9 Phase 2 pullback gave q3zU7Yy5E5s one additional stair_run (2 vs 1) and reduced DTG from 2.84m to 1.04m, demonstrating the robot can navigate to the stair vicinity but is blocked precisely at the Phase 1 centroid gate. For qyAac8rV8Zk even stair-vicinity approach failed at Phase 1. The transfer lesson: any Phase 2 improvement is strictly downstream of Phase 1 centroid reachability \u2014 no Phase 2 lever can propagate a fix into these scenes until the Phase 1 gating condition is bypassed or replaced with a connectivity-aware alternative.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard"
+      ],
+      "highest_leverage_untested": "early_abort_on_N_consecutive_centroid_failures_with_floor_skip: after N>=5 consecutive Reach_stair_centroid=False events, disable the stair frontier and trigger a floor-switch via an alternative path (bypassing DP12 gate), sidestepping the disconnected centroid entirely. This subsumes q3zU7Yy5E5s's Phase1_centroid_skip_for_disconnected_stair_centroid and qyAac8rV8Zk's early_abort recommendation into a single mechanism applicable to both upstairs and downstairs disconnected centroids.",
+      "sr_gain_if_fixed": 0.667,
+      "priority": 1
+    },
+    {
+      "id": "false_positive_stop_near_goal",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Stair traversal and upper-floor exploration are fully solved; the agent reaches within 0.131m of the target bed but issues a STOP action triggered by a non-bed object, ending the episode as a false positive before the goal is confirmed.",
+      "cross_scene_pattern": "Single-scene cluster. All navigation sub-problems (floor switch, stair traversal, upper-floor exploration) are resolved by candidate_9's DP9 Phase 2 pullback. The remaining failure is isolated to step 499: the STOP predicate fires on a nearby non-target object while the actual bed is 0.131m away. Candidate_10 confirmed zero behavioral divergence from candidate_9 (identical DTG to 16 decimal places), establishing that the stopping logic is the sole causal bottleneck.",
+      "transfer_notes": "No multi-scene transfer applicable. The progressive isolation across candidates (candidate_9 solving exploration, candidate_10 confirming no further navigation gain) cleanly separates the detection/stopping failure from all navigation and floor-switching levers, ruling out the entire upstream pipeline as a fix vector.",
+      "cluster_ruled_out_levers": [
+        "DP7",
+        "DP5",
+        "DP6",
+        "DP2",
+        "DP3",
+        "DP12",
+        "premature_stair_climb_success_guard",
+        "post_floor_switch_frontier_seeding_radius",
+        "DP9_phase2_connected_component_validation"
+      ],
+      "highest_leverage_untested": "goal_bbox_overlap_verification_before_stop: before issuing STOP, require that the highest-confidence detected object's bounding box category matches the goal class (bed); if the top detection is a non-goal object, suppress STOP regardless of proximity. Can be combined with dtg_gated_stop_guard (require DTG < threshold AND goal-class confirmed) to eliminate the false-positive at step 499.",
+      "sr_gain_if_fixed": 0.333,
+      "priority": 2
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "ALL",
+      "reason": "Mandatory global forbidden move: ruled out across all scenes in the database."
+    },
+    {
+      "lever": "DP5",
+      "cluster": "ALL",
+      "reason": "Mandatory global forbidden move: ruled out across all scenes in the database."
+    },
+    {
+      "lever": "DP6",
+      "cluster": "ALL",
+      "reason": "Mandatory global forbidden move: ruled out across all scenes in the database."
+    },
+    {
+      "lever": "DP2",
+      "cluster": "ALL",
+      "reason": "Mandatory global forbidden move: ruled out across all scenes in the database."
+    },
+    {
+      "lever": "DP3",
+      "cluster": "ALL",
+      "reason": "Mandatory global forbidden move: ruled out across all scenes in the database."
+    },
+    {
+      "lever": "DP12",
+      "cluster": "ALL",
+      "reason": "Mandatory global forbidden move: ruled out across all scenes in the database."
+    },
+    {
+      "lever": "premature_stair_climb_success_guard",
+      "cluster": "ALL",
+      "reason": "Mandatory global forbidden move: ruled out across all scenes in the database."
+    },
+    {
+      "lever": "DP9_phase2_pullback_alone",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Explicitly ruled out for q3zU7Yy5E5s; de facto ruled out for qyAac8rV8Zk \u2014 candidate_9 demonstrated that Phase 2 pullback cannot produce a floor switch when Phase 1 centroid reachability fails, regardless of stair direction."
+    },
+    {
+      "lever": "DP9_phase2_connected_component_validation",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Candidate_10 confirmed bit-for-bit behavioral identity with candidate_9 on q3zU7Yy5E5s (DTG identical to 16 decimal places): the Phase 2 carrot was already on the robot's connected component, so validation adds nothing. Phase 1 centroid disconnection is the binding constraint for both cluster members."
+    },
+    {
+      "lever": "Phase2_BFS_snap_to_nearest_navigable_point_within_stair_bounding_box",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for q3zU7Yy5E5s and extends to the cluster: any Phase 2 snapping improvement is unreachable when Phase 1 never succeeds and the handoff to Phase 2 never occurs."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "navmesh_disconnected_stair_centroid",
+      "reason": "Ruled out for qyAac8rV8Zk: frontier scoring is irrelevant when the stair centroid is geometrically unreachable \u2014 the failure is pointnav non-convergence at a disconnected centroid, not frontier selection quality."
+    },
+    {
+      "lever": "post_floor_switch_frontier_seeding_radius",
+      "cluster": "false_positive_stop_near_goal",
+      "reason": "Ruled out for XB4GS9ShBRE: floor switching and post-switch frontier seeding are already successful (agent fully explores second floor); the false-positive STOP is orthogonal to frontier seeding."
+    }
+  ],
+  "last_updated": "2026-06-01T10:34:52Z"
+}

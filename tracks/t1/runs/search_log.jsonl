@@ -1,0 +1,25 @@
+{"candidate": "candidate_2", "split": "smoke10_remaining", "sr": null, "status": "eval_failed", "timestamp": "2026-05-11T09:18:23"}
+{"candidate": "candidate_2", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 1275, "timestamp": "2026-05-11T09:39:38"}
+{"candidate": "candidate_4", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 217, "timestamp": "2026-05-18T02:07:09"}
+{"candidate": "candidate_5", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 114, "timestamp": "2026-05-18T02:09:04"}
+{"candidate": "candidate_4", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 159, "timestamp": "2026-05-18T02:15:01"}
+{"candidate": "candidate_3", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 127, "timestamp": "2026-05-18T02:31:36"}
+{"candidate": "candidate_4", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 120, "timestamp": "2026-05-18T02:33:36"}
+{"candidate": "candidate_5", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 122, "timestamp": "2026-05-18T02:35:39"}
+{"candidate": "candidate_6", "split": "smoke10_remaining", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 1735, "timestamp": "2026-05-18T04:19:33"}
+{"candidate": "candidate_7", "split": "smoke10_remaining", "sr": 0.5, "best_sr": 0.5, "status": "no_improvement", "elapsed_s": 1634, "timestamp": "2026-05-18T04:46:47"}
+{"candidate": "candidate_8", "split": "smoke10_remaining", "sr": null, "best_sr": 0.5, "status": "parse_error", "elapsed_s": 507, "timestamp": "2026-05-18T05:04:13"}
+{"candidate": "candidate_9", "split": "smoke10_remaining", "sr": 1.0, "best_sr": 1.0, "status": "improved", "elapsed_s": 813, "timestamp": "2026-05-18T05:17:47"}
+{"candidate": "candidate_12", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 2562, "timestamp": "2026-05-19T02:40:18"}
+{"candidate": "candidate_13", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 2349, "timestamp": "2026-05-19T03:19:26"}
+{"candidate": "candidate_14", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 2408, "timestamp": "2026-05-19T05:18:34"}
+{"candidate": "candidate_15", "split": "smoke10_remaining", "sr": 0.5, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 2138, "timestamp": "2026-05-19T06:18:05"}
+{"candidate": "candidate_16", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 1763, "timestamp": "2026-05-19T06:47:28"}
+{"candidate": "candidate_17", "split": "smoke10_remaining", "sr": null, "status": "validation_failed", "timestamp": "2026-05-19T06:57:41"}
+{"candidate": "candidate_18", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 1884, "timestamp": "2026-05-19T07:29:05"}
+{"candidate": "candidate_19", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 1984, "timestamp": "2026-05-19T08:02:09"}
+{"candidate": "candidate_20", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 1.0, "status": "no_improvement", "elapsed_s": 3215, "timestamp": "2026-05-19T08:55:44"}
+{"candidate": "candidate_22", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 0.625, "status": "no_improvement", "elapsed_s": 3812, "timestamp": "2026-05-20T05:03:49"}
+{"candidate": "candidate_23", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 0.625, "status": "no_improvement", "elapsed_s": 2636, "timestamp": "2026-05-20T05:47:46"}
+{"candidate": "candidate_21", "split": "smoke10_remaining", "sr": 0.625, "best_sr": 0.625, "status": "backfill", "timestamp": "2026-05-20T13:21:57"}
+{"candidate": "candidate_24", "split": "smoke10_remaining", "sr": null, "status": "validation_failed", "timestamp": "2026-05-20T13:45:57"}

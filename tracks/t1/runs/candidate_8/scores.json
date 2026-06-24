@@ -1,0 +1,8 @@
+{
+  "harness": "/home/teeshan/meta-ascent/meta_harness/runs/candidate_8/harness.py",
+  "split": "smoke10_remaining",
+  "metrics": {
+    "parse_error": true
+  },
+  "timestamp": "2026-05-18T05:04:13"
+}

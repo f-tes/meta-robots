@@ -1,0 +1,11 @@
+{
+  "harness": "/home/jovyan/meta_harness/runs/candidate_2/harness.py",
+  "split": "smoke6_c2_remaining",
+  "metrics": {
+    "spl": 0.1501,
+    "success": 0.5,
+    "num_episodes": 4,
+    "distance_to_goal": 4.744892663322389
+  },
+  "timestamp": "2026-05-12T05:53:33"
+}

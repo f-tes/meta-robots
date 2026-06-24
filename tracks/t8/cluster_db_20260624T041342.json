@@ -1,0 +1,203 @@
+{
+  "clusters": [
+    {
+      "id": "frontier",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "mL8ThkuaVTM",
+        "qyAac8rV8Zk",
+        "mv2HUxq3B53",
+        "TEEsavR23oF",
+        "bxsVRursffK",
+        "DYehNKdT76V",
+        "4ok3usBNeis",
+        "Dd4bFSTQ8gi",
+        "zt1RVoi7PcG",
+        "wcojb4TFT35"
+      ],
+      "root_cause_summary": "Heuristic group: frontier",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "DP7"
+      ],
+      "highest_leverage_untested": "should_stop_detection_score_direct_logging_couch_at_1.1m_dtg",
+      "sr_gain_if_fixed": 1.1,
+      "priority": 1
+    },
+    {
+      "id": "navmesh",
+      "scenes": [
+        "p53SfW6mjZe"
+      ],
+      "root_cause_summary": "Heuristic group: navmesh",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "stair_physical_traversal_failure",
+        "navmesh_disconnection_blocking_stair_zone",
+        "DP7",
+        "floor_exploration_budget_cap",
+        "DP1",
+        "floor_reinit_missing_after_stair_success",
+        "geodesic_inf_watchdog",
+        "DP12_as_sole_gate",
+        "false_positive_stop_gate",
+        "per_category_stop_gate"
+      ],
+      "highest_leverage_untested": "Upper-floor frontier seeding quality post-stair-climb: investigate whether map reinitialization after stair SUCCESS seeds frontiers from a stale or spatially clipped occupancy grid \u2014 13 navigable frontier positions is anomalously small and may reflect a grid initialization bug rather than true room geometry",
+      "sr_gain_if_fixed": 0.1,
+      "priority": 2
+    },
+    {
+      "id": "stair",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Heuristic group: stair",
+      "cross_scene_pattern": "Grouped by keyword match in root_cause_summary",
+      "transfer_notes": "",
+      "cluster_ruled_out_levers": [
+        "candidate_2_watchdog_mechanism",
+        "floor_reinit_missing_after_stair_success_for_XB4GS9ShBRE",
+        "MIN_FLOOR_STEPS_ON_FLOOR_80_as_floor.py_gate",
+        "false_positive_STOP_suppression_for_XB4GS9ShBRE",
+        "per_category_STOP_gate_hooks.py",
+        "DP3",
+        "DP2",
+        "DP7",
+        "DP1_mss_coefficient",
+        "floor_exploration_budget_window_via_floor.py_switch_logic",
+        "STOP_gate_calibration_for_XB4GS9ShBRE",
+        "MAX_FLOOR_STEPS_BEFORE_FORCED_STAIR_200",
+        "DP12"
+      ],
+      "highest_leverage_untested": "Direct patch of the look_for_downstair trigger call site (the function or condition that actually evaluates whether to enter look_for_downstair mode, NOT floor.py's floor-switch logic) with a floor_step >= N pre-condition \u2014 candidate_7 confirmed floor.py is the wrong file; the trigger fires before floor.py's gates can intercept it",
+      "sr_gain_if_fixed": 0.1,
+      "priority": 3
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "DP7",
+      "cluster": "frontier",
+      "reason": "Ruled out in all 11 scenes in cluster"
+    },
+    {
+      "lever": "stair_physical_traversal_failure",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "navmesh_disconnection_blocking_stair_zone",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "floor_exploration_budget_cap",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP1",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "floor_reinit_missing_after_stair_success",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "geodesic_inf_watchdog",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP12_as_sole_gate",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "false_positive_stop_gate",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "per_category_stop_gate",
+      "cluster": "navmesh",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "candidate_2_watchdog_mechanism",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "floor_reinit_missing_after_stair_success_for_XB4GS9ShBRE",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "MIN_FLOOR_STEPS_ON_FLOOR_80_as_floor.py_gate",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "false_positive_STOP_suppression_for_XB4GS9ShBRE",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "per_category_STOP_gate_hooks.py",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP3",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP2",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP7",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP1_mss_coefficient",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "floor_exploration_budget_window_via_floor.py_switch_logic",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "STOP_gate_calibration_for_XB4GS9ShBRE",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "MAX_FLOOR_STEPS_BEFORE_FORCED_STAIR_200",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    },
+    {
+      "lever": "DP12",
+      "cluster": "stair",
+      "reason": "Ruled out in all 1 scenes in cluster"
+    }
+  ],
+  "last_updated": "2026-06-24T03:33:16Z"
+}

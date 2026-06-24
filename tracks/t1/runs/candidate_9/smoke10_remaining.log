@@ -1,0 +1,1113 @@
+Renderer: NVIDIA H100 NVL/PCIe/SSE2 by NVIDIA Corporation
+OpenGL version: 4.6.0 NVIDIA 535.288.01
+Using optional features:
+    GL_ARB_vertex_array_object
+    GL_ARB_separate_shader_objects
+    GL_ARB_robustness
+    GL_ARB_texture_storage
+    GL_ARB_texture_view
+    GL_ARB_framebuffer_no_attachments
+    GL_ARB_invalidate_subdata
+    GL_ARB_texture_storage_multisample
+    GL_ARB_multi_bind
+    GL_ARB_direct_state_access
+    GL_ARB_get_texture_sub_image
+    GL_ARB_texture_filter_anisotropic
+    GL_KHR_debug
+    GL_KHR_parallel_shader_compile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+[05:47:05:319975]:[Warning]:[Metadata] SceneDatasetAttributes.cpp(107)::addNewSceneInstanceToDataset : Dataset : 'default' : Lighting Layout Attributes 'no_lights' specified in Scene Attributes but does not exist in dataset, so creating default.
+DEBUG: prewarmed Habitat-Sim EGL
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Could not import yolov7. This is OK if you are only using the client.
+0
+2026-05-18 05:47:09,313 Initializing dataset ObjectNav-v1
+2026-05-18 05:47:09,323 Using the debug Vector environment interface. Expect slower performance.
+2026-05-18 05:47:09,324 Initializing dataset ObjectNav-v1
+2026-05-18 05:47:09,876 initializing sim Sim-v0
+[05:47:09:887558]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/example/00861-GLAQ4DNUx5U/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887626]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00800-TEEsavR23oF/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887648]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00802-wcojb4TFT35/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887669]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00803-k1cupFYWXJ6/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887689]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00808-y9hTuugGdiq/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887711]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00900-XRJ2muKkwAV/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887732]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00901-aJoC8Qw6xQ5/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887753]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00904-S9CUp5RsFY9/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887775]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00905-9v5HzFAB1cm/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887809]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00907-WGxjrSp71zX/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887830]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00909-MrKys1cv4jD/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887851]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00910-jE7Qzu3FyJD/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887872]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00911-a8h4mZT8buN/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887894]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00913-URu5ybF8PrH/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887916]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00914-TxyEAAVD4iD/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887937]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00915-ieavb8rbmA9/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887958]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00918-NQX2SZD1TMJ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:887979]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00921-nhtTwUrWv7v/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888000]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00925-4QUpJVDQ1DN/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888021]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00926-egVUByjgpHU/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888042]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00927-kucQY8TbKkz/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888063]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00929-azb2LDaMrGZ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888084]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00939-VedHjk858Vu/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888105]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00940-oHcTqmvveM7/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888129]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00947-fyZC1Whhj9i/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888150]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00951-RGvKsZAErEk/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888172]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00952-ogAZhviACbN/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888193]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00955-5TxBa2qkcAh/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888214]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00956-oNiVkiFKkAr/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888235]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00957-DowRMDn4MVe/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888256]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00961-dU7KLdn2Kcd/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888277]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00963-awRQoguC7TN/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888299]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00967-XwXCfkthawu/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888320]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00970-kUmc6DP2tff/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888341]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00977-1cQ7WUQgXJ4/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888376]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00978-sZJ5zo6FrEe/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888396]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00981-Rp8JNfstaew/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888417]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00985-3ZJjFFjJKqZ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888439]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00989-t9gvgFMoH4R/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888461]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/test/00992-G3AqUkGnykx/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888486]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00006-HkseAnWCgqk/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888506]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00009-vLpv2VX547B/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888527]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00016-qk9eeNeR4vw/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888549]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00017-oEPjPNSPmzL/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888569]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00020-XYyR54sxe6b/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888590]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00022-gmuS7Wgsbrx/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888612]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00023-zepmXAdrpjR/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888633]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00025-ixTj1aTMup2/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888654]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00031-Wo6kuutE9i7/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888676]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00033-oPj9qMxrDEa/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888697]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00034-6imZUJGRUq4/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888718]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00035-3XYAD64HpDr/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888739]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00043-Jfyvj3xn2aJ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888760]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00055-HxmXPBbFCkH/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888782]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00057-1UnKg1rAb8A/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888803]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00059-kJxT5qssH4H/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888827]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00062-ACZZiU6BXLz/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888848]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00064-gQgtJ9Stk5s/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888869]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00081-5biL7VEkByM/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888891]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00087-YY8rqV6L6rf/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888912]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00096-6HRFAUDqpTb/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888934]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00099-226REUyJh2K/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888955]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00105-xWvSkKiWQpC/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888976]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00108-oStKKWkQ1id/*.basis.glb` so unable to load templates from that path.
+[05:47:09:888997]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00109-GTV2Y73Sn5t/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889018]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00135-HeSYRw7eMtG/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889039]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00141-iigzG1rtanx/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889060]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00143-5Kw4nGdqYtS/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889081]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00149-UuwwmrTsfBN/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889101]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00150-LcAd9dhvVwh/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889123]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00155-iLDo95ZbDJq/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889147]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00164-XfUxBGTFQQb/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889167]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00166-RaYrxWt5pR1/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889188]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00168-bHKTDQFJxTw/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889210]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00172-bB6nKqfsb1z/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889231]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00173-qZ4B7U6XE5Y/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889252]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00177-VSxVP19Cdyw/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889273]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00179-MVVzj944atG/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889294]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00188-dQrLTxHvLXU/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889315]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00203-VoVGtfYrpuQ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889336]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00205-NEVASPhcrxR/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889365]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00207-FRQ75PjD278/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889388]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00210-j2EJhFEQGCL/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889409]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00217-qz3829g1Lzf/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889430]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00222-g8Xrdbe9fir/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889451]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00234-nACV8wLu1u5/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889472]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00238-j6fHrce9pHR/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889497]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00241-h6nwVLpAKQz/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889517]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00245-741Fdj7NLF9/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889538]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00250-U3oQjwTuMX8/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889559]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00251-wsAYBFtQaL7/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889580]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00254-YMNvYDhK8mB/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889601]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00255-NGyoyh91xXJ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889622]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00256-92vYG1q49FY/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889643]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00258-2Pc8W48bu21/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889664]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00261-fK2vEV32Lag/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889685]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00262-1xGrZPxG1Hz/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889706]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00263-GGBvSFddQgs/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889727]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00267-gQ3xxshDiCz/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889748]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00269-JNiWU5TZLtt/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889769]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00272-kA2nG18hCAr/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889790]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00294-PPTLa8SkUfo/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889811]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00299-bdp1XNEdvmW/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889835]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00304-X6Pct1msZv5/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889856]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00307-vDfkYo5VqEQ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889877]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00313-PE6kVEtrxtj/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889898]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00323-yHLr6bvWsVm/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889919]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00324-DoSbsoo4EAg/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889941]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00326-u9rPN5cHWBg/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889962]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00327-xgLmjqzoAzF/*.basis.glb` so unable to load templates from that path.
+[05:47:09:889982]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00330-WhNyDTnd9g5/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890004]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00366-fxbzYAGkrtm/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890025]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00378-DqJKU7YU7dA/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890048]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00382-S7uMvxjBVZq/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890069]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00384-ceJTwFNjqCt/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890091]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00386-b3WpMbPFB6q/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890113]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00388-pcpn6mFqFCg/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890138]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00397-ZNanfzgCdm3/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890164]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00401-H8rQCnvBgo6/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890185]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00404-QN2dRqwd84J/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890206]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00407-NPHxDe6VeCc/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890227]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00410-v7DzfFFEpsD/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890249]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00414-77mMEyxhs44/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890270]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00417-nGhNxKrgBPb/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890291]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00422-8wJuSPJ9FXG/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890312]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00434-L5QEsaVqwrY/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890334]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00440-wPLokgvCnuk/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890355]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00444-sX9xad6ULKc/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890386]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00463-URjpCob8MGw/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890407]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00466-xAHnY3QzFUN/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890428]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00475-g7hUFVNac26/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890449]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00476-NtnvZSMK3en/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890470]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00487-erXNfWVjqZ8/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890492]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00495-CQWES1bawee/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890517]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00506-QVAA6zecMHu/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890538]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00508-4vwGX7U38Ux/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890559]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00525-iKFn6fzyRqs/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890580]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00529-W9YAR9qcuvN/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890602]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00534-DBBESbk4Y3k/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890622]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00537-oahi4u45xMf/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890644]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00538-3CBBjsNkhqW/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890665]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00539-zUG6FL9TYeR/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890686]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00541-FnDDfrBZPhh/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890707]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00546-nS8T59Aw3sf/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890728]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00547-9h5JJxM6E5S/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890749]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00557-fRZhp6vWGw7/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890770]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00560-gjhYih4upQ9/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890791]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00567-KjZrPggnHm8/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890812]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00569-YJDUB7hWg9h/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890833]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00582-TYDavTf8oyy/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890857]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00590-qgZhhx1MpTi/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890879]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00591-JptJPosx1Z6/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890900]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00592-CthA7sQNTPK/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890921]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00598-mt9H8KcxRKD/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890942]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00606-W16Bm4ysK8v/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890964]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00612-GsQBY83r3hb/*.basis.glb` so unable to load templates from that path.
+[05:47:09:890987]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00619-R9fYpvCUkV7/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891008]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00624-ooq3SnvC79d/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891029]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00626-XiJhRLvpKpX/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891050]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00638-iePHCSf119p/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891071]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00643-ggNAcMh8JPT/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891092]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00657-TSJmdttd2GV/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891114]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00662-aRKASs4e8j1/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891135]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00664-u5atqC7vRCY/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891156]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00668-6YtDG3FhNvx/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891180]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00669-DNWbUAJYsPy/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891201]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00680-YmWinf3mhb5/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891222]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00685-ENiCjXWB6aQ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891243]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00688-SgkmkWjjmDJ/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891264]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00696-DsEJeNPcZtE/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891285]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00706-YHmAkqgwe2p/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891306]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00707-XVSZJAtHKdi/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891327]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00712-HZ2iMMBsBQ9/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891348]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00720-8B43pG641ff/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891378]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00723-hWDDQnSDMXb/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891399]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00732-Z2DQddYp1fn/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891420]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00733-GtM3JtRvvvR/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891441]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00738-GPyDUnjwZQy/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891462]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00741-w8GiikYuFRk/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891483]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00744-1S7LAXRdDqK/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891504]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00745-yX5efd48dLf/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891530]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00746-RTV2n6fXB2w/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891551]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00750-E1NrAhMoqvB/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891572]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00757-LVgQNuK8vtv/*.basis.glb` so unable to load templates from that path.
+[05:47:09:891593]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Stage Template> : No Glob path result found for `./data/scene_datasets/hm3d/train/00758-HfMobPm86Xn/*.basis.glb` so unable to load templates from that path.
+[05:47:09:893352]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/example/00861-GLAQ4DNUx5U/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893393]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00800-TEEsavR23oF/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893414]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00802-wcojb4TFT35/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893435]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00803-k1cupFYWXJ6/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893455]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/minival/00808-y9hTuugGdiq/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893476]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00900-XRJ2muKkwAV/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893497]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00901-aJoC8Qw6xQ5/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893518]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00904-S9CUp5RsFY9/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893538]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00905-9v5HzFAB1cm/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893559]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00907-WGxjrSp71zX/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893580]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00909-MrKys1cv4jD/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893606]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00910-jE7Qzu3FyJD/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893627]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00911-a8h4mZT8buN/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893649]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00913-URu5ybF8PrH/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893670]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00914-TxyEAAVD4iD/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893691]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00915-ieavb8rbmA9/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893711]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00918-NQX2SZD1TMJ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893733]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00921-nhtTwUrWv7v/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893754]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00925-4QUpJVDQ1DN/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893774]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00926-egVUByjgpHU/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893795]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00927-kucQY8TbKkz/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893816]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00929-azb2LDaMrGZ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893836]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00939-VedHjk858Vu/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893857]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00940-oHcTqmvveM7/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893878]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00947-fyZC1Whhj9i/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893898]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00951-RGvKsZAErEk/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893922]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00952-ogAZhviACbN/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893943]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00955-5TxBa2qkcAh/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893963]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00956-oNiVkiFKkAr/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:893984]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00957-DowRMDn4MVe/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894005]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00961-dU7KLdn2Kcd/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894025]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00963-awRQoguC7TN/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894045]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00967-XwXCfkthawu/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894066]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00970-kUmc6DP2tff/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894086]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00977-1cQ7WUQgXJ4/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894107]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00978-sZJ5zo6FrEe/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894127]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00981-Rp8JNfstaew/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894148]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00985-3ZJjFFjJKqZ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894168]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00989-t9gvgFMoH4R/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894189]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/test/00992-G3AqUkGnykx/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894214]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00006-HkseAnWCgqk/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894234]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00009-vLpv2VX547B/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894255]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00016-qk9eeNeR4vw/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894276]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00017-oEPjPNSPmzL/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894297]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00020-XYyR54sxe6b/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894318]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00022-gmuS7Wgsbrx/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894338]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00023-zepmXAdrpjR/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894368]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00025-ixTj1aTMup2/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894391]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00031-Wo6kuutE9i7/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894412]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00033-oPj9qMxrDEa/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894433]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00034-6imZUJGRUq4/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894453]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00035-3XYAD64HpDr/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894474]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00043-Jfyvj3xn2aJ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894496]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00055-HxmXPBbFCkH/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894516]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00057-1UnKg1rAb8A/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894541]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00059-kJxT5qssH4H/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894562]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00062-ACZZiU6BXLz/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894582]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00064-gQgtJ9Stk5s/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894603]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00081-5biL7VEkByM/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894624]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00087-YY8rqV6L6rf/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894645]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00096-6HRFAUDqpTb/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894665]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00099-226REUyJh2K/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894686]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00105-xWvSkKiWQpC/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894707]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00108-oStKKWkQ1id/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894727]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00109-GTV2Y73Sn5t/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894749]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00135-HeSYRw7eMtG/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894769]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00141-iigzG1rtanx/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894790]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00143-5Kw4nGdqYtS/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894811]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00149-UuwwmrTsfBN/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894832]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00150-LcAd9dhvVwh/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894855]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00155-iLDo95ZbDJq/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894875]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00164-XfUxBGTFQQb/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894897]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00166-RaYrxWt5pR1/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894918]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00168-bHKTDQFJxTw/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894939]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00172-bB6nKqfsb1z/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894961]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00173-qZ4B7U6XE5Y/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:894982]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00177-VSxVP19Cdyw/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895003]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00179-MVVzj944atG/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895025]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00188-dQrLTxHvLXU/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895046]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00203-VoVGtfYrpuQ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895066]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00205-NEVASPhcrxR/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895087]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00207-FRQ75PjD278/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895108]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00210-j2EJhFEQGCL/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895129]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00217-qz3829g1Lzf/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895150]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00222-g8Xrdbe9fir/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895174]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00234-nACV8wLu1u5/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895194]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00238-j6fHrce9pHR/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895215]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00241-h6nwVLpAKQz/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895236]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00245-741Fdj7NLF9/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895257]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00250-U3oQjwTuMX8/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895277]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00251-wsAYBFtQaL7/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895298]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00254-YMNvYDhK8mB/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895320]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00255-NGyoyh91xXJ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895341]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00256-92vYG1q49FY/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895373]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00258-2Pc8W48bu21/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895393]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00261-fK2vEV32Lag/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895414]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00262-1xGrZPxG1Hz/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895435]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00263-GGBvSFddQgs/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895456]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00267-gQ3xxshDiCz/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895480]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00269-JNiWU5TZLtt/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895501]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00272-kA2nG18hCAr/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895522]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00294-PPTLa8SkUfo/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895543]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00299-bdp1XNEdvmW/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895563]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00304-X6Pct1msZv5/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895585]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00307-vDfkYo5VqEQ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895605]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00313-PE6kVEtrxtj/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895626]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00323-yHLr6bvWsVm/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895648]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00324-DoSbsoo4EAg/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895668]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00326-u9rPN5cHWBg/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895689]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00327-xgLmjqzoAzF/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895710]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00330-WhNyDTnd9g5/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895730]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00366-fxbzYAGkrtm/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895752]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00378-DqJKU7YU7dA/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895773]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00382-S7uMvxjBVZq/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895797]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00384-ceJTwFNjqCt/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895818]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00386-b3WpMbPFB6q/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895839]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00388-pcpn6mFqFCg/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895860]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00397-ZNanfzgCdm3/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895880]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00401-H8rQCnvBgo6/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895901]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00404-QN2dRqwd84J/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895922]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00407-NPHxDe6VeCc/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895943]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00410-v7DzfFFEpsD/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895964]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00414-77mMEyxhs44/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:895985]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00417-nGhNxKrgBPb/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896006]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00422-8wJuSPJ9FXG/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896027]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00434-L5QEsaVqwrY/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896047]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00440-wPLokgvCnuk/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896068]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00444-sX9xad6ULKc/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896089]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00463-URjpCob8MGw/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896113]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00466-xAHnY3QzFUN/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896134]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00475-g7hUFVNac26/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896154]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00476-NtnvZSMK3en/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896175]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00487-erXNfWVjqZ8/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896196]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00495-CQWES1bawee/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896216]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00506-QVAA6zecMHu/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896237]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00508-4vwGX7U38Ux/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896258]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00525-iKFn6fzyRqs/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896279]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00529-W9YAR9qcuvN/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896300]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00534-DBBESbk4Y3k/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896322]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00537-oahi4u45xMf/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896343]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00538-3CBBjsNkhqW/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896372]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00539-zUG6FL9TYeR/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896393]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00541-FnDDfrBZPhh/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896414]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00546-nS8T59Aw3sf/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896441]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00547-9h5JJxM6E5S/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896461]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00557-fRZhp6vWGw7/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896482]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00560-gjhYih4upQ9/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896504]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00567-KjZrPggnHm8/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896524]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00569-YJDUB7hWg9h/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896545]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00582-TYDavTf8oyy/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896566]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00590-qgZhhx1MpTi/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896586]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00591-JptJPosx1Z6/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896607]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00592-CthA7sQNTPK/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896628]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00598-mt9H8KcxRKD/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896649]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00606-W16Bm4ysK8v/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896670]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00612-GsQBY83r3hb/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896691]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00619-R9fYpvCUkV7/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896712]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00624-ooq3SnvC79d/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896736]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00626-XiJhRLvpKpX/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896757]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00638-iePHCSf119p/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896778]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00643-ggNAcMh8JPT/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896799]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00657-TSJmdttd2GV/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896820]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00662-aRKASs4e8j1/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896841]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00664-u5atqC7vRCY/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896861]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00668-6YtDG3FhNvx/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896882]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00669-DNWbUAJYsPy/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896903]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00680-YmWinf3mhb5/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896924]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00685-ENiCjXWB6aQ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896945]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00688-SgkmkWjjmDJ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896965]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00696-DsEJeNPcZtE/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:896986]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00706-YHmAkqgwe2p/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897006]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00707-XVSZJAtHKdi/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897027]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00712-HZ2iMMBsBQ9/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897051]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00720-8B43pG641ff/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897072]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00723-hWDDQnSDMXb/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897093]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00732-Z2DQddYp1fn/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897114]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00733-GtM3JtRvvvR/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897135]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00738-GPyDUnjwZQy/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897156]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00741-w8GiikYuFRk/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897177]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00744-1S7LAXRdDqK/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897198]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00745-yX5efd48dLf/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897219]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00746-RTV2n6fXB2w/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897239]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00750-E1NrAhMoqvB/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897260]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00757-LVgQNuK8vtv/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897281]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/train/00758-HfMobPm86Xn/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897314]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00800-TEEsavR23oF/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897346]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00802-wcojb4TFT35/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897389]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00803-k1cupFYWXJ6/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897425]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00808-y9hTuugGdiq/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897454]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00810-CrMo8WxCyVb/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897484]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00813-svBbv1Pavdk/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897515]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00814-p53SfW6mjZe/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897544]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00815-h1zeeAwLh9Z/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897574]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00820-mL8ThkuaVTM/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897602]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00821-eF36g7L6Z9M/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897633]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00823-7MXmsvcQjpJ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897663]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00824-Dd4bFSTQ8gi/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897694]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00827-BAbdmeyTvMZ/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897724]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00829-QaLdnwvtxbs/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897753]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00831-yr17PDCnDDW/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897784]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00832-qyAac8rV8Zk/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897812]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00835-q3zU7Yy5E5s/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897843]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00839-zt1RVoi7PcG/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897876]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00843-DYehNKdT76V/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897904]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00844-q5QZSEeHe5g/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897935]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00847-bCPU9suPUw9/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897964]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00848-ziup5kvtCCR/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:897995]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00849-a8BtkwhxdRV/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898026]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00853-5cdEh9F2hJL/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898057]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00861-GLAQ4DNUx5U/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898088]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00862-LT9Jq6dN3Ea/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898119]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00869-MHPLjHsuG27/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898152]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00871-VBzV5z6i1WS/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898183]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00873-bxsVRursffK/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898211]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00876-mv2HUxq3B53/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898239]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00877-4ok3usBNeis/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898268]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00878-XB4GS9ShBRE/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898304]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00880-Nfvxx8J5NCo/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898334]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00890-6s7QHgap2fW/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898370]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00891-cvZr5TUy5C5/*.basis.scene_instance.json` so unable to load templates from that path.
+[05:47:09:898404]:[Warning]:[Metadata] AttributesManagerBase.h(457)::buildAttrSrcPathsFromJSONAndLoad : <Scene Instance> : No Glob path result found for `./data/scene_datasets/hm3d/val/00894-HY1NcmCgn3n/*.basis.scene_instance.json` so unable to load templates from that path.
+Renderer: NVIDIA H100 NVL/PCIe/SSE2 by NVIDIA Corporation
+OpenGL version: 4.6.0 NVIDIA 535.288.01
+Using optional features:
+    GL_ARB_vertex_array_object
+    GL_ARB_separate_shader_objects
+    GL_ARB_robustness
+    GL_ARB_texture_storage
+    GL_ARB_texture_view
+    GL_ARB_framebuffer_no_attachments
+    GL_ARB_invalidate_subdata
+    GL_ARB_texture_storage_multisample
+    GL_ARB_multi_bind
+    GL_ARB_direct_state_access
+    GL_ARB_get_texture_sub_image
+    GL_ARB_texture_filter_anisotropic
+    GL_KHR_debug
+    GL_KHR_parallel_shader_compile
+    GL_NV_depth_buffer_float
+Using driver workarounds:
+    no-forward-compatible-core-context
+    nv-egl-incorrect-gl11-function-pointers
+    no-layout-qualifiers-on-old-glsl
+    nv-zero-context-profile-mask
+    nv-implementation-color-read-format-dsa-broken
+    nv-cubemap-inconsistent-compressed-image-size
+    nv-cubemap-broken-full-compressed-image-query
+    nv-compressed-block-size-in-bits
+[05:47:09:961281]:[Warning]:[Metadata] SceneDatasetAttributes.cpp(107)::addNewSceneInstanceToDataset : Dataset : 'hm3d_annotated_basis' : Lighting Layout Attributes 'no_lights' specified in Scene Attributes but does not exist in dataset, so creating default.
+2026-05-18 05:47:12,803 Initializing task ObjectNav-v1
+=> loading RedNet checkpoint 'pretrained_weights/rednet_semmap_mp3d_40.pth'
+=> loaded checkpoint 'pretrained_weights/rednet_semmap_mp3d_40.pth' (epoch 53)
+Model's state_dict:
+2026-05-18 05:47:15,026 Number of params to train: 0
+2026-05-18 05:47:15,026 Agent number of parameters: 0
+  0%|          | 0/8 [00:00<?, ?it/s]Env: 0 | Step: 0 | Floor_step: 0 | Mode: initialize | Stair_flag: 0 | Action: 2
+This is Scene ID: DYehNKdT76V, Episode ID: 0. The goal is chair for this episode.
+Env: 0 | Step: 1 | Floor_step: 1 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 2 | Floor_step: 2 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 3 | Floor_step: 3 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 4 | Floor_step: 4 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 5 | Floor_step: 5 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 6 | Floor_step: 6 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 7 | Floor_step: 7 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 8 | Floor_step: 8 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 9 | Floor_step: 9 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 10 | Floor_step: 10 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 11 | Floor_step: 11 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 12 | Floor_step: 12 | Mode: initialize | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.198→0.198@3.2m, 0.176→0.176@3.4m
+[DP2] should_trigger_llm=True  values=['0.198', '0.176']  dists=['3.2m', '3.4m']
+## Single-floor Prompt:
+You need to select the optimal area based on prior probabilistic data and environmental context.
+You need to answer the question in the following JSON format:
+Example Input:
+{
+    "Goal": "toilet",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Bathroom": 90.0%,
+        "Bedroom": 10.0%,
+    ],
+    "Area Descriptions": [
+        "Area 1": "a bathroom containing objects: shower, towel",
+        "Area 2": "a bedroom containing objects: bed, nightstand",
+        "Area 3": "a garage containing objects: car",
+    ]
+}
+Example Response:
+{"Index": "1", "Reason": "Shower and towel in Bathroom indicate toilet location, with high probability (90.0%)."}
+Now answer question:
+Input:
+{
+    "Goal": "chair",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Kitchen": 32.1%,
+        "Bedroom": 21.8%,
+        "Office": 15.9%,
+        "Living_room": 13.8%,
+        "Bathroom": 7.7%,
+        "Hall": 3.3%,
+        "Garage": 1.4%,
+        "Laundry_room": 1.4%,
+        "Rec_room": 1.4%,
+        "Dining_room": 1.2%
+    ],
+    "Area Descriptions": [
+        "Area 1": "a bedroom containing objects: bed, bedroom, doorway, floor, hardwood, hardwood floor, room, white, wood floor",
+        "Area 2": "a hall containing objects: wall, corridor, dark, door, doorway, floor, hardwood, hardwood floor, lead, lead to, hallway, narrow, room, white, wood floor"
+    ]
+}
+## Single-floor Raw Response:
+To determine the optimal area for finding a chair, we should consider the prior probabilities and the descriptions of each area. Here's how I would approach this:
+
+1. **Prior Probabilities**:**: The highest probability for a chair is in the "Bedroom" at 21.8%. This suggests that bedrooms are more likely to have a chair than other rooms.
+
+2. **Area Descriptions**:
+   - **Area 1**:**: Describes a bedroom with specific details about its contents and features. This alignss with the high probability of finding a chair in a bedroom.
+   - **Area 2**:**: Describes a hall, which typically does not have a chair as its primary furniture item.
+
+Given these points, the optimal area to find a chair is "Area 1", as it is a bedroom with a high probability of containing a chair.
+
+**Response**:
+{"Index": "1", "Reason": "The highest probability for a chair is in the 'Bedroom' at 21.8%, and 'Area 1' is a bedroom with specific details about its contents and features."}
+## Single-floor Response:
+Area Index: 1. Reason: The highest probability for a chair is in the 'Bedroom' at 21.8%, and 'Area 1' is a bedroom with specific details about its contents and features.
+[DP7] parse_intrafloor_response: index=0 reason="The highest probability for a chair is in the 'Bedroom' at 21.8%, and 'Area 1' is a bedroom with specific details about its contents and features."
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 13 | Floor_step: 13 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.198→0.198@3.2m, 0.176→0.176@3.4m
+Force Move.
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 14 | Floor_step: 14 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.198→0.198@3.2m, 0.176→0.176@3.4m
+Force Move.
+Distance Change: 0.0 and Stick Step 1
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 15 | Floor_step: 15 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.198→0.198@3.2m, 0.176→0.176@3.4m
+Force Move.
+Distance Change: 0.0 and Stick Step 2
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 16 | Floor_step: 16 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.198→0.198@3.2m, 0.164→0.164@3.4m
+Force Move.
+Distance Change: 0.0 and Stick Step 3
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 17 | Floor_step: 17 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.189→0.189@3.2m, 0.175→0.175@3.4m
+Force Move.
+Distance Change: 0.0 and Stick Step 4
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 18 | Floor_step: 18 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.197→0.251@2.9m, 0.191→0.191@3.2m
+Force Move.
+Distance Change: 0.2478030610148627 and Stick Step 5
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 19 | Floor_step: 19 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.206→0.276@2.7m, 0.204→0.257@2.9m
+Force Move.
+Distance Change: 0.49519643482374676 and Stick Step 6
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 20 | Floor_step: 20 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.215→0.304@2.4m, 0.214→0.283@2.7m
+Force Move.
+Now the best_frontier is [-1.91767767 -2.51767767]
+Env: 0 | Step: 21 | Floor_step: 21 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.220→0.332@2.2m, 0.219→0.308@2.4m
+Frontier [-1.925 -2.525] is very close (distance: 2.19m), selecting it.
+Now the best_frontier is [-1.925 -2.525]
+Env: 0 | Step: 22 | Floor_step: 22 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.220→0.363@1.9m, 0.220→0.333@2.2m
+Frontier [-1.925 -2.525] is very close (distance: 1.94m), selecting it.
+Now the best_frontier is [-1.925 -2.525]
+Env: 0 | Step: 23 | Floor_step: 23 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.226→0.407@1.7m, 0.226→0.371@1.9m
+Frontier [-1.95       -2.51464466] is very close (distance: 1.71m), selecting it.
+Now the best_frontier is [-1.95       -2.51464466]
+Env: 0 | Step: 24 | Floor_step: 24 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.225→0.456@1.5m, 0.225→0.413@1.7m
+Frontier [-1.95       -2.51464466] is very close (distance: 1.47m), selecting it.
+Now the best_frontier is [-1.95       -2.51464466]
+Env: 0 | Step: 25 | Floor_step: 25 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.231→0.516@1.3m, 0.231→0.471@1.4m
+Frontier [-1.98964466 -2.5       ] is very close (distance: 1.25m), selecting it.
+Now the best_frontier is [-1.98964466 -2.5       ]
+Env: 0 | Step: 26 | Floor_step: 26 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.222→0.575@1.0m, 0.221→0.523@1.2m
+Frontier [-2.         -2.51464466] is very close (distance: 1.04m), selecting it.
+Now the best_frontier is [-2.         -2.51464466]
+Env: 0 | Step: 27 | Floor_step: 27 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.220→0.635@0.9m, 0.218→0.606@0.9m
+Frontier [-2.05  -2.525] is very close (distance: 0.88m), selecting it.
+Now the best_frontier is [-2.05  -2.525]
+Env: 0 | Step: 28 | Floor_step: 28 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.216→0.604@0.9m, 0.206→0.622@0.9m
+Frontier [-2.05  -2.525] is very close (distance: 0.88m), selecting it.
+Now the best_frontier is [-2.05  -2.525]
+Env: 0 | Step: 29 | Floor_step: 29 | Mode: explore | Stair_flag: 0 | Action: 1
+Env: 0 | Step: 30 | Floor_step: 30 | Mode: explore | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 31 | Floor_step: 31 | Mode: explore | Stair_flag: 0 | Action: 1
+Env: 0 | Step: 32 | Floor_step: 32 | Mode: explore | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 33 | Floor_step: 33 | Mode: explore | Stair_flag: 0 | Action: 1
+Env: 0 | Step: 34 | Floor_step: 34 | Mode: explore | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 35 | Floor_step: 35 | Mode: explore | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 36 | Floor_step: 36 | Mode: explore | Stair_flag: 0 | Action: 3
+Env: 0 | Step: 37 | Floor_step: 37 | Mode: explore | Stair_flag: 0 | Action: 1
+Env: 0 | Step: 38 | Floor_step: 38 | Mode: explore | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 39 | Floor_step: 0 | Mode: explore | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 40 | Floor_step: 1 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 41 | Floor_step: 2 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 42 | Floor_step: 3 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 43 | Floor_step: 4 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 44 | Floor_step: 5 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 45 | Floor_step: 6 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 46 | Floor_step: 7 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 47 | Floor_step: 8 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 48 | Floor_step: 9 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 49 | Floor_step: 10 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 50 | Floor_step: 11 | Mode: initialize | Stair_flag: 0 | Action: 2
+Env: 0 | Step: 51 | Floor_step: 12 | Mode: initialize | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.2m, 0.177→0.177@3.1m, 0.100→0.311@1.6m, -1.000→-1.000@5.2m
+[DP2] should_trigger_llm=True  values=['0.311', '0.179']  dists=['1.6m', '5.2m']
+## Single-floor Prompt:
+You need to select the optimal area based on prior probabilistic data and environmental context.
+You need to answer the question in the following JSON format:
+Example Input:
+{
+    "Goal": "toilet",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Bathroom": 90.0%,
+        "Bedroom": 10.0%,
+    ],
+    "Area Descriptions": [
+        "Area 1": "a bathroom containing objects: shower, towel",
+        "Area 2": "a bedroom containing objects: bed, nightstand",
+        "Area 3": "a garage containing objects: car",
+    ]
+}
+Example Response:
+{"Index": "1", "Reason": "Shower and towel in Bathroom indicate toilet location, with high probability (90.0%)."}
+Now answer question:
+Input:
+{
+    "Goal": "chair",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Kitchen": 32.1%,
+        "Bedroom": 21.8%,
+        "Office": 15.9%,
+        "Living_room": 13.8%,
+        "Bathroom": 7.7%,
+        "Hall": 3.3%,
+        "Garage": 1.4%,
+        "Laundry_room": 1.4%,
+        "Rec_room": 1.4%,
+        "Dining_room": 1.2%
+    ],
+    "Area Descriptions": [
+        "Area 1": "a hall containing objects: apartment, bedroom, wall, corridor, curtain, doorway, floor, hardwood, hardwood floor, lead to, hallway, room, white, wood floor",
+        "Area 2": "a hall containing objects: apartment, wall, ceiling, corridor, doorway, floor, hardwood, hardwood floor, lead to, hallway, room, white, wood floor"
+    ]
+}
+## Single-floor Raw Response:
+{"Index": "1", "Reason": "The high probability of finding a chair in the bedroom (21.8%) and the presence of objects like bed and nightstand in Area 1 suggest that the chair is likely to be found in this area."}
+## Single-floor Response:
+Area Index: 1. Reason: The high probability of finding a chair in the bedroom (21.8%) and the presence of objects like bed and nightstand in Area 1 suggest that the chair is likely to be found in this area.
+[DP7] parse_intrafloor_response: index=0 reason='The high probability of finding a chair in the bedroom (21.8%) and the presence of objects like bed and nightstand in Area 1 suggest that the chair is likely to be found in this area.'
+Now the best_frontier is [-0.8        -1.57071068]
+Env: 0 | Step: 52 | Floor_step: 13 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.2m, 0.177→0.177@3.1m, 0.100→0.311@1.6m, -1.000→-1.000@5.2m
+Force Move.
+Now the best_frontier is [-0.8        -1.57071068]
+Env: 0 | Step: 53 | Floor_step: 14 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.2m, 0.177→0.177@3.1m, 0.098→0.310@1.6m, -1.000→-1.000@5.2m
+Force Move.
+Distance Change: 0.0 and Stick Step 1
+Now the best_frontier is [-0.8        -1.57071068]
+Env: 0 | Step: 54 | Floor_step: 15 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.2m, 0.177→0.177@3.1m, 0.100→0.312@1.6m, -1.000→-1.000@5.2m
+Force Move.
+Distance Change: 0.0 and Stick Step 2
+Now the best_frontier is [-0.8        -1.57071068]
+Env: 0 | Step: 55 | Floor_step: 16 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.1m, 0.177→0.177@3.1m, 0.101→0.254@1.9m, -1.000→-1.000@5.2m
+Frontier [-0.52928932 -1.22928932] is very close (distance: 1.88m), selecting it.
+Now the best_frontier is [-0.52928932 -1.22928932]
+Env: 0 | Step: 56 | Floor_step: 17 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.1m, 0.177→0.177@3.1m, 0.101→0.254@1.9m, -1.000→-1.000@5.2m
+Frontier [-0.52928932 -1.22928932] is very close (distance: 1.88m), selecting it.
+Now the best_frontier is [-0.52928932 -1.22928932]
+Env: 0 | Step: 57 | Floor_step: 18 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.1m, 0.177→0.177@3.1m, 0.097→0.250@1.9m, -1.000→-1.000@5.2m
+Frontier [-0.52928932 -1.22928932] is very close (distance: 1.88m), selecting it.
+Distance Change: 0.0 and Stick Step 1
+Now the best_frontier is [-0.52928932 -1.22928932]
+Env: 0 | Step: 58 | Floor_step: 19 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.1m, 0.177→0.177@3.1m, 0.098→0.252@1.9m, -1.000→-1.000@5.2m
+Frontier [-0.52928932 -1.22928932] is very close (distance: 1.88m), selecting it.
+Distance Change: 0.0 and Stick Step 2
+Now the best_frontier is [-0.52928932 -1.22928932]
+Env: 0 | Step: 59 | Floor_step: 20 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.179→0.179@5.1m, 0.177→0.177@3.1m, 0.099→0.253@1.9m, -1.000→-1.000@5.2m
+Frontier [-0.52928932 -1.22928932] is very close (distance: 1.88m), selecting it.
+Distance Change: 0.0 and Stick Step 3
+Now the best_frontier is [-0.52928932 -1.22928932]
+Env: 0 | Step: 60 | Floor_step: 21 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.167→0.167@5.1m, 0.166→0.166@3.1m, 0.099→0.253@1.9m, -1.000→-1.000@5.2m
+Frontier [-0.52928932 -1.22928932] is very close (distance: 1.88m), selecting it.
+Distance Change: 0.0 and Stick Step 4
+Now the best_frontier is [-0.52928932 -1.22928932]
+Env: 0 | Step: 61 | Floor_step: 22 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.154→0.213@2.8m, 0.142→0.142@4.9m, 0.099→0.271@1.8m, -1.000→-1.000@5.1m
+Frontier [-0.52928932 -1.22928932] is very close (distance: 1.76m), selecting it.
+Distance Change: 0.11172726153726487 and Stick Step 5
+Now the best_frontier is [-0.52928932 -1.22928932]
+Env: 0 | Step: 62 | Floor_step: 23 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.154→0.213@2.8m, 0.142→0.142@4.9m, 0.096→0.096@3.4m, -1.000→-1.000@5.1m
+Frontier [-3.9 -1. ] is very close (distance: 2.83m), selecting it.
+Now the best_frontier is [-3.9 -1. ]
+Env: 0 | Step: 63 | Floor_step: 24 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.146→0.205@2.8m, 0.138→0.138@4.9m, 0.096→0.096@3.4m, -1.000→-1.000@5.1m
+Frontier [-3.9 -1. ] is very close (distance: 2.83m), selecting it.
+Now the best_frontier is [-3.9 -1. ]
+Env: 0 | Step: 64 | Floor_step: 25 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.171→0.230@2.8m, 0.171→0.171@4.9m, 0.096→0.096@3.4m, -1.000→-1.000@5.1m
+Frontier [-3.9 -1. ] is very close (distance: 2.83m), selecting it.
+Distance Change: 0.0 and Stick Step 1
+Now the best_frontier is [-3.9 -1. ]
+Env: 0 | Step: 65 | Floor_step: 26 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.171→0.171@4.9m, 0.171→0.230@2.8m, 0.096→0.096@3.4m, -1.000→-1.000@5.1m
+Frontier [-3.9 -1. ] is very close (distance: 2.83m), selecting it.
+Distance Change: 0.0 and Stick Step 2
+Now the best_frontier is [-3.9 -1. ]
+Env: 0 | Step: 66 | Floor_step: 27 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.171→0.243@2.6m, 0.170→0.170@5.0m, 0.096→0.096@3.6m, -1.000→-1.000@5.3m
+Frontier [-3.9 -1. ] is very close (distance: 2.63m), selecting it.
+Distance Change: 0.19994399515242822 and Stick Step 3
+Now the best_frontier is [-3.9 -1. ]
+Env: 0 | Step: 67 | Floor_step: 28 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.168→0.240@2.6m, 0.168→0.168@5.0m, 0.096→0.096@3.6m, -1.000→-1.000@5.3m
+Frontier [-3.9 -1. ] is very close (distance: 2.63m), selecting it.
+Distance Change: 0.19994399515242822 and Stick Step 4
+Now the best_frontier is [-3.9 -1. ]
+Env: 0 | Step: 68 | Floor_step: 29 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.160→0.249@2.4m, 0.158→0.158@4.7m, 0.096→0.096@3.6m, -1.000→-1.000@5.5m
+Frontier [-3.925 -0.975] is very close (distance: 2.42m), selecting it.
+Now the best_frontier is [-3.925 -0.975]
+Env: 0 | Step: 69 | Floor_step: 30 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.156→0.271@2.2m, 0.153→0.153@4.7m, 0.096→0.096@3.7m, -1.000→-1.000@5.6m
+Frontier [-3.9  -0.95] is very close (distance: 2.17m), selecting it.
+Now the best_frontier is [-3.9  -0.95]
+Env: 0 | Step: 70 | Floor_step: 31 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.150→0.150@4.3m, 0.149→0.289@2.0m, 0.145→0.145@5.2m, 0.096→0.096@3.8m, -1.000→-1.000@5.7m
+Frontier [-3.80303301 -0.79696699] is very close (distance: 1.97m), selecting it.
+Now the best_frontier is [-3.80303301 -0.79696699]
+Env: 0 | Step: 71 | Floor_step: 32 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.156→0.156@5.2m, 0.153→0.264@2.2m, 0.153→0.153@4.0m, 0.096→0.096@4.0m, -1.000→-1.000@5.9m
+Frontier [-3.25  0.  ] is very close (distance: 2.20m), selecting it.
+Now the best_frontier is [-3.25  0.  ]
+Env: 0 | Step: 72 | Floor_step: 33 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.170→0.170@5.2m, 0.162→0.162@3.8m, 0.153→0.283@2.0m, 0.096→0.096@4.1m, -1.000→-1.000@6.0m
+Frontier [-3.25  0.  ] is very close (distance: 2.04m), selecting it.
+Now the best_frontier is [-3.25  0.  ]
+Env: 0 | Step: 73 | Floor_step: 34 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.142→0.142@5.2m, 0.138→0.138@3.8m, 0.100→0.100@3.2m, 0.096→0.096@4.1m, -1.000→-1.000@6.0m
+[DP2] should_trigger_llm=True  values=['0.142', '0.138']  dists=['5.2m', '3.8m']
+## Single-floor Prompt:
+You need to select the optimal area based on prior probabilistic data and environmental context.
+You need to answer the question in the following JSON format:
+Example Input:
+{
+    "Goal": "toilet",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Bathroom": 90.0%,
+        "Bedroom": 10.0%,
+    ],
+    "Area Descriptions": [
+        "Area 1": "a bathroom containing objects: shower, towel",
+        "Area 2": "a bedroom containing objects: bed, nightstand",
+        "Area 3": "a garage containing objects: car",
+    ]
+}
+Example Response:
+{"Index": "1", "Reason": "Shower and towel in Bathroom indicate toilet location, with high probability (90.0%)."}
+Now answer question:
+Input:
+{
+    "Goal": "chair",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Kitchen": 32.1%,
+        "Bedroom": 21.8%,
+        "Office": 15.9%,
+        "Living_room": 13.8%,
+        "Bathroom": 7.7%,
+        "Hall": 3.3%,
+        "Garage": 1.4%,
+        "Laundry_room": 1.4%,
+        "Rec_room": 1.4%,
+        "Dining_room": 1.2%
+    ],
+    "Area Descriptions": [
+        "Area 1": "a hall containing objects: wall, ceiling, doorway, fireplace, floor, hardwood, hardwood floor, living room, hallway, repair, room, wood floor",
+        "Area 2": "a hall containing objects: appliance, beam, wall, ceiling, pillar, corridor, doorway, floor, hardwood, hardwood floor, home appliance, lead to, hallway, room, wood floor"
+    ]
+}
+## Single-floor Raw Response:
+To determine the optimal area for finding a chair, we should consider the prior probabilities and the descriptions of each area. Here's how I would approach this:
+
+1. **Prior Probabilities**:**: The highest probability for a chair is in the "Living_room" at 13.8%. This suggests that chairs are most likely to be found in living rooms.
+
+2. **Area Descriptions**.:
+   - **Area 1**: contains a "living room" which aligns with the high probability of finding a chair in a living room.
+   - **Area 2** also contains a "corridor" and "hallway", which are common areas where chairs might be found, but it does not explicitly mention a "living room".
+
+Based on these considerations, the optimal area to find a chair is "Area 1" because it contains a "living room", which has the highest prior probability for finding a chair.
+
+**Response**:
+{"Index": "1", "Reason": "The highest prior probability for finding a chair is in the 'Living_room' at 13.8%, and 'Area 1' contains a 'living room'."}
+## Single-floor Response:
+Area Index: 1. Reason: The highest prior probability for finding a chair is in the 'Living_room' at 13.8%, and 'Area 1' contains a 'living room'.
+[DP7] parse_intrafloor_response: index=0 reason="The highest prior probability for finding a chair is in the 'Living_room' at 13.8%, and 'Area 1' contains a 'living room'."
+Now the best_frontier is [-7.08964466  1.1       ]
+Env: 0 | Step: 74 | Floor_step: 35 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.158→0.158@5.2m, 0.155→0.155@3.8m, 0.100→0.100@3.2m, 0.096→0.096@4.1m, -1.000→-1.000@6.0m
+Force Move.
+Now the best_frontier is [-7.08964466  1.1       ]
+Env: 0 | Step: 75 | Floor_step: 36 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.162→0.162@5.2m, 0.159→0.159@3.5m, 0.100→0.100@3.1m, 0.096→0.096@4.2m, -1.000→-1.000@6.2m
+[DP2] should_trigger_llm=True  values=['0.162', '0.100']  dists=['5.2m', '3.1m']
+## Single-floor Prompt:
+You need to select the optimal area based on prior probabilistic data and environmental context.
+You need to answer the question in the following JSON format:
+Example Input:
+{
+    "Goal": "toilet",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Bathroom": 90.0%,
+        "Bedroom": 10.0%,
+    ],
+    "Area Descriptions": [
+        "Area 1": "a bathroom containing objects: shower, towel",
+        "Area 2": "a bedroom containing objects: bed, nightstand",
+        "Area 3": "a garage containing objects: car",
+    ]
+}
+Example Response:
+{"Index": "1", "Reason": "Shower and towel in Bathroom indicate toilet location, with high probability (90.0%)."}
+Now answer question:
+Input:
+{
+    "Goal": "chair",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Kitchen": 32.1%,
+        "Bedroom": 21.8%,
+        "Office": 15.9%,
+        "Living_room": 13.8%,
+        "Bathroom": 7.7%,
+        "Hall": 3.3%,
+        "Garage": 1.4%,
+        "Laundry_room": 1.4%,
+        "Rec_room": 1.4%,
+        "Dining_room": 1.2%
+    ],
+    "Area Descriptions": [
+        "Area 1": "a hall containing objects: wall, ceiling, corridor, doorway, floor, hardwood, hardwood floor, lead to, hallway, repair, room, wood floor",
+        "Area 2": "a hall containing objects: wall, ceiling, doorway, fireplace, floor, hardwood, hardwood floor, living room, hallway, repair, room, wood floor"
+    ]
+}
+## Single-floor Raw Response:
+To determine the optimal area for finding a chair, we should consider the prior probabilities and the descriptions of each area. The highest probability for a chair is found is in the "Living_room" with 13.8%. However, since there are no specific descriptions mentioning chairs in any of the areas, we cannot definitively say which area has the highest probability based on the given information. Therefore, I would recommend searching all areas with a higher probability (Living_room, Bedroom, Office) to increase the chances of finding a chair.
+[2026-05-18 05:48:35,798][root][WARNING] - No JSON object found in intrafloor response
+[DP7] parse_intrafloor_response: index=0 reason=''
+Now the best_frontier is [-7.31767767  1.23232233]
+Env: 0 | Step: 76 | Floor_step: 37 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.171→0.171@5.2m, 0.165→0.165@3.4m, 0.100→0.100@3.1m, 0.096→0.096@4.4m, -1.000→-1.000@6.3m
+[DP2] should_trigger_llm=True  values=['0.171', '0.100']  dists=['5.2m', '3.1m']
+## Single-floor Prompt:
+You need to select the optimal area based on prior probabilistic data and environmental context.
+You need to answer the question in the following JSON format:
+Example Input:
+{
+    "Goal": "toilet",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Bathroom": 90.0%,
+        "Bedroom": 10.0%,
+    ],
+    "Area Descriptions": [
+        "Area 1": "a bathroom containing objects: shower, towel",
+        "Area 2": "a bedroom containing objects: bed, nightstand",
+        "Area 3": "a garage containing objects: car",
+    ]
+}
+Example Response:
+{"Index": "1", "Reason": "Shower and towel in Bathroom indicate toilet location, with high probability (90.0%)."}
+Now answer question:
+Input:
+{
+    "Goal": "chair",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Kitchen": 32.1%,
+        "Bedroom": 21.8%,
+        "Office": 15.9%,
+        "Living_room": 13.8%,
+        "Bathroom": 7.7%,
+        "Hall": 3.3%,
+        "Garage": 1.4%,
+        "Laundry_room": 1.4%,
+        "Rec_room": 1.4%,
+        "Dining_room": 1.2%
+    ],
+    "Area Descriptions": [
+        "Area 1": "a hall containing objects: wall, ceiling, corridor, doorway, floor, hardwood, hardwood floor, lead to, hallway, room, wood floor",
+        "Area 2": "a hall containing objects: wall, ceiling, doorway, fireplace, floor, hardwood, hardwood floor, living room, hallway, repair, room, wood floor"
+    ]
+}
+## Single-floor Raw Response:
+To determine the optimal area for finding a chair, we should consider the prior probabilities and the descriptions of each area. The highest probability for a chair is found is in the "Living_room" with 13.8%. However, since there are no specific descriptions of chairs in any of the areas, we can infer that the most likely place to find a chair would be in a room where chairs are typically found, such as a living room or a dining room. Since the "Living_room" has the highest probability, we can assume that it is the most likely place to find a chair. Therefore, the optimal area to find a chair is is "Area 2" with a probability of 13.8%.
+[2026-05-18 05:48:39,390][root][WARNING] - No JSON object found in intrafloor response
+[DP7] parse_intrafloor_response: index=0 reason=''
+Now the best_frontier is [-7.51767767  1.38232233]
+Env: 0 | Step: 77 | Floor_step: 38 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.171→0.171@5.2m, 0.165→0.165@3.4m, 0.100→0.100@3.1m, 0.096→0.096@4.4m, -1.000→-1.000@6.3m
+Force Move.
+Now the best_frontier is [-7.51767767  1.38232233]
+Env: 0 | Step: 78 | Floor_step: 39 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.171→0.171@5.2m, 0.168→0.168@3.4m, 0.100→0.100@3.1m, 0.096→0.096@4.4m, -1.000→-1.000@6.3m
+Force Move.
+Distance Change: 0.0 and Stick Step 1
+Now the best_frontier is [-7.51767767  1.38232233]
+Env: 0 | Step: 79 | Floor_step: 40 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.173→0.173@5.2m, 0.171→0.171@3.1m, 0.100→0.100@3.1m, 0.096→0.096@4.5m, -1.000→-1.000@6.5m
+[DP2] should_trigger_llm=True  values=['0.173', '0.100']  dists=['5.2m', '3.1m']
+## Single-floor Prompt:
+You need to select the optimal area based on prior probabilistic data and environmental context.
+You need to answer the question in the following JSON format:
+Example Input:
+{
+    "Goal": "toilet",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Bathroom": 90.0%,
+        "Bedroom": 10.0%,
+    ],
+    "Area Descriptions": [
+        "Area 1": "a bathroom containing objects: shower, towel",
+        "Area 2": "a bedroom containing objects: bed, nightstand",
+        "Area 3": "a garage containing objects: car",
+    ]
+}
+Example Response:
+{"Index": "1", "Reason": "Shower and towel in Bathroom indicate toilet location, with high probability (90.0%)."}
+Now answer question:
+Input:
+{
+    "Goal": "chair",
+    "Prior Probabilities between Room Type and Goal Object": [
+        "Kitchen": 32.1%,
+        "Bedroom": 21.8%,
+        "Office": 15.9%,
+        "Living_room": 13.8%,
+        "Bathroom": 7.7%,
+        "Hall": 3.3%,
+        "Garage": 1.4%,
+        "Laundry_room": 1.4%,
+        "Rec_room": 1.4%,
+        "Dining_room": 1.2%
+    ],
+    "Area Descriptions": [
+        "Area 1": "a hall containing objects: wall, ceiling, corridor, doorway, floor, hardwood, hardwood floor, lead to, hallway, room, wood floor",
+        "Area 2": "a hall containing objects: wall, ceiling, doorway, fireplace, floor, hardwood, hardwood floor, living room, hallway, repair, room, wood floor"
+    ]
+}
+## Single-floor Raw Response:
+To determine the optimal area for finding a chair, we should consider the prior probabilities and the descriptions of each area. The highest probability for a chair is found is in the "Living_room" with 13.8%. However, since there are no specific descriptions of chairs in any of the areas, we can infer that the most likely place to find a chair would be in a room where chairs are typically found, such as a living room or a dining room. Since the "Living_room" has the highest probability, we can assume that it is the most likely place to find a chair. Therefore, the optimal area to find a chair is is "Area 2" with a probability of 13.8%.
+[2026-05-18 05:48:44,051][root][WARNING] - No JSON object found in intrafloor response
+[DP7] parse_intrafloor_response: index=0 reason=''
+Now the best_frontier is [-7.67803301  1.52196699]
+Env: 0 | Step: 80 | Floor_step: 41 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.166→0.221@2.9m, 0.162→0.162@5.2m, 0.100→0.100@3.1m, 0.096→0.096@4.7m, -1.000→-1.000@6.7m
+Frontier [-5.89267767  0.49267767] is very close (distance: 2.91m), selecting it.
+Now the best_frontier is [-5.89267767  0.49267767]
+Env: 0 | Step: 81 | Floor_step: 42 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.165→0.233@2.7m, 0.164→0.164@5.2m, 0.100→0.100@3.1m, 0.096→0.096@4.9m, -1.000→-1.000@6.9m
+Frontier [-5.88535534  0.53535534] is very close (distance: 2.69m), selecting it.
+Now the best_frontier is [-5.88535534  0.53535534]
+Env: 0 | Step: 82 | Floor_step: 43 | Mode: explore | Stair_flag: 0 | Action: 3
+Env: 0 | Step: 83 | Floor_step: 44 | Mode: look_for_downstair | Stair_flag: 0 | Action: 5
+Env: 0 | Step: 84 | Floor_step: 45 | Mode: look_up_back | Stair_flag: 0 | Action: 4
+[DP1] frontier scores (raw→enhanced, dist): 0.142→0.142@5.2m, 0.140→0.208@2.7m, 0.100→0.100@3.1m, 0.096→0.096@4.9m, -1.000→-1.000@6.9m
+Frontier [-5.88535534  0.53535534] is very close (distance: 2.69m), selecting it.
+Now the best_frontier is [-5.88535534  0.53535534]
+Env: 0 | Step: 85 | Floor_step: 46 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.141→0.141@5.2m, 0.141→0.227@2.4m, 0.100→0.151@3.0m, 0.096→0.096@5.0m, -1.000→-1.000@6.9m
+Frontier [-5.88535534  0.53535534] is very close (distance: 2.45m), selecting it.
+Distance Change: 0.2414262777195484 and Stick Step 1
+Now the best_frontier is [-5.88535534  0.53535534]
+Env: 0 | Step: 86 | Floor_step: 47 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.160→0.160@5.2m, 0.157→0.243@2.4m, 0.100→0.151@3.0m, 0.096→0.096@5.0m, -1.000→-1.000@6.9m
+Frontier [-5.88535534  0.53535534] is very close (distance: 2.45m), selecting it.
+Distance Change: 0.2414262777195484 and Stick Step 2
+Now the best_frontier is [-5.88535534  0.53535534]
+Env: 0 | Step: 87 | Floor_step: 48 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.166→0.166@5.0m, 0.162→0.272@2.2m, 0.100→0.100@3.0m, 0.096→0.096@5.1m, -1.000→-1.000@7.1m
+Frontier [-5.88535534  0.53535534] is very close (distance: 2.21m), selecting it.
+Distance Change: 0.4829241162109543 and Stick Step 3
+Now the best_frontier is [-5.88535534  0.53535534]
+Env: 0 | Step: 88 | Floor_step: 49 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.163→0.163@4.7m, 0.162→0.304@2.0m, 0.100→0.100@3.1m, 0.096→0.096@5.3m, -1.000→-1.000@7.3m
+Frontier [-5.875  0.525] is very close (distance: 1.95m), selecting it.
+Now the best_frontier is [-5.875  0.525]
+Env: 0 | Step: 89 | Floor_step: 50 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.153→0.322@1.8m, 0.153→0.153@4.5m, 0.100→0.100@3.2m, 0.096→0.096@5.5m, -1.000→-1.000@7.5m
+Frontier [-5.89267767  0.59267767] is very close (distance: 1.78m), selecting it.
+Now the best_frontier is [-5.89267767  0.59267767]
+Env: 0 | Step: 90 | Floor_step: 51 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.143→0.359@1.5m, 0.142→0.142@4.3m, 0.100→0.100@3.3m, 0.096→0.096@5.7m, -1.000→-1.000@7.7m
+Frontier [-5.85  0.6 ] is very close (distance: 1.53m), selecting it.
+Now the best_frontier is [-5.85  0.6 ]
+Env: 0 | Step: 91 | Floor_step: 52 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.143→0.400@1.4m, 0.143→0.143@4.0m, 0.100→0.100@3.4m, 0.096→0.096@5.9m, -1.000→-1.000@7.9m
+Frontier [-5.85303301  0.65303301] is very close (distance: 1.36m), selecting it.
+Now the best_frontier is [-5.85303301  0.65303301]
+Env: 0 | Step: 92 | Floor_step: 53 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.134→0.134@4.0m, 0.130→0.387@1.4m, 0.100→0.100@3.4m, 0.096→0.096@5.9m, -1.000→-1.000@7.9m
+Frontier [-5.85303301  0.65303301] is very close (distance: 1.36m), selecting it.
+Now the best_frontier is [-5.85303301  0.65303301]
+Env: 0 | Step: 93 | Floor_step: 54 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.126→0.215@2.4m, 0.119→0.119@3.1m, 0.117→0.447@1.1m, 0.100→0.100@3.4m, 0.096→0.096@6.1m, -1.000→-1.000@8.0m
+Frontier [-5.85        0.65428932] is very close (distance: 1.11m), selecting it.
+Now the best_frontier is [-5.85        0.65428932]
+Env: 0 | Step: 94 | Floor_step: 55 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.126→0.244@2.1m, 0.115→0.170@2.9m, 0.113→0.537@0.9m, 0.100→0.100@3.5m, 0.096→0.096@6.2m, -1.000→-1.000@8.1m
+Frontier [-5.85        0.65428932] is very close (distance: 0.86m), selecting it.
+Now the best_frontier is [-5.85        0.65428932]
+Env: 0 | Step: 95 | Floor_step: 56 | Mode: explore | Stair_flag: 0 | Action: 2
+[DP1] frontier scores (raw→enhanced, dist): 0.147→0.265@2.1m, 0.140→0.196@2.9m, 0.129→0.553@0.9m, 0.100→0.100@3.5m, 0.096→0.096@6.2m, -1.000→-1.000@8.1m
+Frontier [-5.85        0.65428932] is very close (distance: 0.86m), selecting it.
+Distance Change: 0.0 and Stick Step 1
+Now the best_frontier is [-5.85        0.65428932]
+Env: 0 | Step: 96 | Floor_step: 57 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.144→0.295@1.9m, 0.141→0.212@2.6m, 0.129→0.597@0.8m, 0.100→0.100@3.6m, 0.096→0.096@6.4m, -1.000→-1.000@8.3m
+Frontier [-5.76767767  0.76767767] is very close (distance: 0.76m), selecting it.
+Now the best_frontier is [-5.76767767  0.76767767]
+Env: 0 | Step: 97 | Floor_step: 58 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.142→0.293@1.9m, 0.136→0.509@1.0m, 0.123→0.194@2.6m, 0.100→0.100@3.6m, 0.096→0.096@6.4m, -1.000→-1.000@8.3m
+Frontier [-5.55        0.98964466] is very close (distance: 0.99m), selecting it.
+Now the best_frontier is [-5.55        0.98964466]
+Env: 0 | Step: 98 | Floor_step: 59 | Mode: explore | Stair_flag: 0 | Action: 1
+[DP1] frontier scores (raw→enhanced, dist): 0.142→0.328@1.7m, 0.138→0.568@0.8m, 0.119→0.209@2.4m, 0.100→0.100@3.7m, 0.096→0.096@6.5m, -1.000→-1.000@8.5m
+Frontier [-5.5         1.01464466] is very close (distance: 0.84m), selecting it.
+Now the best_frontier is [-5.5         1.01464466]
+Env: 0 | Step: 99 | Floor_step: 60 | Mode: explore | Stair_flag: 0 | Action: 3
+[DP1] frontier scores (raw→enhanced, dist): 0.142→0.328@1.7m, 0.136→0.373@1.4m, 0.128→0.279@1.9m, 0.119→0.209@2.4m, 0.100→0.100@3.7m, 0.096→0.096@6.5m, -1.000→-1.000@8.5m
+Frontier [-5.07928932  1.47071068] is very close (distance: 1.44m), selecting it.
+Now the best_frontier is [-5.07928932  1.47071068]
+Env: 0 | Step: 100 | Floor_step: 61 | Mode: explore | Stair_flag: 0 | Action: 1
+Traceback (most recent call last):
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/teeshan/meta-ascent/ascent/run.py", line 94, in <module>
+    main()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/hydra/_internal/hydra.py", line 119, in run
+    ret = run_job(
+  File "/home/teeshan/miniconda3/envs/habitat_clean/lib/python3.9/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+  File "/home/teeshan/meta-ascent/ascent/run.py", line 89, in main
+    execute_exp(cfg, "eval" if cfg.habitat_baselines.evaluate else "train")
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/run.py", line 62, in execute_exp
+    trainer.eval()
+  File "/home/teeshan/meta-ascent/third_party/habitat-lab/habitat-baselines/habitat_baselines/common/base_trainer.py", line 129, in eval
+    self._eval_checkpoint(
+  File "/home/teeshan/meta-ascent/ascent/ascent_trainer.py", line 196, in _eval_checkpoint
+    action_data = self._agent.actor_critic.act(
+  File "/home/teeshan/meta-ascent/ascent/ascent_policy.py", line 654, in act
+    self._policy_info[env].update(self._get_policy_info(self.all_detection_list[env], env))
+  File "/home/teeshan/meta-ascent/ascent/ascent_policy.py", line 376, in _get_policy_info
+    self._map_controller._value_map[env].visualize(markers, reduce_fn=self._vis_reduce_fn),
+  File "/home/teeshan/meta-ascent/ascent/mapping/value_map.py", line 220, in visualize
+    map_img[zero_mask] = (255, 255, 255)
+KeyboardInterrupt

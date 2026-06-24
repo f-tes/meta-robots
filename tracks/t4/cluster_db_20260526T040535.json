@@ -1,0 +1,132 @@
+{
+  "clusters": [
+    {
+      "id": "get_close_to_stair_navmesh_disconnect",
+      "scenes": [
+        "q3zU7Yy5E5s",
+        "qyAac8rV8Zk"
+      ],
+      "root_cause_summary": "The stair centroid lies in a navmesh-disconnected component (Reach_stair_centroid=False on every approach attempt). All nine prior interventions targeted look_for_downstair, which exits naturally in 2\u201312 steps and is therefore never the stalling mode; the actual prolonged stall is get_close_to_stair (75+ steps in qyAac8rV8Zk, onset ~step 179 in q3zU7Yy5E5s), which has no exit condition when geometric traversal is infeasible.",
+      "cross_scene_pattern": "Identical mechanism: navmesh-disconnected stair centroid \u2192 Reach_stair_centroid=False on all approaches \u2192 look_for_downstair exits in 2\u201312 steps (natural timeout, not threshold-triggered) \u2192 agent re-enters get_close_to_stair and stalls indefinitely. Fingerprints are identical across all tested candidates for both scenes, confirming zero behavioral differentiation from any intervention. Difference: q3zU7Yy5E5s has 5 distinct disconnected centroids spanning a 0.9m region and stalls begin later (~step 179); qyAac8rV8Zk has a single centroid with min_dis_to_downstair oscillating 159\u2013175 and get_close_to_stair runs 75 steps (164\u2013239). Both share the same two-disable FSM cycle.",
+      "transfer_notes": "Candidate_8 applied a pathfinder feasibility gate at look_for_downstair entry to both scenes and produced zero behavioral effect (identical fingerprints, unchanged step counts). This conclusively locates the causal gap: the gate fires at the right mode entry but the mode exits naturally before any gate-triggered branch can execute, and get_close_to_stair re-engages via a separate FSM path. The transfer lesson is that the fix must be applied inside get_close_to_stair itself, not at look_for_downstair entry. Candidate_5's longer look_for_downstair window (steps 70\u2013115 in q3zU7Yy5E5s, 56\u201358 in qyAac8rV8Zk) shows that extending look_for_downstair only delays, not prevents, re-entry into get_close_to_stair.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP9_carrot_distance",
+        "LLM_DP7",
+        "DP1",
+        "T4_STAIR_FIX_permanent_disable",
+        "T4_STAIR_MEM_llm_memory_injection",
+        "all_harness_DPs",
+        "step_budget_on_look_for_downstair",
+        "no_progress_counter_on_look_for_downstair",
+        "pre_entry_pathfinder_feasibility_gate_at_look_for_downstair"
+      ],
+      "highest_leverage_untested": "step_budget_or_reach_centroid_false_count_exit_applied_to_get_close_to_stair: inject a counter inside get_close_to_stair that fires stair-disable + frontier regeneration when Reach_stair_centroid=False accumulates N\u22655 consecutive times (or step budget T\u226520 inside the mode). Pair with a navmesh island_radius query at the stair centroid to distinguish a genuinely disconnected island from a connected-but-distant one, preventing premature disabling on valid stairs. This is the first intervention that directly targets the stalling mode rather than the 2\u201312-step look_for_downstair prelude.",
+      "sr_gain_if_fixed": 0.35,
+      "priority": 1
+    },
+    {
+      "id": "hysteresis_patch_regression",
+      "scenes": [
+        "mL8ThkuaVTM"
+      ],
+      "root_cause_summary": "Candidate_0 solved this episode via passive climb_stair detection during explore mode (steps 91\u2013102, floor_step reset at step 287, DTG\u21920.04). Candidate_2's hysteresis patch rerouted stair detection into an explicit get_close_to_stair\u2192look_for_downstair oscillation, doubling floor_reinits (3\u21926) and exhausting the 499-step budget. The toilet is 2D-connected to the agent start \u2014 the root cause is a patch-induced FSM regression on an already-solvable episode.",
+      "cross_scene_pattern": "Single-scene cluster. Mechanistically distinct from Cluster 1 (get_close_to_stair_navmesh_disconnect): here the stair IS physically traversable and was successfully used by candidate_0; the failure is behavioral, caused by a patch disrupting a working FSM path. Distinct from Cluster 3 (post_climb_floor2_navmesh_disconnect): there is no post-climb connectivity problem \u2014 the failure occurs before floor 2 is reached.",
+      "transfer_notes": "The hysteresis patch applied in candidate_2 had zero behavioral effect in q3zU7Yy5E5s and qyAac8rV8Zk (Cluster 1), confirming those scenes fail for structural reasons the patch cannot address. Asymmetrically, the same patch broke mL8ThkuaVTM by overriding the passive climb_stair path. This establishes a mandatory constraint for future cross-scene patches: any modification to stair-detection FSM entry must verify that passive climb_stair during explore remains reachable, or else it risks regressing already-solved episodes.",
+      "cluster_ruled_out_levers": [
+        "DP12_increase_to_80",
+        "floor_confusion_hypothesis",
+        "LLM_DP7",
+        "DP1",
+        "hysteresis_patch"
+      ],
+      "highest_leverage_untested": "revert_hysteresis_patch and restore passive climb_stair detection path active in candidate_0. Probability of success is near 1.0 since candidate_0 already demonstrated success on this exact episode. Any future patch must explicitly gate on whether passive climb_stair is already active before overriding FSM stair-detection logic.",
+      "sr_gain_if_fixed": 0.21,
+      "priority": 2
+    },
+    {
+      "id": "post_climb_floor2_navmesh_disconnect",
+      "scenes": [
+        "XB4GS9ShBRE"
+      ],
+      "root_cause_summary": "Stair traversal succeeds at step 198 (floor_step resets to 0, floor 2 entered), but floor 2 presents only 2 frontiers near the stair landing; the bed room occupies a navmesh-disconnected island of floor 2 that is geometrically unreachable from the stair arrival point. Eight candidates with identical behavioral fingerprints confirm that no pre-climb or stair-mode intervention has any causal path to this failure.",
+      "cross_scene_pattern": "Single-scene cluster. Shares the navmesh-disconnection mechanism with Cluster 1 but the disconnection occurs on floor 2 after a successful climb, not in the stair region during approach. T4_NOQUIT rescues at steps 228 and 241 both encounter empty frontier pools, confirming the goal room's navmesh island is not seeded from the stair landing. Eight candidates spanning all harness DPs and FSM-level interventions produce identical fingerprints, establishing that the failure is entirely post-climb.",
+      "transfer_notes": "All eight no-op candidates establish that pre-climb interventions (DP9, DP12, pathfinder gate, step budget, no-progress counter, hysteresis patch) are causally disconnected from this failure. The post-climb navmesh disconnection here is analogous to the stair-region disconnection in Cluster 1, but harder to remediate: Cluster 1's fix (exit get_close_to_stair early) frees the agent to explore other options, while here the agent has already climbed and floor 2 exploration is structurally bounded by the navmesh island size. Any effective fix requires injecting new exploration coverage beyond what the navmesh naturally seeds from the stair landing.",
+      "cluster_ruled_out_levers": [
+        "hysteresis_patch",
+        "DP12",
+        "DP9",
+        "LLM_DP7",
+        "DP1",
+        "T4_STAIR_FIX_permanent_disable",
+        "T4_STAIR_MEM_llm_memory_injection",
+        "all_harness_DPs",
+        "step_budget_on_look_for_downstair",
+        "no_progress_counter_on_look_for_downstair",
+        "pre_entry_pathfinder_feasibility_gate_at_look_for_downstair"
+      ],
+      "highest_leverage_untested": "frontier_seeding_beyond_stair_landing_via_navmesh_boundary_detection: after a successful floor change (floor_step resets to 0), if the reachable frontier count within 3m of the arrival point is \u22642, query navmesh island boundaries or use 2D occupancy grid raycasting to inject synthetic exploration waypoints in directions not reachable via standard BFS from the landing. A lower-cost variant: downstairs_fallback_to_retry_different_floor_entry_point after floor 2 frontier exhaustion \u2014 re-disable the climbed stair and attempt a different stair or floor-1 re-entry point to find an alternate path into the disconnected room.",
+      "sr_gain_if_fixed": 0.075,
+      "priority": 3
+    }
+  ],
+  "forbidden_moves": [
+    {
+      "lever": "LLM_DP7",
+      "cluster": "ALL",
+      "reason": "Globally ruled out for all scenes in the database per mandatory forbidden-moves constraint; dp7_empty rate near 1.0 in relevant episodes confirms LLM is already effectively disabled."
+    },
+    {
+      "lever": "DP1",
+      "cluster": "ALL",
+      "reason": "Globally ruled out for all scenes in the database per mandatory forbidden-moves constraint."
+    },
+    {
+      "lever": "pre_entry_pathfinder_feasibility_gate_at_look_for_downstair",
+      "cluster": "get_close_to_stair_navmesh_disconnect",
+      "reason": "Candidate_8 confirmed zero behavioral effect in both q3zU7Yy5E5s (fingerprint identical, steps=381) and qyAac8rV8Zk (fingerprint identical, steps=239): look_for_downstair exits naturally in 2\u201312 steps before the gate logic can redirect the agent, and the actual stall in get_close_to_stair re-engages via a separate FSM path not gated by this mechanism."
+    },
+    {
+      "lever": "step_budget_on_look_for_downstair",
+      "cluster": "get_close_to_stair_navmesh_disconnect",
+      "reason": "look_for_downstair runs only 2\u201312 steps in both scenes, far below any practical budget threshold; confirmed no-op in candidates 6 and 7 for both q3zU7Yy5E5s and qyAac8rV8Zk."
+    },
+    {
+      "lever": "no_progress_counter_on_look_for_downstair",
+      "cluster": "get_close_to_stair_navmesh_disconnect",
+      "reason": "Same reason as step_budget: look_for_downstair exits in 2\u201312 steps before the counter can accumulate enough consecutive failures to trigger."
+    },
+    {
+      "lever": "DP9_carrot_distance",
+      "cluster": "get_close_to_stair_navmesh_disconnect",
+      "reason": "DP9 governs waypoint distance inside look_for_downstair; that mode is not the stalling mode in either scene. Adjusting carrot distance does not affect get_close_to_stair behavior."
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "get_close_to_stair_navmesh_disconnect",
+      "reason": "Ruled out for q3zU7Yy5E5s and qyAac8rV8Zk (no behavioral effect); also ruled out globally because it caused a regression in mL8ThkuaVTM by overriding passive climb_stair detection."
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "hysteresis_patch_regression",
+      "reason": "The patch is the direct cause of the regression in mL8ThkuaVTM: it rerouted passive climb_stair into explicit get_close_to_stair\u2192look_for_downstair oscillation. Must not be reapplied."
+    },
+    {
+      "lever": "DP12_increase_to_80",
+      "cluster": "hysteresis_patch_regression",
+      "reason": "mL8ThkuaVTM was already solved by candidate_0 with default DP12; the failure is a patch-induced FSM regression, not a floor-switch interval problem. Raising DP12 cannot undo a behavioral path change caused by code modification."
+    },
+    {
+      "lever": "hysteresis_patch",
+      "cluster": "post_climb_floor2_navmesh_disconnect",
+      "reason": "Eight candidates with identical behavioral fingerprints in XB4GS9ShBRE confirm that all stair-approach and FSM-level interventions \u2014 including the hysteresis patch \u2014 are causally upstream of the post-climb floor 2 navmesh disconnection and have no effect on it."
+    },
+    {
+      "lever": "T4_STAIR_FIX_permanent_disable",
+      "cluster": "post_climb_floor2_navmesh_disconnect",
+      "reason": "The stair in XB4GS9ShBRE was successfully traversed at step 198; permanently disabling stair logic after traversal cannot unblock a navmesh-disconnected room on the destination floor."
+    }
+  ],
+  "last_updated": "2026-05-26T04:05:35Z"
+}

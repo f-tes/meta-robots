@@ -1,0 +1,11 @@
+{
+  "harness": "/home/teeshan/meta_harness_t5/runs/candidate_0/harness",
+  "split": "smoke10_t3",
+  "metrics": {
+    "success": 0.7,
+    "num_episodes": 10,
+    "spl": 0.3164,
+    "distance_to_goal": 2.5654124462977053
+  },
+  "timestamp": "2026-05-29T02:05:59"
+}
