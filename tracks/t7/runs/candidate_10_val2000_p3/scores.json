@@ -2,7 +2,7 @@
   "harness": "/home/teeshan/meta_harness_t7/runs/candidate_10/harness",
   "split": "val_1800_t7_p3",
   "metrics": {
-    "success": 0.5596,
+    "success": 0.6861,
     "spl": 0.297,
     "distance_to_goal": 4.2605,
     "num_steps": 222.3056,
